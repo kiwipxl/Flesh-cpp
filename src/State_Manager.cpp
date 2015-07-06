@@ -1,6 +1,7 @@
 #include "State_Manager.h"
+#include <time.h>
 
-USING_NS_CC;
+using namespace cocos2d;
 
 Scene* State_Manager::createScene() {
     // 'scene' is an autorelease object
@@ -10,13 +11,11 @@ Scene* State_Manager::createScene() {
     auto layer = State_Manager::create();
 
     // add layer as a child to scene
-    scene->addChild(layer);
+	scene->addChild(layer);
 
     // return the scene
     return scene;
 }
-
-Label* label;
 
 bool State_Manager::init() {
 	if (!Layer::init()) return false;
@@ -28,14 +27,17 @@ bool State_Manager::init() {
 	label->setPosition(200, 200);
     this->addChild(label, 1);
 
+	scheduleUpdate();
+	init_time = clock();
+
     return true;
 }
 
-void State_Manager::update(float delta) {
-	CCLOG("test");
-	label->setPosition(Vec2(cos(delta), 20));
+void State_Manager::update(float dt) {
+	time_since_startup = (clock() - init_time) / 1000.0f;
+	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 200, 200));
 }
 
-void State_Manager::menuCloseCallback(Ref* sender) {
+void State_Manager::menu_close(Ref* r) {
 	Director::getInstance()->end();
 }
