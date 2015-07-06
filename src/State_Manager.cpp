@@ -4,16 +4,11 @@
 using namespace cocos2d;
 
 Scene* State_Manager::createScene() {
-    // 'scene' is an autorelease object
+	//auto release objects
 	auto scene = Scene::create();
-
-    // 'layer' is an autorelease object
     auto layer = State_Manager::create();
-
-    // add layer as a child to scene
 	scene->addChild(layer);
 
-    // return the scene
     return scene;
 }
 
@@ -21,11 +16,12 @@ bool State_Manager::init() {
 	if (!Layer::init()) return false;
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	
+	label = LabelBMFont::create("", "fonts/lucida.fnt");
+	label->setString("abcdefghijklmnopqrstuvwxyz");
 	label->setPosition(200, 200);
-    this->addChild(label, 1);
+	addChild(label, 1);
 
 	scheduleUpdate();
 	init_time = clock();
@@ -35,7 +31,17 @@ bool State_Manager::init() {
 
 void State_Manager::update(float dt) {
 	time_since_startup = (clock() - init_time) / 1000.0f;
-	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 200, 200));
+	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 250, 200));
+
+	for (int n = 0; n < 26; ++n) {
+		Node* s;
+		(s = label->getChildByTag(n))->setRotation(s->getRotation() + cos(s->getPosition().x));
+	}
+
+	for (int n = 0; n < 26; ++n) {
+		Node* s;
+		(s = label->getChildByTag(n))->setPosition((n * 25), s->getPosition().y);
+	}
 }
 
 void State_Manager::menu_close(Ref* r) {

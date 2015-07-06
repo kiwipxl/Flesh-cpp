@@ -21,7 +21,7 @@ class State_Manager : public Layer {
 		float time_since_startup;
 
 	private:
-		Label* label;
+		LabelBMFont* label;
 		clock_t init_time;
 };
 
