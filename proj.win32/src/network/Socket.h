@@ -16,13 +16,15 @@ enum SocketProtocol {
 class Socket {
 
 	public:
+		static void init_sockets();
+
 		Socket(SocketProtocol c_protocol = PROTO_TCP, char* c_ip = "n/a", char* c_port = "n/a");
 		char* ip;
 		char* port;
 		SocketProtocol protocol;
 
 		bool try_connect();
-		bool send_buffer();
+		bool send_buffer(char* buffer);
 
 		SOCKET get_sock() { return sock; }
 

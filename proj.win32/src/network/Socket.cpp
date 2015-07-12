@@ -1,17 +1,19 @@
 #include "Socket.h"
 #include "cocos2d.h"
 
-Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
+void Socket::init_sockets() {
 	WSAData wsa_data;
-	SOCKET sock = INVALID_SOCKET;
-	struct addrinfo* result, hints;
 	int err;
-	char* ip = "127.0.0.1";
-	char* port = "4222";
-
 	if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
-		CCLOG("WSA Startup failed! Err: %d", err);
+		CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
 	}
+}
+
+Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
+	sock = INVALID_SOCKET;
+	protocol = c_protocol;
+	ip = c_ip;
+	port = c_port;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
@@ -55,8 +57,6 @@ bool Socket::try_connect() {
 	return true;
 }
 
-bool Socket::send_buffer() {
-	char* buffer = "ayy lmao";
-	send(sock, buffer, strlen(buffer), 0);
-	CCLOG("sent");
+bool Socket::send_buffer(char* buffer) {
+	return send(sock, buffer, strlen(buffer), 0);
 }
