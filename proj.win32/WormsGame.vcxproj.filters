@@ -12,30 +12,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\State_Manager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
+    <ClCompile Include="src\AppDelegate.cpp" />
+    <ClCompile Include="src\State_Manager.cpp" />
+    <ClCompile Include="src\network\Socket.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\State_Manager.h">
-      <Filter>src</Filter>
-    </ClInclude>
+    <ClInclude Include="src\AppDelegate.h" />
+    <ClInclude Include="src\State_Manager.h" />
+    <ClInclude Include="src\network\Socket.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\main.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build-cfg.json" />
+    <None Include="game.aps" />
   </ItemGroup>
 </Project>
