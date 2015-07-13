@@ -3,6 +3,9 @@
 import socket;
 import select;
 import sys;
+import db;
+
+class Enum(tuple): __getattr__ = tuple.index
 
 if (sys.version_info > (3,)):
     buffer = memoryview
@@ -10,7 +13,15 @@ if (sys.version_info > (3,)):
 class Client:
     user_id = 0;
     socket = None;
-    
+
+MSG_ID = Enum(["UNKNOWN", "USER_ID", "SEND_USER_PASS"]);
+
+class Message:
+    msg_id = MSG_ID.UNKNOWN;
+
+msg = Message();
+print(str(msg.msg_id) + ", " + str(MSG_ID[msg.msg_id]));
+
 server_s = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 server_s.bind(("0.0.0.0", 4222));
 server_s.listen(5);
