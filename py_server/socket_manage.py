@@ -42,11 +42,4 @@ def listen(ip, port):
                     if (server.num_clients <= 0): break;
                     continue;
 
-                msg = str(data);
-                user_id = msg[0:msg.find("|")];
-                print("received from client: " + msg);
-                print("sending msg to " + str(len(can_write_list)) + " clients");
-                for write_sock in can_write_list:
-                    write_sock.send(buffer(msg.encode()));
-
     s.close();

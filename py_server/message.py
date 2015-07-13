@@ -2,13 +2,22 @@ import sys;
 
 class Enum(tuple): __getattr__ = tuple.index;
 
-if (sys.version_info > (3,)):
-    buffer = memoryview;
-
-MSG_ID = Enum(["UNKNOWN", "USER_ID", "SEND_USER_PASS"]);
+ID = Enum(["UNKNOWN", "CLIENT_ID", "SEND_USER_PASS"]);
 
 class Message:
-    msg_id = MSG_ID.UNKNOWN;
+    msg_id = ID.UNKNOWN;
 
-msg = Message();
-print(str(msg.msg_id) + ", " + str(MSG_ID[msg.msg_id]));
+def send(sock, msg_id, *params):
+    data = str(msg_id);
+    for param in params:
+        s = str(param);
+        data += str(s.__len__()) + s;
+    sock.send(buffer(data.encode()));
+
+def broadcast(sock_list, msg_id, *params):
+    data = str(msg_id);
+    for param in params:
+        s = str(param);
+        data += str(s.__len__()) + s;
+    for sock in sock_list:
+        sock.send(buffer(data.encode()));
