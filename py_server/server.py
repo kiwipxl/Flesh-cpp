@@ -29,7 +29,7 @@ def client_accepted(client_sock, client_ip, client_port):
     client_id_inc += 1;
     message.send(c.sock, message.ID.CLIENT_ID, c.id);
 
-    got_message(message.make(message.ID.CLIENT_USER_PASS, "myuser", "mahpassword"));
+    got_message(message.decode_msg(message.make(message.ID.CLIENT_USER_PASS, "myuser_testthislol12344444||", "mahpassword")));
 
 def client_disconnected(sock):
     global clients
@@ -43,6 +43,9 @@ def client_disconnected(sock):
             break;
 
 def got_message(msg):
+    print("params: " + str(msg.params));
+    return;
+
     if (msg.msg_id == message.ID.CLIENT_USER_PASS):
         print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
         print("raw: %s" % msg.raw_data);
