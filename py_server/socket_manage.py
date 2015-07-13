@@ -2,6 +2,7 @@ import socket;
 import select;
 import sys;
 import server;
+import message;
 
 tcp_sock = None;
 
@@ -41,5 +42,6 @@ def listen(ip, port):
                     server.client_disconnected(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
+                server.got_message(message.decode_raw(data));
 
     s.close();

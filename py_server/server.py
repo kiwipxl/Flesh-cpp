@@ -29,6 +29,8 @@ def client_accepted(client_sock, client_ip, client_port):
     client_id_inc += 1;
     message.send(c.sock, message.ID.CLIENT_ID, c.id);
 
+    got_message(message.make(message.ID.CLIENT_USER_PASS, "myuser", "mahpassword"));
+
 def client_disconnected(sock):
     global clients
     global num_clients
@@ -39,6 +41,13 @@ def client_disconnected(sock):
             clients.remove(c);
             num_clients -= 1;
             break;
+
+def got_message(msg):
+    if (msg.msg_id == message.ID.CLIENT_USER_PASS):
+        print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
+        print("raw: %s" % msg.raw_data);
+    else:
+        print("unknown message received. raw: %s" % msg.raw_data);
 
 if __name__ == "__main__":
     db.init();
