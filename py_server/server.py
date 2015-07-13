@@ -3,23 +3,42 @@
 import sys;
 import db;
 import socket_manage;
+import message;
+from client import *;
 
-class Enum(tuple): __getattr__ = tuple.index
+clients = [];
+num_clients = 0;
+client_id_inc = 0;
 
-if (sys.version_info > (3,)):
-    buffer = memoryview
+def client_accepted(client_sock, client_ip, client_port):
+    global clients
+    global num_clients
+    global client_id_inc
     
-class Client:
-    user_id = 0;
-    socket = None;
+    c = Client();
+    c.sock = client_sock;
+    c.id = client_id_inc;
+    c.ip = client_ip;
+    c.port = client_port;
 
-MSG_ID = Enum(["UNKNOWN", "USER_ID", "SEND_USER_PASS"]);
+    clients.append(c);
 
-class Message:
-    msg_id = MSG_ID.UNKNOWN;
+    print("accepted client (client-id: %d, ip: %s, port: %d)" % (c.id, c.ip, c.port));
 
-msg = Message();
-print(str(msg.msg_id) + ", " + str(MSG_ID[msg.msg_id]));
+    num_clients += 1;
+    client_id_inc += 1;
+    client_sock.send(buffer(("userid:" + str(c.id)).encode()));
+
+def client_disconnected(r):
+    global clients
+    global num_clients
+
+    for c in clients:
+        if (c.socket == r):
+            clients.remove(c);
+            break;
+
+    num_clients -= 1;
 
 if __name__ == "__main__":
     db.init();

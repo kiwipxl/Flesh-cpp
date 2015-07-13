@@ -1,43 +1,35 @@
 import socket;
 import select;
 import sys;
+import server;
 
 tcp_sock = None;
 
 def init():
     global tcp_sock;
+
     tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 
 def listen(ip, port):
     global tcp_sock;
+
     tcp_sock.bind((ip, port));
-    tcp_sock.listen(5);
+    tcp_sock.listen(1);
     print("awaiting clients...");
-    
+
     read_list = [tcp_sock];
     write_list = [];
-    clients = [];
-    conn_clients = 0;
-    user_id_count = 0;
 
     while (1):
         can_read_list, can_write_list, err = select.select(read_list, write_list, [], 60000);
 
         for r in can_read_list:
             if (r == tcp_sock):
-                client_s, addr = tcp_sock.accept();
-                print("accepted client");
-                read_list.append(client_s);
-                write_list.append(client_s);
+                client_sock, addr = tcp_sock.accept();
+                read_list.append(client_sock);
+                write_list.append(client_sock);
 
-                c = Client();
-                c.socket = client_s;
-                c.user_id = user_id_count;
-                clients.append(c);
-
-                conn_clients += 1;
-                user_id_count += 1;
-                client_s.send(buffer(("userid:" + str(c.user_id)).encode()));
+                server.client_accepted(client_sock, addr[0], addr[1]);
             else:
                 try:
                     data = r.recv(1024);
@@ -46,14 +38,10 @@ def listen(ip, port):
                     read_list.remove(r);
                     write_list.remove(r);
 
-                    for c in clients:
-                        if (c.socket == r):
-                            clients.remove(c);
-                            break;
-
-                    conn_clients -= 1;
-                    if (conn_clients <= 0):
-                        break;
+                    print(str(r.getpeername()));
+                    
+                    server.client_disconnected(r);
+                    if (server.num_clients <= 0): break;
                     continue;
 
                 msg = str(data);
