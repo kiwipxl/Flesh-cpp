@@ -40,7 +40,7 @@ def encode(msg_id, *params):
     data = int2chrstr(msg_id, 4);
     for param in params:
         s = str(param);
-        data += int2chrstr(s.__len__(), 2) + s;
+        if (s != ""): data += int2chrstr(s.__len__(), 2) + s;
     return data;
 
 def decode_msg(msg):
