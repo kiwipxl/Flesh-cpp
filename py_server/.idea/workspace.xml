@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3964497">
-              <caret line="31" column="81" selection-start-line="31" selection-start-column="81" selection-end-line="31" selection-end-column="81" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="175" selection-start-line="31" selection-start-column="175" selection-end-line="31" selection-end-column="175" />
               <folding>
                 <element signature="e#19#30#0" expanded="true" />
               </folding>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="db.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.29980275">
+              <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -100,8 +100,8 @@
         <option value="$PROJECT_DIR$/client.py" />
         <option value="$PROJECT_DIR$/socket_manage.py" />
         <option value="$PROJECT_DIR$/message.py" />
-        <option value="$PROJECT_DIR$/db.py" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/db.py" />
       </list>
     </option>
   </component>
@@ -466,22 +466,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db.py">
+    <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+          <caret line="31" column="175" selection-start-line="31" selection-start-column="175" selection-end-line="31" selection-end-column="175" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#19#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
+    <entry file="file://$PROJECT_DIR$/db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3964497">
-          <caret line="31" column="81" selection-start-line="31" selection-start-column="81" selection-end-line="31" selection-end-column="81" />
+        <state vertical-scroll-proportion="0.29980275">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
           <folding>
-            <element signature="e#19#30#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>

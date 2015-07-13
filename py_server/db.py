@@ -3,6 +3,7 @@ import hashlib;
 
 db_con = None;
 cur = None;
+MAX_USERNAME_LEN = 16;
 
 def init():
     global db_con;
@@ -11,12 +12,13 @@ def init():
 
     db_con.row_factory = lite.Row;     #fetches use dictionary over tuple
     cur = db_con.cursor();
-    query("create table if not exists accounts(id integer primary key, user character(16), pass character(256), unique(user))");
+    query("create table if not exists accounts(id integer primary key, user character, pass character, unique(user))");
     db_con.commit();
     print("accounts db initiated");
 
 def add_user_account(username, password):
     global db_con;
+    if (username.__len__() > MAX_USERNAME_LEN): username = username[0:MAX_USERNAME_LEN];
     query("insert or ignore into accounts(user, pass) values('" + username + "', '" + hashlib.sha256(password).hexdigest() + "')");
     db_con.commit();
     print(db_con);
