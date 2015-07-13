@@ -23,11 +23,11 @@ def int2chrstr(num, bits):
 def chrstr2int(chrstr):
     i = 0;
     l = chrstr.__len__();
-    if (l >= 4): i += int(chrstr[3]) * b24const;
-    if (l >= 3): i += int(chrstr[2]) * b16const;
-    if (l >= 2): i += int(chrstr[1]) * 256;
-    if (l >= 1): i += int(chrstr[0]);
-    return s;
+    if (l >= 4): i += ord(chrstr[3]) * b24const;
+    if (l >= 3): i += ord(chrstr[2]) * b16const;
+    if (l >= 2): i += ord(chrstr[1]) * 256;
+    if (l >= 1): i += ord(chrstr[0]);
+    return i;
 
 def make(msg_id, *params):
     m = Message();
@@ -45,24 +45,23 @@ def encode(msg_id, *params):
 
 def decode_msg(msg):
     raw_data = msg.raw_data;
-    print(raw_data);
-    if (len(raw_data) >= 1 and raw_data[0].isdigit()):
-        msg_id = int(raw_data[0]);
+    if (len(raw_data) >= 4):
+        msg_id = chrstr2int(raw_data[0:3]);
         params = [];
-        if (len(raw_data) >= 3):
-            print("ayy");
-            p = "";
-            i = 0;
-            start_index = -1;
-            for c in raw_data[1:]:
-                if (i == 0):
-                    if (start_index != -1):
-                        params.append(raw_data[start_index:start_index + i]);
-                    if (c.isdigit()):
-                        i = int(c);
-                        start_index = c;
-                    else:
-                        break;
+        i = 0;
+        start_index = -1;
+        slen = raw_data.__len__() + 1;
+        index = 4;
+        while index < slen:
+            if (i == 0):
+                if (start_index != -1):
+                    params.append(raw_data[start_index:index]);
+                if (index + 2 < slen):
+                    i = chrstr2int(raw_data[index:index + 2]);
+                    start_index = index + 2;
+                    index += 2;
+            i -= 1;
+            index += 1;
 
         msg.msg_id = msg_id;
         msg.params = params;
