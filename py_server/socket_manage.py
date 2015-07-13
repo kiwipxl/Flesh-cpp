@@ -21,10 +21,10 @@ def listen(ip, port):
     write_list = [];
 
     while (1):
-        can_read_list, can_write_list, err = select.select(read_list, write_list, [], 60000);
+        can_read_list, can_write_list, err = select.select(read_list, write_list, [], 1);
 
-        for r in can_read_list:
-            if (r == tcp_sock):
+        for read_sock in can_read_list:
+            if (read_sock == tcp_sock):
                 client_sock, addr = tcp_sock.accept();
                 read_list.append(client_sock);
                 write_list.append(client_sock);
@@ -32,15 +32,13 @@ def listen(ip, port):
                 server.client_accepted(client_sock, addr[0], addr[1]);
             else:
                 try:
-                    data = r.recv(1024);
+                    data = read_sock.recv(1024);
                 except:
                     print("socket has disconnected");
-                    read_list.remove(r);
-                    write_list.remove(r);
+                    read_list.remove(read_sock);
+                    write_list.remove(read_sock);
 
-                    print(str(r.getpeername()));
-                    
-                    server.client_disconnected(r);
+                    server.client_disconnected(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
 
@@ -48,7 +46,7 @@ def listen(ip, port):
                 user_id = msg[0:msg.find("|")];
                 print("received from client: " + msg);
                 print("sending msg to " + str(len(can_write_list)) + " clients");
-                for w in can_write_list:
-                    w.send(buffer(msg.encode()));
+                for write_sock in can_write_list:
+                    write_sock.send(buffer(msg.encode()));
 
     s.close();

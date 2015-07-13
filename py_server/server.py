@@ -29,16 +29,16 @@ def client_accepted(client_sock, client_ip, client_port):
     client_id_inc += 1;
     client_sock.send(buffer(("userid:" + str(c.id)).encode()));
 
-def client_disconnected(r):
+def client_disconnected(sock):
     global clients
     global num_clients
 
     for c in clients:
-        if (c.socket == r):
+        if (c.sock == sock):
+            print("client disconnected (client-id: %d, ip: %s, port: %d)" % (c.id, c.ip, c.port));
             clients.remove(c);
+            num_clients -= 1;
             break;
-
-    num_clients -= 1;
 
 if __name__ == "__main__":
     db.init();
