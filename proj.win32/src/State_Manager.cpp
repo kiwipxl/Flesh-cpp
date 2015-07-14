@@ -30,7 +30,6 @@ bool State_Manager::init() {
 	Socket::init_sockets();
 	Socket sock(PROTO_TCP, "127.0.0.1", "4222");
 	sock.try_connect();
-	sock.send_buffer("ayyyyyyyyyyyy");
 
     return true;
 }

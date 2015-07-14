@@ -18,9 +18,6 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 	ip = c_ip;
 	port = c_port;
 
-	int t = 8;
-	CCLOG("encoded msg: %s", (Msg::Encode << t << "test").stream.str().c_str());
-
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	switch (protocol) {
@@ -60,6 +57,9 @@ bool Socket::try_connect() {
 		CCLOG("could not connect (ip: %s, port: %s). Err %d", ip, port, err);
 		return false;
 	}
+
+	Msg::send(this, Msg::ByteStream() << MID_CLIENT_ID << 80);
+
 	return true;
 }
 
