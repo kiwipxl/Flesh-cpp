@@ -18,7 +18,8 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 	ip = c_ip;
 	port = c_port;
 
-	CCLOG((Msg::Encode << "ayy" << "lmao" << 4.058f).stream.str().c_str());
+	int t = 8;
+	CCLOG("encoded msg: %s", (Msg::Encode << t << "test").stream.str().c_str());
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;

@@ -153,6 +153,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\AppDelegate.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\network\Message.h" />
+    <ClInclude Include="src\network\ReadableType.h" />
     <ClInclude Include="src\network\Socket.h" />
     <ClInclude Include="src\State_Manager.h" />
   </ItemGroup>

@@ -25,6 +25,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\network\Message.h" />
+    <ClInclude Include="src\network\ReadableType.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -4,6 +4,7 @@
 #include <string>
 #include <stdarg.h>
 #include <sstream>
+#include "ReadableType.h"
 
 enum ID {
 	MSG_UNKNOWN,
@@ -28,7 +29,14 @@ class EncodeStream {
 		EncodeStream() { }
 
 		template <class T> EncodeStream &operator<<(const T &v) {
-			stream << v;
+			std::string name = type_to_string(v);
+			if (name == "int") {
+				stream << int2chrstr((int)v, 4);
+			}else if (name.find("char") != -1) {
+				stream << v;
+			}else {
+				stream << "UNDEFINED";
+			}
 			return *this;
 		}
 };
