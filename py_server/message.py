@@ -80,7 +80,7 @@ def extract_params(mid, byte_data):
     byte_offset = 4;
     for n in range(0, len(mid.ft_params)):
         t = mid.ft_params[n];
-        s = struct.unpack(t.char, byte_data[byte_offset:t.len]);
+        s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len]);
         byte_offset += t.len;
         params.append(s);
     return params;

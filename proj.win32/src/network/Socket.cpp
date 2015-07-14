@@ -58,7 +58,7 @@ bool Socket::try_connect() {
 		return false;
 	}
 
-	Msg::send(this, Msg::ByteStream() << MID_CLIENT_ID << 50);
+	Msg::send(this, Msg::ByteStream() << MID_CLIENT_ID << "test!");
 
 	return true;
 }
