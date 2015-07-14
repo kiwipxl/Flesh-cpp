@@ -5,6 +5,7 @@ class MID():
 
     id = 0;
     ft_params = [];
+    min_param_len = 0;
 
     def __init__(self, *ft_params_list):
         global MID_id;
@@ -12,6 +13,8 @@ class MID():
 
         self.id = MID_id;
         self.ft_params = ft_params_list;
+        for param in ft_params_list:
+            self.min_param_len += param.len;
 
         MID_id += 1;
         MID_list.append(self);
@@ -47,7 +50,7 @@ FT_CHAR_ARRAY               = FormatType('s', 0);
 FT_VOID_POINTER             = FormatType('p', 4);
 
 MID_UNKNOWN                         = MID();
-MID_CLIENT_ID                       = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT);
+MID_CLIENT_ID                       = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_BOOL);
 MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 
 byte_buffer = bytearray(1024);
@@ -77,21 +80,25 @@ def extract_mid(byte_data):
 
 def extract_params(mid, byte_data):
     params = [];
-    byte_offset = 4;
-    for n in range(0, len(mid.ft_params)):
-        t = mid.ft_params[n];
-        if (t.char == 's'):
-            s = "";
-            l = 0;
-            for c in byte_data[byte_offset:]:
-                l += 1;
-                if (c == '\0'): break;
-                s += c;
-            byte_offset += l;
-        else:
-            s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len])[0];
-            byte_offset += t.len;
-        params.append(s);
+    if (len(byte_data) - 4 >= mid.min_param_len):
+        byte_offset = 4;
+        for n in range(0, len(mid.ft_params)):
+            t = mid.ft_params[n];
+            if (t.char == 's'):
+                s = "";
+                l = 0;
+                for c in byte_data[byte_offset:]:
+                    l += 1;
+                    if (c == '\0'): break;
+                    s += c;
+                byte_offset += l;
+            else:
+                s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len])[0];
+                byte_offset += t.len;
+            params.append(s);
+    else:
+        print("received message is only %i bytes long when the minimum required is %i bytes" % (len(byte_data) - 4, mid.min_param_len));
+
     return params;
 
 def send(sock, mid, *params):
