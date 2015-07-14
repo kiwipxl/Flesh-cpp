@@ -33,7 +33,7 @@ def listen(ip, port):
                 server.client_accepted(client_sock, addr[0], addr[1]);
             else:
                 try:
-                    data = read_sock.recv(1024);
+                    byte_data = read_sock.recv(1024);
                 except:
                     print("socket has disconnected");
                     read_list.remove(read_sock);
@@ -42,6 +42,6 @@ def listen(ip, port):
                     server.client_disconnected(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
-                server.got_message(data);
+                server.got_message(byte_data);
 
     s.close();

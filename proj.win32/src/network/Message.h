@@ -22,9 +22,9 @@ class Message {
 };
 
 namespace Msg {
-
-	static char byte_buffer[1024];
-	static int byte_offset = 0;
+	
+	extern char byte_buffer[1024];
+	extern int byte_offset;
 
 	class ByteStream {
 
@@ -32,7 +32,7 @@ namespace Msg {
 			ByteStream() { byte_offset = 0; }
 
 			template <class T> ByteStream& operator<<(const T& v) {
-				memcpy(byte_buffer, &v, sizeof(v));
+				memcpy(byte_buffer + byte_offset, &v, sizeof(v));
 				byte_offset += sizeof(v);
 				return *this;
 			}

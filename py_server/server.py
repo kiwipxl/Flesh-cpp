@@ -5,6 +5,7 @@ import db;
 import socket_manage;
 import message;
 from client import *;
+import struct;
 
 clients = [];
 num_clients = 0;
@@ -27,7 +28,7 @@ def client_accepted(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    #message.send(c.sock, message.ID.CLIENT_ID, c.id, 42, "ayylol");
+    message.send(c.sock, message.MID_CLIENT_ID, c.id);
 
 def client_disconnected(sock):
     global clients
@@ -41,7 +42,10 @@ def client_disconnected(sock):
             break;
 
 def got_message(byte_data):
-    print("got msg: %s" % byte_data);
+    print(byte_data + ", %s" % len(byte_data));
+    mid = message.get_mid(byte_data);
+    print(mid);
+    print(struct.unpack("", byte_data[4:]));
     #plen = len(msg.params);
     #if (msg.msg_id == message.ID.CLIENT_USER_PASS and plen == 2):
     #    print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
