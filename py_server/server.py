@@ -27,7 +27,7 @@ def client_accepted(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.sock, message.ID.CLIENT_ID, c.id);
+    #message.send(c.sock, message.ID.CLIENT_ID, c.id, 42, "ayylol");
 
 def client_disconnected(sock):
     global clients
@@ -40,13 +40,14 @@ def client_disconnected(sock):
             num_clients -= 1;
             break;
 
-def got_message(msg):
-    plen = len(msg.params);
-    if (msg.msg_id == message.ID.CLIENT_USER_PASS and plen == 2):
-        print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
-        db.add_user_account(msg.params[0], msg.params[1]);
-    else:
-        print("unknown message received. raw: %s" % msg.raw_data);
+def got_message(byte_data):
+    print("got msg: %s" % byte_data);
+    #plen = len(msg.params);
+    #if (msg.msg_id == message.ID.CLIENT_USER_PASS and plen == 2):
+    #    print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
+    #    db.add_user_account(msg.params[0], msg.params[1]);
+    #else:
+    #    print("unknown message received. raw: %s" % msg.raw_data);
 
 if __name__ == "__main__":
     db.init();

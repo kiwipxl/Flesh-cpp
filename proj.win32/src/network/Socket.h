@@ -24,7 +24,7 @@ class Socket {
 		SocketProtocol protocol;
 
 		bool try_connect();
-		bool send_buffer(char* buffer);
+		bool send_buffer(char* buffer, int buffer_len);
 
 		SOCKET get_sock() { return sock; }
 

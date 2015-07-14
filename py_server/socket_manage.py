@@ -42,6 +42,6 @@ def listen(ip, port):
                     server.client_disconnected(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
-                server.got_message(message.decode_raw(data));
+                server.got_message(data);
 
     s.close();

@@ -63,6 +63,6 @@ bool Socket::try_connect() {
 	return true;
 }
 
-bool Socket::send_buffer(char* buffer) {
-	return send(sock, buffer, strlen(buffer), 0);
+bool Socket::send_buffer(char* buffer, int buffer_len) {
+	return send(sock, buffer, buffer_len, 0);
 }
