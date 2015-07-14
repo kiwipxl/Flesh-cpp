@@ -19,23 +19,32 @@ class MID():
 MID_id = 0;
 MID_list = [];
 
+class FormatType():
+
+    char = '';
+    len = 0;
+
+    def __init__(self, char, len):
+        self.char = char;
+        self.len = len;
+
 #format types for packing and unpacking byte data
-FT_CHAR                     = 'c';
-FT_SIGNED_CHAR              = 'b';
-FT_UNSIGNED_CHAR            = 'B';
-FT_BOOL                     = '?';
-FT_SHORT                    = 'h';
-FT_UNSIGNED_SHORT           = 'H';
-FT_INT                      = 'i';
-FT_UNSIGNED_INT             = 'I';
-FT_LONG                     = 'l';
-FT_UNSIGNED_LONG            = 'L';
-FT_LONG_LONG                = 'q';
-FT_UNSIGNED_LONG_LONG       = 'Q';
-FT_FLOAT                    = 'f';
-FT_DOUBLE                   = 'd';
-FT_CHAR_ARRAY               = 's';
-FT_VOID_POINTER             = 'p';
+FT_CHAR                     = FormatType('c', 1);
+FT_SIGNED_CHAR              = FormatType('b', 1);
+FT_UNSIGNED_CHAR            = FormatType('B', 1);
+FT_BOOL                     = FormatType('?', 1);
+FT_SHORT                    = FormatType('h', 2);
+FT_UNSIGNED_SHORT           = FormatType('H', 2);
+FT_INT                      = FormatType('i', 4);
+FT_UNSIGNED_INT             = FormatType('I', 4);
+FT_LONG                     = FormatType('l', 8);
+FT_UNSIGNED_LONG            = FormatType('L', 8);
+FT_LONG_LONG                = FormatType('q', 8);
+FT_UNSIGNED_LONG_LONG       = FormatType('Q', 8);
+FT_FLOAT                    = FormatType('f', 4);
+FT_DOUBLE                   = FormatType('d', 8);
+FT_CHAR_ARRAY               = FormatType('s', 0);
+FT_VOID_POINTER             = FormatType('p', 4);
 
 MID_UNKNOWN                         = MID();
 MID_CLIENT_ID                       = MID(FT_INT);
@@ -52,14 +61,24 @@ def encode(mid, *params):
         if (t == 's'):
             s = param;
         else:
-            s = struct.pack(t, param);
+            s = struct.pack(t.char, param);
         byte_buffer[byte_offset:byte_offset + s.__len__()] = s;
         byte_offset += s.__len__();
         i += 1;
     return byte_buffer;
 
-def get_mid(byte_data):
+def extract_mid(byte_data):
     return len(byte_data) >= 4 if message.MID_list[struct.unpack("i", byte_data[0:4])[0]] else MID_UNKNOWN;
+
+def extract_params(mid, byte_data):
+    params = [];
+    byte_offset = 4;
+    for n in range(0, len(mid.ft_params)):
+        t = mid.ft_params[n];
+        s = struct.unpack(t.char, byte_data[byte_offset:t.len]);
+        byte_offset += t.len;
+        params.append(s);
+    return params;
 
 def send(sock, mid, *params):
     sock.send(encode(mid, *params));

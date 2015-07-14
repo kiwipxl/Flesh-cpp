@@ -43,9 +43,9 @@ def client_disconnected(sock):
 
 def got_message(byte_data):
     print(byte_data + ", %s" % len(byte_data));
-    mid = message.get_mid(byte_data);
+    mid = message.extract_mid(byte_data);
     print(mid);
-    print(struct.unpack("", byte_data[4:]));
+    params = message.extract_params(byte_data);
     #plen = len(msg.params);
     #if (msg.msg_id == message.ID.CLIENT_USER_PASS and plen == 2):
     #    print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
