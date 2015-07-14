@@ -144,6 +144,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
   <ItemGroup>
     <ClCompile Include="src\AppDelegate.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\network\Message.cpp" />
     <ClCompile Include="src\network\Socket.cpp" />
     <ClCompile Include="src\State_Manager.cpp" />
   </ItemGroup>
@@ -151,6 +152,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\AppDelegate.h" />
     <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\network\Message.h" />
     <ClInclude Include="src\network\Socket.h" />
     <ClInclude Include="src\State_Manager.h" />
   </ItemGroup>

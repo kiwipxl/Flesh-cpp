@@ -29,8 +29,6 @@ def client_accepted(client_sock, client_ip, client_port):
     client_id_inc += 1;
     message.send(c.sock, message.ID.CLIENT_ID, c.id);
 
-    got_message(message.decode_msg(message.make(message.ID.CLIENT_USER_PASS, "longusernameislongandstuffloliwonderwhenthiswillcutoff", "longpasswordisevenlongerloliwonderwhen")));
-
 def client_disconnected(sock):
     global clients
     global num_clients
