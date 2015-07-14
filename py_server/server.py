@@ -45,7 +45,8 @@ def got_message(byte_data):
     print(byte_data + ", %s" % len(byte_data));
     mid = message.extract_mid(byte_data);
     print(mid);
-    params = message.extract_params(byte_data);
+    params = message.extract_params(mid, byte_data);
+    print(params);
     #plen = len(msg.params);
     #if (msg.msg_id == message.ID.CLIENT_USER_PASS and plen == 2):
     #    print("username: %s, password: %s" % (msg.params[0], msg.params[1]));

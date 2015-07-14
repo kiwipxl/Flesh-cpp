@@ -68,7 +68,12 @@ def encode(mid, *params):
     return byte_buffer;
 
 def extract_mid(byte_data):
-    return len(byte_data) >= 4 if message.MID_list[struct.unpack("i", byte_data[0:4])[0]] else MID_UNKNOWN;
+    mid = MID_UNKNOWN;
+    if (len(byte_data) >= 4):
+        id = struct.unpack("i", byte_data[0:4])[0];
+        if (id >= 0 and id < len(MID_list)):
+            mid = MID_list[id];
+    return mid;
 
 def extract_params(mid, byte_data):
     params = [];
