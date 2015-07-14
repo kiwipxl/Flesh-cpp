@@ -8,26 +8,26 @@ class MID():
         print(param_types);
 
 #format types for packing and unpacking byte data
-FT_CHAR = 'c';
-FT_SIGNED_CHAR = 'b';
-FT_UNSIGNED_CHAR = 'B';
-FT_BOOL = '?';
-FT_SHORT = 'h';
-FT_UNSIGNED_SHORT = 'H';
-FT_INT = 'i';
-FT_UNSIGNED_INT = 'I';
-FT_LONG = 'l';
-FT_UNSIGNED_LONG = 'L';
-FT_LONG_LONG = 'q';
-FT_UNSIGNED_LONG_LONG = 'Q';
-FT_FLOAT = 'f';
-FT_DOUBLE = 'd';
-FT_CHAR_ARRAY = 's';
-FT_VOID_POINTER = 'p';
+FT_CHAR                     = 'c';
+FT_SIGNED_CHAR              = 'b';
+FT_UNSIGNED_CHAR            = 'B';
+FT_BOOL                     = '?';
+FT_SHORT                    = 'h';
+FT_UNSIGNED_SHORT           = 'H';
+FT_INT                      = 'i';
+FT_UNSIGNED_INT             = 'I';
+FT_LONG                     = 'l';
+FT_UNSIGNED_LONG            = 'L';
+FT_LONG_LONG                = 'q';
+FT_UNSIGNED_LONG_LONG       = 'Q';
+FT_FLOAT                    = 'f';
+FT_DOUBLE                   = 'd';
+FT_CHAR_ARRAY               = 's';
+FT_VOID_POINTER             = 'p';
 
-MID_UNKNOWN = MID(None);
-MID_UNKNOWN = MID(None);
-MID_UNKNOWN = MID(None);
+MID_UNKNOWN                         = MID();
+MID_CLIENT_ID                       = MID(FT_INT);
+MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
