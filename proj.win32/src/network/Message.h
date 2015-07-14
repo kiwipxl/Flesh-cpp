@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <sstream>
 #include "ReadableType.h"
+#include "Socket.h"
 
 enum MID {
 	MSG_UNKNOWN,
@@ -49,6 +50,8 @@ extern int chrstr2int(std::string chrstr);
 
 extern Message make(MID msg_id, EncodeStream* params);
 extern std::string encode(MID msg_id, EncodeStream* params);
+
+extern void send(Socket* sock, EncodeStream* stream_data);
 
 //
 //def decode_msg(msg):

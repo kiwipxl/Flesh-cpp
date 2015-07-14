@@ -1,5 +1,4 @@
 #include "Message.h"
-#include "cocos2d.h"
 
 extern std::string Msg::int2chrstr(int num, int bits) {
 	std::string s = "";
@@ -64,15 +63,10 @@ extern std::string Msg::encode(MID msg_id, EncodeStream* params) {
 //    m.raw_data = raw_data;
 //    return decode_msg(m);
 //
-//def send(sock, msg_id, *params):
-//    sock.send(buffer(encode(msg_id, *params).encode()));
-//
-//def send_msg(sock, msg):
-//    sock.send(buffer(msg.raw_data.encode()));
-//
-//def send_raw(sock, raw_data):
-//    sock.send(buffer(raw_data.encode()));
-//
+void Message::send(Socket* sock, EncodeStream* stream_data) {
+	sock->send_buffer(stream_data->stream.str.c_str());
+}
+
 //def broadcast_msg(sock_list, msg):
 //    for sock in sock_list:
 //        sock.send(buffer(msg.raw_data.encode()));
