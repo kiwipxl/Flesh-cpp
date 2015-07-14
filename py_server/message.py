@@ -47,7 +47,7 @@ FT_CHAR_ARRAY               = FormatType('s', 0);
 FT_VOID_POINTER             = FormatType('p', 4);
 
 MID_UNKNOWN                         = MID();
-MID_CLIENT_ID                       = MID(FT_INT);
+MID_CLIENT_ID                       = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT);
 MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 
 byte_buffer = bytearray(1024);
@@ -58,7 +58,7 @@ def encode(mid, *params):
     i = 0;
     for param in params:
         t = mid.ft_params[i];
-        if (t == 's'):
+        if (t.char == 's'):
             s = param;
         else:
             s = struct.pack(t.char, param);
@@ -80,14 +80,23 @@ def extract_params(mid, byte_data):
     byte_offset = 4;
     for n in range(0, len(mid.ft_params)):
         t = mid.ft_params[n];
-        s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len]);
-        byte_offset += t.len;
+        if (t.char == 's'):
+            s = "";
+            l = 0;
+            for c in byte_data[byte_offset:]:
+                l += 1;
+                if (c == '\0'): break;
+                s += c;
+            byte_offset += l;
+        else:
+            s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len])[0];
+            byte_offset += t.len;
         params.append(s);
     return params;
 
 def send(sock, mid, *params):
     sock.send(encode(mid, *params));
 
-def broadcast_raw(sock_list, mid, *params):
+def broadcast(sock_list, mid, *params):
     for sock in sock_list:
         sock.send(buffer(encode(mid, params).encode()));
