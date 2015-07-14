@@ -50,7 +50,7 @@ FT_CHAR_ARRAY               = FormatType('s', 0);
 FT_VOID_POINTER             = FormatType('p', 4);
 
 MID_UNKNOWN                         = MID();
-MID_CLIENT_ID                       = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_BOOL);
+MID_CLIENT_ID                       = MID(FT_BOOL, FT_BOOL);
 MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 
 #put all MID_x variables into a name array so messages can be debugged easier
@@ -102,10 +102,10 @@ def extract_params(mid, byte_data):
                 s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len])[0];
                 byte_offset += t.len;
             params.append(s);
+        return (params, 0);
     else:
         print("recv message %s is only %i bytes long when minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.min_param_len));
-
-    return params;
+        return (params, -1);
 
 def send(sock, mid, *params):
     sock.send(encode(mid, *params));

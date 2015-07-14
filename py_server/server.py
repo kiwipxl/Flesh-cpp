@@ -28,7 +28,8 @@ def client_accepted(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    #message.send(c.sock, message.MID_CLIENT_ID, c.id);
+    c.sock.send("ayy");
+    message.send(c.sock, message.MID_CLIENT_ID, c.id);
 
 def client_disconnected(sock):
     global clients
@@ -42,17 +43,15 @@ def client_disconnected(sock):
             break;
 
 def got_message(byte_data):
-    print(byte_data + ", %s" % len(byte_data));
     mid = message.extract_mid(byte_data);
-    print(mid);
-    params = message.extract_params(mid, byte_data);
-    print(params);
-    #plen = len(msg.params);
-    #if (msg.msg_id == message.ID.CLIENT_USER_PASS and plen == 2):
-    #    print("username: %s, password: %s" % (msg.params[0], msg.params[1]));
-    #    db.add_user_account(msg.params[0], msg.params[1]);
-    #else:
-    #    print("unknown message received. raw: %s" % msg.raw_data);
+    if (mid != message.MID_UNKNOWN):
+        (params, err) = message.extract_params(mid, byte_data);
+        if (err != -1):
+            if (mid == message.MID_CLIENT_USER_PASS):
+                print("username: %s, password: %s" % (params[0], params[1]));
+                db.add_user_account(params[0], params[1]);
+    else:
+        print("recv message has an unknown MID");
 
 if __name__ == "__main__":
     db.init();

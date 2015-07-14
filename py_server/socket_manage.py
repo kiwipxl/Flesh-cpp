@@ -3,30 +3,38 @@ import select;
 import sys;
 import server;
 import message;
+import time;
 
-tcp_sock = None;
+send_sock = None;
 
 def init():
-    global tcp_sock;
+    global send_sock;
 
-    tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+    send_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 
 def listen(ip, port):
-    global tcp_sock;
+    global send_sock;
 
-    tcp_sock.bind((ip, port));
-    tcp_sock.listen(1);
+    send_sock.bind((ip, port));
+    send_sock.listen(1);
     print("awaiting clients...");
 
-    read_list = [tcp_sock];
+    read_list = [send_sock];
     write_list = [];
 
     while (1):
         can_read_list, can_write_list, err = select.select(read_list, write_list, [], 1);
 
         for read_sock in can_read_list:
-            if (read_sock == tcp_sock):
-                client_sock, addr = tcp_sock.accept();
+            if (read_sock == send_sock):
+                client_sock, addr = send_sock.accept();
+                time.sleep(2);
+                print("not asleep anymore");
+                recv_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+                recv_sock.connect((addr[0], 4223));
+                client_sock = recv_sock;
+                client_sock.send("ayyyyyyyyyyyyyyy");
+                print("sent ayyyyyyyyy");
                 read_list.append(client_sock);
                 write_list.append(client_sock);
 

@@ -58,8 +58,56 @@ bool Socket::try_connect() {
 		return false;
 	}
 
-	Msg::send(this, Msg::ByteStream() << MID_CLIENT_ID << true);
+	Msg::send(this, Msg::ByteStream() << MID_CLIENT_USER_PASS << false << true);
 
+	return true;
+}
+
+bool Socket::try_listen() {
+	sock = socket(hints.ai_family, hints.ai_socktype, hints.ai_protocol);
+
+	sockaddr_in addr;
+	addr.sin_family = AF_INET;
+	addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	addr.sin_port = htons(4223);
+	
+	if (bind(sock, (PSOCKADDR)&addr, sizeof(addr)) == SOCKET_ERROR) {
+		OutputDebugStringA("an error occurred while trying to bind\n");
+		int err = WSAGetLastError();
+		int a = 5;
+	}
+
+	FD_SET read_set;
+	FD_SET write_set;
+
+	FD_ZERO(&read_set);
+	FD_ZERO(&write_set);
+
+	FD_SET(sock, &read_set);
+	
+	if (listen(sock, 5)) {
+		OutputDebugStringA("an error occurred while trying to listen\n");
+	}
+
+	u_long non_block_flag = 1;
+	ioctlsocket(sock, FIONBIO, &non_block_flag);
+
+	char buffer[1024];
+	while (true) {
+		timeval t;
+		t.tv_sec = 0;
+		t.tv_usec = 1;
+		int total = select(0, &read_set, &write_set, NULL, NULL);
+		if (FD_ISSET(sock, &read_set)) {
+			SOCKET s = accept(sock, NULL, NULL);
+			recv(s, buffer, 1024, 0);
+		}
+		if (read_set.fd_count > 1) OutputDebugStringA("> 1!!!!!!\n");
+		for (int n = 0; n < read_set.fd_count; ++n) {
+			recv(read_set.fd_array[n], buffer, 1024, 0);
+			OutputDebugStringA(buffer);
+		}
+	}
 	return true;
 }
 
