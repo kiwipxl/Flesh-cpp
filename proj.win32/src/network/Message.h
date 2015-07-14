@@ -6,7 +6,7 @@
 #include <sstream>
 #include "ReadableType.h"
 
-enum ID {
+enum MID {
 	MSG_UNKNOWN,
 	MSG_CLIENT_ID,
 	MSG_CLIENT_USER_PASS
@@ -14,9 +14,10 @@ enum ID {
 
 class Message {
 
-	ID msg_id = MSG_UNKNOWN;
-	char* params;
-	std::string raw_data;
+	public:
+		MID msg_id = MSG_UNKNOWN;
+		char* params;
+		std::string raw_data;
 };
 
 namespace Msg {
@@ -46,11 +47,8 @@ class EncodeStream {
 extern std::string int2chrstr(int num, int bits);
 extern int chrstr2int(std::string chrstr);
 
-template<class... Args>
-extern Message make(int msg_id, Args... args);
-
-template <class T>
-extern std::string encode(int msg_id, std::initializer_list<T> list);
+extern Message make(MID msg_id, EncodeStream* params);
+extern std::string encode(MID msg_id, EncodeStream* params);
 
 //
 //def decode_msg(msg):

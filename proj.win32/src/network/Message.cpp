@@ -20,24 +20,15 @@ extern int Msg::chrstr2int(std::string chrstr) {
 	return i;
 }
 
-template<class... Args>
-extern Message Msg::make(int msg_id, Args... args) {
-	Message m = Message();
-	/* m.msg_id = msg_id;
-	m.params = params;
-	m.raw_data = encode(msg_id, *params);*/
+extern Message Msg::make(MID msg_id, EncodeStream* params) {
+	Message m;
+	m.msg_id = msg_id;
+	m.raw_data = encode(msg_id, params);
 	return m;
 }
 
-template <class T>
-extern std::string Msg::encode(int msg_id, std::initializer_list<T> list) {
-	/*std::string data = int2chrstr(msg_id, 4);
-	for (param : params) {
-	s = str(param);
-	if (s != "") : data += int2chrstr(s.__len__(), 2) + s;
-	}*/
-	std::string = "";
-	return data;
+extern std::string Msg::encode(MID msg_id, EncodeStream* params) {
+	return int2chrstr((int)msg_id, 4) + params->stream.str();
 }
 
 //
