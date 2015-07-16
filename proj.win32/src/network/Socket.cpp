@@ -38,12 +38,14 @@ hostent* Socket::verify_host(char* host_name) {
 int Socket::get_last_error() {
 	#ifdef PLATFORM_WIN32
 		return WSAGetLastError();
-	#elif PLATFORM_ANDROID || PLATFORM_LINUX
-		return stderr;
+	#elif defined(PLATFORM_ANDROID) || defined(PLATFORM_LINUX)
+		return errno;
 	#endif
 }
 
 bool Socket::try_connect() {
+	CCLOG("trying to connect!");
+
 	sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol);
 
 	memset(&serv_addr, 0, sizeof(serv_addr));
@@ -56,14 +58,13 @@ bool Socket::try_connect() {
 	}
 
 	if ((err = connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) {
-	
+		CCLOG("error occurred while trying to connect");
 	}
 
 	char buffer[1024];
 	int n = 0;
 	while ((n = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
-		OutputDebugStringA(buffer);
-		OutputDebugStringA("\n");
+		CCLOG("buffer: %s", buffer);
 		buffer[n] = 0;
 	}
 

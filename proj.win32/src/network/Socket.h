@@ -10,10 +10,11 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #if defined(PLATFORM_WIN32)
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-#elif defined(PLATFORM_ANDROID)
+#elif defined(PLATFORM_ANDROID) || defined(PLATFORM_LINUX)
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <netdb.h>
 #endif
 
