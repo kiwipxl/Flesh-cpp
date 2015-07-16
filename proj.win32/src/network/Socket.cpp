@@ -2,15 +2,16 @@
 #include "Message.h"
 
 void Socket::init_sockets() {
+	#if defined(PLATFORM_WIN32)
 	WSAData wsa_data;
 	int err;
 	if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
 		CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
 	}
+	#endif
 }
 
 Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
-	sock = INVALID_SOCKET;
 	protocol = c_protocol;
 	ip = c_ip;
 	port = c_port;

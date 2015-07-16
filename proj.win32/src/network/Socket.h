@@ -5,12 +5,12 @@
 simple cross-platform berkeley socket class used to encapsulate simpler functions
 */
 
-#include "CCPlatformConfig.h"
+#include "debug/PlatformConfig.h"
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
+#if !defined(PLATFORM_WIN32)
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-#elif CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+#elif !defined(PLATFORM_ANDROID)
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -37,11 +37,11 @@ class Socket {
 		bool send_buffer(char* buffer, int buffer_len);
 		bool try_listen();
 
-		SOCKET get_sock() { return sock; }
+		uintptr_t get_sock() { return sock; }
 
 	private:
 		int err;
-		SOCKET sock;
+		uintptr_t sock;
 		struct addrinfo* result;
 		struct addrinfo hints;
 };
