@@ -45,8 +45,10 @@ int Socket::get_last_error() {
 
 bool Socket::try_connect() {
 	CCLOG("trying to connect!");
-
-	sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol);
+	
+	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) {
+		CCLOG("error occurred while creating socket %d", get_last_error());
+	}
 
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
@@ -57,8 +59,9 @@ bool Socket::try_connect() {
 		CCLOG("error occurred while");
 	}
 
-	if ((err = connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) {
-		CCLOG("error occurred while trying to connect");
+	CCLOG("ip: %s port: %d", ip, serv_addr.sin_port);
+	if (connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+		CCLOG("error occurred while trying to connect: %d", get_last_error());
 	}
 
 	char buffer[1024];

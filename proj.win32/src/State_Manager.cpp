@@ -28,7 +28,7 @@ bool State_Manager::init() {
 	init_time = clock();
 
 	Socket::init_sockets();
-	Socket send_sock(PROTO_TCP, "127.0.0.1", "4222");
+	Socket send_sock(PROTO_TCP, "192.168.0.7", "4222");
 	send_sock.try_connect();
 	//Socket recv_sock(PROTO_TCP, "127.0.0.1", "4223");
 	//recv_sock.try_listen();
