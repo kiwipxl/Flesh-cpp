@@ -31,11 +31,31 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 	}
 }
 
+hostent* Socket::verify_host(char* host_name) {
+	return gethostbyname(host_name);
+}
+
+int Socket::get_last_error() {
+	#ifdef PLATFORM_WIN32
+		return WSAGetLastError();
+	#elif PLATFORM_ANDROID || PLATFORM_LINUX
+		return stderr;
+	#endif
+}
+
 bool Socket::try_connect() {
-	/*if ((err = getaddrinfo(ip, port, &hints, &result)) != 0) {
-		console_log("getaddrinfo failed (ip: %s, port: %s). Err %d", ip, port, err);
+	hostent* server = verify_host(ip);
+	server = NULL;
+	if (server == NULL) {
+		console_log("error (%d), no such host (%s)", get_last_error(), ip);
 		return false;
-	}*/
+	}
+	return false;
+
+	if ((err = getaddrinfo(ip, port, &hints, &result)) != 0) {
+		console_log("getaddrinfo failed (ip: %s, port: %s, err: %d)", ip, port, err);
+		return false;
+	}
 
 	while (result != NULL) {
 		if ((sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol)) == INVALID_SOCKET) {

@@ -1,6 +1,6 @@
 #include "State_Manager.h"
 #include <time.h>
-//#include "network/Socket.h"
+#include "network/Socket.h"
 
 using namespace cocos2d;
 
@@ -24,14 +24,12 @@ bool State_Manager::init() {
 	label->setPosition(200, 200);
 	addChild(label, 1);
 
-	log("");
-
 	scheduleUpdate();
 	init_time = clock();
 
-	//Socket::init_sockets();
-	//Socket send_sock(PROTO_TCP, "127.0.0.1", "4222");
-	//send_sock.try_connect();
+	Socket::init_sockets();
+	Socket send_sock(PROTO_TCP, "127.0.0.1", "4222");
+	send_sock.try_connect();
 	//Socket recv_sock(PROTO_TCP, "127.0.0.1", "4223");
 	//recv_sock.try_listen();
 

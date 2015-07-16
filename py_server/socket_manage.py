@@ -28,6 +28,7 @@ def listen(ip, port):
         for read_sock in can_read_list:
             if (read_sock == send_sock):
                 client_sock, addr = send_sock.accept();
+                print("connect");
                 time.sleep(2);
                 print("not asleep anymore");
                 recv_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);

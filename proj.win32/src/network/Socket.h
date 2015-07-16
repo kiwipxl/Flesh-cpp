@@ -36,13 +36,16 @@ class Socket {
 		bool send_buffer(char* buffer, int buffer_len);
 		bool try_listen();
 
+		hostent* verify_host(char* host_name);
+
 		uintptr_t get_sock() { return sock; }
+		int get_last_error();
 
 	private:
 		int err;
 		uintptr_t sock;
-		addrinfo* result;
-		addrinfo hints;
+		struct addrinfo* result;
+		struct addrinfo hints;
 };
 
 #endif
