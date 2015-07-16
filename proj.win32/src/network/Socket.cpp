@@ -1,13 +1,13 @@
 #include "Socket.h"
 #include "Message.h"
-#include "debug/Log.h"
+#include "base/CCConsole.h"
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
 	WSAData wsa_data;
 	int err;
 	if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
-		console_log("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
+		CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
 	}
 	#endif
 }
@@ -44,22 +44,23 @@ int Socket::get_last_error() {
 }
 
 bool Socket::try_connect() {
+	CCLOG("no optimisation");
+
 	hostent* server = verify_host(ip);
 	server = NULL;
 	if (server == NULL) {
-		console_log("error (%d), no such host (%s)", get_last_error(), ip);
+		CCLOG("error (%d), no such host (%s)", get_last_error(), ip);
 		return false;
 	}
-	return false;
 
 	if ((err = getaddrinfo(ip, port, &hints, &result)) != 0) {
-		console_log("getaddrinfo failed (ip: %s, port: %s, err: %d)", ip, port, err);
+		CCLOG("getaddrinfo failed (ip: %s, port: %s, err: %d)", ip, port, err);
 		return false;
 	}
 
 	while (result != NULL) {
 		if ((sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol)) == INVALID_SOCKET) {
-			console_log("connection failed, invalid socket (ip: %s, port: %s). Err %d", ip, port, err);
+			CCLOG("connection failed, invalid socket (ip: %s, port: %s). Err %d", ip, port, err);
 			return false;
 		}
 		if ((err = connect(sock, result->ai_addr, (int)result->ai_addrlen)) == SOCKET_ERROR) {
@@ -74,7 +75,7 @@ bool Socket::try_connect() {
 	//freeaddrinfo(result);
 
 	if (sock == INVALID_SOCKET) {
-		console_log("could not connect (ip: %s, port: %s). Err %d", ip, port, err);
+		CCLOG("could not connect (ip: %s, port: %s). Err %d", ip, port, err);
 		return false;
 	}
 

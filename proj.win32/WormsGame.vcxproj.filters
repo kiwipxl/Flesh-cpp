@@ -17,7 +17,6 @@
     <ClCompile Include="src\network\Socket.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\network\Message.cpp" />
-    <ClCompile Include="src\debug\Log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -27,7 +26,6 @@
     <ClInclude Include="src\network\Message.h" />
     <ClInclude Include="src\network\ReadableType.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
-    <ClInclude Include="src\debug\Log.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

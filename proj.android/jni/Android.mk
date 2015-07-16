@@ -11,11 +11,18 @@ LOCAL_MODULE := cocos2dcpp_shared
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 
-TEST_SRC_FILES := $(wildcard $(LOCAL_PATH)/../../proj.win32/src/*.cpp)
-TEST_SRC_FILES := $(TEST_SRC_FILES:$(LOCAL_PATH)/%=%)
+ROOT_SRC_FILES := $(wildcard $(LOCAL_PATH)/../../proj.win32/src/*.cpp)
+ROOT_SRC_FILES := $(ROOT_SRC_FILES:$(LOCAL_PATH)/%=%)
 
+DEBUG_SRC_FILES := $(wildcard $(LOCAL_PATH)/../../proj.win32/src/debug/*.cpp)
+DEBUG_SRC_FILES := $(DEBUG_SRC_FILES:$(LOCAL_PATH)/%=%)
 
-LOCAL_SRC_FILES := $(TEST_SRC_FILES)
+NETWORK_SRC_FILES := $(wildcard $(LOCAL_PATH)/../../proj.win32/src/network/*.cpp)
+NETWORK_SRC_FILES := $(NETWORK_SRC_FILES:$(LOCAL_PATH)/%=%)
+
+LOCAL_SRC_FILES := $(ROOT_SRC_FILES)
+LOCAL_SRC_FILES += $(DEBUG_SRC_FILES)
+LOCAL_SRC_FILES += $(NETWORK_SRC_FILES)
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../proj.win32/src/
