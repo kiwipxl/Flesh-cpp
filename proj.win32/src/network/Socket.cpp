@@ -17,16 +17,16 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 	ip = c_ip;
 	port = c_port;
 
-	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC;
+	memset(&sock_info, 0, sizeof(sock_info));
+	sock_info.ai_family = AF_UNSPEC;
 	switch (protocol) {
 		case PROTO_TCP:
-			hints.ai_socktype = SOCK_STREAM;
-			hints.ai_protocol = IPPROTO_TCP;
+			sock_info.ai_socktype = SOCK_STREAM;
+			sock_info.ai_protocol = IPPROTO_TCP;
 			break;
 		case PROTO_UDP:
-			hints.ai_socktype = SOCK_DGRAM;
-			hints.ai_protocol = IPPROTO_UDP;
+			sock_info.ai_socktype = SOCK_DGRAM;
+			sock_info.ai_protocol = IPPROTO_UDP;
 			break;
 	}
 }
@@ -44,39 +44,27 @@ int Socket::get_last_error() {
 }
 
 bool Socket::try_connect() {
-	CCLOG("no optimisation");
+	sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol);
 
-	hostent* server = verify_host(ip);
-	server = NULL;
-	if (server == NULL) {
-		CCLOG("error (%d), no such host (%s)", get_last_error(), ip);
-		return false;
+	memset(&serv_addr, 0, sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_port = htons(atoi(port));
+
+	//convert ip and copy into ipv4 structure in_addr
+	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
+		CCLOG("error occurred while");
 	}
 
-	if ((err = getaddrinfo(ip, port, &hints, &result)) != 0) {
-		CCLOG("getaddrinfo failed (ip: %s, port: %s, err: %d)", ip, port, err);
-		return false;
+	if ((err = connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) {
+	
 	}
 
-	while (result != NULL) {
-		if ((sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol)) == INVALID_SOCKET) {
-			CCLOG("connection failed, invalid socket (ip: %s, port: %s). Err %d", ip, port, err);
-			return false;
-		}
-		if ((err = connect(sock, result->ai_addr, (int)result->ai_addrlen)) == SOCKET_ERROR) {
-			closesocket(sock);
-			sock = INVALID_SOCKET;
-			result = result->ai_next;
-			continue;
-		}
-		break;
-	}
-	//todo: weird error?
-	//freeaddrinfo(result);
-
-	if (sock == INVALID_SOCKET) {
-		CCLOG("could not connect (ip: %s, port: %s). Err %d", ip, port, err);
-		return false;
+	char buffer[1024];
+	int n = 0;
+	while ((n = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
+		OutputDebugStringA(buffer);
+		OutputDebugStringA("\n");
+		buffer[n] = 0;
 	}
 
 	Msg::send(this, Msg::ByteStream() << MID_CLIENT_USER_PASS << false << true);
@@ -85,7 +73,7 @@ bool Socket::try_connect() {
 }
 
 bool Socket::try_listen() {
-	sock = socket(hints.ai_family, hints.ai_socktype, hints.ai_protocol);
+	/*sock = socket(sock_info.ai_family, sock_info.ai_socktype, sock_info.ai_protocol);
 
 	sockaddr_in addr;
 	addr.sin_family = AF_INET;
@@ -128,7 +116,7 @@ bool Socket::try_listen() {
 			recv(read_set.fd_array[n], buffer, 1024, 0);
 			OutputDebugStringA(buffer);
 		}
-	}
+	}*/
 	return true;
 }
 

@@ -28,14 +28,6 @@ def listen(ip, port):
         for read_sock in can_read_list:
             if (read_sock == send_sock):
                 client_sock, addr = send_sock.accept();
-                print("connect");
-                time.sleep(2);
-                print("not asleep anymore");
-                recv_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-                recv_sock.connect((addr[0], 4223));
-                client_sock = recv_sock;
-                client_sock.send("ayyyyyyyyyyyyyyy");
-                print("sent ayyyyyyyyy");
                 read_list.append(client_sock);
                 write_list.append(client_sock);
 

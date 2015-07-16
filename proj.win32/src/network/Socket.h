@@ -44,8 +44,8 @@ class Socket {
 	private:
 		int err;
 		uintptr_t sock;
-		struct addrinfo* result;
-		struct addrinfo hints;
+		struct sockaddr_in serv_addr;
+		struct addrinfo sock_info;
 };
 
 #endif
