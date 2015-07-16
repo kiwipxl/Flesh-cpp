@@ -5,8 +5,18 @@
 simple cross-platform berkeley socket class used to encapsulate simpler functions
 */
 
+#include "CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
 #include <WinSock2.h>
 #include <WS2tcpip.h>
+#elif CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#endif
 
 enum SocketProtocol {
 	PROTO_TCP, 

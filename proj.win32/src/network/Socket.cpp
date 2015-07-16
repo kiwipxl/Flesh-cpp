@@ -1,5 +1,4 @@
 #include "Socket.h"
-#include "cocos2d.h"
 #include "Message.h"
 
 void Socket::init_sockets() {
@@ -8,8 +7,6 @@ void Socket::init_sockets() {
 	if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
 		CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
 	}
-
-	//Msg::make(4, 2, "ayy");
 }
 
 Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
