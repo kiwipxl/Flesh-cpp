@@ -1,12 +1,13 @@
 #include "Socket.h"
 #include "Message.h"
+#include "debug/Log.h"
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
 	WSAData wsa_data;
 	int err;
 	if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
-		CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
+		console_log("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
 	}
 	#endif
 }
@@ -31,14 +32,14 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 }
 
 bool Socket::try_connect() {
-	if ((err = getaddrinfo(ip, port, &hints, &result)) != 0) {
-		CCLOG("getaddrinfo failed (ip: %s, port: %s). Err %d", ip, port, err);
+	/*if ((err = getaddrinfo(ip, port, &hints, &result)) != 0) {
+		console_log("getaddrinfo failed (ip: %s, port: %s). Err %d", ip, port, err);
 		return false;
-	}
+	}*/
 
 	while (result != NULL) {
 		if ((sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol)) == INVALID_SOCKET) {
-			CCLOG("connection failed, invalid socket (ip: %s, port: %s). Err %d", ip, port, err);
+			console_log("connection failed, invalid socket (ip: %s, port: %s). Err %d", ip, port, err);
 			return false;
 		}
 		if ((err = connect(sock, result->ai_addr, (int)result->ai_addrlen)) == SOCKET_ERROR) {
@@ -49,10 +50,11 @@ bool Socket::try_connect() {
 		}
 		break;
 	}
-	freeaddrinfo(result);
+	//todo: weird error?
+	//freeaddrinfo(result);
 
 	if (sock == INVALID_SOCKET) {
-		CCLOG("could not connect (ip: %s, port: %s). Err %d", ip, port, err);
+		console_log("could not connect (ip: %s, port: %s). Err %d", ip, port, err);
 		return false;
 	}
 
@@ -68,7 +70,7 @@ bool Socket::try_listen() {
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	addr.sin_port = htons(4223);
-	
+
 	if (bind(sock, (PSOCKADDR)&addr, sizeof(addr)) == SOCKET_ERROR) {
 		OutputDebugStringA("an error occurred while trying to bind\n");
 		int err = WSAGetLastError();

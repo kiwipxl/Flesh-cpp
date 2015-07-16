@@ -7,14 +7,13 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 
 #include "debug/PlatformConfig.h"
 
-#if !defined(PLATFORM_WIN32)
+#if defined(PLATFORM_WIN32)
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-#elif !defined(PLATFORM_ANDROID)
+#elif defined(PLATFORM_ANDROID)
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
 #include <netdb.h>
 #endif
 
@@ -42,8 +41,8 @@ class Socket {
 	private:
 		int err;
 		uintptr_t sock;
-		struct addrinfo* result;
-		struct addrinfo hints;
+		addrinfo* result;
+		addrinfo hints;
 };
 
 #endif

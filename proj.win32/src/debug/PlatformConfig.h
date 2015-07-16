@@ -1,7 +1,7 @@
 #ifndef _PLATFORM_CONFIG_H_
 #define _PLATFORM_CONFIG_H_
 
-#include <CCPlatformConfig.h>
+#include <platform/CCPlatformConfig.h>
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 	#define PLATFORM_MAC

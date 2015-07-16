@@ -24,6 +24,8 @@ bool State_Manager::init() {
 	label->setPosition(200, 200);
 	addChild(label, 1);
 
+	log("");
+
 	scheduleUpdate();
 	init_time = clock();
 
