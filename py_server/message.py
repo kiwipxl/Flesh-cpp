@@ -35,7 +35,7 @@ class MID():
 
     id = 0;
     ft_params = [];
-    min_param_len = 0;
+    total_param_bytes = 0;
 
     def __init__(self, *ft_params_list):
         global MID_id;
@@ -44,7 +44,7 @@ class MID():
         self.id = MID_id;
         self.ft_params = ft_params_list;
         for param in ft_params_list:
-            self.min_param_len += param.len;
+            self.total_param_bytes += param.len;
 
         MID_id += 1;
         MID_list.append(self);
@@ -86,7 +86,7 @@ def extract_mid(byte_data):
 
 def extract_params(mid, byte_data):
     params = [];
-    if (len(byte_data) - 4 >= mid.min_param_len):
+    if (len(byte_data) - 4 >= mid.total_param_bytes):
         byte_offset = 4;
         for n in range(0, len(mid.ft_params)):
             t = mid.ft_params[n];
@@ -104,7 +104,7 @@ def extract_params(mid, byte_data):
             params.append(s);
         return (params, 0);
     else:
-        print("recv message %s is only %i bytes long when minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.min_param_len));
+        print("recv message %s is only %i bytes long when minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
         return (params, -1);
 
 def send(sock, mid, *params):

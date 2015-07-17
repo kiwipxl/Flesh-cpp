@@ -17,7 +17,15 @@ namespace message {
 		char chr;
 		short len;
 
-		FormatType::FormatType(char c, short l) : chr(c), len(l) { }
+		FormatType::FormatType() { }
+		FormatType::FormatType(char c, short l);
+		
+		bool operator==(const FormatType& a) {
+			return *this == a;
+		}
+		bool operator!=(const FormatType& a) {
+			return *this != a;
+		}
 	};
 
 	//format types for packing and unpacking byte data
@@ -43,31 +51,27 @@ namespace message {
 	struct MID {
 
 		int id = 0;
-		std::vector<FormatType> ft_params;
-		int min_param_len = 0;
+		FormatType* ft_params = NULL;
+		int total_param_bytes = 0;
+		int num_params = 0;
 
-		MID::MID(...);
+		MID::MID(int num_args, ...);
 	};
-	
+
+	#define CMID const message::MID*
+
 	extern int MID_id;
 	extern std::vector<MID*> MID_list;
 	
-	extern const MID MID_UNKNOWN;
-	extern const MID MID_CLIENT_ID;
-	extern const MID MID_CLIENT_USER_PASS;
+	extern CMID MID_UNKNOWN;
+	extern CMID MID_CLIENT_ID;
+	extern CMID MID_CLIENT_USER_PASS;
 
 	//================== Message begin ==================
 
-	class Message {
-
-		public:
-			MID msg_id = MID_UNKNOWN;
-			char* params;
-			std::string raw_data;
-	};
-
 	extern char byte_buffer[1024];
 	extern int byte_offset;
+	extern std::vector<void*> param_list;
 
 	class ByteStream {
 
@@ -85,6 +89,9 @@ namespace message {
 	};
 
 	extern void send(Socket* sock, ByteStream& stream);
+	extern CMID extract_mid(char* buffer, int buffer_len);
+	extern void unpack(void* dest, char* buffer, int buffer_len);
+	extern void extract_params(CMID mid, char* byte_data, int byte_data_len);
 }
 
 #endif
