@@ -18,14 +18,10 @@ void messagerecv::start() {
 	CMID mid = message::extract_mid(message::byte_buffer, message::byte_offset);
 	message::extract_params(mid, message::byte_buffer, message::byte_offset);
 
-	bool a;
-	memcpy(&a, message::param_list[0], 1);
-	bool b;
-	memcpy(&b, message::param_list[1], 1);
-	int c;
-	memcpy(&c, message::param_list[2], 4);
-	float d;
-	memcpy(&d, message::param_list[3], 4);
+	bool* a = (bool*)message::param_list[0];
+	bool* b = (bool*)message::param_list[1];
+	int* c = (int*)message::param_list[2];
+	float* d = (float*)message::param_list[3];
 
 	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true);
 
