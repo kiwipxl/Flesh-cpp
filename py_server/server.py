@@ -52,7 +52,7 @@ def got_message(byte_data):
                 print("username: %s, password: %s" % (params[0], params[1]));
                 db.add_user_account(params[0], params[1]);
     else:
-        print("recv message has an unknown MID");
+        print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));
 
 if __name__ == "__main__":
     db.init();

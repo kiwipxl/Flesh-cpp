@@ -27,7 +27,7 @@ bool State_Manager::init() {
 	scheduleUpdate();
 	init_time = clock();
 
-	message_recv_start();
+	messagerecv::start();
 
     return true;
 }

@@ -4,9 +4,12 @@
 #include "Socket.h"
 #include "Message.h"
 
-extern Socket tcp_sock;
-extern Socket udp_sock;
+namespace messagerecv {
 
-extern void message_recv_start();
+	extern Socket tcp_sock;
+	extern Socket udp_sock;
+
+	extern void start();
+}
 
 #endif

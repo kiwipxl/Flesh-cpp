@@ -1,27 +1,6 @@
 import sys;
 import struct;
 
-class MID():
-
-    id = 0;
-    ft_params = [];
-    min_param_len = 0;
-
-    def __init__(self, *ft_params_list):
-        global MID_id;
-        global MID_list;
-
-        self.id = MID_id;
-        self.ft_params = ft_params_list;
-        for param in ft_params_list:
-            self.min_param_len += param.len;
-
-        MID_id += 1;
-        MID_list.append(self);
-
-MID_id = 0;
-MID_list = [];
-
 class FormatType():
 
     char = '';
@@ -48,6 +27,27 @@ FT_FLOAT                    = FormatType('f', 4);
 FT_DOUBLE                   = FormatType('d', 8);
 FT_CHAR_ARRAY               = FormatType('s', 0);
 FT_VOID_POINTER             = FormatType('p', 4);
+
+MID_id = 0;
+MID_list = [];
+
+class MID():
+
+    id = 0;
+    ft_params = [];
+    min_param_len = 0;
+
+    def __init__(self, *ft_params_list):
+        global MID_id;
+        global MID_list;
+
+        self.id = MID_id;
+        self.ft_params = ft_params_list;
+        for param in ft_params_list:
+            self.min_param_len += param.len;
+
+        MID_id += 1;
+        MID_list.append(self);
 
 MID_UNKNOWN                         = MID();
 MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY);
