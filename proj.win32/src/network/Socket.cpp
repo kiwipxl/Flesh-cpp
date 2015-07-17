@@ -1,7 +1,6 @@
 #include "Socket.h"
 #include "Message.h"
 #include "../debug/Errors.h"
-#include <base/CCConsole.h>
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
@@ -30,17 +29,6 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 			sock_info.ai_protocol = IPPROTO_UDP;
 			break;
 	}
-
-	char buffer[1024];
-	int msg_len;
-	while (true) {
-		msg_len = recv(sock, buffer, sizeof(buffer) - 1, 0);
-		if (msg_len > 0) {
-			CCLOG("buffer: %s", buffer);
-		}
-	}
-
-	Msg::send(this, Msg::ByteStream() << MID_CLIENT_USER_PASS << false << true);
 }
 
 int Socket::s_create() {
@@ -118,9 +106,18 @@ int Socket::s_connect() {
 
 int Socket::s_send(char* buffer, int buffer_len) {
 	if (protocol == PROTO_TCP) {
-		if (send(sock, buffer, buffer_len, 0) < 0) return get_last_error();
+		if ((result = send(sock, buffer, buffer_len, 0)) < 0) return get_last_error();
 	}else if (protocol == PROTO_UDP) {
-		if (sendto(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) return get_last_error();
+		if ((result = sendto(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return get_last_error();
 	}
-	return NO_ERROR;
+	return result;
+}
+
+int Socket::s_recv(char* buffer, int buffer_len) {
+	if (protocol == PROTO_TCP) {
+		if ((result = recv(sock, buffer, buffer_len, 0)) < 0) return get_last_error();
+	}else if (protocol == PROTO_UDP) {
+		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, (int*)sizeof(serv_addr))) < 0) return get_last_error();
+	}
+	return result;
 }

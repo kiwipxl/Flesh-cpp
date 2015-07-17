@@ -5,6 +5,7 @@
 simple cross-platform berkeley socket class used to encapsulate simpler functions
 */
 
+#include <base/CCConsole.h>
 #include "debug/PlatformConfig.h"
 
 #if defined(PLATFORM_WIN32)
@@ -35,12 +36,14 @@ class Socket {
 		int s_bind();
 		int s_connect();
 		int s_send(char* buffer, int buffer_len);
+		int s_recv(char* buffer, int buffer_len);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_ip() { return ip; }
 		char* get_port() { return port; }
 
 	private:
+		int result;
 		char* ip;
 		char* port;
 		uintptr_t sock;

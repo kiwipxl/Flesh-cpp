@@ -1,6 +1,6 @@
 #include "State_Manager.h"
 #include <time.h>
-#include "network/Socket.h"
+#include "network/MessageRecv.h"
 
 using namespace cocos2d;
 
@@ -27,11 +27,7 @@ bool State_Manager::init() {
 	scheduleUpdate();
 	init_time = clock();
 
-	Socket::init_sockets();
-	Socket send_sock(PROTO_TCP, "192.168.0.2", "4222");
-	send_sock.try_connect();
-	//Socket recv_sock(PROTO_TCP, "127.0.0.1", "4223");
-	//recv_sock.try_listen();
+	message_recv_start();
 
     return true;
 }
