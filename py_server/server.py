@@ -50,7 +50,7 @@ def got_message(byte_data):
         if (err != -1):
             if (mid == message.MID_CLIENT_USER_PASS):
                 print("username: %s, password: %s" % (params[0], params[1]));
-                db.add_user_account(params[0], params[1]);
+                #db.add_user_account(params[0], params[1]);
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));
 

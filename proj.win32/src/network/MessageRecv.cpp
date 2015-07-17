@@ -14,7 +14,7 @@ void messagerecv::start() {
 	udp_sock.s_create();
 	udp_sock.s_bind();
 
-	message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true << 458 << 89.42f;
+	message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true << 458 << 89.42f << "testtttttttt232!#$@";
 	CMID mid = message::extract_mid(message::byte_buffer, message::byte_offset);
 	message::extract_params(mid, message::byte_buffer, message::byte_offset);
 
@@ -22,10 +22,11 @@ void messagerecv::start() {
 	bool* b = (bool*)message::param_list[1];
 	int* c = (int*)message::param_list[2];
 	float* d = (float*)message::param_list[3];
+	char* e = (char*)message::param_list[4];
 
 	message::clear_param_list();
 
-	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true);
+	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true << 458 << 89.42f);
 
 	char buffer[1024];
 	int msg_len;

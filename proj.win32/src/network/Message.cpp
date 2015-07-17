@@ -28,7 +28,7 @@ std::vector<message::MID*> message::MID_list;
 
 CMID message::MID_UNKNOWN							= new MID(0);
 CMID message::MID_CLIENT_ID							= new MID(1, message::FT_INT);
-CMID message::MID_CLIENT_USER_PASS					= new MID(4, message::FT_BOOL, message::FT_BOOL, message::FT_INT, message::FT_FLOAT);
+CMID message::MID_CLIENT_USER_PASS					= new MID(5, message::FT_BOOL, message::FT_BOOL, message::FT_INT, message::FT_FLOAT, message::FT_CHAR_ARRAY);
 
 MID::MID(int num_args, ...) {
 	id = MID_id;
@@ -38,8 +38,9 @@ MID::MID(int num_args, ...) {
 	va_list ap;
 	va_start(ap, num_args);
 	for (int n = 0; n < num_args; ++n) {
-		ft_params[n] = va_arg(ap, CFTYPE);
-		total_param_bytes += ft_params[n]->len;
+		CFTYPE ft = va_arg(ap, CFTYPE); 
+		ft_params[n] = ft;
+		total_param_bytes += ft->len;
 	}
 	va_end(ap);
 
@@ -65,6 +66,7 @@ CMID message::extract_mid(char* buffer, int buffer_len) {
 	return mid;
 }
 
+std::string concat_str = "";
 void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 	clear_param_list();
 	if (mid != MID_UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
@@ -72,13 +74,15 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 		for (int n = 0; n < mid->num_params; ++n) {
 			int len = 0;
 			if (mid->ft_params[n] == FT_CHAR_ARRAY) {
-				std::string* pointer = new std::string();
+				concat_str = "";
 				for (int c = offset; c < byte_data_len; ++c) {
 					++len;
+					concat_str += byte_data[c];
 					if (byte_data[c] == '\0') break;
-					*pointer += byte_data[c];
 				}
-				param_list.push_back((char*)pointer);
+				char* pointer = new char[len];
+				strcpy(pointer, concat_str.c_str());
+				param_list.push_back(pointer);
 				offset += len;
 			}else {
 				len = mid->ft_params[n]->len;
