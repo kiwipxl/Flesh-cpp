@@ -70,9 +70,18 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 	if (mid != MID_UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
 		int offset = 4;
 		for (int n = 0; n < mid->num_params; ++n) {
+			int len = 0;
 			if (mid->ft_params[n] == FT_CHAR_ARRAY) {
+				std::string* pointer = new std::string();
+				for (int c = offset; c < byte_data_len; ++c) {
+					++len;
+					if (byte_data[c] == '\0') break;
+					*pointer += byte_data[c];
+				}
+				param_list.push_back((char*)pointer);
+				offset += len;
 			}else {
-				int len = mid->ft_params[n]->len;
+				len = mid->ft_params[n]->len;
 				char* pointer = new char[len];
 				memcpy(pointer, byte_data + offset, len);
 				param_list.push_back(pointer);
@@ -83,7 +92,7 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 }
 
 void message::clear_param_list() {
-	if (param_list.size() > 0) {
-		message::param_list.clear();
+	for (int n = 0; n < param_list.size(); ++n) {
+		if (param_list[n] != NULL) delete[] param_list[n];
 	}
 }

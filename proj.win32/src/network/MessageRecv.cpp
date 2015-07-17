@@ -23,6 +23,8 @@ void messagerecv::start() {
 	int* c = (int*)message::param_list[2];
 	float* d = (float*)message::param_list[3];
 
+	message::clear_param_list();
+
 	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true);
 
 	char buffer[1024];
