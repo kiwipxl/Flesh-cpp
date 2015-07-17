@@ -1,6 +1,7 @@
 #include "Socket.h"
 #include "Message.h"
-#include "base/CCConsole.h"
+#include "../debug/Errors.h"
+#include <base/CCConsole.h>
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
@@ -29,54 +30,45 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 			sock_info.ai_protocol = IPPROTO_UDP;
 			break;
 	}
-}
 
-hostent* Socket::verify_host(char* host_name) {
-	return gethostbyname(host_name);
-}
-
-int Socket::get_last_error() {
-	#ifdef PLATFORM_WIN32
-		return WSAGetLastError();
-	#elif defined(PLATFORM_ANDROID) || defined(PLATFORM_LINUX)
-		return errno;
-	#endif
-}
-
-bool Socket::try_connect() {
-	CCLOG("trying to connect!");
-	
-	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) {
-		CCLOG("error occurred while creating socket %d", get_last_error());
+	char buffer[1024];
+	int msg_len;
+	while (true) {
+		msg_len = recv(sock, buffer, sizeof(buffer) - 1, 0);
+		if (msg_len > 0) {
+			CCLOG("buffer: %s", buffer);
+		}
 	}
 
+	Msg::send(this, Msg::ByteStream() << MID_CLIENT_USER_PASS << false << true);
+}
+
+int Socket::s_create() {
+	//setup serv_addr structure
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(atoi(port));
 
 	//convert ip and copy into ipv4 structure in_addr
-	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
-		CCLOG("error occurred while");
-	}
+	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) return get_last_error();
+	//create socket
+	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return get_last_error();
 
-	CCLOG("ip: %s port: %d", ip, serv_addr.sin_port);
-	if (connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
-		CCLOG("error occurred while trying to connect: %d", get_last_error());
-	}
-
-	char buffer[1024];
-	int n = 0;
-	while ((n = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
-		CCLOG("buffer: %s", buffer);
-		buffer[n] = 0;
-	}
-
-	Msg::send(this, Msg::ByteStream() << MID_CLIENT_USER_PASS << false << true);
-
-	return true;
+	return NO_ERROR;
 }
 
-bool Socket::try_listen() {
+int Socket::s_bind() {
+	if ((sock = bind(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return get_last_error();
+	return NO_ERROR;
+}
+
+int Socket::s_connect() {
+	if (connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) return get_last_error();
+
+	return NO_ERROR;
+}
+
+//bool Socket::s_listen() {
 	/*sock = socket(sock_info.ai_family, sock_info.ai_socktype, sock_info.ai_protocol);
 
 	sockaddr_in addr;
@@ -121,9 +113,14 @@ bool Socket::try_listen() {
 			OutputDebugStringA(buffer);
 		}
 	}*/
-	return true;
-}
+	//return true;
+//}
 
-bool Socket::send_buffer(char* buffer, int buffer_len) {
-	return send(sock, buffer, buffer_len, 0);
+int Socket::s_send(char* buffer, int buffer_len) {
+	if (protocol == PROTO_TCP) {
+		if (send(sock, buffer, buffer_len, 0) < 0) return get_last_error();
+	}else if (protocol == PROTO_UDP) {
+		if (sendto(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) return get_last_error();
+	}
+	return NO_ERROR;
 }

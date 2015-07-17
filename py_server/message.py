@@ -50,7 +50,7 @@ FT_CHAR_ARRAY               = FormatType('s', 0);
 FT_VOID_POINTER             = FormatType('p', 4);
 
 MID_UNKNOWN                         = MID();
-MID_CLIENT_ID                       = MID(FT_BOOL, FT_BOOL);
+MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY);
 MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 
 #put all MID_x variables into a name array so messages can be debugged easier

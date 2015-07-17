@@ -28,8 +28,9 @@ def client_accepted(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    c.sock.send("ayyyyyyyyyyyyyyyyyy");
-    message.send(c.sock, message.MID_CLIENT_ID, c.id);
+    c.sock.send("ayyyyyyyyyyyyyyyyyy2");
+    #message.send(c.sock, message.MID_CLIENT_ID, c.id, "test");
+    c.sock.send("second msg lol");
 
 def client_disconnected(sock):
     global clients
