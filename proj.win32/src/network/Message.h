@@ -19,39 +19,34 @@ namespace message {
 
 		FormatType::FormatType() { }
 		FormatType::FormatType(char c, short l);
-		
-		bool operator==(const FormatType& a) {
-			return *this == a;
-		}
-		bool operator!=(const FormatType& a) {
-			return *this != a;
-		}
 	};
 
+	#define CFTYPE const message::FormatType*
+
 	//format types for packing and unpacking byte data
-	extern const FormatType FT_CHAR;
-	extern const FormatType FT_SIGNED_CHAR;
-	extern const FormatType FT_UNSIGNED_CHAR;
-	extern const FormatType FT_BOOL;
-	extern const FormatType FT_SHORT;
-	extern const FormatType FT_UNSIGNED_SHORT;
-	extern const FormatType FT_INT;
-	extern const FormatType FT_UNSIGNED_INT;
-	extern const FormatType FT_LONG;
-	extern const FormatType FT_UNSIGNED_LONG;
-	extern const FormatType FT_LONG_LONG;
-	extern const FormatType FT_UNSIGNED_LONG_LONG;
-	extern const FormatType FT_FLOAT;
-	extern const FormatType FT_DOUBLE;
-	extern const FormatType FT_CHAR_ARRAY;
-	extern const FormatType FT_VOID_POINTER;
+	extern CFTYPE FT_CHAR;
+	extern CFTYPE FT_SIGNED_CHAR;
+	extern CFTYPE FT_UNSIGNED_CHAR;
+	extern CFTYPE FT_BOOL;
+	extern CFTYPE FT_SHORT;
+	extern CFTYPE FT_UNSIGNED_SHORT;
+	extern CFTYPE FT_INT;
+	extern CFTYPE FT_UNSIGNED_INT;
+	extern CFTYPE FT_LONG;
+	extern CFTYPE FT_UNSIGNED_LONG;
+	extern CFTYPE FT_LONG_LONG;
+	extern CFTYPE FT_UNSIGNED_LONG_LONG;
+	extern CFTYPE FT_FLOAT;
+	extern CFTYPE FT_DOUBLE;
+	extern CFTYPE FT_CHAR_ARRAY;
+	extern CFTYPE FT_VOID_POINTER;
 
 	//================== MID begin ==================
 
 	struct MID {
 
 		int id = 0;
-		FormatType* ft_params = NULL;
+		CFTYPE* ft_params = NULL;
 		int total_param_bytes = 0;
 		int num_params = 0;
 
@@ -85,7 +80,7 @@ namespace message {
 
 			template <class T> ByteStream& operator<<(const T& v) { cpy_to_buf(v); return *this; }
 
-			ByteStream& operator<<(const MID& v) { cpy_to_buf(v.id); return *this; }
+			ByteStream& operator<<(CMID v) { cpy_to_buf(v->id); return *this; }
 	};
 
 	extern void send(Socket* sock, ByteStream& stream);
