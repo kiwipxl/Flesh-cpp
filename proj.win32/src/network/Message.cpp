@@ -20,7 +20,7 @@ CFTYPE message::FT_LONG_LONG						= new FormatType('q', 8);
 CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType('Q', 8);
 CFTYPE message::FT_FLOAT							= new FormatType('f', 4);
 CFTYPE message::FT_DOUBLE							= new FormatType('d', 8);
-CFTYPE message::FT_CHAR_ARRAY						= new FormatType('s', 0);
+CFTYPE message::FT_CHAR_ARRAY						= new FormatType('s', 1);
 CFTYPE message::FT_VOID_POINTER						= new FormatType('p', 4);
 
 int message::MID_id = 0;
@@ -28,7 +28,7 @@ std::vector<message::MID*> message::MID_list;
 
 CMID message::MID_UNKNOWN							= new MID(0);
 CMID message::MID_CLIENT_ID							= new MID(1, message::FT_INT);
-CMID message::MID_CLIENT_USER_PASS					= new MID(2, message::FT_CHAR_ARRAY, message::FT_CHAR_ARRAY);
+CMID message::MID_CLIENT_USER_PASS					= new MID(4, message::FT_BOOL, message::FT_BOOL, message::FT_INT, message::FT_FLOAT);
 
 MID::MID(int num_args, ...) {
 	id = MID_id;
@@ -39,7 +39,7 @@ MID::MID(int num_args, ...) {
 	va_start(ap, num_args);
 	for (int n = 0; n < num_args; ++n) {
 		ft_params[n] = va_arg(ap, CFTYPE);
-		total_param_bytes = ft_params[n]->len;
+		total_param_bytes += ft_params[n]->len;
 	}
 	va_end(ap);
 
@@ -49,14 +49,14 @@ MID::MID(int num_args, ...) {
 
 char message::byte_buffer[1024];
 int message::byte_offset;
-std::vector<void*> message::param_list = std::vector<void*>();
+std::vector<char*> message::param_list = std::vector<char*>();
 
 void message::send(Socket* sock, ByteStream& stream) {
 	sock->s_send(byte_buffer, byte_offset);
 }
 
 CMID message::extract_mid(char* buffer, int buffer_len) {
-	CMID mid = message::MID_UNKNOWN;
+	CMID mid = MID_UNKNOWN;
 	if (buffer_len >= 4) {
 		int id = 0;
 		memcpy(&id, buffer, 4);
@@ -66,17 +66,24 @@ CMID message::extract_mid(char* buffer, int buffer_len) {
 }
 
 void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
-	message::param_list.clear();
-	if (mid != message::MID_UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
-		int offset = 0;
+	clear_param_list();
+	if (mid != MID_UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
+		int offset = 4;
 		for (int n = 0; n < mid->num_params; ++n) {
-			if (mid->ft_params[n] == message::FT_CHAR_ARRAY) {
+			if (mid->ft_params[n] == FT_CHAR_ARRAY) {
 			}else {
+				int len = mid->ft_params[n]->len;
+				char* pointer = new char[len];
+				memcpy(pointer, byte_data + offset, len);
+				param_list.push_back(pointer);
+				offset += len;
 			}
 		}
 	}
 }
 
-void message::unpack(void* dest, char* buffer, int buffer_len) {
-	memcpy(dest, buffer, buffer_len);
+void message::clear_param_list() {
+	if (param_list.size() > 0) {
+		message::param_list.clear();
+	}
 }

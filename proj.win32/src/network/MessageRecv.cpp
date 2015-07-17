@@ -14,9 +14,18 @@ void messagerecv::start() {
 	udp_sock.s_create();
 	udp_sock.s_bind();
 
-	message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true;
+	message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true << 458 << 89.42f;
 	CMID mid = message::extract_mid(message::byte_buffer, message::byte_offset);
 	message::extract_params(mid, message::byte_buffer, message::byte_offset);
+
+	bool a;
+	memcpy(&a, message::param_list[0], 1);
+	bool b;
+	memcpy(&b, message::param_list[1], 1);
+	int c;
+	memcpy(&c, message::param_list[2], 4);
+	float d;
+	memcpy(&d, message::param_list[3], 4);
 
 	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true);
 

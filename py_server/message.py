@@ -25,7 +25,7 @@ FT_LONG_LONG                = FormatType('q', 8);
 FT_UNSIGNED_LONG_LONG       = FormatType('Q', 8);
 FT_FLOAT                    = FormatType('f', 4);
 FT_DOUBLE                   = FormatType('d', 8);
-FT_CHAR_ARRAY               = FormatType('s', 0);
+FT_CHAR_ARRAY               = FormatType('s', 1);
 FT_VOID_POINTER             = FormatType('p', 4);
 
 MID_id = 0;

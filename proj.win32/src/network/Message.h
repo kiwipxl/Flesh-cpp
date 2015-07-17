@@ -66,7 +66,7 @@ namespace message {
 
 	extern char byte_buffer[1024];
 	extern int byte_offset;
-	extern std::vector<void*> param_list;
+	extern std::vector<char*> param_list;
 
 	class ByteStream {
 
@@ -85,8 +85,8 @@ namespace message {
 
 	extern void send(Socket* sock, ByteStream& stream);
 	extern CMID extract_mid(char* buffer, int buffer_len);
-	extern void unpack(void* dest, char* buffer, int buffer_len);
 	extern void extract_params(CMID mid, char* byte_data, int byte_data_len);
+	extern void clear_param_list();
 }
 
 #endif
