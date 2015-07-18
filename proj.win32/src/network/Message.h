@@ -56,7 +56,7 @@ namespace message {
 
 	extern int MID_id;
 	extern std::vector<CMID> MID_list;
-	extern std::vector<const char*> MID_names;
+	extern std::vector<std::string> MID_names;
 
 	extern CMID MID_UNKNOWN;
 	extern CMID MID_CLIENT_ID;
@@ -76,8 +76,8 @@ namespace message {
 		MID_AutoName(std::string name) {
 			int index = name.find("MID_");
 			int index_end;
-			if (index != -1) index_end = name.substr(index, name.length()).find(" ");
-				if (index_end != -1) MID_names.push_back(name.substr(index, index_end).c_str());
+			if (index != -1) index_end = name.find("=");
+				if (index_end != -1) MID_names.push_back(name.substr(index, index_end - index).c_str() + '\0');
 		}
 	};
 
@@ -125,6 +125,7 @@ namespace message {
 	extern void extract_params(CMID mid, char* byte_data, int byte_data_len);
 	extern void clear_param_list();
 	extern void print_extracted_params();
+	extern inline const char* get_MID_name(CMID mid);
 }
 
 #endif

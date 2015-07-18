@@ -26,7 +26,7 @@ CFTYPE message::FT_VOID_POINTER						= new FormatType("%p", 4);
 
 int message::MID_id = 0;
 std::vector<CMID> message::MID_list;
-std::vector<const char*> message::MID_names;
+std::vector<std::string> message::MID_names;
 
 ADD_MID_NAME(CMID message::MID_UNKNOWN					= new MID(0));
 ADD_MID_NAME(CMID message::MID_CLIENT_ID				= new MID(2, message::FT_INT, message::FT_CHAR_ARRAY));
@@ -128,8 +128,11 @@ void message::print_extracted_params() {
 	if (last_extracted_mid->num_params == param_list_size) {
 		static const char header[] = "(debug): ";
 		int header_size = sizeof(header);
-		strcpy(print_buf, header);
-		int offset = header_size - 1;
+		const char* MID_name = get_MID_name(last_extracted_mid);
+		int MID_name_len = strlen(MID_name) - 1;
+		strcpy(print_buf, MID_name);
+		strcpy(print_buf + MID_name_len, header);
+		int offset = header_size + MID_name_len - 1;
 		for (int n = 0; n < param_list_size; ++n) {
 			//i don't know if the below code can be shortened in c++, but this is a quick work around for now at least
 			//sprintf requires that arguments be the same type of the format specifier, but the type is variable
@@ -163,4 +166,8 @@ void message::print_extracted_params() {
 	}else {
 		CCLOG("could not print params, required %d params, but %d params given", last_extracted_mid->num_params, param_list_size);
 	}
+}
+
+inline const char* message::get_MID_name(CMID mid) {
+	return (MID_names.size() > 0 && mid->id > 0 && mid->id < MID_names.size()) ? MID_names[mid->id].c_str() : "undefined";
 }
