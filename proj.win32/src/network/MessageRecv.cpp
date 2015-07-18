@@ -20,16 +20,16 @@ void messagerecv::tcp_recv() {
 				CMID mid = message::extract_mid(buffer, msg_len);
 				if (mid->id > 0 && mid->id < message::MID_list.size()) {
 					message::extract_params(mid, buffer, msg_len);
-					if (mid == message::MID_RELAY_TEST && message::param_list.size() >= message::MID_RELAY_TEST->num_params) {
+					if (mid == message::MID_RELAY_TEST && message::param_list_size >= message::MID_RELAY_TEST->num_params) {
 						bool* a = (bool*)message::param_list[0];
 						bool* b = (bool*)message::param_list[1];
 						int* c = (int*)message::param_list[2];
 						float* d = (float*)message::param_list[3];
 						char* e = (char*)message::param_list[4];
 
-						CCLOG("b: %d, b: %d, i: %d, f: %f, c: %s", *a, *b, *c, *d, *e);
+						CCLOG("b: %d, b: %d, i: %d, f: %f, c: %s", *a, *b, *c, *d, e);
 
-						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << *c << *d << *e);
+						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << *c << *d << e);
 					}
 					message::clear_param_list();
 				}

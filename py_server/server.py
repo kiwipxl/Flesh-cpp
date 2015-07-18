@@ -28,9 +28,7 @@ def client_accepted(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    c.sock.send("ayyyyyyyyyyyyyyyyyy2");
     #message.send(c.sock, message.MID_CLIENT_ID, c.id, "test");
-    c.sock.send("second msg lol");
 
 def client_disconnected(sock):
     global clients
@@ -52,7 +50,8 @@ def got_message(client_sock, byte_data):
                 print("username: %s, password: %s" % (params[0], params[1]));
                 db.add_user_account(params[0], params[1]);
             elif (mid == message.MID_RELAY_TEST and len(params) == message.MID_RELAY_TEST.num_params):
-                message.send(client_sock, message.MID_RELAY_TEST << params[0] << params[1] << params[2] << params[3] << params[4]);
+                print("received relay. sending confirmation back...");
+                message.send(client_sock, message.MID_RELAY_TEST, params[0], params[1], params[2], params[3], params[4]);
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));
 

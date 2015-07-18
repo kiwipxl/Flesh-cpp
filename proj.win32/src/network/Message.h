@@ -67,7 +67,10 @@ namespace message {
 
 	extern char byte_buffer[1024];
 	extern int byte_offset;
-	extern std::vector<char*> param_list;
+
+	extern const int MAX_NUM_PARAMS;
+	extern char* param_list[];
+	extern int param_list_size;
 
 	class ByteStream {
 

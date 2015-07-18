@@ -50,7 +50,10 @@ MID::MID(int num_args, ...) : id(MID_id) {
 
 char message::byte_buffer[1024];
 int message::byte_offset;
-std::vector<char*> message::param_list = std::vector<char*>();
+
+const int message::MAX_NUM_PARAMS = 16;
+char* message::param_list[MAX_NUM_PARAMS];
+int message::param_list_size = 0;
 
 void message::send(Socket* sock, ByteStream& stream) {
 	sock->s_send(byte_buffer, byte_offset);
@@ -69,8 +72,10 @@ CMID message::extract_mid(char* buffer, int buffer_len) {
 std::string concat_str = "";
 void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 	clear_param_list();
+
 	if (mid != MID_UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
 		int offset = 4;
+		int index = 0;
 		for (int n = 0; n < mid->num_params; ++n) {
 			int len = 0;
 			if (mid->ft_params[n] == FT_CHAR_ARRAY) {
@@ -82,21 +87,25 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 				}
 				char* pointer = new char[len];
 				strcpy(pointer, concat_str.c_str());
-				param_list.push_back(pointer);
+				param_list[index] = pointer;
 				offset += len;
+				++index;
 			}else {
 				len = mid->ft_params[n]->len;
 				char* pointer = new char[len];
 				memcpy(pointer, byte_data + offset, len);
-				param_list.push_back(pointer);
+				param_list[index] = pointer;
 				offset += len;
+				++index;
 			}
 		}
+		param_list_size = index;
 	}
 }
 
 void message::clear_param_list() {
-	for (int n = 0; n < param_list.size(); ++n) {
+	for (int n = 0; n < param_list_size; ++n) {
 		if (param_list[n] != NULL) delete[] param_list[n];
 	}
+	param_list_size = 0;
 }
