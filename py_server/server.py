@@ -51,7 +51,6 @@ def got_message(client_sock, byte_data):
                 print("username: %s, password: %s" % (params[0], params[1]));
                 db.add_user_account(params[0], params[1]);
             elif (mid == message.MID_RELAY_TEST and len(params) == message.MID_RELAY_TEST.num_params):
-                print("received relay. sending confirmation back...");
                 message.print_params(mid, params);
                 message.send(client_sock, message.MID_RELAY_TEST, params[0], params[1], params[2], params[3], params[4]);
     else:

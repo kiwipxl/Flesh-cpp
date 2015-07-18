@@ -37,8 +37,8 @@ class Socket {
 		int s_connect();
 		int s_send(char* buffer, int buffer_len);
 		int s_recv(char* buffer, int buffer_len);
-		void s_setup_select(fd_set* read_set, fd_set* write_set, int seconds_delay, int ms_delay);
-		int s_select();
+		void s_setup_select(fd_set* read_set, fd_set* write_set, int seconds_delay = 0, int ms_delay = 0);
+		int s_select(bool use_timeout = false);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_ip() { return ip; }

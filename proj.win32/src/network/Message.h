@@ -14,11 +14,11 @@ namespace message {
 
 	struct FormatType {
 
-		char chr;
-		short len;
+		const char* printf_format;
+		const short len;
 
 		FormatType() { }
-		FormatType(char c, short l);
+		FormatType(const char* c, const short l);
 	};
 
 	#define CFTYPE const message::FormatType*

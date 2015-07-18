@@ -3,25 +3,25 @@
 using message::MID;
 using message::FormatType;
 
-FormatType::FormatType(char c, short l) : chr(c), len(l) { }
+FormatType::FormatType(const char* c, const short l) : printf_format(c), len(l) { }
 
 //format types for packing and unpacking byte data
-CFTYPE message::FT_CHAR								= new FormatType('c', 1);
-CFTYPE message::FT_SIGNED_CHAR						= new FormatType('b', 1);
-CFTYPE message::FT_UNSIGNED_CHAR					= new FormatType('B', 1);
-CFTYPE message::FT_BOOL								= new FormatType('?', 1);
-CFTYPE message::FT_SHORT							= new FormatType('h', 2);
-CFTYPE message::FT_UNSIGNED_SHORT					= new FormatType('H', 2);
-CFTYPE message::FT_INT								= new FormatType('i', 4);
-CFTYPE message::FT_UNSIGNED_INT						= new FormatType('I', 4);
-CFTYPE message::FT_LONG								= new FormatType('l', 8);
-CFTYPE message::FT_UNSIGNED_LONG					= new FormatType('L', 8);
-CFTYPE message::FT_LONG_LONG						= new FormatType('q', 8);
-CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType('Q', 8);
-CFTYPE message::FT_FLOAT							= new FormatType('f', 4);
-CFTYPE message::FT_DOUBLE							= new FormatType('d', 8);
-CFTYPE message::FT_CHAR_ARRAY						= new FormatType('s', 1);
-CFTYPE message::FT_VOID_POINTER						= new FormatType('p', 4);
+CFTYPE message::FT_CHAR								= new FormatType("c", 1);
+CFTYPE message::FT_SIGNED_CHAR						= new FormatType("c", 1);
+CFTYPE message::FT_UNSIGNED_CHAR					= new FormatType("c", 1);
+CFTYPE message::FT_BOOL								= new FormatType("d", 1);
+CFTYPE message::FT_SHORT							= new FormatType("d", 2);
+CFTYPE message::FT_UNSIGNED_SHORT					= new FormatType("d", 2);
+CFTYPE message::FT_INT								= new FormatType("i", 4);
+CFTYPE message::FT_UNSIGNED_INT						= new FormatType("u", 4);
+CFTYPE message::FT_LONG								= new FormatType("li", 8);
+CFTYPE message::FT_UNSIGNED_LONG					= new FormatType("lu", 8);
+CFTYPE message::FT_LONG_LONG						= new FormatType("lli", 8);
+CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType("llu", 8);
+CFTYPE message::FT_FLOAT							= new FormatType("f", 4);
+CFTYPE message::FT_DOUBLE							= new FormatType("f", 8);
+CFTYPE message::FT_CHAR_ARRAY						= new FormatType("s", 1);
+CFTYPE message::FT_VOID_POINTER						= new FormatType("lu", 4);
 
 int message::MID_id = 0;
 std::vector<message::MID*> message::MID_list;

@@ -8,7 +8,7 @@ std::thread messagerecv::recv_thread;
 void messagerecv::tcp_recv() {
 	fd_set read_list;
 	fd_set write_list;
-	tcp_sock.s_setup_select(&read_list, &write_list, 50000, 0);
+	tcp_sock.s_setup_select(&read_list, &write_list);
 
 	char buffer[1024];
 	int msg_len;
@@ -16,7 +16,9 @@ void messagerecv::tcp_recv() {
 		int total = 0;
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		if ((total = tcp_sock.s_select()) > 0) {
+			CCLOG("total: %d", total);
 			if ((msg_len = recv(read_list.fd_array[0], buffer, 1024, 0)) > 0) {
+				CCLOG("received!");
 				CMID mid = message::extract_mid(buffer, msg_len);
 				if (mid->id > 0 && mid->id < message::MID_list.size()) {
 					message::extract_params(mid, buffer, msg_len);

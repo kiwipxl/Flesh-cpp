@@ -73,8 +73,8 @@ void Socket::s_setup_select(fd_set* read_set, fd_set* write_set, int seconds_del
 	w_set = write_set;
 }
 
-int Socket::s_select() {
-	return select(1, r_set, w_set, NULL, &t);
+int Socket::s_select(bool use_timeout) {
+	return select(1, r_set, w_set, NULL, use_timeout ? &t : NULL);
 }
 
 int Socket::s_send(char* buffer, int buffer_len) {
