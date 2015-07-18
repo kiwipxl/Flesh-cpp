@@ -2,6 +2,7 @@
 
 using message::MID;
 using message::FormatType;
+using message::Param;
 
 FormatType::FormatType(const char* c, const short l) : printf_format(c), len(l) { }
 
@@ -21,7 +22,7 @@ CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType("llu", 8);
 CFTYPE message::FT_FLOAT							= new FormatType("f", 4);
 CFTYPE message::FT_DOUBLE							= new FormatType("f", 8);
 CFTYPE message::FT_CHAR_ARRAY						= new FormatType("s", 1);
-CFTYPE message::FT_VOID_POINTER						= new FormatType("lu", 4);
+CFTYPE message::FT_VOID_POINTER						= new FormatType("p", 4);
 
 int message::MID_id = 0;
 std::vector<message::MID*> message::MID_list;
@@ -52,8 +53,10 @@ char message::byte_buffer[1024];
 int message::byte_offset;
 
 const int message::MAX_NUM_PARAMS = 16;
-char* message::param_list[MAX_NUM_PARAMS];
+Param* message::param_list[MAX_NUM_PARAMS];
 int message::param_list_size = 0;
+int message::param_tbytes = 0;
+CMID message::last_extracted_mid;
 
 void message::send(Socket* sock, ByteStream& stream) {
 	sock->s_send(byte_buffer, byte_offset);
@@ -66,6 +69,7 @@ CMID message::extract_mid(char* buffer, int buffer_len) {
 		memcpy(&id, buffer, 4);
 		if (id >= 0 && id < MID_list.size()) mid = MID_list[id];
 	}
+	last_extracted_mid = mid;
 	return mid;
 }
 
@@ -78,6 +82,7 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 		int index = 0;
 		for (int n = 0; n < mid->num_params; ++n) {
 			int len = 0;
+			char* pointer;
 			if (mid->ft_params[n] == FT_CHAR_ARRAY) {
 				concat_str = "";
 				for (int c = offset; c < byte_data_len; ++c) {
@@ -85,19 +90,18 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 					concat_str += byte_data[c];
 					if (byte_data[c] == '\0') break;
 				}
-				char* pointer = new char[len];
+				pointer = new char[len];
 				strcpy(pointer, concat_str.c_str());
-				param_list[index] = pointer;
-				offset += len;
-				++index;
 			}else {
 				len = mid->ft_params[n]->len;
-				char* pointer = new char[len];
+				pointer = new char[len];
 				memcpy(pointer, byte_data + offset, len);
-				param_list[index] = pointer;
-				offset += len;
-				++index;
 			}
+			param_list[index]->data = pointer;
+			param_list[index]->len = len;
+			offset += len;
+			param_tbytes += len;
+			++index;
 		}
 		param_list_size = index;
 	}
@@ -108,4 +112,20 @@ void message::clear_param_list() {
 		if (param_list[n] != NULL) delete[] param_list[n];
 	}
 	param_list_size = 0;
+	param_tbytes = 0;
+}
+
+void message::print_extracted_params() {
+	if (last_extracted_mid->num_params == param_list_size) {
+		int header_size = 10;
+		char* temp = new char[param_tbytes + header_size];
+		strcpy(temp, "(debug): ");
+		int offset = header_size;
+		for (int n = 0; n < param_list_size; ++n) {
+			sprintf(temp + offset, last_extracted_mid->ft_params[n]->printf_format, param_list[n]);
+			offset += param_list[n]->len;
+		}
+		temp[offset + 1] = '\0';
+		CCLOG(temp);
+	}
 }

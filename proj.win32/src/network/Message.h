@@ -17,7 +17,6 @@ namespace message {
 		const char* printf_format;
 		const short len;
 
-		FormatType() { }
 		FormatType(const char* c, const short l);
 	};
 
@@ -63,14 +62,24 @@ namespace message {
 	extern CMID MID_CLIENT_USER_PASS;
 	extern CMID MID_RELAY_TEST;
 
+	//================== Parameters begin ==================
+
+	struct Param {
+
+		char* data;
+		int len;
+	};
+
+	extern const int MAX_NUM_PARAMS;
+	extern Param* param_list[];
+	extern int param_list_size;
+	extern int param_tbytes;
+	extern CMID last_extracted_mid;
+
 	//================== Message begin ==================
 
 	extern char byte_buffer[1024];
 	extern int byte_offset;
-
-	extern const int MAX_NUM_PARAMS;
-	extern char* param_list[];
-	extern int param_list_size;
 
 	class ByteStream {
 
@@ -91,6 +100,7 @@ namespace message {
 	extern CMID extract_mid(char* buffer, int buffer_len);
 	extern void extract_params(CMID mid, char* byte_data, int byte_data_len);
 	extern void clear_param_list();
+	extern void print_extracted_params();
 }
 
 #endif
