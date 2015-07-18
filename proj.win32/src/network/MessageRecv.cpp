@@ -27,12 +27,12 @@ void messagerecv::tcp_recv() {
 						bool* b = (bool*)message::param_list[1]->data;
 						int* c = (int*)message::param_list[2]->data;
 						float* d = (float*)message::param_list[3]->data;
-						char* e = (char*)message::param_list[4]->data;
+						char** e = &(char*)message::param_list[4]->data;
 
-						CCLOG("b: %d, b: %d, i: %d, f: %f, c: %s", *a, *b, *c, *d, e);
+						message::print_extracted_params();
 
 						int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
-						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << e);
+						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
 
 						char* buf = message::byte_buffer;
 						int len = message::byte_offset;

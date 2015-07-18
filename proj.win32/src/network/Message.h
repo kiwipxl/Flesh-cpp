@@ -75,6 +75,8 @@ namespace message {
 	extern int param_list_size;
 	extern int param_tbytes;
 	extern CMID last_extracted_mid;
+	extern const int MAX_PRINT_BUF;
+	extern char print_buf[];
 
 	//================== Message begin ==================
 
@@ -93,7 +95,7 @@ namespace message {
 
 			template <class T> ByteStream& operator<<(const T& v) { cpy_to_buf(&v, sizeof(v)); return *this; }
 			ByteStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); return *this; }
-			ByteStream& operator<<(char* str) { cpy_to_buf(str, 8); return *this; }
+			ByteStream& operator<<(char* str) { cpy_to_buf(str, strlen(str)); return *this; }
 	};
 
 	extern void init();

@@ -43,6 +43,6 @@ def listen(ip, port):
                     server.client_disconnected(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
-                server.got_message(read_sock, byte_data);
+                if (byte_data != '' and byte_data != '\0'): server.got_message(read_sock, byte_data);
 
     s.close();

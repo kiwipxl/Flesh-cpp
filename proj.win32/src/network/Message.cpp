@@ -7,22 +7,22 @@ using message::Param;
 FormatType::FormatType(const char* c, const short l) : printf_format(c), len(l) { }
 
 //format types for packing and unpacking byte data
-CFTYPE message::FT_CHAR								= new FormatType("c", 1);
-CFTYPE message::FT_SIGNED_CHAR						= new FormatType("c", 1);
-CFTYPE message::FT_UNSIGNED_CHAR					= new FormatType("c", 1);
-CFTYPE message::FT_BOOL								= new FormatType("d", 1);
-CFTYPE message::FT_SHORT							= new FormatType("d", 2);
-CFTYPE message::FT_UNSIGNED_SHORT					= new FormatType("d", 2);
-CFTYPE message::FT_INT								= new FormatType("i", 4);
-CFTYPE message::FT_UNSIGNED_INT						= new FormatType("u", 4);
-CFTYPE message::FT_LONG								= new FormatType("li", 8);
-CFTYPE message::FT_UNSIGNED_LONG					= new FormatType("lu", 8);
-CFTYPE message::FT_LONG_LONG						= new FormatType("lli", 8);
-CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType("llu", 8);
-CFTYPE message::FT_FLOAT							= new FormatType("f", 4);
-CFTYPE message::FT_DOUBLE							= new FormatType("f", 8);
-CFTYPE message::FT_CHAR_ARRAY						= new FormatType("s", 1);
-CFTYPE message::FT_VOID_POINTER						= new FormatType("p", 4);
+CFTYPE message::FT_CHAR								= new FormatType("%c", 1);
+CFTYPE message::FT_SIGNED_CHAR						= new FormatType("%c", 1);
+CFTYPE message::FT_UNSIGNED_CHAR					= new FormatType("%c", 1);
+CFTYPE message::FT_BOOL								= new FormatType("%d", 1);
+CFTYPE message::FT_SHORT							= new FormatType("%d", 2);
+CFTYPE message::FT_UNSIGNED_SHORT					= new FormatType("%d", 2);
+CFTYPE message::FT_INT								= new FormatType("%i", 4);
+CFTYPE message::FT_UNSIGNED_INT						= new FormatType("%u", 4);
+CFTYPE message::FT_LONG								= new FormatType("%li", 8);
+CFTYPE message::FT_UNSIGNED_LONG					= new FormatType("%lu", 8);
+CFTYPE message::FT_LONG_LONG						= new FormatType("%lli", 8);
+CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType("%llu", 8);
+CFTYPE message::FT_FLOAT							= new FormatType("%f", 4);
+CFTYPE message::FT_DOUBLE							= new FormatType("%f", 8);
+CFTYPE message::FT_CHAR_ARRAY						= new FormatType("%s", 1);
+CFTYPE message::FT_VOID_POINTER						= new FormatType("%p", 4);
 
 int message::MID_id = 0;
 std::vector<message::MID*> message::MID_list;
@@ -57,6 +57,8 @@ Param* message::param_list[MAX_NUM_PARAMS];
 int message::param_list_size = 0;
 int message::param_tbytes = 0;
 CMID message::last_extracted_mid;
+const int message::MAX_PRINT_BUF = 1024;
+char message::print_buf[MAX_PRINT_BUF];
 
 void message::init() {
 	for (int n = 0; n < MAX_NUM_PARAMS; ++n) {
@@ -123,15 +125,41 @@ void message::clear_param_list() {
 
 void message::print_extracted_params() {
 	if (last_extracted_mid->num_params == param_list_size) {
-		int header_size = 10;
-		char* temp = new char[param_tbytes + header_size];
-		strcpy(temp, "(debug): ");
-		int offset = header_size;
+		static const char header[] = "(debug): ";
+		int header_size = sizeof(header);
+		strcpy(print_buf, header);
+		int offset = header_size - 1;
 		for (int n = 0; n < param_list_size; ++n) {
-			sprintf(temp + offset, last_extracted_mid->ft_params[n]->printf_format, param_list[n]);
-			offset += param_list[n]->len;
+			//i don't know if the below code can be shortened in c++, but this is a quick work around for now at least
+			//sprintf requires that arguments be the same type of the format specifier, but the type is variable
+			CFTYPE t = last_extracted_mid->ft_params[n];
+			int len;
+			if (t == FT_INT || t == FT_UNSIGNED_INT)
+				len = sprintf(print_buf + offset, t->printf_format, *(int*)param_list[n]->data);
+			else if (t == FT_SHORT || t == FT_UNSIGNED_SHORT)
+				len = sprintf(print_buf + offset, t->printf_format, *(short*)param_list[n]->data);
+			else if (t == FT_LONG || t == FT_UNSIGNED_LONG)
+				len = sprintf(print_buf + offset, t->printf_format, *(long*)param_list[n]->data);
+			else if (t == FT_FLOAT)
+				len = sprintf(print_buf + offset, t->printf_format, *(float*)param_list[n]->data);
+			else if (t == FT_DOUBLE)
+				len = sprintf(print_buf + offset, t->printf_format, *(double*)param_list[n]->data);
+			else if (t == FT_BOOL)
+				len = sprintf(print_buf + offset, t->printf_format, *(bool*)param_list[n]->data);
+			else if (t == FT_CHAR_ARRAY)
+				len = sprintf(print_buf + offset, t->printf_format, param_list[n]->data);
+			else
+				len = sprintf(print_buf + offset, "%s", "undefined");
+
+			offset += len;
+			if (n < param_list_size - 1) {
+				strcpy(print_buf + offset, ", ");
+				offset += 2;
+			}
 		}
-		temp[offset + 1] = '\0';
-		CCLOG(temp);
+		print_buf[offset + 1] = '\0';
+		CCLOG(print_buf);
+	}else {
+		CCLOG("could not print params, required %d params, but %d params given", last_extracted_mid->num_params, param_list_size);
 	}
 }

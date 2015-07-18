@@ -134,4 +134,4 @@ def print_params(mid, params):
             i += 1;
             print("") if i >= len(params) else print(", ", end='');
     else:
-        print("could not print params, required %d, but %d given" % (len(params), mid.num_params));
+        print("could not print params, required %d params, but %d params given" % (len(params), mid.num_params));
