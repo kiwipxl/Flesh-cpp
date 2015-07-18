@@ -12,7 +12,6 @@ def init():
 
     send_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 
-t = None;
 def listen(ip, port):
     global send_sock;
 
@@ -28,9 +27,7 @@ def listen(ip, port):
 
         for read_sock in can_read_list:
             if (read_sock == send_sock):
-                global t;
                 client_sock, addr = send_sock.accept();
-                t = client_sock;
                 read_list.append(client_sock);
                 write_list.append(client_sock);
 
@@ -46,7 +43,6 @@ def listen(ip, port):
                     server.client_disconnected(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
-                t.send("hey!");
                 server.got_message(read_sock, byte_data);
 
     s.close();

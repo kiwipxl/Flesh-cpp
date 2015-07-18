@@ -57,18 +57,24 @@ int Socket::s_connect() {
 }
 
 void Socket::s_setup_select(fd_set* read_set, fd_set* write_set, int seconds_delay, int ms_delay) {
-	FD_ZERO(read_set);
-	FD_SET(sock, read_set);
+	if (read_set != NULL) {
+		FD_ZERO(read_set);
+		FD_SET(sock, read_set);
+	}
+	if (write_set != NULL) FD_ZERO(write_set);
 
 	//u_long non_block_flag = 1;
 	//ioctlsocket(sock, FIONBIO, &non_block_flag);
 
 	t.tv_sec = seconds_delay;
 	t.tv_usec = ms_delay;
+
+	r_set = read_set;
+	w_set = write_set;
 }
 
 int Socket::s_select() {
-	return select(0, r_set, w_set, NULL, NULL);
+	return select(1, r_set, w_set, NULL, &t);
 }
 
 int Socket::s_send(char* buffer, int buffer_len) {

@@ -28,10 +28,10 @@ std::vector<message::MID*> message::MID_list;
 
 CMID message::MID_UNKNOWN							= new MID(0);
 CMID message::MID_CLIENT_ID							= new MID(2, message::FT_INT, message::FT_CHAR_ARRAY);
-CMID message::MID_CLIENT_USER_PASS					= new MID(5, message::FT_BOOL, message::FT_BOOL, message::FT_INT, message::FT_FLOAT, message::FT_CHAR_ARRAY);
+CMID message::MID_CLIENT_USER_PASS					= new MID(2, message::FT_CHAR_ARRAY, message::FT_CHAR_ARRAY);
+CMID message::MID_RELAY_TEST						= new MID(5, message::FT_BOOL, message::FT_BOOL, message::FT_INT, message::FT_FLOAT, message::FT_CHAR_ARRAY);
 
-MID::MID(int num_args, ...) {
-	id = MID_id;
+MID::MID(int num_args, ...) : id(MID_id) {
 	if (num_args > 0) ft_params = new CFTYPE[num_args];
 	num_params = num_args;
 

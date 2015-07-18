@@ -45,7 +45,7 @@ namespace message {
 
 	struct MID {
 
-		int id = 0;
+		const int id = 0;
 		CFTYPE* ft_params = NULL;
 		int total_param_bytes = 0;
 		int num_params = 0;
@@ -61,6 +61,7 @@ namespace message {
 	extern CMID MID_UNKNOWN;
 	extern CMID MID_CLIENT_ID;
 	extern CMID MID_CLIENT_USER_PASS;
+	extern CMID MID_RELAY_TEST;
 
 	//================== Message begin ==================
 
