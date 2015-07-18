@@ -8,7 +8,7 @@ std::thread messagerecv::recv_thread;
 void messagerecv::tcp_recv() {
 	fd_set read_list;
 	fd_set write_list;
-	tcp_sock.s_setup_select(&read_list, &write_list, 0, 1);
+	tcp_sock.s_setup_select(&read_list, &write_list, 50000, 0);
 
 	char buffer[1024];
 	int msg_len;
@@ -30,6 +30,10 @@ void messagerecv::tcp_recv() {
 						CCLOG("b: %d, b: %d, i: %d, f: %f, c: %s", *a, *b, *c, *d, e);
 
 						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << *c << *d << e);
+
+						char* buf = message::byte_buffer;
+						int len = message::byte_offset;
+						int i = 5;
 					}
 					message::clear_param_list();
 				}

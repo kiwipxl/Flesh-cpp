@@ -1,32 +1,35 @@
+from __future__ import print_function;
 import sys;
 import struct;
 
 class FormatType():
 
-    char = '';
+    struct_char = '';
+    printf_char = '';
     len = 0;
 
-    def __init__(self, char, len):
-        self.char = char;
+    def __init__(self, schar, pchar, len):
+        self.struct_char = schar;
+        self.printf_char = pchar;
         self.len = len;
 
 #format types for packing and unpacking byte data
-FT_CHAR                     = FormatType('c', 1);
-FT_SIGNED_CHAR              = FormatType('b', 1);
-FT_UNSIGNED_CHAR            = FormatType('B', 1);
-FT_BOOL                     = FormatType('?', 1);
-FT_SHORT                    = FormatType('h', 2);
-FT_UNSIGNED_SHORT           = FormatType('H', 2);
-FT_INT                      = FormatType('i', 4);
-FT_UNSIGNED_INT             = FormatType('I', 4);
-FT_LONG                     = FormatType('l', 8);
-FT_UNSIGNED_LONG            = FormatType('L', 8);
-FT_LONG_LONG                = FormatType('q', 8);
-FT_UNSIGNED_LONG_LONG       = FormatType('Q', 8);
-FT_FLOAT                    = FormatType('f', 4);
-FT_DOUBLE                   = FormatType('d', 8);
-FT_CHAR_ARRAY               = FormatType('s', 1);
-FT_VOID_POINTER             = FormatType('p', 4);
+FT_CHAR                     = FormatType('c', 'c', 1);
+FT_SIGNED_CHAR              = FormatType('b', 'c', 1);
+FT_UNSIGNED_CHAR            = FormatType('B', 'c', 1);
+FT_BOOL                     = FormatType('?', 'd', 1);
+FT_SHORT                    = FormatType('h', 'd', 2);
+FT_UNSIGNED_SHORT           = FormatType('H', 'd', 2);
+FT_INT                      = FormatType('i', 'i', 4);
+FT_UNSIGNED_INT             = FormatType('I', 'u', 4);
+FT_LONG                     = FormatType('l', 'li', 8);
+FT_UNSIGNED_LONG            = FormatType('L', 'lu', 8);
+FT_LONG_LONG                = FormatType('q', 'lli', 8);
+FT_UNSIGNED_LONG_LONG       = FormatType('Q', 'llu', 8);
+FT_FLOAT                    = FormatType('f', 'f', 4);
+FT_DOUBLE                   = FormatType('d', 'f', 8);
+FT_CHAR_ARRAY               = FormatType('s', 's', 1);
+FT_VOID_POINTER             = FormatType('p', 'lu', 4);
 
 MID_id = 0;
 MID_list = [];
@@ -70,13 +73,13 @@ byte_offset = 0;
 def pack_message(mid, *params):
     byte_offset = 4;
     i = 0;
-    byte_buffer[0:4] = struct.pack(FT_INT.char, mid.id);
+    byte_buffer[0:4] = struct.pack(FT_INT.struct_char, mid.id);
     for param in params:
         t = mid.ft_params[i];
-        if (t.char == 's'):
+        if (t.struct_char == 's'):
             s = param + '\0';
         else:
-            s = struct.pack(t.char, param);
+            s = struct.pack(t.struct_char, param);
         byte_buffer[byte_offset:byte_offset + s.__len__()] = s;
         byte_offset += s.__len__();
         i += 1;
@@ -90,13 +93,15 @@ def extract_mid(byte_data):
             mid = MID_list[id];
     return mid;
 
+import time;
+
 def extract_params(mid, byte_data):
     params = [];
     if (len(byte_data) - 4 >= mid.total_param_bytes):
         byte_offset = 4;
         for n in range(0, len(mid.ft_params)):
             t = mid.ft_params[n];
-            if (t.char == 's'):
+            if (t.struct_char == 's'):
                 s = "";
                 l = 0;
                 for c in byte_data[byte_offset:]:
@@ -105,12 +110,12 @@ def extract_params(mid, byte_data):
                     s += c;
                 byte_offset += l;
             else:
-                s = struct.unpack(t.char, byte_data[byte_offset:byte_offset + t.len])[0];
+                s = struct.unpack(t.struct_char, byte_data[byte_offset:byte_offset + t.len])[0];
                 byte_offset += t.len;
             params.append(s);
         return (params, 0);
     else:
-        print("recv message %s is only %i bytes long when minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
+        print("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
         return (params, -1);
 
 def send(sock, mid, *params):
@@ -119,3 +124,14 @@ def send(sock, mid, *params):
 def broadcast(sock_list, mid, *params):
     for sock in sock_list:
         sock.send(pack_message(mid, params));
+
+def print_params(mid, params):
+    if (mid.num_params == len(params)):
+        print(MID_names[mid.id] + " (debug): ");
+        i = 0;
+        for param in params:
+            print(("%" + mid.ft_params[i].printf_char) % param, end='');
+            i += 1;
+            print("") if i >= len(params) else print(", ", end='');
+    else:
+        print("could not print params, required %d, but %d given" % (len(params), mid.num_params));

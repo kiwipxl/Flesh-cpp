@@ -77,14 +77,14 @@ namespace message {
 		public:
 			ByteStream() { byte_offset = 0; }
 
-			template <class T> inline void cpy_to_buf(const T& v) {
-				memcpy(byte_buffer + byte_offset, &v, sizeof(v));
-				byte_offset += sizeof(v);
+			template <class T> inline void cpy_to_buf(const T* v, int len) {
+				memcpy(byte_buffer + byte_offset, v, len);
+				byte_offset += len;
 			}
 
-			template <class T> ByteStream& operator<<(const T& v) { cpy_to_buf(v); return *this; }
-
-			ByteStream& operator<<(CMID v) { cpy_to_buf(v->id); return *this; }
+			template <class T> ByteStream& operator<<(const T& v) { cpy_to_buf(&v, sizeof(v)); return *this; }
+			ByteStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); return *this; }
+			ByteStream& operator<<(char* str) { cpy_to_buf(str, 8); return *this; }
 	};
 
 	extern void send(Socket* sock, ByteStream& stream);
