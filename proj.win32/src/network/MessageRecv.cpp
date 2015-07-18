@@ -23,11 +23,11 @@ void messagerecv::tcp_recv() {
 				if (mid->id > 0 && mid->id < message::MID_list.size()) {
 					message::extract_params(mid, buffer, msg_len);
 					if (mid == message::MID_RELAY_TEST && message::param_list_size >= message::MID_RELAY_TEST->num_params) {
-						bool* a = (bool*)message::param_list[0];
-						bool* b = (bool*)message::param_list[1];
-						int* c = (int*)message::param_list[2];
-						float* d = (float*)message::param_list[3];
-						char* e = (char*)message::param_list[4];
+						bool* a = (bool*)message::param_list[0]->data;
+						bool* b = (bool*)message::param_list[1]->data;
+						int* c = (int*)message::param_list[2]->data;
+						float* d = (float*)message::param_list[3]->data;
+						char* e = (char*)message::param_list[4]->data;
 
 						CCLOG("b: %d, b: %d, i: %d, f: %f, c: %s", *a, *b, *c, *d, e);
 
@@ -46,6 +46,7 @@ void messagerecv::tcp_recv() {
 }
 
 void messagerecv::start() {
+	message::init();
 	Socket::init_sockets();
 
 	tcp_sock = Socket(PROTO_TCP, "192.168.0.5", "4222");

@@ -58,6 +58,12 @@ int message::param_list_size = 0;
 int message::param_tbytes = 0;
 CMID message::last_extracted_mid;
 
+void message::init() {
+	for (int n = 0; n < MAX_NUM_PARAMS; ++n) {
+		param_list[n] = new Param();
+	}
+}
+
 void message::send(Socket* sock, ByteStream& stream) {
 	sock->s_send(byte_buffer, byte_offset);
 }
@@ -109,7 +115,7 @@ void message::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 
 void message::clear_param_list() {
 	for (int n = 0; n < param_list_size; ++n) {
-		if (param_list[n] != NULL) delete[] param_list[n];
+		if (param_list[n] != NULL) delete[] param_list[n]->data;
 	}
 	param_list_size = 0;
 	param_tbytes = 0;

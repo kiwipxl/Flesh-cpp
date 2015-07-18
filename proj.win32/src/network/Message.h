@@ -96,6 +96,7 @@ namespace message {
 			ByteStream& operator<<(char* str) { cpy_to_buf(str, 8); return *this; }
 	};
 
+	extern void init();
 	extern void send(Socket* sock, ByteStream& stream);
 	extern CMID extract_mid(char* buffer, int buffer_len);
 	extern void extract_params(CMID mid, char* byte_data, int byte_data_len);
