@@ -51,7 +51,7 @@ class MID():
 
 MID_UNKNOWN                         = MID();
 MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY);
-MID_CLIENT_USER_PASS                = MID(FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT);
+MID_CLIENT_USER_PASS                = MID(FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY);
 
 #put all MID_x variables into a name array so messages can be debugged easier
 MID_names = MID_id * [None];
@@ -68,7 +68,7 @@ def encode(mid, *params):
     for param in params:
         t = mid.ft_params[i];
         if (t.char == 's'):
-            s = param;
+            s = param + '\0';
         else:
             s = struct.pack(t.char, param);
         byte_buffer[byte_offset:byte_offset + s.__len__()] = s;

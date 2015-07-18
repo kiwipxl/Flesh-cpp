@@ -17,8 +17,8 @@ namespace message {
 		char chr;
 		short len;
 
-		FormatType::FormatType() { }
-		FormatType::FormatType(char c, short l);
+		FormatType() { }
+		FormatType(char c, short l);
 	};
 
 	#define CFTYPE const message::FormatType*
@@ -50,7 +50,7 @@ namespace message {
 		int total_param_bytes = 0;
 		int num_params = 0;
 
-		MID::MID(int num_args, ...);
+		MID(int num_args, ...);
 	};
 
 	#define CMID const message::MID*

@@ -8,8 +8,10 @@ namespace messagerecv {
 
 	extern Socket tcp_sock;
 	extern Socket udp_sock;
+	extern std::thread recv_thread;
 
 	extern void start();
+	extern void tcp_recv();
 }
 
 #endif

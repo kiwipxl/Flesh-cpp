@@ -1,7 +1,19 @@
 #include "MessageRecv.h"
+#include <thread>
 
 Socket messagerecv::tcp_sock;
 Socket messagerecv::udp_sock;
+std::thread messagerecv::recv_thread;
+
+void messagerecv::tcp_recv() {
+	char buffer[1024];
+	int msg_len;
+	while (true) {
+		if ((msg_len = tcp_sock.s_recv(buffer, 1024)) > 0) {
+			CCLOG("buffer: %s, len: %d", buffer, msg_len);
+		}
+	}
+}
 
 void messagerecv::start() {
 	Socket::init_sockets();
@@ -24,15 +36,11 @@ void messagerecv::start() {
 	float* d = (float*)message::param_list[3];
 	char* e = (char*)message::param_list[4];
 
+	CCLOG("bool: %d, bool2: %d, int: %d, float: %f, str: %s", *a, *b, *c, *d, e);
+
 	message::clear_param_list();
 
-	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true << 458 << 89.42f);
+	message::send(&tcp_sock, message::ByteStream() << message::MID_CLIENT_USER_PASS << false << true << 458 << 89.42f << "debug8");
 
-	char buffer[1024];
-	int msg_len;
-		while (true) {
-		if ((msg_len = tcp_sock.s_recv(buffer, sizeof(buffer))) > 0) {
-			CCLOG("buffer: %s", buffer);
-		}
-	}
+	recv_thread = std::thread(messagerecv::tcp_recv);
 }
