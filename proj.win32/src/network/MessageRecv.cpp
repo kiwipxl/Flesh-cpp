@@ -29,7 +29,8 @@ void messagerecv::tcp_recv() {
 
 						CCLOG("b: %d, b: %d, i: %d, f: %f, c: %s", *a, *b, *c, *d, e);
 
-						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << *c << *d << e);
+						int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
+						message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << e);
 
 						char* buf = message::byte_buffer;
 						int len = message::byte_offset;

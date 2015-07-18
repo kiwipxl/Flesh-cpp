@@ -127,7 +127,7 @@ def broadcast(sock_list, mid, *params):
 
 def print_params(mid, params):
     if (mid.num_params == len(params)):
-        print(MID_names[mid.id] + " (debug): ");
+        print(MID_names[mid.id] + " (debug): ", end='');
         i = 0;
         for param in params:
             print(("%" + mid.ft_params[i].printf_char) % param, end='');
