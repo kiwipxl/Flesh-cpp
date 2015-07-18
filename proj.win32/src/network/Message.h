@@ -55,12 +55,33 @@ namespace message {
 	#define CMID const message::MID*
 
 	extern int MID_id;
-	extern std::vector<MID*> MID_list;
-	
+	extern std::vector<CMID> MID_list;
+	extern std::vector<const char*> MID_names;
+
 	extern CMID MID_UNKNOWN;
 	extern CMID MID_CLIENT_ID;
 	extern CMID MID_CLIENT_USER_PASS;
 	extern CMID MID_RELAY_TEST;
+
+	//================== Hack to get message variable names ==================
+
+	#define PP_CAT(a, b) PP_CAT_I(a, b)
+	#define PP_CAT_I(a, b) PP_CAT_II(~, a ## b)
+	#define PP_CAT_II(p, res) res
+
+	#define UNIQUE_NAME(base) PP_CAT(base, __COUNTER__)
+
+	struct MID_AutoName {
+
+		MID_AutoName(std::string name) {
+			int index = name.find("MID_");
+			int index_end;
+			if (index != -1) index_end = name.substr(index, name.length()).find(" ");
+				if (index_end != -1) MID_names.push_back(name.substr(index, index_end).c_str());
+		}
+	};
+
+	#define ADD_MID_NAME(name) name; message::MID_AutoName UNIQUE_NAME(test) = message::MID_AutoName(#name);
 
 	//================== Parameters begin ==================
 
