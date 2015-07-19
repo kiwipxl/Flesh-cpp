@@ -1,6 +1,7 @@
 from __future__ import print_function;
 import sys;
 import struct;
+import socket;
 
 class FormatType():
 
@@ -121,11 +122,17 @@ def extract_params(mid, byte_data):
         print("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
         return (params, -1);
 
-def send(sock, mid, *params):
-    sock.send(pack_message(mid, *params));
+def send(sock, client, mid, *params):
+    if (sock.type == socket.SOCK_STREAM):
+        sock.send(pack_message(mid, *params));
+    else:
+        sock.sendto(pack_message(mid, *params), (client.ip, client.port));
 
-def sendto(sock, ip, port, mid, *params):
-    sock.sendto(pack_message(mid, *params), (ip, port));
+def send_tcp(tcp_sock, mid, *params):
+    tcp_sock.send(pack_message(mid, *params));
+
+def send_udp(udp_sock, ip, port, mid, *params):
+    udp_sock.sendto(pack_message(mid, *params), (ip, port));
 
 def broadcast(sock_list, mid, *params):
     for sock in sock_list:

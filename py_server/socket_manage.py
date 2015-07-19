@@ -70,6 +70,6 @@ def listen(ip, port):
                             client_obj = c;
 
                     if (client_obj):
-                        server_msgs.got_message(client_obj, byte_data);
+                        server_msgs.got_message(read_sock, client_obj, byte_data);
 
     s.close();

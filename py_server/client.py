@@ -3,7 +3,6 @@ import message;
 class Client:
     id = 0;
     tcp_sock = None;
-    udp_send_sock = None;
     ip = "";
     port = 0;
 
@@ -17,7 +16,7 @@ def handle_join(client_sock, client_ip, client_port):
     global client_id_inc
 
     c = Client();
-    c.sock = client_sock;
+    c.tcp_sock = client_sock;
     c.id = client_id_inc;
     c.ip = client_ip;
     c.port = client_port;
@@ -28,7 +27,7 @@ def handle_join(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.sock, message.MID_GET_TCP_CLIENT_PORT, client_port);
+    message.send(c.tcp_sock, c, message.MID_GET_TCP_CLIENT_PORT, client_port);
 
 def handle_leave(sock):
     global clients
