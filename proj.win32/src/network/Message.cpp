@@ -1,8 +1,26 @@
 #include "Message.h"
 
+//the following namespace inclusions are used to avoid redundant "message::" accesses
 using message::MID;
 using message::FormatType;
 using message::Param;
+
+using message::FT_CHAR;
+using message::FT_SIGNED_CHAR;
+using message::FT_UNSIGNED_CHAR;
+using message::FT_BOOL;
+using message::FT_SHORT;
+using message::FT_UNSIGNED_SHORT;
+using message::FT_INT;
+using message::FT_UNSIGNED_INT;
+using message::FT_LONG;
+using message::FT_UNSIGNED_LONG;
+using message::FT_LONG_LONG;
+using message::FT_UNSIGNED_LONG_LONG;
+using message::FT_FLOAT;
+using message::FT_DOUBLE;
+using message::FT_CHAR_ARRAY;
+using message::FT_VOID_POINTER;
 
 FormatType::FormatType(const char* c, const short l) : printf_format(c), len(l) { }
 
@@ -29,9 +47,9 @@ std::vector<CMID> message::MID_list;
 std::vector<std::string> message::MID_names;
 
 ADD_MID_NAME(CMID message::MID_UNKNOWN					= new MID(0));
-ADD_MID_NAME(CMID message::MID_CLIENT_ID				= new MID(2, message::FT_INT, message::FT_CHAR_ARRAY));
-ADD_MID_NAME(CMID message::MID_CLIENT_USER_PASS			= new MID(2, message::FT_CHAR_ARRAY, message::FT_CHAR_ARRAY));
-ADD_MID_NAME(CMID message::MID_RELAY_TEST				= new MID(5, message::FT_BOOL, message::FT_BOOL, message::FT_INT, message::FT_FLOAT, message::FT_CHAR_ARRAY));
+ADD_MID_NAME(CMID message::MID_CLIENT_ID				= new MID(5, FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY));
+ADD_MID_NAME(CMID message::MID_CLIENT_USER_PASS			= new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));
+ADD_MID_NAME(CMID message::MID_RELAY_TEST				= new MID(5, FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY));
 
 MID::MID(int num_args, ...) : id(MID_id) {
 	if (num_args > 0) ft_params = new CFTYPE[num_args];

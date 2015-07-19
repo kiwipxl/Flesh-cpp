@@ -77,7 +77,5 @@ void messagerecv::start() {
 
 	recv_thread = std::thread(messagerecv::tcp_recv);
 
-	CCLOG("send message");
-
 	message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << false << true << 458 << 89.42f << "debug12");
 }

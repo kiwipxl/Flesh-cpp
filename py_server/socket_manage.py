@@ -1,9 +1,8 @@
 import socket;
 import select;
 import sys;
-import server;
-import message;
-import time;
+import client;
+import server_msgs;
 
 send_sock = None;
 
@@ -31,18 +30,23 @@ def listen(ip, port):
                 read_list.append(client_sock);
                 write_list.append(client_sock);
 
-                server.client_accepted(client_sock, addr[0], addr[1]);
+                client.handle_join(client_sock, addr[0], addr[1]);
             else:
                 try:
                     byte_data = read_sock.recv(1024);
+                    if (byte_data.__len__() <= 0):
+                        print("socket has disconnected");
+                        read_list.remove(read_sock);
+
+                        client.handle_leave(read_sock);
+                        if (server.num_clients <= 0): break;
                 except:
                     print("socket has disconnected");
                     read_list.remove(read_sock);
-                    write_list.remove(read_sock);
 
-                    server.client_disconnected(read_sock);
+                    client.handle_leave(read_sock);
                     if (server.num_clients <= 0): break;
                     continue;
-                if (byte_data != '' and byte_data != '\0'): server.got_message(read_sock, byte_data);
+                server_msgs.got_message(client.find_by_sock(read_sock), byte_data);
 
     s.close();

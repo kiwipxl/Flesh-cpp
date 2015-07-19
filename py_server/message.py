@@ -57,7 +57,7 @@ class MID():
         MID_list.append(self);
 
 MID_UNKNOWN                         = MID();
-MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY);
+MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY);
 MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 MID_RELAY_TEST                      = MID(FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY);
 
