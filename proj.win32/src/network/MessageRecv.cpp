@@ -12,51 +12,55 @@ std::thread messagerecv::recv_thread;
 void messagerecv::tcp_recv() {
 	fd_set read_list;
 	fd_set write_list;
-
-	struct pollfd fds[2];
+	
+	std::vector<pollfd> fds;
+	fds.resize(2);
 	fds[0].fd = tcp_serv_sock.get_sock();
 	fds[0].events = POLLRDNORM | POLLRDBAND;
-	fds[0].fd = udp_serv_recv_sock.get_sock();
-	fds[0].events = POLLRDNORM | POLLRDBAND;
+	fds[1].fd = udp_serv_recv_sock.get_sock();
+	fds[1].events = POLLRDNORM | POLLRDBAND;
+
+	std::vector<Socket*> socket_fds;
+	socket_fds.resize(fds.size());
+	socket_fds[0] = &tcp_serv_sock;
+	socket_fds[1] = &udp_serv_recv_sock;
 
 	char buffer[1024];
 	int msg_len;
 	while (true) {
 		int total = 0;
-		if ((total = Socket::poll_fds(fds, 1, 1000)) > 0) {
-			int i = 0;
-			if (fds[i].revents & POLLERR) {
-				CCLOG("poll error occurred");
-			}else if (fds[i].revents & POLLHUP) {
-				CCLOG("poll hang up error occurred");
-			}else if (fds[i].revents & POLLNVAL) {
-				CCLOG("poll invalid request occurred");
-			}else if (fds[i].revents & POLLRDNORM || fds[i].revents & POLLRDBAND || fds[i].revents & POLLIN || fds[i].revents & POLLPRI) {
-				if ((msg_len = udp_serv_recv_sock.s_recv(buffer, 1024)) > 0) {
-					CCLOG("buf: %s", buffer);
-				}
-				continue;
-				if ((msg_len = tcp_serv_sock.s_recv(buffer, 1024)) > 0) {
-					CMID mid = message::extract_mid(buffer, msg_len);
-					if (mid->id > 0 && mid->id < message::MID_list.size()) {
-						message::extract_params(mid, buffer, msg_len);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		if ((total = Socket::poll_fds(&fds[0], fds.size(), 1000)) > 0) {
+			for (int i = 0; i < fds.size(); ++i) {
+				if (fds[i].revents & POLLERR) {
+					CCLOG("poll error occurred");
+				}else if (fds[i].revents & POLLHUP) {
+					CCLOG("poll hang up error occurred");
+				}else if (fds[i].revents & POLLNVAL) {
+					CCLOG("poll invalid request occurred");
+				}else if (fds[i].revents & POLLRDNORM || fds[i].revents & POLLRDBAND || fds[i].revents & POLLIN || fds[i].revents & POLLPRI) {
+					if ((msg_len = socket_fds[i]->s_recv(buffer, 1024)) > 0) {
+						CMID mid = message::extract_mid(buffer, msg_len);
+						if (mid->id > 0 && mid->id < message::MID_list.size()) {
+							message::extract_params(mid, buffer, msg_len);
 
-						if (VALID_PARAMS(mid, message::MID_RELAY_TEST)) {
-							bool* a = (bool*)message::param_list[0]->data;
-							bool* b = (bool*)message::param_list[1]->data;
-							int* c = (int*)message::param_list[2]->data;
-							float* d = (float*)message::param_list[3]->data;
-							char** e = &message::param_list[4]->data;
+							if (VALID_PARAMS(mid, message::MID_RELAY_TEST)) {
+								bool* a = (bool*)message::param_list[0]->data;
+								bool* b = (bool*)message::param_list[1]->data;
+								int* c = (int*)message::param_list[2]->data;
+								float* d = (float*)message::param_list[3]->data;
+								char** e = &message::param_list[4]->data;
 
-							message::print_extracted_params();
+								message::print_extracted_params();
 
-							int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
-							std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-							message::send(&tcp_serv_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
-						}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
-							message::print_extracted_params();
+								int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
+								std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+								message::send(&tcp_serv_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
+							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
+								message::print_extracted_params();
+							}
+							message::clear_param_list();
 						}
-						message::clear_param_list();
 					}
 				}
 			}
@@ -90,5 +94,5 @@ void messagerecv::start() {
 
 	recv_thread = std::thread(messagerecv::tcp_recv);
 
-	message::send(&udp_serv_send_sock, message::ByteStream() << "ayyyyyy");
+	message::send(&udp_serv_send_sock, message::ByteStream() << message::MID_CLIENT_ID << 14 << "ayy" << "lmao" << 80 << "kappa");
 }

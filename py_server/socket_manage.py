@@ -34,7 +34,6 @@ def listen(ip, port):
     while (1):
         print("receiving...");
         buf, addr = udp_sock.recvfrom(1024);
-        time.sleep(1);
         print("buf: %s, addr: %s" % (buf, addr));
         udp_sock_send.sendto(buf, (ip, 4224));
         print("received!");

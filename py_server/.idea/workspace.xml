@@ -71,8 +71,8 @@
       <file leaf-file-name="socket_manage.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/socket_manage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7357002">
-              <caret line="46" column="46" selection-start-line="46" selection-start-column="46" selection-end-line="46" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.3668639">
+              <caret line="35" column="44" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -819,8 +819,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/socket_manage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7357002">
-          <caret line="46" column="46" selection-start-line="46" selection-start-column="46" selection-end-line="46" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.3668639">
+          <caret line="35" column="44" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
