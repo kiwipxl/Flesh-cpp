@@ -28,7 +28,7 @@ def handle_join(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.sock, message.MID_CLIENT_ID, c.id, "verify", "connection", 40, "a");
+    message.send(c.sock, message.MID_GET_TCP_CLIENT_PORT << client_port);
 
 def handle_leave(sock):
     global clients

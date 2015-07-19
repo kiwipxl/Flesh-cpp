@@ -5,30 +5,27 @@ import client;
 import server_msgs;
 import time;
 
+#used to listen to a port for incoming connections and accepting them
 tcp_sock = None;
-udp_recv_sock = None;
-udp_send_sock = None;
+udp_sock = None;
 
 def init():
     global tcp_sock;
-    global udp_recv_sock;
-    global udp_send_sock;
-
+    global udp_sock;
+    
     tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-    udp_recv_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
-    udp_send_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
-
+    udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+    
 def listen(ip, port):
     global tcp_sock;
-    global udp_recv_sock;
-    global udp_send_sock;
-
+    global udp_sock;
+    
     tcp_sock.bind((ip, port));
-    udp_recv_sock.bind((ip, port));
+    udp_sock.bind((ip, port));
     tcp_sock.listen(1);
     print("awaiting clients...");
 
-    read_list = [tcp_sock, udp_recv_sock];
+    read_list = [tcp_sock, udp_sock];
     write_list = [];
 
     while (1):

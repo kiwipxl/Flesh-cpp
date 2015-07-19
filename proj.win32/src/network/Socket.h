@@ -31,7 +31,7 @@ class Socket {
 		static void init_sockets();
 		static int poll_fds(pollfd* fd_array, int array_len, int timeout);
 
-		Socket(SocketProtocol c_protocol = PROTO_TCP, char* c_ip = "n/a", char* c_port = "n/a");
+		Socket(SocketProtocol c_protocol = PROTO_TCP, char* c_ip = "undefined", short c_port = -1);
 		SocketProtocol protocol;
 
 		int s_create();
@@ -40,16 +40,16 @@ class Socket {
 		int s_send(char* buffer, int buffer_len);
 		int s_recv(char* buffer, int buffer_len);
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
-		int s_change_addr(char* c_ip, char* c_port);
+		int s_change_addr(char* c_ip, short c_port);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_ip() { return ip; }
-		char* get_port() { return port; }
+		short get_port() { return port; }
 
 	private:
 		int result;
 		char* ip;
-		char* port;
+		short port;
 		uintptr_t sock;
 		struct sockaddr_in serv_addr;
 		struct addrinfo sock_info;

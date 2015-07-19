@@ -50,6 +50,7 @@ ADD_MID_NAME(CMID message::MID_UNKNOWN					= new MID(0));
 ADD_MID_NAME(CMID message::MID_CLIENT_ID				= new MID(5, FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY));
 ADD_MID_NAME(CMID message::MID_CLIENT_USER_PASS			= new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));
 ADD_MID_NAME(CMID message::MID_RELAY_TEST				= new MID(5, FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY));
+ADD_MID_NAME(CMID message::MID_GET_TCP_CLIENT_PORT		= new MID(1, FT_SHORT));
 
 MID::MID(int num_args, ...) : id(MID_id) {
 	if (num_args > 0) ft_params = new CFTYPE[num_args];

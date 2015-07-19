@@ -58,6 +58,11 @@ void messagerecv::tcp_recv() {
 								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
 							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
 								message::print_extracted_params();
+							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_CLIENT_PORT)) {
+								message::print_extracted_params();
+
+								udp_serv_sock.s_change_addr("192.168.0.5", *(short*)message::param_list[0]->data);
+								message::send(&udp_serv_sock, message::ByteStream() << message::MID_CLIENT_ID << 14 << "ayy" << "lmao" << 80 << "kappa");
 							}
 							message::clear_param_list();
 						}
@@ -79,18 +84,15 @@ void messagerecv::start() {
 	Socket::init_sockets();
 
 	int fresult;
-	tcp_serv_sock = Socket(PROTO_TCP, "192.168.0.5", "4222");
+	tcp_serv_sock = Socket(PROTO_TCP, "192.168.0.5", 4222);
 	if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) { CCLOG("(tcp_serv_sock): error %d occurred while creating tcp socket", fresult); start_failed(); return; }
 	if ((fresult = tcp_serv_sock.s_connect()) != NO_ERROR) { CCLOG("(tcp_serv_sock): error %d occurred while trying to connect to (ip: %s, port: %s)", fresult, tcp_serv_sock.get_ip(), tcp_serv_sock.get_port()); start_failed(); return; }
 
-	udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", "4224");
+	udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 4224);
 	if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult); start_failed(); return; }
 	if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %s)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port()); start_failed(); return; }
-	udp_serv_sock.s_change_addr("192.168.0.5", "4222");
 
 	CCLOG("socket start was successful");
 
 	recv_thread = std::thread(messagerecv::tcp_recv);
-
-	message::send(&udp_serv_sock, message::ByteStream() << message::MID_CLIENT_ID << 14 << "ayy" << "lmao" << 80 << "kappa");
 }

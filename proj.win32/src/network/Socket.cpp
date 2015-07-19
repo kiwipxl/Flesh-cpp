@@ -20,7 +20,7 @@ int Socket::poll_fds(pollfd* fd_array, int array_len, int timeout) {
 	#endif
 }
 
-Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
+Socket::Socket(SocketProtocol c_protocol, char* c_ip, short c_port) {
 	protocol = c_protocol;
 	ip = c_ip;
 	port = c_port;
@@ -48,14 +48,14 @@ int Socket::s_create() {
 	return NO_ERROR;
 }
 
-int Socket::s_change_addr(char* c_ip, char* c_port) {
+int Socket::s_change_addr(char* c_ip, short c_port) {
 	ip = c_ip;
 	port = c_port;
 
 	//setup serv_addr structure
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(atoi(port));
+	serv_addr.sin_port = htons(port);
 
 	//convert ip and copy into ipv4 structure in_addr
 	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) return get_last_error();
