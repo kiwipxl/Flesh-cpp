@@ -162,7 +162,7 @@ void message::print_extracted_params() {
 			}
 		}
 		print_buf[offset + 1] = '\0';
-		CCLOG(print_buf);
+		CCLOG(print_buf, "");
 	}else {
 		CCLOG("could not print params, required %d params, but %d params given", last_extracted_mid->num_params, param_list_size);
 	}
