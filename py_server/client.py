@@ -2,7 +2,8 @@ import message;
 
 class Client:
     id = 0;
-    sock = None;
+    tcp_sock = None;
+    udp_send_sock = None;
     ip = "";
     port = 0;
 
@@ -27,7 +28,7 @@ def handle_join(client_sock, client_ip, client_port):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.sock, message.MID_CLIENT_ID, c.id, "test1", "test2", 40, "a");
+    message.send(c.sock, message.MID_CLIENT_ID, c.id, "verify", "connection", 40, "a");
 
 def handle_leave(sock):
     global clients

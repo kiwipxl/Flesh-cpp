@@ -40,6 +40,7 @@ class Socket {
 		int s_send(char* buffer, int buffer_len);
 		int s_recv(char* buffer, int buffer_len);
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
+		int s_change_addr(char* c_ip, char* c_port);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_ip() { return ip; }

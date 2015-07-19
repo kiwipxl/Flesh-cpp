@@ -6,39 +6,33 @@ import server_msgs;
 import time;
 
 tcp_sock = None;
-udp_sock = None;
-udp_sock_send = None;
+udp_recv_sock = None;
+udp_send_sock = None;
 
 def init():
     global tcp_sock;
-    global udp_sock;
-    global udp_sock_send;
+    global udp_recv_sock;
+    global udp_send_sock;
 
     tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-    udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
-    udp_sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+    udp_recv_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+    udp_send_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
 
 def listen(ip, port):
     global tcp_sock;
-    global udp_sock;
-    global udp_sock_send;
+    global udp_recv_sock;
+    global udp_send_sock;
 
-    #tcp_sock.bind((ip, port));
-    udp_sock.bind((ip, port));
-    #tcp_sock.listen(1);
+    tcp_sock.bind((ip, port));
+    udp_recv_sock.bind((ip, port));
+    tcp_sock.listen(1);
     print("awaiting clients...");
 
-    read_list = [tcp_sock, udp_sock];
+    read_list = [tcp_sock, udp_recv_sock];
     write_list = [];
 
     while (1):
-        print("receiving...");
-        buf, addr = udp_sock.recvfrom(1024);
-        print("buf: %s, addr: %s" % (buf, addr));
-        udp_sock_send.sendto(buf, (ip, 4224));
-        print("received!");
-
-        can_read_list, can_write_list, err = select.select(read_list, write_list, [], 1);
+        can_read_list, can_write_list, err = select.select(read_list, write_list, [], 0);
 
         for read_sock in can_read_list:
             if (read_sock == tcp_sock):
@@ -48,8 +42,14 @@ def listen(ip, port):
 
                 client.handle_join(client_sock, addr[0], addr[1]);
             else:
+                addr = None;
                 try:
-                    byte_data = read_sock.recv(1024);
+                    if (read_sock.type == socket.SOCK_STREAM):
+                        byte_data = read_sock.recv(1024);
+                        addr = read_sock.getsockname();
+                    else:
+                        byte_data, addr = read_sock.recvfrom(1024);
+
                     if (byte_data.__len__() <= 0):
                         print("socket has disconnected");
                         read_list.remove(read_sock);
@@ -63,6 +63,12 @@ def listen(ip, port):
                     client.handle_leave(read_sock);
                     if (client.num_clients <= 0): break;
                     continue;
-                server_msgs.got_message(client.find_by_sock(read_sock), byte_data);
+                if (addr):
+                    client_obj = None;
+                    for c in client.clients:
+                        if (c.ip == addr[0] and c.port == addr[1]):
+                            client_obj = c;
+                    #if (client_obj):
+                    server_msgs.got_message(client_obj, byte_data);
 
     s.close();

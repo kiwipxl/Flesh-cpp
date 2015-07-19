@@ -40,6 +40,18 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, char* c_port) {
 }
 
 int Socket::s_create() {
+	s_change_addr(ip, port);
+
+	//create socket
+	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return get_last_error();
+
+	return NO_ERROR;
+}
+
+int Socket::s_change_addr(char* c_ip, char* c_port) {
+	ip = c_ip;
+	port = c_port;
+
 	//setup serv_addr structure
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
@@ -47,8 +59,6 @@ int Socket::s_create() {
 
 	//convert ip and copy into ipv4 structure in_addr
 	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) return get_last_error();
-	//create socket
-	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return get_last_error();
 
 	return NO_ERROR;
 }
