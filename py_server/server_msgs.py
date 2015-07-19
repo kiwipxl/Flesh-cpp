@@ -15,10 +15,10 @@ def got_message(sock, client_obj, byte_data):
                 print("username: %s, password: %s" % (params[0], params[1]));
                 db.add_user_account(params[0], params[1]);
             elif (mid == message.MID_RELAY_TEST and len(params) == message.MID_RELAY_TEST.num_params):
-                message.print_params(mid, params);
+                message.print_params(client_obj, sock.type, mid, params);
                 message.send(sock, client_obj, message.MID_RELAY_TEST, params[0], params[1], random.randrange(0, 100), params[3], params[4]);
             elif (mid == message.MID_CLIENT_ID and len(params) == message.MID_CLIENT_ID.num_params):
-                message.print_params(mid, params);
-                message.send_udp(socket_manage.udp_sock, client_obj.ip, client_obj.port, message.MID_RELAY_TEST, True, False, random.randrange(0, 100), 2.458, "ayyo");
+                message.print_params(client_obj, sock.type, mid, params);
+                message.send(sock, client_obj, message.MID_RELAY_TEST, True, False, random.randrange(0, 100), 2.458, "ayyo");
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));

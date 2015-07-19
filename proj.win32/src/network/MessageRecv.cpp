@@ -53,8 +53,9 @@ void messagerecv::tcp_recv() {
 
 								message::print_extracted_params();
 
-								std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << *c << *d << *e);
+
+								std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
 								message::print_extracted_params();
 							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_CLIENT_PORT)) {

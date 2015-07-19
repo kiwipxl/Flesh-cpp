@@ -64,7 +64,7 @@ def listen(ip, port):
                     client_obj = None;
                     for c in client.clients:
                         if (read_sock.type == socket.SOCK_STREAM):
-                            if (c.sock == read_sock):
+                            if (c.tcp_sock == read_sock):
                                 client_obj = c;
                         elif (c.ip == addr[0] and c.port == addr[1]):
                             client_obj = c;

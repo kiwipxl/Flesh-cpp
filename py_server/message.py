@@ -138,9 +138,9 @@ def broadcast(sock_list, mid, *params):
     for sock in sock_list:
         sock.send(pack_message(mid, params));
 
-def print_params(mid, params):
+def print_params(client_obj, sock_type, mid, params):
     if (mid.num_params > 1 and mid.num_params == len(params)):
-        print(MID_names[mid.id] + ": ", end='');
+        print(MID_names[mid.id] + " (client id %d, %s): " % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
         i = 0;
         for param in params:
             print(("(%s): %" + mid.ft_params[i].printf_char) % (mid.ft_params[i].type_name, param), end='');
