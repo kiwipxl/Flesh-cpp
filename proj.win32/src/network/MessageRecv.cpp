@@ -9,19 +9,26 @@ std::thread messagerecv::recv_thread;
 void messagerecv::tcp_recv() {
 	fd_set read_list;
 	fd_set write_list;
-	tcp_sock.s_setup_select(&read_list, &write_list);
+
+	struct pollfd fds[1];
+	fds[0].fd = tcp_sock.get_sock();
+	fds[0].events = POLLRDNORM | POLLRDBAND;
 
 	char buffer[1024];
 	int msg_len;
 	while (true) {
 		int total = 0;
-		CCLOG("running!");
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		if ((total = tcp_sock.s_select()) > 0) {
-			CCLOG("total: %d", total);
-			if (FD_ISSET(tcp_sock.get_sock(), &read_list)) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		if ((total = tcp_sock.s_poll(fds, 1, 1000)) > 0) {
+			int i = 0;
+			if (fds[i].revents & POLLERR) {
+				CCLOG("poll error occurred");
+			}else if (fds[i].revents & POLLHUP) {
+				CCLOG("poll hang up error occurred");
+			}else if (fds[i].revents & POLLNVAL) {
+				CCLOG("poll invalid request occurred");
+			}else if (fds[i].revents & POLLRDNORM || fds[i].revents & POLLRDBAND || fds[i].revents & POLLIN || fds[i].revents & POLLPRI) {
 				if ((msg_len = tcp_sock.s_recv(buffer, 1024)) > 0) {
-					CCLOG("received!");
 					CMID mid = message::extract_mid(buffer, msg_len);
 					if (mid->id > 0 && mid->id < message::MID_list.size()) {
 						message::extract_params(mid, buffer, msg_len);

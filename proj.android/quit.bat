@@ -1,0 +1,1 @@
+adb install -r "E:\Development\C++Projects\WormsGame\bin\debug\android\WormsGame-debug.apk"

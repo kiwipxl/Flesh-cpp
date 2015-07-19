@@ -7,6 +7,8 @@ import socket_manage;
 import message;
 from client import *;
 import struct;
+import time;
+import random;
 
 clients = [];
 num_clients = 0;
@@ -52,7 +54,7 @@ def got_message(client_sock, byte_data):
                 db.add_user_account(params[0], params[1]);
             elif (mid == message.MID_RELAY_TEST and len(params) == message.MID_RELAY_TEST.num_params):
                 message.print_params(mid, params);
-                message.send(client_sock, message.MID_RELAY_TEST, params[0], params[1], params[2], params[3], params[4]);
+                message.send(client_sock, message.MID_RELAY_TEST, params[0], params[1], random.randrange(0, 100), params[3], params[4]);
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));
 

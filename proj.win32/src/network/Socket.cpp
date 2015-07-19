@@ -56,25 +56,25 @@ int Socket::s_connect() {
 	return NO_ERROR;
 }
 
-void Socket::s_setup_select(fd_set* read_set, fd_set* write_set, int seconds_delay, int ms_delay) {
+int Socket::s_select(fd_set* read_set, fd_set* write_set, bool use_timeout, int timeout_seconds, int timeout_ms) {
 	if (read_set != NULL) {
 		FD_ZERO(read_set);
 		FD_SET(sock, read_set);
 	}
 	if (write_set != NULL) FD_ZERO(write_set);
 
-	//u_long non_block_flag = 1;
-	//ioctlsocket(sock, FIONBIO, &non_block_flag);
+	t.tv_sec = timeout_seconds;
+	t.tv_usec = timeout_ms;
 
-	t.tv_sec = seconds_delay;
-	t.tv_usec = ms_delay;
-
-	r_set = read_set;
-	w_set = write_set;
+	return select(2, read_set, NULL, NULL, use_timeout ? &t : NULL);
 }
 
-int Socket::s_select(bool use_timeout) {
-	return select(1, r_set, w_set, NULL, use_timeout ? &t : NULL);
+int Socket::s_poll(pollfd* fd_array, int array_len, int timeout) {
+	#if defined(PLATFORM_WIN32)
+		return WSAPoll(fd_array, array_len, timeout);
+	#elif defined(PLATFORM_ANDROID) || defined(PLATFORM_LINUX)
+		return poll(fd_array, array_len, timeout);
+	#endif
 }
 
 int Socket::s_send(char* buffer, int buffer_len) {
