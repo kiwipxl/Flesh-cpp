@@ -63,9 +63,13 @@ def listen(ip, port):
                 if (addr):
                     client_obj = None;
                     for c in client.clients:
-                        if (c.ip == addr[0] and c.port == addr[1]):
+                        if (read_sock.type == socket.SOCK_STREAM):
+                            if (c.sock == read_sock):
+                                client_obj = c;
+                        elif (c.ip == addr[0] and c.port == addr[1]):
                             client_obj = c;
-                    #if (client_obj):
-                    server_msgs.got_message(client_obj, byte_data);
+
+                    if (client_obj):
+                        server_msgs.got_message(client_obj, byte_data);
 
     s.close();

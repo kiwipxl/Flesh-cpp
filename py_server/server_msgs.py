@@ -19,5 +19,6 @@ def got_message(client, byte_data):
                 message.send(client.sock, message.MID_RELAY_TEST, params[0], params[1], random.randrange(0, 100), params[3], params[4]);
             elif (mid == message.MID_CLIENT_ID and len(params) == message.MID_CLIENT_ID.num_params):
                 message.print_params(mid, params);
+                message.sendto(socket_manage.udp_sock, client.ip, client.port, message.MID_RELAY_TEST, True, False, random.randrange(0, 100), 2.458, "ayyo");
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));

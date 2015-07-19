@@ -124,6 +124,9 @@ def extract_params(mid, byte_data):
 def send(sock, mid, *params):
     sock.send(pack_message(mid, *params));
 
+def sendto(sock, ip, port, mid, *params):
+    sock.sendto(pack_message(mid, *params), (ip, port));
+
 def broadcast(sock_list, mid, *params):
     for sock in sock_list:
         sock.send(pack_message(mid, params));

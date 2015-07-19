@@ -53,15 +53,17 @@ void messagerecv::tcp_recv() {
 
 								message::print_extracted_params();
 
-								int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
 								std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
+								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << *c << *d << *e);
 							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
 								message::print_extracted_params();
 							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_CLIENT_PORT)) {
 								message::print_extracted_params();
 
 								udp_serv_sock.s_change_addr("192.168.0.5", *(unsigned short*)message::param_list[0]->data);
+								int fresult;
+								if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %s)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port()); }
+								udp_serv_sock.s_change_addr("192.168.0.5", 4222);
 								message::send(&udp_serv_sock, message::ByteStream() << message::MID_CLIENT_ID << 14 << "ayy" << "lmao" << 80 << "kappa");
 							}
 							message::clear_param_list();
@@ -90,7 +92,6 @@ void messagerecv::start() {
 
 	udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 4224);
 	if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult); start_failed(); return; }
-	if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %s)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port()); start_failed(); return; }
 
 	CCLOG("socket start was successful");
 
