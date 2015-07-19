@@ -33,9 +33,10 @@ def listen(ip, port):
 
     while (1):
         print("receiving...");
-        udp_sock.recvfrom(1024);
+        buf, addr = udp_sock.recvfrom(1024);
         time.sleep(1);
-        udp_sock_send.sendto("sup", (ip, 4224));
+        print("buf: %s, addr: %s" % (buf, addr));
+        udp_sock_send.sendto(buf, (ip, 4224));
         print("received!");
 
         can_read_list, can_write_list, err = select.select(read_list, write_list, [], 1);

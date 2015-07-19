@@ -16,15 +16,14 @@ void messagerecv::tcp_recv() {
 	struct pollfd fds[2];
 	fds[0].fd = tcp_serv_sock.get_sock();
 	fds[0].events = POLLRDNORM | POLLRDBAND;
-	fds[1].fd = udp_serv_recv_sock.get_sock();
-	fds[1].events = POLLRDNORM | POLLRDBAND;
+	fds[0].fd = udp_serv_recv_sock.get_sock();
+	fds[0].events = POLLRDNORM | POLLRDBAND;
 
 	char buffer[1024];
 	int msg_len;
 	while (true) {
 		int total = 0;
-		if ((total = Socket::poll_fds(fds, 2, 1000)) > 0) {
-			CCLOG("total: %d", total);
+		if ((total = Socket::poll_fds(fds, 1, 1000)) > 0) {
 			int i = 0;
 			if (fds[i].revents & POLLERR) {
 				CCLOG("poll error occurred");
@@ -33,6 +32,10 @@ void messagerecv::tcp_recv() {
 			}else if (fds[i].revents & POLLNVAL) {
 				CCLOG("poll invalid request occurred");
 			}else if (fds[i].revents & POLLRDNORM || fds[i].revents & POLLRDBAND || fds[i].revents & POLLIN || fds[i].revents & POLLPRI) {
+				if ((msg_len = udp_serv_recv_sock.s_recv(buffer, 1024)) > 0) {
+					CCLOG("buf: %s", buffer);
+				}
+				continue;
 				if ((msg_len = tcp_serv_sock.s_recv(buffer, 1024)) > 0) {
 					CMID mid = message::extract_mid(buffer, msg_len);
 					if (mid->id > 0 && mid->id < message::MID_list.size()) {
@@ -87,5 +90,5 @@ void messagerecv::start() {
 
 	recv_thread = std::thread(messagerecv::tcp_recv);
 
-	message::send(&udp_serv_send_sock, message::ByteStream() << message::MID_RELAY_TEST << false << true << 458 << 89.42f << "debug12");
+	message::send(&udp_serv_send_sock, message::ByteStream() << "ayyyyyy");
 }

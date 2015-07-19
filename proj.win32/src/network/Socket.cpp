@@ -90,7 +90,8 @@ int Socket::s_recv(char* buffer, int buffer_len) {
 	if (protocol == PROTO_TCP) {
 		if ((result = recv(sock, buffer, buffer_len, 0)) < 0) return get_last_error();
 	}else if (protocol == PROTO_UDP) {
-		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, (int*)sizeof(serv_addr))) < 0) return get_last_error();
+		int serv_addr_size = sizeof(serv_addr);
+		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, &serv_addr_size)) < 0) return get_last_error();
 	}
 	return result;
 }
