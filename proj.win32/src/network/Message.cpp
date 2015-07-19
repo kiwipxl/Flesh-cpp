@@ -22,25 +22,25 @@ using message::FT_DOUBLE;
 using message::FT_CHAR_ARRAY;
 using message::FT_VOID_POINTER;
 
-FormatType::FormatType(const char* c, const short l) : printf_format(c), len(l) { }
+FormatType::FormatType(const char* c, const short l, const char* name) : printf_format(c), len(l), type_name(name) { }
 
 //format types for packing and unpacking byte data
-CFTYPE message::FT_CHAR								= new FormatType("%c", 1);
-CFTYPE message::FT_SIGNED_CHAR						= new FormatType("%c", 1);
-CFTYPE message::FT_UNSIGNED_CHAR					= new FormatType("%c", 1);
-CFTYPE message::FT_BOOL								= new FormatType("%d", 1);
-CFTYPE message::FT_SHORT							= new FormatType("%d", 2);
-CFTYPE message::FT_UNSIGNED_SHORT					= new FormatType("%d", 2);
-CFTYPE message::FT_INT								= new FormatType("%i", 4);
-CFTYPE message::FT_UNSIGNED_INT						= new FormatType("%u", 4);
-CFTYPE message::FT_LONG								= new FormatType("%li", 8);
-CFTYPE message::FT_UNSIGNED_LONG					= new FormatType("%lu", 8);
-CFTYPE message::FT_LONG_LONG						= new FormatType("%lli", 8);
-CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType("%llu", 8);
-CFTYPE message::FT_FLOAT							= new FormatType("%f", 4);
-CFTYPE message::FT_DOUBLE							= new FormatType("%f", 8);
-CFTYPE message::FT_CHAR_ARRAY						= new FormatType("%s", 1);
-CFTYPE message::FT_VOID_POINTER						= new FormatType("%p", 4);
+CFTYPE message::FT_CHAR								= new FormatType("%c", 1, "char");
+CFTYPE message::FT_SIGNED_CHAR						= new FormatType("%c", 1, "schar");
+CFTYPE message::FT_UNSIGNED_CHAR					= new FormatType("%c", 1, "uchar");
+CFTYPE message::FT_BOOL								= new FormatType("%d", 1, "bool");
+CFTYPE message::FT_SHORT							= new FormatType("%d", 2, "short");
+CFTYPE message::FT_UNSIGNED_SHORT					= new FormatType("%d", 2, "ushort");
+CFTYPE message::FT_INT								= new FormatType("%i", 4, "int");
+CFTYPE message::FT_UNSIGNED_INT						= new FormatType("%u", 4, "uint");
+CFTYPE message::FT_LONG								= new FormatType("%li", 8, "long");
+CFTYPE message::FT_UNSIGNED_LONG					= new FormatType("%lu", 8, "ulong");
+CFTYPE message::FT_LONG_LONG						= new FormatType("%lli", 8, "llong");
+CFTYPE message::FT_UNSIGNED_LONG_LONG				= new FormatType("%llu", 8, "ullong");
+CFTYPE message::FT_FLOAT							= new FormatType("%f", 4, "float");
+CFTYPE message::FT_DOUBLE							= new FormatType("%f", 8, "double");
+CFTYPE message::FT_CHAR_ARRAY						= new FormatType("%s", 1, "char*");
+CFTYPE message::FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
 
 int message::MID_id = 0;
 std::vector<CMID> message::MID_list;
@@ -152,7 +152,7 @@ void message::print_extracted_params() {
 		strcpy(print_buf + MID_name_len, header);
 		int offset = header_size + MID_name_len - 1;
 		for (int n = 0; n < param_list_size; ++n) {
-			//i don't know if the below code can be shortened in c++, but this is a quick work around for now at least
+			//unsure if the below code can be shortened in c++, but this is a quick work around for now at least
 			//sprintf requires that arguments be the same type of the format specifier, but the type is variable
 			CFTYPE t = last_extracted_mid->ft_params[n];
 			int len;
@@ -174,10 +174,7 @@ void message::print_extracted_params() {
 				len = sprintf(print_buf + offset, "%s", "undefined");
 
 			offset += len;
-			if (n < param_list_size - 1) {
-				strcpy(print_buf + offset, ", ");
-				offset += 2;
-			}
+			if (n < param_list_size - 1) offset += sprintf(print_buf + offset, " (%s), ", t->type_name);
 		}
 		print_buf[offset + 1] = '\0';
 		CCLOG(print_buf, "");

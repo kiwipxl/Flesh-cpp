@@ -39,13 +39,13 @@ def listen(ip, port):
                         read_list.remove(read_sock);
 
                         client.handle_leave(read_sock);
-                        if (server.num_clients <= 0): break;
+                        if (client.num_clients <= 0): break;
                 except:
                     print("socket has disconnected");
                     read_list.remove(read_sock);
 
                     client.handle_leave(read_sock);
-                    if (server.num_clients <= 0): break;
+                    if (client.num_clients <= 0): break;
                     continue;
                 server_msgs.got_message(client.find_by_sock(read_sock), byte_data);
 

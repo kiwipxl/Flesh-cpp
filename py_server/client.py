@@ -1,3 +1,5 @@
+import message;
+
 class Client:
     id = 0;
     sock = None;

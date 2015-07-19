@@ -43,10 +43,14 @@ void messagerecv::tcp_recv() {
 
 							int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
 							message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
+						}else if (mid == message::MID_CLIENT_ID && message::param_list_size >= message::MID_CLIENT_ID->num_params) {
+							int* a = (int*)message::param_list[0]->data;
+							char** b = &message::param_list[1]->data;
+							char** c = &message::param_list[2]->data;
+							int* d = (int*)message::param_list[3]->data;
+							char** e = &message::param_list[4]->data;
 
-							char* buf = message::byte_buffer;
-							int len = message::byte_offset;
-							int i = 5;
+							message::print_extracted_params();
 						}
 						message::clear_param_list();
 					}
