@@ -6,6 +6,8 @@ Socket messagerecv::tcp_sock;
 Socket messagerecv::udp_sock;
 std::thread messagerecv::recv_thread;
 
+#define VALID_PARAMS(a, b) a == b && message::param_list_size >= b->num_params
+
 void messagerecv::tcp_recv() {
 	fd_set read_list;
 	fd_set write_list;
@@ -32,7 +34,8 @@ void messagerecv::tcp_recv() {
 					CMID mid = message::extract_mid(buffer, msg_len);
 					if (mid->id > 0 && mid->id < message::MID_list.size()) {
 						message::extract_params(mid, buffer, msg_len);
-						if (mid == message::MID_RELAY_TEST && message::param_list_size >= message::MID_RELAY_TEST->num_params) {
+
+						if (VALID_PARAMS(mid, message::MID_RELAY_TEST)) {
 							bool* a = (bool*)message::param_list[0]->data;
 							bool* b = (bool*)message::param_list[1]->data;
 							int* c = (int*)message::param_list[2]->data;
@@ -43,13 +46,7 @@ void messagerecv::tcp_recv() {
 
 							int r = ((std::rand() / (float)RAND_MAX) * 100.0f);
 							message::send(&tcp_sock, message::ByteStream() << message::MID_RELAY_TEST << *a << *b << r << *d << *e);
-						}else if (mid == message::MID_CLIENT_ID && message::param_list_size >= message::MID_CLIENT_ID->num_params) {
-							int* a = (int*)message::param_list[0]->data;
-							char** b = &message::param_list[1]->data;
-							char** c = &message::param_list[2]->data;
-							int* d = (int*)message::param_list[3]->data;
-							char** e = &message::param_list[4]->data;
-
+						}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
 							message::print_extracted_params();
 						}
 						message::clear_param_list();
