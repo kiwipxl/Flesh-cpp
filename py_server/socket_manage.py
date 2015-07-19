@@ -3,30 +3,46 @@ import select;
 import sys;
 import client;
 import server_msgs;
+import time;
 
-send_sock = None;
+tcp_sock = None;
+udp_sock = None;
+udp_sock_send = None;
 
 def init():
-    global send_sock;
+    global tcp_sock;
+    global udp_sock;
+    global udp_sock_send;
 
-    send_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+    tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+    udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+    udp_sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
 
 def listen(ip, port):
-    global send_sock;
+    global tcp_sock;
+    global udp_sock;
+    global udp_sock_send;
 
-    send_sock.bind((ip, port));
-    send_sock.listen(1);
+    #tcp_sock.bind((ip, port));
+    udp_sock.bind((ip, port));
+    #tcp_sock.listen(1);
     print("awaiting clients...");
 
-    read_list = [send_sock];
+    read_list = [tcp_sock, udp_sock];
     write_list = [];
 
     while (1):
+        print("receiving...");
+        udp_sock.recvfrom(1024);
+        time.sleep(1);
+        udp_sock_send.sendto("sup", (ip, 4224));
+        print("received!");
+
         can_read_list, can_write_list, err = select.select(read_list, write_list, [], 1);
 
         for read_sock in can_read_list:
-            if (read_sock == send_sock):
-                client_sock, addr = send_sock.accept();
+            if (read_sock == tcp_sock):
+                client_sock, addr = tcp_sock.accept();
                 read_list.append(client_sock);
                 write_list.append(client_sock);
 

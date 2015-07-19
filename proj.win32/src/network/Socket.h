@@ -29,6 +29,7 @@ class Socket {
 
 	public:
 		static void init_sockets();
+		static int poll_fds(pollfd* fd_array, int array_len, int timeout);
 
 		Socket(SocketProtocol c_protocol = PROTO_TCP, char* c_ip = "n/a", char* c_port = "n/a");
 		SocketProtocol protocol;
@@ -39,7 +40,6 @@ class Socket {
 		int s_send(char* buffer, int buffer_len);
 		int s_recv(char* buffer, int buffer_len);
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
-		int s_poll(pollfd* fd_array, int array_len, int timeout);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_ip() { return ip; }

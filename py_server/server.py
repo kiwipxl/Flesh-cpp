@@ -9,4 +9,4 @@ from client import *;
 if __name__ == "__main__":
     db.init();
     socket_manage.init();
-    socket_manage.listen("0.0.0.0", 4222);
+    socket_manage.listen("192.168.0.5", 4222);

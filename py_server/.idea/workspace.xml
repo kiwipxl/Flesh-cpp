@@ -25,8 +25,10 @@
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-              <folding />
+              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+              <folding>
+                <element signature="e#19#30#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,19 +37,22 @@
         <entry file="file://$PROJECT_DIR$/server_msgs.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-              <folding />
+              <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="message.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="message.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.76528597">
-              <caret line="134" column="26" selection-start-line="134" selection-start-column="26" selection-end-line="134" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="125" column="39" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
+                <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -63,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="socket_manage.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="socket_manage.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/socket_manage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="50" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.70414203">
+              <caret line="36" column="22" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -104,10 +109,10 @@
       <list>
         <option value="$PROJECT_DIR$/db.py" />
         <option value="$PROJECT_DIR$/server_msgs.py" />
-        <option value="$PROJECT_DIR$/server.py" />
-        <option value="$PROJECT_DIR$/socket_manage.py" />
         <option value="$PROJECT_DIR$/client.py" />
         <option value="$PROJECT_DIR$/message.py" />
+        <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/socket_manage.py" />
       </list>
     </option>
   </component>
@@ -411,7 +416,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="15" />
+      <option name="time" value="18" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -420,7 +425,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="58" selection-start-line="51" selection-start-column="58" selection-end-line="51" selection-end-column="58" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -430,6 +437,7 @@
           <caret line="127" column="30" selection-start-line="127" selection-start-column="30" selection-end-line="127" selection-end-column="30" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -466,7 +474,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -476,6 +486,7 @@
           <caret line="45" column="36" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -512,7 +523,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -522,6 +535,7 @@
           <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -558,7 +572,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="42" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -568,6 +584,7 @@
           <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -604,7 +621,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="42" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -614,6 +633,7 @@
           <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -650,7 +670,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="175" selection-start-line="31" selection-start-column="175" selection-end-line="31" selection-end-column="175" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -660,6 +682,7 @@
           <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -696,7 +719,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -714,7 +739,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -725,25 +752,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/Python27/Lib/socket.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7021696">
-          <caret line="238" column="26" selection-start-line="238" selection-start-column="26" selection-end-line="238" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.53451675">
           <caret line="1783" column="46" selection-start-line="1783" selection-start-column="46" selection-end-line="1783" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -758,20 +770,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server_msgs.py">
+    <entry file="file://$PROJECT_DIR$/message.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="50" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+          <caret line="125" column="39" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1437297100283" expanded="true" signature="214:337" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -784,12 +789,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/message.py">
+    <entry file="file://E:/Python27/Lib/socket.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.76528597">
-          <caret line="134" column="26" selection-start-line="134" selection-start-column="26" selection-end-line="134" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="227" column="0" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server_msgs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socket_manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70414203">
+          <caret line="36" column="22" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>

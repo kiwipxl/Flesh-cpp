@@ -6,8 +6,9 @@
 
 namespace messagerecv {
 
-	extern Socket tcp_sock;
-	extern Socket udp_sock;
+	extern Socket tcp_serv_sock;
+	extern Socket udp_serv_recv_sock;
+	extern Socket udp_serv_send_sock;
 	extern std::thread recv_thread;
 
 	extern void start();

@@ -4,11 +4,19 @@
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
-	WSAData wsa_data;
-	int err;
-	if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
-		CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
-	}
+		WSAData wsa_data;
+		int err;
+		if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
+			CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
+		}
+	#endif
+}
+
+int Socket::poll_fds(pollfd* fd_array, int array_len, int timeout) {
+	#if defined(PLATFORM_WIN32)
+		return WSAPoll(fd_array, array_len, timeout);
+	#elif defined(PLATFORM_ANDROID) || defined(PLATFORM_LINUX)
+		return poll(fd_array, array_len, timeout);
 	#endif
 }
 
@@ -46,7 +54,7 @@ int Socket::s_create() {
 }
 
 int Socket::s_bind() {
-	if ((sock = bind(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return get_last_error();
+	if ((result = bind(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return get_last_error();
 	return NO_ERROR;
 }
 
@@ -67,14 +75,6 @@ int Socket::s_select(fd_set* read_set, fd_set* write_set, bool use_timeout, int 
 	t.tv_usec = timeout_ms;
 
 	return select(2, read_set, NULL, NULL, use_timeout ? &t : NULL);
-}
-
-int Socket::s_poll(pollfd* fd_array, int array_len, int timeout) {
-	#if defined(PLATFORM_WIN32)
-		return WSAPoll(fd_array, array_len, timeout);
-	#elif defined(PLATFORM_ANDROID) || defined(PLATFORM_LINUX)
-		return poll(fd_array, array_len, timeout);
-	#endif
 }
 
 int Socket::s_send(char* buffer, int buffer_len) {
