@@ -144,7 +144,7 @@ void message::clear_param_list() {
 
 void message::print_extracted_params() {
 	if (last_extracted_mid->num_params == param_list_size) {
-		static const char header[] = "(debug): ";
+		static const char header[] = ": ";
 		int header_size = sizeof(header);
 		const char* MID_name = get_MID_name(last_extracted_mid);
 		int MID_name_len = strlen(MID_name) - 1;
@@ -156,6 +156,9 @@ void message::print_extracted_params() {
 			//sprintf requires that arguments be the same type of the format specifier, but the type is variable
 			CFTYPE t = last_extracted_mid->ft_params[n];
 			int len;
+
+			offset += sprintf(print_buf + offset, "(%s): ", t->type_name);
+
 			if (t == FT_INT || t == FT_UNSIGNED_INT)
 				len = sprintf(print_buf + offset, t->printf_format, *(int*)param_list[n]->data);
 			else if (t == FT_SHORT || t == FT_UNSIGNED_SHORT)
@@ -174,7 +177,7 @@ void message::print_extracted_params() {
 				len = sprintf(print_buf + offset, "%s", "undefined");
 
 			offset += len;
-			if (n < param_list_size - 1) offset += sprintf(print_buf + offset, " (%s), ", t->type_name);
+			if (n < param_list_size - 1) offset += sprintf(print_buf + offset, ", ", t->type_name);
 		}
 		print_buf[offset + 1] = '\0';
 		CCLOG(print_buf, "");

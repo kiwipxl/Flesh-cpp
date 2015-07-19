@@ -7,29 +7,31 @@ class FormatType():
     struct_char = '';
     printf_char = '';
     len = 0;
+    type_name = "";
 
-    def __init__(self, schar, pchar, len):
+    def __init__(self, schar, pchar, len, name):
         self.struct_char = schar;
         self.printf_char = pchar;
         self.len = len;
+        self.type_name = name;
 
 #format types for packing and unpacking byte data
-FT_CHAR                     = FormatType('c', 'c', 1);
-FT_SIGNED_CHAR              = FormatType('b', 'c', 1);
-FT_UNSIGNED_CHAR            = FormatType('B', 'c', 1);
-FT_BOOL                     = FormatType('?', 'd', 1);
-FT_SHORT                    = FormatType('h', 'd', 2);
-FT_UNSIGNED_SHORT           = FormatType('H', 'd', 2);
-FT_INT                      = FormatType('i', 'i', 4);
-FT_UNSIGNED_INT             = FormatType('I', 'u', 4);
-FT_LONG                     = FormatType('l', 'li', 8);
-FT_UNSIGNED_LONG            = FormatType('L', 'lu', 8);
-FT_LONG_LONG                = FormatType('q', 'lli', 8);
-FT_UNSIGNED_LONG_LONG       = FormatType('Q', 'llu', 8);
-FT_FLOAT                    = FormatType('f', 'f', 4);
-FT_DOUBLE                   = FormatType('d', 'f', 8);
-FT_CHAR_ARRAY               = FormatType('s', 's', 1);
-FT_VOID_POINTER             = FormatType('p', 'lu', 4);
+FT_CHAR                     = FormatType('c', 'c', 1, "char");
+FT_SIGNED_CHAR              = FormatType('b', 'c', 1, "schar");
+FT_UNSIGNED_CHAR            = FormatType('B', 'c', 1, "uchar");
+FT_BOOL                     = FormatType('?', 'd', 1, "bool");
+FT_SHORT                    = FormatType('h', 'd', 2, "short");
+FT_UNSIGNED_SHORT           = FormatType('H', 'd', 2, "ushort");
+FT_INT                      = FormatType('i', 'i', 4, "int");
+FT_UNSIGNED_INT             = FormatType('I', 'u', 4, "uint");
+FT_LONG                     = FormatType('l', 'li', 8, "long");
+FT_UNSIGNED_LONG            = FormatType('L', 'lu', 8, "ulong");
+FT_LONG_LONG                = FormatType('q', 'lli', 8, "llong");
+FT_UNSIGNED_LONG_LONG       = FormatType('Q', 'llu', 8, "ullong");
+FT_FLOAT                    = FormatType('f', 'f', 4, "float");
+FT_DOUBLE                   = FormatType('d', 'f', 8, "double");
+FT_CHAR_ARRAY               = FormatType('s', 's', 1, "char*");
+FT_VOID_POINTER             = FormatType('p', 'lu', 4, "void*");
 
 MID_id = 0;
 MID_list = [];
@@ -126,11 +128,11 @@ def broadcast(sock_list, mid, *params):
         sock.send(pack_message(mid, params));
 
 def print_params(mid, params):
-    if (mid.num_params == len(params)):
-        print(MID_names[mid.id] + " (debug): ", end='');
+    if (mid.num_params > 1 and mid.num_params == len(params)):
+        print(MID_names[mid.id] + ": ", end='');
         i = 0;
         for param in params:
-            print(("%" + mid.ft_params[i].printf_char) % param, end='');
+            print(("(%s): %" + mid.ft_params[i].printf_char) % (mid.ft_params[i].type_name, param), end='');
             i += 1;
             print("") if i >= len(params) else print(", ", end='');
     else:
