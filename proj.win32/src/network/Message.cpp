@@ -50,7 +50,7 @@ ADD_MID_NAME(CMID message::MID_UNKNOWN					= new MID(0));
 ADD_MID_NAME(CMID message::MID_CLIENT_ID				= new MID(5, FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY));
 ADD_MID_NAME(CMID message::MID_CLIENT_USER_PASS			= new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));
 ADD_MID_NAME(CMID message::MID_RELAY_TEST				= new MID(5, FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY));
-ADD_MID_NAME(CMID message::MID_GET_TCP_CLIENT_PORT		= new MID(1, FT_SHORT));
+ADD_MID_NAME(CMID message::MID_GET_TCP_CLIENT_PORT		= new MID(1, FT_UNSIGNED_SHORT));
 
 MID::MID(int num_args, ...) : id(MID_id) {
 	if (num_args > 0) ft_params = new CFTYPE[num_args];
@@ -160,12 +160,18 @@ void message::print_extracted_params() {
 
 			offset += sprintf(print_buf + offset, "(%s): ", t->type_name);
 
-			if (t == FT_INT || t == FT_UNSIGNED_INT)
+			if (t == FT_INT)
 				len = sprintf(print_buf + offset, t->printf_format, *(int*)param_list[n]->data);
-			else if (t == FT_SHORT || t == FT_UNSIGNED_SHORT)
+			else if (t == FT_UNSIGNED_INT)
+				len = sprintf(print_buf + offset, t->printf_format, *(unsigned int*)param_list[n]->data);
+			else if (t == FT_SHORT)
 				len = sprintf(print_buf + offset, t->printf_format, *(short*)param_list[n]->data);
-			else if (t == FT_LONG || t == FT_UNSIGNED_LONG)
+			else if (t == FT_UNSIGNED_SHORT)
+				len = sprintf(print_buf + offset, t->printf_format, *(unsigned short*)param_list[n]->data);
+			else if (t == FT_LONG)
 				len = sprintf(print_buf + offset, t->printf_format, *(long*)param_list[n]->data);
+			else if (t == FT_UNSIGNED_LONG)
+				len = sprintf(print_buf + offset, t->printf_format, *(unsigned long*)param_list[n]->data);
 			else if (t == FT_FLOAT)
 				len = sprintf(print_buf + offset, t->printf_format, *(float*)param_list[n]->data);
 			else if (t == FT_DOUBLE)

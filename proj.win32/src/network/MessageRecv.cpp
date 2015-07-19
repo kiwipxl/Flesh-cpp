@@ -61,7 +61,7 @@ void messagerecv::tcp_recv() {
 							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_CLIENT_PORT)) {
 								message::print_extracted_params();
 
-								udp_serv_sock.s_change_addr("192.168.0.5", *(short*)message::param_list[0]->data);
+								udp_serv_sock.s_change_addr("192.168.0.5", *(unsigned short*)message::param_list[0]->data);
 								message::send(&udp_serv_sock, message::ByteStream() << message::MID_CLIENT_ID << 14 << "ayy" << "lmao" << 80 << "kappa");
 							}
 							message::clear_param_list();

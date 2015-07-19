@@ -62,6 +62,7 @@ MID_UNKNOWN                         = MID();
 MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY);
 MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 MID_RELAY_TEST                      = MID(FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY);
+MID_GET_TCP_CLIENT_PORT             = MID(FT_UNSIGNED_SHORT);
 
 #put all MID_x variables into a name array so messages can be debugged easier
 MID_names = MID_id * [None];
