@@ -34,17 +34,21 @@ def handle_leave(sock):
     global num_clients
 
     for c in clients:
-        if (c.sock == sock):
+        if (c.tcp_sock == sock):
             print("client disconnected (client-id: %d, ip: %s, port: %d)" % (c.id, c.ip, c.port));
             clients.remove(c);
             num_clients -= 1;
             break;
 
-def find_by_sock(sock):
+def find_by_sock(sock, addr):
     global clients
-    global num_clients
+
+    if not (addr): return None;
+    if not (sock): return None;
 
     for c in clients:
-        if (c.sock == sock):
+        if (read_sock.type == socket.SOCK_STREAM):
+            if (c.tcp_sock == sock):
+                return c;
+        elif (c.ip == addr[0] and c.port == addr[1]):
             return c;
-            break;

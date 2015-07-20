@@ -14,12 +14,14 @@ def init():
     global udp_sock;
     
     tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+    tcp_sock.setblocking(0);
     udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
-    
+    udp_sock.setblocking(0);
+
 def listen(ip, port):
     global tcp_sock;
     global udp_sock;
-    
+
     tcp_sock.bind((ip, port));
     udp_sock.bind((ip, port));
     tcp_sock.listen(1);
@@ -29,47 +31,49 @@ def listen(ip, port):
     write_list = [];
 
     while (1):
-        can_read_list, can_write_list, err = select.select(read_list, write_list, [], 0);
-
-        for read_sock in can_read_list:
+        for read_sock in read_list:
             if (read_sock == tcp_sock):
-                client_sock, addr = tcp_sock.accept();
-                read_list.append(client_sock);
-                write_list.append(client_sock);
-
-                client.handle_join(client_sock, addr[0], addr[1]);
-            else:
-                addr = None;
                 try:
-                    if (read_sock.type == socket.SOCK_STREAM):
-                        byte_data = read_sock.recv(1024);
-                        addr = read_sock.getsockname();
-                    else:
-                        byte_data, addr = read_sock.recvfrom(1024);
-
-                    if (byte_data.__len__() <= 0):
-                        print("socket has disconnected");
-                        read_list.remove(read_sock);
-
-                        client.handle_leave(read_sock);
-                        if (client.num_clients <= 0): break;
+                    client_sock, addr = tcp_sock.accept();
+                    client_sock.setblocking(0);
+                    client.handle_join(client_sock, addr[0], addr[1]);
                 except:
-                    print("socket has disconnected");
-                    read_list.remove(read_sock);
-
-                    client.handle_leave(read_sock);
-                    if (client.num_clients <= 0): break;
                     continue;
-                if (addr):
-                    client_obj = None;
-                    for c in client.clients:
-                        if (read_sock.type == socket.SOCK_STREAM):
-                            if (c.tcp_sock == read_sock):
-                                client_obj = c;
-                        elif (c.ip == addr[0] and c.port == addr[1]):
-                            client_obj = c;
 
-                    if (client_obj):
-                        server_msgs.got_message(read_sock, client_obj, byte_data);
+        c = 0;
+        for i in range(0, len(client.clients)):
+            client_obj = client.clients[c];
+            client_tcp_sock = client_obj.tcp_sock;
+            client_dc = False;
+
+            try:
+                byte_data = client_tcp_sock.recv(1024);
+                if (byte_data.__len__() > 0):
+                    server_msgs.got_message(read_sock, client_obj, byte_data);
+                else:
+                    print("socket has disconnected");
+                    del clients[c];
+                    client.handle_leave(read_sock);
+                    client_dc = True;
+            except socket.error as serr:
+                if (serr.errno != socket.errno.EWOULDBLOCK):
+                    print("tcp socket error occurred. err: %s" % serr.message);
+
+            if not (client_dc):
+                try:
+                    byte_data, addr = udp_sock.recvfrom(1024);
+                    if (byte_data.__len__() > 0):
+                        if (client_obj.ip == addr[0] and client_obj.port == addr[1]):
+                            server_msgs.got_message(udp_sock, client_obj, byte_data);
+                    else:
+                        print("socket has disconnected");
+                        del clients[c];
+                        client.handle_leave(read_sock);
+                        client_dc = True;
+                except socket.error as serr:
+                    if (serr.errno != socket.errno.EWOULDBLOCK):
+                        print("tcp socket error occurred. err: %s" % serr.message);
+
+            c += 1;
 
     s.close();
