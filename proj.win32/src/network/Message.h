@@ -62,6 +62,7 @@ namespace message {
 	extern CMID MID_UNKNOWN;
 	extern CMID MID_CLIENT_ID;
 	extern CMID MID_CLIENT_USER_PASS;
+	extern CMID MID_BEGIN_RELAY_TEST;
 	extern CMID MID_RELAY_TEST;
 	extern CMID MID_GET_TCP_CLIENT_PORT;
 
@@ -118,7 +119,8 @@ namespace message {
 
 			template <class T> ByteStream& operator<<(const T& v) { cpy_to_buf(&v, sizeof(v)); return *this; }
 			ByteStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); return *this; }
-			ByteStream& operator<<(char* str) { cpy_to_buf(str, strlen(str)); return *this; }
+			ByteStream& operator<<(char* str) { cpy_to_buf(str, strlen(str) + 1); return *this; }
+			ByteStream& operator<<(Param* p) { if (p != NULL) cpy_to_buf(p->data, p->len); return *this; }
 	};
 
 	extern void init();

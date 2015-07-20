@@ -33,6 +33,13 @@ bool State_Manager::init() {
 }
 
 void State_Manager::update(float dt) {
+	if (messagerecv::done_connecting) {
+		if (messagerecv::connect_result == NO_ERROR) {
+			messagerecv::begin_receiving();
+			messagerecv::done_connecting = false;
+		}
+	}
+
 	time_since_startup = (clock() - init_time) / 1000.0f;
 	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 250, 200));
 

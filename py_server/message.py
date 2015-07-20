@@ -59,11 +59,13 @@ class MID():
         MID_id += 1;
         MID_list.append(self);
 
-MID_UNKNOWN                         = MID();
-MID_CLIENT_ID                       = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY);
-MID_CLIENT_USER_PASS                = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
-MID_RELAY_TEST                      = MID(FT_BOOL, FT_BOOL, FT_INT, FT_FLOAT, FT_CHAR_ARRAY);
-MID_GET_TCP_CLIENT_PORT             = MID(FT_UNSIGNED_SHORT);
+MID_UNKNOWN                             = MID();
+MID_CLIENT_ID                           = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY);
+MID_CLIENT_USER_PASS                    = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+MID_BEGIN_RELAY_TEST                    = MID();
+MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+MID_GET_TCP_CLIENT_PORT                 = MID(FT_UNSIGNED_SHORT);
+MID_GAME_SEND_PEER_INFO                 = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 
 #put all MID_x variables into a name array so messages can be debugged easier
 MID_names = MID_id * [None];
@@ -74,7 +76,7 @@ for k, v in list(locals().iteritems()):
 byte_buffer = bytearray(1024);
 byte_offset = 0;
 
-def pack_message(mid, *params):
+def pack_message(mid, params):
     byte_offset = 4;
     i = 0;
     byte_buffer[0:4] = struct.pack(FT_INT.struct_char, mid.id);
@@ -122,19 +124,19 @@ def extract_params(mid, byte_data):
         print("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
         return (params, -1);
 
-def send(sock, client, mid, *params):
+def send(sock, client, mid, params):
     if (sock.type == socket.SOCK_STREAM):
-        sock.send(pack_message(mid, *params));
+        sock.send(pack_message(mid, params));
     else:
-        sock.sendto(pack_message(mid, *params), (client.ip, client.port));
+        sock.sendto(pack_message(mid, params), (client.ip, client.port));
 
-def send_tcp(tcp_sock, mid, *params):
-    tcp_sock.send(pack_message(mid, *params));
+def send_tcp(tcp_sock, mid, params):
+    tcp_sock.send(pack_message(mid, params));
 
-def send_udp(udp_sock, ip, port, mid, *params):
-    udp_sock.sendto(pack_message(mid, *params), (ip, port));
+def send_udp(udp_sock, ip, port, mid, params):
+    udp_sock.sendto(pack_message(mid, params), (ip, port));
 
-def broadcast(sock_list, mid, *params):
+def broadcast(sock_list, mid, params):
     for sock in sock_list:
         sock.send(pack_message(mid, params));
 
