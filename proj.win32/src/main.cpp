@@ -4,23 +4,17 @@
 USING_NS_CC;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+#define WIN32_LEAN_AND_MEAN
 
-// Windows Header Files:
 #include <windows.h>
 #include <tchar.h>
+#include <CCStdC.h>
 
-// C RunTime Header Files
-#include "CCStdC.h"
-
-int APIENTRY _tWinMain(HINSTANCE hInstance,
-                       HINSTANCE hPrevInstance,
-                       LPTSTR    lpCmdLine,
-                       int       nCmdShow) {
+int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow) {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // create the application instance
+    //create the application instance
     AppDelegate app;
     return Application::getInstance()->run();
 }

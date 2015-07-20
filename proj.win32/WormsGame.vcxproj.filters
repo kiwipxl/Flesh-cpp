@@ -15,10 +15,10 @@
     <ClCompile Include="src\AppDelegate.cpp" />
     <ClCompile Include="src\State_Manager.cpp" />
     <ClCompile Include="src\network\Socket.cpp" />
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\network\Message.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
     <ClCompile Include="src\network\MessageRecv.cpp" />
+    <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
