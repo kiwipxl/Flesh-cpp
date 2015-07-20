@@ -1,6 +1,11 @@
 #include "State_Manager.h"
 #include <time.h>
+#include "debug/Errors.h"
 #include "network/MessageRecv.h"
+
+#include <sstream>
+
+#define SSTR(x) dynamic_cast<std::ostringstream&>((std::ostringstream() << std::dec << x )).str()
 
 using namespace cocos2d;
 
@@ -40,7 +45,7 @@ void State_Manager::update(float dt) {
 			messagerecv::begin_receiving();
 			messagerecv::done_connecting = false;
 		}else {
-			label->setString("an error occurred while trying to connect: " + std::to_string(messagerecv::connect_result));
+			label->setString("an error occurred while trying to connect: " + SSTR(messagerecv::connect_result));
 		}
 	}
 

@@ -14,10 +14,10 @@ def init():
     tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
     tcp_sock.setblocking(0);
 
-def listen(ip, port):
+def socket_loop(listen_ip, listen_port):
     global tcp_sock;
 
-    tcp_sock.bind((ip, port));
+    tcp_sock.bind((listen_ip, listen_port));
     tcp_sock.listen(1);
     print("awaiting clients...");
 

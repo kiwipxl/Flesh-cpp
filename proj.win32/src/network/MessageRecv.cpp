@@ -1,5 +1,6 @@
 #include "MessageRecv.h"
 #include <thread>
+#include <cstdint>
 #include "../debug/Errors.h"
 #include "../State_Manager.h"
 
@@ -52,9 +53,9 @@ void messagerecv::recv_msgs() {
 
 							if (VALID_PARAMS(mid, message::MID_RELAY_TEST)) {
 								int* a = (int*)message::param_list[0]->data;
-								char** b = &(char*)message::param_list[1]->data;
-								USHORT* c = (USHORT*)message::param_list[2]->data;
-								USHORT* d = (USHORT*)message::param_list[3]->data;
+                                char** b = &message::param_list[1]->data;
+								u_short* c = (u_short*)message::param_list[2]->data;
+								u_short* d = (u_short*)message::param_list[3]->data;
 
 								message::print_extracted_params();
 
@@ -91,6 +92,7 @@ void messagerecv::begin_receiving() {
 }
 
 void messagerecv::tcp_connect() {
+    CCLOG("attempt connect on thread...");
 	tcp_serv_sock = Socket(PROTO_TCP, "192.168.0.2", 4222);
 	if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
 		CCLOG("(tcp_serv_sock): error %d occurred while creating tcp socket", fresult);
@@ -122,7 +124,8 @@ void messagerecv::socket_setup_failed(int err) {
 
 void messagerecv::start() {
 	message::init();
-	Socket::init_sockets();
+    Socket::init_sockets();
 
+    CCLOG("attempt connect...");
 	tcp_connect_thread = std::thread(messagerecv::tcp_connect);
 }
