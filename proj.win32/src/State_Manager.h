@@ -18,7 +18,7 @@ class State_Manager : public Layer {
 		void menu_close(Ref* r);
 		virtual void update(float dt);
 
-		float time_since_startup;
+        float time_since_startup = 0;
 
 		static LabelBMFont* label;
 	private:

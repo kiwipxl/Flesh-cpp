@@ -68,11 +68,17 @@ void messagerecv::recv_msgs() {
 								message::print_extracted_params();
 
 								udp_serv_sock.s_change_addr("0.0.0.0", *(unsigned short*)message::param_list[0]->data);
-								if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port()); }
-								udp_serv_sock.s_change_addr("192.168.0.2", *(unsigned short*)message::param_list[1]->data);
+								if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) {
+                                    CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port());
+                                    socket_setup_failed(fresult);
+                                }else {
+                                    udp_serv_sock.s_change_addr("192.168.0.2", *(unsigned short*)message::param_list[1]->data);
+                                    message::send(&udp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
+                                    message::send(&tcp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
 
-								message::send(&udp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
-								message::send(&tcp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
+                                    done_connecting = true;
+                                    connect_result = NO_ERROR;
+                                }
 							}
 							message::clear_param_list();
 						}
@@ -83,12 +89,6 @@ void messagerecv::recv_msgs() {
 			CCLOG("polling error occurred: %d", get_last_error());
 		}
 	}
-}
-
-void messagerecv::begin_receiving() {
-	CCLOG("socket start was successful");
-
-	msg_recv_thread = std::thread(messagerecv::recv_msgs);
 }
 
 void messagerecv::tcp_connect() {
@@ -111,10 +111,9 @@ void messagerecv::tcp_connect() {
 		socket_setup_failed(fresult); return;
 	}
 
-	CCLOG("(udp_serv_sock): creation/binding successful");
+    CCLOG("(udp_serv_sock): creation/binding successful");
 
-	done_connecting = true;
-	connect_result = NO_ERROR;
+    msg_recv_thread = std::thread(messagerecv::recv_msgs);
 }
 
 void messagerecv::socket_setup_failed(int err) {
@@ -122,7 +121,7 @@ void messagerecv::socket_setup_failed(int err) {
 	connect_result = err;
 }
 
-void messagerecv::start() {
+void messagerecv::connect_to_server() {
 	message::init();
     Socket::init_sockets();
 

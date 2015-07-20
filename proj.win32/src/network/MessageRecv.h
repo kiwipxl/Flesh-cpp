@@ -14,8 +14,7 @@ namespace messagerecv {
 	extern bool done_connecting;
 	extern int connect_result;
 
-	extern void start();
-	extern void begin_receiving();
+    extern void connect_to_server();
 	extern void recv_msgs();
 	extern void tcp_connect();
 	extern void socket_setup_failed(int err);

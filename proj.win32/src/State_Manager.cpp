@@ -31,9 +31,9 @@ bool State_Manager::init() {
 	addChild(label, 1);
 
 	scheduleUpdate();
-	init_time = clock();
+    init_time = clock();
 
-	messagerecv::start();
+    messagerecv::connect_to_server();
 
     return true;
 }
@@ -41,15 +41,14 @@ bool State_Manager::init() {
 void State_Manager::update(float dt) {
 	if (messagerecv::done_connecting) {
 		if (messagerecv::connect_result == NO_ERROR) {
-			label->setString("connected!");
-			messagerecv::begin_receiving();
+            label->setString("connected!");
 			messagerecv::done_connecting = false;
 		}else {
 			label->setString("an error occurred while trying to connect: " + SSTR(messagerecv::connect_result));
 		}
 	}
 
-	time_since_startup = (clock() - init_time) / 1000.0f;
+    time_since_startup += dt;
 	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 
 	/*for (int n = 0; n < 26; ++n) {
