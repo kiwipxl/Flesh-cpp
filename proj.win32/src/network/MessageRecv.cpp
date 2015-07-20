@@ -54,10 +54,11 @@ void messagerecv::recv_msgs() {
 								int* a = (int*)message::param_list[0]->data;
 								char** b = &(char*)message::param_list[1]->data;
 								USHORT* c = (USHORT*)message::param_list[2]->data;
+								USHORT* d = (USHORT*)message::param_list[3]->data;
 
 								message::print_extracted_params();
 
-								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << message::param_list[1] << *c);
+								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << message::param_list[1] << *c << *d);
 
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
