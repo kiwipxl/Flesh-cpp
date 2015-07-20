@@ -1,6 +1,7 @@
 #include "MessageRecv.h"
 #include <thread>
 #include "../debug/Errors.h"
+#include "../State_Manager.h"
 
 Socket messagerecv::tcp_serv_sock;
 Socket messagerecv::udp_serv_sock;
@@ -34,7 +35,6 @@ void messagerecv::recv_msgs() {
 	int msg_len;
 	while (true) {
 		int total = 0;
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		if ((total = Socket::poll_fds(&fds[0], fds.size(), 1000)) > 0) {
 			for (int i = 0; i < fds.size(); ++i) {
 				if (fds[i].revents & POLLERR) {
@@ -59,16 +59,18 @@ void messagerecv::recv_msgs() {
 
 								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << message::param_list[1] << *c);
 
-								std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
 								message::print_extracted_params();
-							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_CLIENT_PORT)) {
+							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_AND_UDP_CLIENT_PORTS)) {
 								message::print_extracted_params();
 
 								udp_serv_sock.s_change_addr("0.0.0.0", *(unsigned short*)message::param_list[0]->data);
-								if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %s)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port()); }
-								udp_serv_sock.s_change_addr("192.168.0.2", 4222);
+								if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) { CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port()); }
+								udp_serv_sock.s_change_addr("192.168.0.2", *(unsigned short*)message::param_list[1]->data);
+
 								message::send(&udp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
+								message::send(&tcp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
 							}
 							message::clear_param_list();
 						}
@@ -100,7 +102,7 @@ void messagerecv::tcp_connect() {
 
 	CCLOG("(tcp_serv_sock): connection successful");
 
-	udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 4224);
+	udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 0);
 	if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
 		CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult);
 		socket_setup_failed(fresult); return;

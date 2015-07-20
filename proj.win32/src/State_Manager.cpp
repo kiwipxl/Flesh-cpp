@@ -4,6 +4,8 @@
 
 using namespace cocos2d;
 
+LabelBMFont* State_Manager::label;
+
 Scene* State_Manager::createScene() {
 	//auto release objects
 	auto scene = Scene::create();
@@ -20,8 +22,7 @@ bool State_Manager::init() {
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	
 	label = LabelBMFont::create("", "fonts/lucida.fnt");
-	label->setString("abcdefghijklmnopqrstuvwxyz");
-	label->setPosition(200, 200);
+	label->setString("connecting...");
 	addChild(label, 1);
 
 	scheduleUpdate();
@@ -35,15 +36,18 @@ bool State_Manager::init() {
 void State_Manager::update(float dt) {
 	if (messagerecv::done_connecting) {
 		if (messagerecv::connect_result == NO_ERROR) {
+			label->setString("connected!");
 			messagerecv::begin_receiving();
 			messagerecv::done_connecting = false;
+		}else {
+			label->setString("an error occurred while trying to connect: " + std::to_string(messagerecv::connect_result));
 		}
 	}
 
 	time_since_startup = (clock() - init_time) / 1000.0f;
-	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 250, 200));
+	label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 
-	for (int n = 0; n < 26; ++n) {
+	/*for (int n = 0; n < 26; ++n) {
 		Node* s;
 		(s = label->getChildByTag(n))->setRotation(s->getRotation() + cos(s->getPosition().x));
 	}
@@ -51,7 +55,7 @@ void State_Manager::update(float dt) {
 	for (int n = 0; n < 26; ++n) {
 		Node* s;
 		(s = label->getChildByTag(n))->setPosition((n * 25), s->getPosition().y);
-	}
+	}*/
 }
 
 void State_Manager::menu_close(Ref* r) {

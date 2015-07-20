@@ -20,8 +20,8 @@ class State_Manager : public Layer {
 
 		float time_since_startup;
 
+		static LabelBMFont* label;
 	private:
-		LabelBMFont* label;
 		clock_t init_time;
 };
 

@@ -64,7 +64,7 @@ namespace message {
 	extern CMID MID_CLIENT_USER_PASS;
 	extern CMID MID_BEGIN_RELAY_TEST;
 	extern CMID MID_RELAY_TEST;
-	extern CMID MID_GET_TCP_CLIENT_PORT;
+	extern CMID MID_GET_TCP_AND_UDP_CLIENT_PORTS;
 
 	//================== Hack to get message variable names ==================
 

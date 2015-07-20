@@ -64,7 +64,7 @@ MID_CLIENT_ID                           = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARR
 MID_CLIENT_USER_PASS                    = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 MID_BEGIN_RELAY_TEST                    = MID();
 MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-MID_GET_TCP_CLIENT_PORT                 = MID(FT_UNSIGNED_SHORT);
+MID_GET_TCP_AND_UDP_CLIENT_PORTS        = MID(FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
 MID_GAME_SEND_PEER_INFO                 = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 
 #put all MID_x variables into a name array so messages can be debugged easier
@@ -128,7 +128,7 @@ def send(sock, client, mid, params):
     if (sock.type == socket.SOCK_STREAM):
         sock.send(pack_message(mid, params));
     else:
-        sock.sendto(pack_message(mid, params), (client.ip, client.port));
+        sock.sendto(pack_message(mid, params), (client.ip, client.tcp_port));
 
 def send_tcp(tcp_sock, mid, params):
     tcp_sock.send(pack_message(mid, params));
