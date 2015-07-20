@@ -53,10 +53,10 @@ def listen(ip, port):
                     server_msgs.got_message(client_tcp_sock, client_obj, byte_data);
                 else:
                     del client.clients[c];
-                    client.handle_leave(client_obj, "USER_QUIT", False);
+                    client.handle_leave(client_obj, "HOST_QUIT", False);
                     client_dc = True;
             except socket.error as serr:
-                if (serr.errno != socket.errno.WSAEWOULDBLOCK and serr.errno != socket.errno.EWOULDBLOCK):
+                if (serr.errno != socket.errno.EWOULDBLOCK):
                     sockerr = serr;
 
             if not (client_dc):
@@ -67,18 +67,20 @@ def listen(ip, port):
                             server_msgs.got_message(udp_sock, client_obj, byte_data);
                     else:
                         del client.clients[c];
-                        client.handle_leave(client_obj, "USER_QUIT", False);
+                        client.handle_leave(client_obj, "HOST_QUIT", False);
                         client_dc = True;
                         client_tcp_sock.close();
                 except socket.error as serr:
-                    if (serr.errno != socket.errno.WSAEWOULDBLOCK and serr.errno != socket.errno.EWOULDBLOCK):
+                    if (serr.errno != socket.errno.EWOULDBLOCK):
                         sockerr = serr;
 
             if (sockerr):
-                print("tcp socket error occurred (or not handled for). err: %s" % serr.strerror);
-                client_dc = True;
                 del client.clients[c];
-                client.handle_leave(client_obj, serr.strerror, False);
+                if (sockerr.errno == socket.errno.ECONNRESET):
+                    client.handle_leave(client_obj, "HOST_FORCE_QUIT", False);
+                else:
+                    print("socket error occurred (or not handled for). err: %s" % serr.strerror);
+                    client.handle_leave(client_obj, serr.strerror, False);
 
             c += 1;
 
