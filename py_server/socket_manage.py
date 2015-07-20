@@ -36,7 +36,7 @@ def listen(ip, port):
                 try:
                     client_sock, addr = tcp_sock.accept();
                     client_sock.setblocking(0);
-                    client.handle_join(client_sock, addr[0], addr[1]);
+                    client.handle_join(client_sock, addr[0], addr[1], True);
                 except:
                     continue;
 
@@ -45,19 +45,19 @@ def listen(ip, port):
             client_obj = client.clients[c];
             client_tcp_sock = client_obj.tcp_sock;
             client_dc = False;
+            sockerr = None;
 
             try:
                 byte_data = client_tcp_sock.recv(1024);
                 if (byte_data.__len__() > 0):
-                    server_msgs.got_message(read_sock, client_obj, byte_data);
+                    server_msgs.got_message(client_tcp_sock, client_obj, byte_data);
                 else:
-                    print("socket has disconnected");
-                    del clients[c];
-                    client.handle_leave(read_sock);
+                    del client.clients[c];
+                    client.handle_leave(client_obj, "USER_QUIT", False);
                     client_dc = True;
             except socket.error as serr:
-                if (serr.errno != socket.errno.EWOULDBLOCK):
-                    print("tcp socket error occurred. err: %s" % serr.message);
+                if (serr.errno != socket.errno.WSAEWOULDBLOCK and serr.errno != socket.errno.EWOULDBLOCK):
+                    sockerr = serr;
 
             if not (client_dc):
                 try:
@@ -66,13 +66,19 @@ def listen(ip, port):
                         if (client_obj.ip == addr[0] and client_obj.port == addr[1]):
                             server_msgs.got_message(udp_sock, client_obj, byte_data);
                     else:
-                        print("socket has disconnected");
-                        del clients[c];
-                        client.handle_leave(read_sock);
+                        del client.clients[c];
+                        client.handle_leave(client_obj, "USER_QUIT", False);
                         client_dc = True;
+                        client_tcp_sock.close();
                 except socket.error as serr:
-                    if (serr.errno != socket.errno.EWOULDBLOCK):
-                        print("tcp socket error occurred. err: %s" % serr.message);
+                    if (serr.errno != socket.errno.WSAEWOULDBLOCK and serr.errno != socket.errno.EWOULDBLOCK):
+                        sockerr = serr;
+
+            if (sockerr):
+                print("tcp socket error occurred (or not handled for). err: %s" % serr.strerror);
+                client_dc = True;
+                del client.clients[c];
+                client.handle_leave(client_obj, serr.strerror, False);
 
             c += 1;
 

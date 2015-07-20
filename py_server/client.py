@@ -10,7 +10,7 @@ clients = [];
 num_clients = 0;
 client_id_inc = 0;
 
-def handle_join(client_sock, client_ip, client_port):
+def handle_join(client_sock, client_ip, client_port, add_to_list = True):
     global clients
     global num_clients
     global client_id_inc
@@ -21,7 +21,7 @@ def handle_join(client_sock, client_ip, client_port):
     c.ip = client_ip;
     c.port = client_port;
 
-    clients.append(c);
+    if (add_to_list): clients.append(c);
 
     print("accepted client (client-id: %d, ip: %s, port: %d)" % (c.id, c.ip, c.port));
 
@@ -29,16 +29,13 @@ def handle_join(client_sock, client_ip, client_port):
     client_id_inc += 1;
     message.send(c.tcp_sock, c, message.MID_GET_TCP_CLIENT_PORT, (client_port,));
 
-def handle_leave(sock):
+def handle_leave(client_obj, leave_message, remove_from_list = True):
     global clients
     global num_clients
 
-    for c in clients:
-        if (c.tcp_sock == sock):
-            print("client disconnected (client-id: %d, ip: %s, port: %d)" % (c.id, c.ip, c.port));
-            clients.remove(c);
-            num_clients -= 1;
-            break;
+    print("client disconnected (client-id: %d, ip: %s, port: %d, leave_msg: %s)" % (client_obj.id, client_obj.ip, client_obj.port, leave_message));
+    if (remove_from_list): clients.remove(client_obj);
+    num_clients -= 1;
 
 def find_by_sock(sock, addr):
     global clients
