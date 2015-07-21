@@ -1,11 +1,35 @@
 #include "SocketPoll.h"
 #include <thread>
+#include <algorithm>
 #include "../StateManager.h"
 #include "SocketManager.h"
 
 using err::fresult;
 
 #define VALID_PARAMS(a, b) a == b && message::param_list_size >= b->num_params
+
+int SocketPoll::poll() {
+    return Socket::poll_fds(fds[0], fds.size(), 1000);
+}
+
+void SocketPoll::add_sock(Socket& sock) {
+    pollfd fd;
+    fds.push_back(&fd);
+    fd.fd = sock.get_sock();
+    fd.events = POLLRDNORM | POLLRDBAND;
+}
+
+void SocketPoll::remove_sock(Socket& sock) {
+    sockets.erase(std::remove(sockets.begin(), sockets.end(), sock), sockets.end());
+}
+
+void SocketPoll::remove_sock(int at) {
+    for (int n = 0; n < sockets.size(); ++n) {
+        if (n == at) {
+            sockets.erase(sockets.begin() + n, sockets.end() + n + 1);
+        }
+    }
+}
 
 void SocketPoll::recv_msgs() {
 	fd_set read_list;
