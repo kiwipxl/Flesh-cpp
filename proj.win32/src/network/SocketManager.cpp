@@ -31,18 +31,18 @@ void tcp_connect() {
 
     state::switch_state(state::UDP_SERVER_CONNECT);
 
-    msgs::start_recv_game_msgs();
+    game_msgs::start_recv_thread();
 }
 
-void sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
+bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
     udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", udp_recv_port);
     if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
         CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult);
-        socket_setup_failed(fresult); return;
+        socket_setup_failed(fresult); return false;
     }
     if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) {
         CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port());
-        socket_setup_failed(fresult); return;
+        socket_setup_failed(fresult); return false;
     }
     udp_serv_sock.s_change_addr(serv_ip, udp_serv_port);
     message::send(&udp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
@@ -51,6 +51,8 @@ void sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
     CCLOG("(udp_serv_sock): creation/binding successful");
 
     state::switch_state(state::SERVER_CONNECTED);
+
+    return true;
 }
 
 void sock::socket_setup_failed(int err) {

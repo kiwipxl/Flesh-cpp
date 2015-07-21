@@ -22,7 +22,7 @@ namespace sock {
     extern void init();
     extern void setup_tcp_sock();
     extern void socket_setup_failed(int err);
-    extern void setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port);
+    extern bool setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port);
 };
 
 #endif

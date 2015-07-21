@@ -4,11 +4,12 @@
 #include <thread>
 #include "SocketPoll.h"
 
-namespace msgs {
+namespace game_msgs {
 
-    extern std::thread game_msgs_thread;
+    extern std::thread msgs_thread;
+    extern SocketPoll server_poll;
 
-    extern void start_recv_game_msgs();
+    extern void start_recv_thread();
 }
 
 #endif
