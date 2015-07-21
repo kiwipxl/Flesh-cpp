@@ -6,6 +6,7 @@
 namespace err {
 
     #define NO_ERROR 0
+    #define UDP_PING_PONG_TIMEOUT 9000
 
     extern int get_last_error();
     extern int fresult;

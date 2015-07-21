@@ -55,6 +55,9 @@ void recv_msgs() {
                                     server_poll.add_sock(sock::udp_serv_sock);
                                     sock::connection_finished = true;
                                     sock::connection_error = NO_ERROR;
+                                }else {
+                                    sock::connection_finished = true;
+                                    sock::connection_error = -1;
                                 }
 							}
 							message::clear_param_list();

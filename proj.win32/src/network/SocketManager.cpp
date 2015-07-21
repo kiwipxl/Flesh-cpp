@@ -8,6 +8,11 @@ Socket sock::udp_serv_sock;
 std::thread sock::msg_recv_thread;
 std::thread sock::tcp_connect_thread;
 
+bool sock::udp_ping_pong = false;
+float sock::udp_ping_pong_time = 0;
+int sock::udp_ping_pong_tries = 0;
+const int sock::MAX_UDP_PING_PONG_TRIES = 3;
+
 bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
@@ -47,8 +52,6 @@ bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
         socket_setup_failed(fresult); return false;
     }
     udp_serv_sock.s_change_addr(serv_ip, udp_serv_port);
-    message::send(&udp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
-    message::send(&tcp_serv_sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
 
     CCLOG("(udp_serv_sock): creation/binding successful");
 
@@ -58,6 +61,26 @@ bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
 void sock::socket_setup_failed(int err) {
     connection_finished = false;
     connection_error = err;
+}
+
+void sock::update() {
+    if (udp_ping_pong) {
+        if (state::time_since_startup - udp_ping_pong_time >= 4.0f) {
+            ++udp_ping_pong_tries;
+            send_udp_ping_pong();
+            if (udp_ping_pong_tries > MAX_UDP_PING_PONG_TRIES) socket_setup_failed(UDP_PING_PONG_TIMEOUT);
+        }
+    }
+}
+
+void sock::send_udp_ping_pong() {
+    if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
+        message::send(&udp_serv_sock, message::ByteStream() << message::MID_UDP_PING_PONG);
+        if (!udp_ping_pong) {
+            udp_ping_pong_time = state::time_since_startup;
+            udp_ping_pong = true;
+        }
+    }
 }
 
 void sock::init() {
