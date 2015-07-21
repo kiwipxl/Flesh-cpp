@@ -1,12 +1,9 @@
 #include "MessageRecv.h"
 #include <thread>
-#include <cstdint>
-#include "../debug/Errors.h"
-#include "../SceneManager.h"
 #include "../StateManager.h"
 #include "SocketManager.h"
 
-int fresult;
+using err::fresult;
 
 #define VALID_PARAMS(a, b) a == b && message::param_list_size >= b->num_params
 
@@ -69,7 +66,7 @@ void messagerecv::recv_msgs() {
 				}
 			}
 		}else if (total == -1) {
-			CCLOG("polling error occurred: %d", get_last_error());
+			CCLOG("polling error occurred: %d", err::get_last_error());
 		}
 	}
 }

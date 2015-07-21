@@ -3,9 +3,12 @@
 
 #include "PlatformConfig.h"
 
-#define NO_ERROR 0
+namespace err {
 
-extern int get_last_error();
-extern int fresult;
+    #define NO_ERROR 0
+
+    extern int get_last_error();
+    extern int fresult;
+};
 
 #endif

@@ -43,7 +43,7 @@ int Socket::s_create() {
 	s_change_addr(ip, port);
 
 	//create socket
-	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return get_last_error();
+	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return err::get_last_error();
 
 	return NO_ERROR;
 }
@@ -58,18 +58,18 @@ int Socket::s_change_addr(char* c_ip, short c_port) {
 	serv_addr.sin_port = htons(port);
 
 	//convert ip and copy into ipv4 structure in_addr
-	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) return get_last_error();
+	if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) return err::get_last_error();
 
 	return NO_ERROR;
 }
 
 int Socket::s_bind() {
-	if ((result = bind(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return get_last_error();
+	if ((result = bind(sock, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return err::get_last_error();
 	return NO_ERROR;
 }
 
 int Socket::s_connect() {
-	if (connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) return get_last_error();
+	if (connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) return err::get_last_error();
 
 	return NO_ERROR;
 }
@@ -89,19 +89,19 @@ int Socket::s_select(fd_set* read_set, fd_set* write_set, bool use_timeout, int 
 
 int Socket::s_send(char* buffer, int buffer_len) {
 	if (protocol == PROTO_TCP) {
-		if ((result = send(sock, buffer, buffer_len, 0)) < 0) return get_last_error();
+		if ((result = send(sock, buffer, buffer_len, 0)) < 0) return err::get_last_error();
 	}else if (protocol == PROTO_UDP) {
-		if ((result = sendto(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return get_last_error();
+		if ((result = sendto(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) return err::get_last_error();
 	}
 	return result;
 }
 
 int Socket::s_recv(char* buffer, int buffer_len) {
 	if (protocol == PROTO_TCP) {
-		if ((result = recv(sock, buffer, buffer_len, 0)) < 0) return get_last_error();
+		if ((result = recv(sock, buffer, buffer_len, 0)) < 0) return err::get_last_error();
 	}else if (protocol == PROTO_UDP) {
 		int serv_addr_size = sizeof(serv_addr);
-		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, &serv_addr_size)) < 0) return get_last_error();
+		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&serv_addr, &serv_addr_size)) < 0) return err::get_last_error();
 	}
 	return result;
 }
