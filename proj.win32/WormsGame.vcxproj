@@ -159,7 +159,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\network\Message.cpp" />
     <ClCompile Include="src\network\MessageRecv.cpp" />
     <ClCompile Include="src\network\Socket.cpp" />
-    <ClCompile Include="src\State_Manager.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -170,7 +171,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\network\MessageRecv.h" />
     <ClInclude Include="src\network\ReadableType.h" />
     <ClInclude Include="src\network\Socket.h" />
-    <ClInclude Include="src\State_Manager.h" />
+    <ClInclude Include="src\SceneManager.h" />
+    <ClInclude Include="src\StateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "State_Manager.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -32,9 +32,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//set ms per frame (fps)
     director->setAnimationInterval(1.0f / 60.0f);
 
-	register_all_packages();
+    register_all_packages();
 
-	auto scene = State_Manager::createScene();
+    auto scene = SceneManager::create_scene();
     director->runWithScene(scene);
 
     return true;

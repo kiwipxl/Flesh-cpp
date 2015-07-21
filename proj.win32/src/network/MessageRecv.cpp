@@ -2,7 +2,8 @@
 #include <thread>
 #include <cstdint>
 #include "../debug/Errors.h"
-#include "../State_Manager.h"
+#include "../SceneManager.h"
+#include "../StateManager.h"
 
 Socket messagerecv::tcp_serv_sock;
 Socket messagerecv::udp_serv_sock;

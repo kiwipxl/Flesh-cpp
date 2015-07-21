@@ -64,7 +64,7 @@ namespace message {
 	extern CMID MID_CLIENT_USER_PASS;
 	extern CMID MID_BEGIN_RELAY_TEST;
 	extern CMID MID_RELAY_TEST;
-	extern CMID MID_GET_TCP_AND_UDP_CLIENT_PORTS;
+    extern CMID MID_GET_TCP_AND_UDP_CLIENT_PORTS;
 
 	//================== Hack to get message variable names ==================
 
@@ -84,7 +84,7 @@ namespace message {
 		}
 	};
 
-	#define ADD_MID_NAME(name) name; message::MID_AutoName UNIQUE_NAME(test) = message::MID_AutoName(#name);
+	#define ADD_MID_NAME(name) name; message::MID_AutoName UNIQUE_NAME(_unique_) = message::MID_AutoName(#name);
 
 	//================== Parameters begin ==================
 
@@ -123,13 +123,13 @@ namespace message {
 			ByteStream& operator<<(Param* p) { if (p != NULL) cpy_to_buf(p->data, p->len); return *this; }
 	};
 
-	extern void init();
-	extern void send(Socket* sock, ByteStream& stream);
-	extern CMID extract_mid(char* buffer, int buffer_len);
-	extern void extract_params(CMID mid, char* byte_data, int byte_data_len);
-	extern void clear_param_list();
-	extern void print_extracted_params();
-	extern inline const char* get_MID_name(CMID mid);
+	void init();
+	void send(Socket* sock, ByteStream& stream);
+	CMID extract_mid(char* buffer, int buffer_len);
+	void extract_params(CMID mid, char* byte_data, int byte_data_len);
+	void clear_param_list();
+	void print_extracted_params();
+    inline const char* get_MID_name(CMID mid);
 }
 
 #endif
