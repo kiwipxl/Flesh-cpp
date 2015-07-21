@@ -9,8 +9,8 @@ using state::State;
 
 SceneManager* state::scene;
 
-State state::s = state::TCP_SERVER_CONNECT;
-cc::LabelBMFont* state::label;
+State state::s = state::SERVER_CONNECT_SCREEN;
+cc::LabelBMFont* state::info_label;
 float state::time_since_startup = 0;
 
 void create_state(State c_state) {
@@ -18,10 +18,10 @@ void create_state(State c_state) {
 
     s = c_state;
     switch (s) {
-        case TCP_SERVER_CONNECT:
-            label = cc::LabelBMFont::create("", "fonts/lucida.fnt");
-            label->setString("connecting...");
-            scene->addChild(label, 1);
+        case SERVER_CONNECT_SCREEN:
+            info_label = cc::LabelBMFont::create("", "fonts/lucida.fnt");
+            info_label->setString("connecting...");
+            scene->addChild(info_label, 1);
 
             scene->scheduleUpdate();
 
@@ -35,7 +35,8 @@ void remove_state(State r_state) {
 
     s = r_state;
     switch (s) {
-        case TCP_SERVER_CONNECT:
+        case SERVER_CONNECT_SCREEN:
+            scene->removeChild(info_label);
             break;
     }
 }
@@ -55,29 +56,19 @@ void state::init(SceneManager* scene_ref) {
 
 void state::update(float dt) {
     switch (s) {
-        case TCP_SERVER_CONNECT:
-            label->setString("connecting to server");
-
+        case SERVER_CONNECT_SCREEN:
             time_since_startup += dt;
-            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
-            break;
-        case UDP_SERVER_CONNECT:
-            label->setString("verifying udp connection...");
+            info_label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 
-            time_since_startup += dt;
-            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
-            break;
-        case SERVER_CONNECTED:
-            label->setString("connected");
-
-            time_since_startup += dt;
-            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
-            break;
-        case SERVER_CONNECTION_FAILED:
-            label->setString("an error occurred while trying to connect: " + SSTR(sock::connection_error));
-
-            time_since_startup += dt;
-            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
+            if (sock::connection_finished) {
+                if (sock::connection_error == NO_ERROR) {
+                    switch_state(LOGIN_REGISTER_SCREEN);
+                }else {
+                    info_label->setString("an error occurred while trying to connect: " + SSTR(sock::connection_error));
+                }
+            }else {
+                info_label->setString("connecting to server...");
+            }
             break;
     }
 }

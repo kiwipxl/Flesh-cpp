@@ -8,6 +8,7 @@ Socket sock::udp_serv_sock;
 std::thread sock::msg_recv_thread;
 std::thread sock::tcp_connect_thread;
 
+bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
 char* serv_ip = "192.168.0.5";
@@ -15,6 +16,9 @@ u_short serv_port = 4222;
 
 void tcp_connect() {
     using namespace sock;
+
+    connection_finished = false;
+    connection_error = NO_ERROR;
 
     CCLOG("attempt connect on thread...");
     tcp_serv_sock = Socket(PROTO_TCP, serv_ip, serv_port);
@@ -28,8 +32,6 @@ void tcp_connect() {
     }
 
     CCLOG("(tcp_serv_sock): connection successful");
-
-    state::switch_state(state::UDP_SERVER_CONNECT);
 
     game_msgs::start_recv_thread();
 }
@@ -50,14 +52,12 @@ bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
 
     CCLOG("(udp_serv_sock): creation/binding successful");
 
-    state::switch_state(state::SERVER_CONNECTED);
-
     return true;
 }
 
 void sock::socket_setup_failed(int err) {
+    connection_finished = false;
     connection_error = err;
-    state::switch_state(state::SERVER_CONNECTION_FAILED);
 }
 
 void sock::init() {

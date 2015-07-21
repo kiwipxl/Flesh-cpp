@@ -17,6 +17,7 @@ namespace sock {
     extern std::thread msg_recv_thread;
     extern std::thread tcp_connect_thread;
 
+    extern bool connection_finished;
     extern int connection_error;
 
     extern void init();

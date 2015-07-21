@@ -8,16 +8,14 @@ namespace state {
 
     enum State {
 
-        TCP_SERVER_CONNECT,
-        UDP_SERVER_CONNECT,
-        SERVER_CONNECTED, 
-        SERVER_CONNECTION_FAILED
+        SERVER_CONNECT_SCREEN,  
+        LOGIN_REGISTER_SCREEN
     };
 
     extern SceneManager* scene;
 
     extern State s;
-    extern cc::LabelBMFont* label;
+    extern cc::LabelBMFont* info_label;
     extern float time_since_startup;
 
     extern void init(SceneManager* scene_ref);

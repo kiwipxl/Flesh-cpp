@@ -53,6 +53,8 @@ void recv_msgs() {
                                 
                                 if (sock::setup_udp_sock(*(u_short*)message::param_list[0]->data, *(u_short*)message::param_list[1]->data)) {
                                     server_poll.add_sock(sock::udp_serv_sock);
+                                    sock::connection_finished = true;
+                                    sock::connection_error = NO_ERROR;
                                 }
 							}
 							message::clear_param_list();
