@@ -7,7 +7,6 @@ namespace state {
 
     enum State {
 
-        INIT_SCENE, 
         TCP_SERVER_CONNECT,
         UDP_SERVER_CONNECT,
         SERVER_CONNECTED

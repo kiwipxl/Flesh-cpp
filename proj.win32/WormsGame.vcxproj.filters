@@ -20,6 +20,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
+    <ClCompile Include="src\network\SocketManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="src\network\MessageRecv.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\StateManager.h" />
+    <ClInclude Include="src\network\SocketManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

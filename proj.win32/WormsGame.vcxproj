@@ -159,6 +159,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\network\Message.cpp" />
     <ClCompile Include="src\network\MessageRecv.cpp" />
     <ClCompile Include="src\network\Socket.cpp" />
+    <ClCompile Include="src\network\SocketManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
   </ItemGroup>
@@ -171,6 +172,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\network\MessageRecv.h" />
     <ClInclude Include="src\network\ReadableType.h" />
     <ClInclude Include="src\network\Socket.h" />
+    <ClInclude Include="src\network\SocketManager.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\StateManager.h" />
   </ItemGroup>

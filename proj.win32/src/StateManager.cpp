@@ -2,6 +2,7 @@
 #include <sstream>
 #include "debug/Errors.h"
 #include "network/MessageRecv.h"
+#include "network/SocketManager.h"
 
 using state::State;
 
@@ -9,7 +10,7 @@ using state::State;
 
 SceneManager* state::scene;
 
-State state::s = state::INIT_SCENE;
+State state::s = state::TCP_SERVER_CONNECT;
 cc::LabelBMFont* state::label;
 float state::time_since_startup = 0;
 
@@ -18,9 +19,6 @@ void create_state(State c_state) {
 
     s = c_state;
     switch (s) {
-        case INIT_SCENE:
-            switch_state(TCP_SERVER_CONNECT);
-            break;
         case TCP_SERVER_CONNECT:
             label = cc::LabelBMFont::create("", "fonts/lucida.fnt");
             label->setString("connecting...");
@@ -28,7 +26,7 @@ void create_state(State c_state) {
 
             scene->scheduleUpdate();
 
-            messagerecv::connect_to_server();
+            sock::setup_tcp_sock();
             break;
     }
 }
@@ -38,8 +36,6 @@ void remove_state(State r_state) {
 
     s = r_state;
     switch (s) {
-        case INIT_SCENE:
-            break;
         case TCP_SERVER_CONNECT:
             break;
     }
@@ -53,35 +49,40 @@ void state::switch_state(State new_state) {
 void state::init(SceneManager* scene_ref) {
     scene = scene_ref;
 
+    sock::init();
+
     create_state(s);
 }
 
 void state::update(float dt) {
     switch (s) {
-        case INIT_SCENE:
-            break;
         case TCP_SERVER_CONNECT:
-            if (messagerecv::done_connecting) {
-                if (messagerecv::connect_result == NO_ERROR) {
+            label->setString("connecting to server");
+            if (sock::done_connecting) {
+                if (sock::connect_result == NO_ERROR) {
                     label->setString("connected!");
-                    messagerecv::done_connecting = false;
+                    sock::done_connecting = false;
                 }else {
-                    label->setString("an error occurred while trying to connect: " + SSTR(messagerecv::connect_result));
+                    label->setString("an error occurred while trying to connect: " + SSTR(sock::connect_result));
                 }
             }
 
             time_since_startup += dt;
             label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
-
-            /*for (int n = 0; n < 26; ++n) {
-            Node* s;
-            (s = label->getChildByTag(n))->setRotation(s->getRotation() + cos(s->getPosition().x));
+            break;
+        case UDP_SERVER_CONNECT:
+            label->setString("verifying udp connection...");
+            if (sock::done_connecting) {
+                if (sock::connect_result == NO_ERROR) {
+                    label->setString("connected!");
+                    sock::done_connecting = false;
+                }else {
+                    label->setString("an error occurred while trying to verify udp connection: " + SSTR(sock::connect_result));
+                }
             }
 
-            for (int n = 0; n < 26; ++n) {
-            Node* s;
-            (s = label->getChildByTag(n))->setPosition((n * 25), s->getPosition().y);
-            }*/
+            time_since_startup += dt;
+            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
             break;
     }
 }

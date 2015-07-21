@@ -25,6 +25,6 @@ void SceneManager::update(float dt) {
     state::update(dt);
 }
 
-void SceneManager::menu_close(Ref* r) {
+void SceneManager::menu_close(cc::Ref* r) {
     cc::Director::getInstance()->end();
 }

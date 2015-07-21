@@ -6,5 +6,6 @@
 #define NO_ERROR 0
 
 extern int get_last_error();
+extern int fresult;
 
 #endif
