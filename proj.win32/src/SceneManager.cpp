@@ -3,8 +3,6 @@
 
 using namespace cocos2d;
 
-LabelBMFont* SceneManager::label;
-
 Scene* SceneManager::create_scene() {
 	//auto release objects
 	auto scene = Scene::create();

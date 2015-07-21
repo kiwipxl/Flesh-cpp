@@ -21,8 +21,8 @@ namespace state {
 
     extern void init(SceneManager* scene_ref);
     extern void update(float dt);
-    extern void switch_state(State new_state);
 
+    extern void switch_state(State new_state);
 };
 
 #endif
