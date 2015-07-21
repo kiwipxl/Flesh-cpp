@@ -5,7 +5,6 @@
 #include <stdarg.h>
 #include <sstream>
 #include <vector>
-#include "ReadableType.h"
 #include "Socket.h"
 
 namespace message {

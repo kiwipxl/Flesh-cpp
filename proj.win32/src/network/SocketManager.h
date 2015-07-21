@@ -7,7 +7,7 @@ handles the tcp and udp socket connection between the server and udp sockets bet
 
 #include "Socket.h"
 #include "Message.h"
-#include "MessageRecv.h"
+#include "GameMessages.h"
 #include "../debug/Errors.h"
 
 namespace sock {

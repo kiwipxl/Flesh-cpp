@@ -156,8 +156,9 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\AppDelegate.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\network\GameMessages.cpp" />
     <ClCompile Include="src\network\Message.cpp" />
-    <ClCompile Include="src\network\MessageRecv.cpp" />
+    <ClCompile Include="src\network\SocketPoll.cpp" />
     <ClCompile Include="src\network\Socket.cpp" />
     <ClCompile Include="src\network\SocketManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
@@ -168,9 +169,9 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\AppDelegate.h" />
     <ClInclude Include="src\debug\Errors.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
+    <ClInclude Include="src\network\GameMessages.h" />
     <ClInclude Include="src\network\Message.h" />
-    <ClInclude Include="src\network\MessageRecv.h" />
-    <ClInclude Include="src\network\ReadableType.h" />
+    <ClInclude Include="src\network\SocketPoll.h" />
     <ClInclude Include="src\network\Socket.h" />
     <ClInclude Include="src\network\SocketManager.h" />
     <ClInclude Include="src\SceneManager.h" />

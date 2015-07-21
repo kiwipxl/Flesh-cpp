@@ -31,7 +31,7 @@ void tcp_connect() {
 
     state::switch_state(state::UDP_SERVER_CONNECT);
 
-    msg_recv_thread = std::thread(messagerecv::recv_msgs);
+    msgs::start_recv_game_msgs();
 }
 
 void sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
