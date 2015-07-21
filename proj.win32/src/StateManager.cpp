@@ -10,7 +10,7 @@ using state::State;
 SceneManager* state::scene;
 
 State state::s = state::INIT_SCENE;
-LabelBMFont* state::label;
+cc::LabelBMFont* state::label;
 float state::time_since_startup = 0;
 
 void create_state(State c_state) {
@@ -19,17 +19,16 @@ void create_state(State c_state) {
     s = c_state;
     switch (s) {
         case INIT_SCENE:
-            label = LabelBMFont::create("", "fonts/lucida.fnt");
+            switch_state(TCP_SERVER_CONNECT);
+            break;
+        case TCP_SERVER_CONNECT:
+            label = cc::LabelBMFont::create("", "fonts/lucida.fnt");
             label->setString("connecting...");
             scene->addChild(label, 1);
 
             scene->scheduleUpdate();
 
             messagerecv::connect_to_server();
-
-            switch_state(TCP_SERVER_CONNECT);
-            break;
-        case TCP_SERVER_CONNECT:
             break;
     }
 }
@@ -72,7 +71,7 @@ void state::update(float dt) {
             }
 
             time_since_startup += dt;
-            label->setPosition(Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
+            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 
             /*for (int n = 0; n < 26; ++n) {
             Node* s;

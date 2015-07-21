@@ -1,11 +1,9 @@
 #include "SceneManager.h"
 #include "StateManager.h"
 
-using namespace cocos2d;
-
-Scene* SceneManager::create_scene() {
+cc::Scene* SceneManager::create_scene() {
 	//auto release objects
-	auto scene = Scene::create();
+	auto scene = cc::Scene::create();
     auto layer = SceneManager::create();
 	scene->addChild(layer);
 
@@ -14,6 +12,9 @@ Scene* SceneManager::create_scene() {
 
 bool SceneManager::init() {
     if (!Layer::init()) return false;
+    
+    screen_size = cc::Director::getInstance()->getVisibleSize();
+    screen_origin = cc::Director::getInstance()->getVisibleOrigin();
 
     state::init(this);
 
@@ -25,5 +26,5 @@ void SceneManager::update(float dt) {
 }
 
 void SceneManager::menu_close(Ref* r) {
-	Director::getInstance()->end();
+    cc::Director::getInstance()->end();
 }
