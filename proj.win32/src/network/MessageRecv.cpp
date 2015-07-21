@@ -1,4 +1,4 @@
-#include "MessageRecv.h"
+#include "SocketPoll.h"
 #include <thread>
 #include "../StateManager.h"
 #include "SocketManager.h"
@@ -7,7 +7,7 @@ using err::fresult;
 
 #define VALID_PARAMS(a, b) a == b && message::param_list_size >= b->num_params
 
-void messagerecv::recv_msgs() {
+void SocketPoll::recv_msgs() {
 	fd_set read_list;
 	fd_set write_list;
 	

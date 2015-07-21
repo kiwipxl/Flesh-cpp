@@ -58,28 +58,24 @@ void state::update(float dt) {
     switch (s) {
         case TCP_SERVER_CONNECT:
             label->setString("connecting to server");
-            if (sock::done_connecting) {
-                if (sock::connect_result == NO_ERROR) {
-                    label->setString("connected!");
-                    sock::done_connecting = false;
-                }else {
-                    label->setString("an error occurred while trying to connect: " + SSTR(sock::connect_result));
-                }
-            }
 
             time_since_startup += dt;
             label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
             break;
         case UDP_SERVER_CONNECT:
             label->setString("verifying udp connection...");
-            if (sock::done_connecting) {
-                if (sock::connect_result == NO_ERROR) {
-                    label->setString("connected!");
-                    sock::done_connecting = false;
-                }else {
-                    label->setString("an error occurred while trying to verify udp connection: " + SSTR(sock::connect_result));
-                }
-            }
+
+            time_since_startup += dt;
+            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
+            break;
+        case SERVER_CONNECTED:
+            label->setString("connected");
+
+            time_since_startup += dt;
+            label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
+            break;
+        case SERVER_CONNECTION_FAILED:
+            label->setString("an error occurred while trying to connect: " + SSTR(sock::connection_error));
 
             time_since_startup += dt;
             label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));

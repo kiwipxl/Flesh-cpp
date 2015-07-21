@@ -10,7 +10,8 @@ namespace state {
 
         TCP_SERVER_CONNECT,
         UDP_SERVER_CONNECT,
-        SERVER_CONNECTED
+        SERVER_CONNECTED, 
+        SERVER_CONNECTION_FAILED
     };
 
     extern SceneManager* scene;
