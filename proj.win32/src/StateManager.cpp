@@ -57,6 +57,8 @@ void state::init(SceneManager* scene_ref) {
 void state::update(float dt) {
     switch (s) {
         case SERVER_CONNECT_SCREEN:
+            sock::update();
+
             time_since_startup += dt;
             info_label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 

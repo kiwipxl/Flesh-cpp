@@ -1,14 +1,15 @@
 #include "SocketPoll.h"
 
 int SocketPoll::poll() {
-    return Socket::poll_fds(*fds.begin(), fds.size(), 1000);
+    if (fds.size() <= 0) return 0;
+    return Socket::poll_fds(&fds[0], fds.size(), 1000);
 }
 
 void SocketPoll::add_sock(Socket& sock) {
     pollfd* fd = new pollfd();
-    fds.push_back(fd);
     fd->fd = sock.get_sock();
     fd->events = POLLRDNORM | POLLRDBAND;
+    fds.push_back(*fd);
     sockets.push_back(&sock);
 }
 

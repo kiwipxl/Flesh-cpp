@@ -52,6 +52,7 @@ ADD_MID_NAME(CMID message::MID_CLIENT_USER_PASS					= new MID(2, FT_CHAR_ARRAY, 
 ADD_MID_NAME(CMID message::MID_BEGIN_RELAY_TEST					= new MID(0));
 ADD_MID_NAME(CMID message::MID_RELAY_TEST						= new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
 ADD_MID_NAME(CMID message::MID_GET_TCP_AND_UDP_CLIENT_PORTS		= new MID(2, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+ADD_MID_NAME(CMID message::MID_UDP_PING_PONG                    = new MID(0));
 
 MID::MID(int num_args, ...) : id(MID_id) {
 	if (num_args > 0) ft_params = new CFTYPE[num_args];
@@ -87,8 +88,8 @@ void message::init() {
 	}
 }
 
-void message::send(Socket* sock, ByteStream& stream) {
-	sock->s_send(byte_buffer, byte_offset);
+void message::send(Socket& sock, ByteStream& stream) {
+	sock.s_send(byte_buffer, byte_offset);
 }
 
 CMID message::extract_mid(char* buffer, int buffer_len) {

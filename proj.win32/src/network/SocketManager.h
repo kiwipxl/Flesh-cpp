@@ -20,7 +20,8 @@ namespace sock {
     extern bool udp_ping_pong;
     extern float udp_ping_pong_time;
     extern int udp_ping_pong_tries;
-    extern const int MAX_UDP_PING_PONG_TRIES;
+    #define MAX_UDP_PING_PONG_TRIES 3
+    #define UDP_PING_PONG_TIMEOUT 2.5f
 
     extern bool connection_finished;
     extern int connection_error;
@@ -31,6 +32,7 @@ namespace sock {
     extern void socket_setup_failed(int err);
     extern bool setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port);
     extern void send_udp_ping_pong();
+    extern void begin_relay_test(Socket& sock);
 };
 
 #endif

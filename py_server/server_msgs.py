@@ -32,5 +32,8 @@ def got_message(sock, client_obj, byte_data):
 
             elif (verify_params(mid, message.MID_BEGIN_RELAY_TEST, np)):
                 message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.tcp_port, client_obj.udp_port));
+
+            elif (verify_params(mid, message.MID_UDP_PING_PONG, np)):
+                message.send(sock, client_obj, message.MID_UDP_PING_PONG);
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));

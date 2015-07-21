@@ -64,6 +64,7 @@ namespace message {
 	extern CMID MID_BEGIN_RELAY_TEST;
 	extern CMID MID_RELAY_TEST;
     extern CMID MID_GET_TCP_AND_UDP_CLIENT_PORTS;
+    extern CMID MID_UDP_PING_PONG;
 
 	//================== Hack to get message variable names ==================
 
@@ -123,7 +124,7 @@ namespace message {
 	};
 
 	void init();
-	void send(Socket* sock, ByteStream& stream);
+	void send(Socket& sock, ByteStream& stream);
 	CMID extract_mid(char* buffer, int buffer_len);
 	void extract_params(CMID mid, char* byte_data, int byte_data_len);
 	void clear_param_list();

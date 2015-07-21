@@ -19,7 +19,8 @@ void recv_msgs() {
 	while (true) {
 		int total = 0;
 		if ((total = server_poll.poll()) > 0) {
-            for (int i = 0; i < server_poll.get_size(); ++i) {
+            int size = server_poll.get_size();
+            for (int i = 0; i < size; ++i) {
                 int revents = server_poll.get_fd_at(i)->revents;
 				if (revents & POLLERR) {
 					CCLOG("poll error occurred");
@@ -43,7 +44,7 @@ void recv_msgs() {
 
 								message::print_extracted_params();
 
-								message::send(sock, message::ByteStream() << message::MID_RELAY_TEST << *a << message::param_list[1] << *c << *d);
+								message::send(*sock, message::ByteStream() << message::MID_RELAY_TEST << *a << message::param_list[1] << *c << *d);
 
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
@@ -53,12 +54,15 @@ void recv_msgs() {
                                 
                                 if (sock::setup_udp_sock(*(u_short*)message::param_list[0]->data, *(u_short*)message::param_list[1]->data)) {
                                     server_poll.add_sock(sock::udp_serv_sock);
-                                    sock::connection_finished = true;
-                                    sock::connection_error = NO_ERROR;
+                                    sock::send_udp_ping_pong();
                                 }else {
                                     sock::connection_finished = true;
                                     sock::connection_error = -1;
                                 }
+                            }else if (VALID_PARAMS(mid, message::MID_UDP_PING_PONG)) {
+                                sock::udp_ping_pong = false;
+                                sock::connection_finished = true;
+                                sock::connection_error = NO_ERROR;
 							}
 							message::clear_param_list();
 						}

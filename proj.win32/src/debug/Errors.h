@@ -3,10 +3,10 @@
 
 #include "PlatformConfig.h"
 
-namespace err {
+#define ERR_NONE 0
+#define ERR_UDP_PING_PONG_FAILED 9000
 
-    #define NO_ERROR 0
-    #define UDP_PING_PONG_TIMEOUT 9000
+namespace err {
 
     extern int get_last_error();
     extern int fresult;

@@ -65,6 +65,7 @@ MID_CLIENT_USER_PASS                    = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 MID_BEGIN_RELAY_TEST                    = MID();
 MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
 MID_GET_TCP_AND_UDP_CLIENT_PORTS        = MID(FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
+MID_UDP_PING_PONG                       = MID();
 MID_GAME_PEER_JOIN                      = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 MID_GAME_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 
@@ -77,19 +78,20 @@ for k, v in list(locals().iteritems()):
 byte_buffer = bytearray(1024);
 byte_offset = 0;
 
-def pack_message(mid, params):
+def pack_message(mid, params = None):
     byte_offset = 4;
     i = 0;
     byte_buffer[0:4] = struct.pack(FT_INT.struct_char, mid.id);
-    for param in params:
-        t = mid.ft_params[i];
-        if (t.struct_char == 's'):
-            s = param + '\0';
-        else:
-            s = struct.pack(t.struct_char, param);
-        byte_buffer[byte_offset:byte_offset + s.__len__()] = s;
-        byte_offset += s.__len__();
-        i += 1;
+    if (params):
+        for param in params:
+            t = mid.ft_params[i];
+            if (t.struct_char == 's'):
+                s = param + '\0';
+            else:
+                s = struct.pack(t.struct_char, param);
+            byte_buffer[byte_offset:byte_offset + s.__len__()] = s;
+            byte_offset += s.__len__();
+            i += 1;
     return byte_buffer;
 
 def extract_mid(byte_data):
@@ -125,19 +127,19 @@ def extract_params(mid, byte_data):
         print("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
         return (params, -1);
 
-def send(sock, client, mid, params):
+def send(sock, client, mid, params = None):
     if (sock.type == socket.SOCK_STREAM):
         sock.send(pack_message(mid, params));
     else:
         sock.sendto(pack_message(mid, params), (client.ip, client.tcp_port));
 
-def send_tcp(tcp_sock, mid, params):
+def send_tcp(tcp_sock, mid, params = None):
     tcp_sock.send(pack_message(mid, params));
 
-def send_udp(udp_sock, ip, port, mid, params):
+def send_udp(udp_sock, ip, port, mid, params = None):
     udp_sock.sendto(pack_message(mid, params), (ip, port));
 
-def broadcast(sock_list, mid, params):
+def broadcast(sock_list, mid, params = None):
     for sock in sock_list:
         sock.send(pack_message(mid, params));
 

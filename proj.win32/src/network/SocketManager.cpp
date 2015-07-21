@@ -11,12 +11,11 @@ std::thread sock::tcp_connect_thread;
 bool sock::udp_ping_pong = false;
 float sock::udp_ping_pong_time = 0;
 int sock::udp_ping_pong_tries = 0;
-const int sock::MAX_UDP_PING_PONG_TRIES = 3;
 
 bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
-char* serv_ip = "192.168.0.5";
+char* serv_ip = "192.168.0.11";
 u_short serv_port = 4222;
 
 void tcp_connect() {
@@ -59,28 +58,37 @@ bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
 }
 
 void sock::socket_setup_failed(int err) {
-    connection_finished = false;
+    connection_finished = true;
     connection_error = err;
 }
 
 void sock::update() {
     if (udp_ping_pong) {
-        if (state::time_since_startup - udp_ping_pong_time >= 4.0f) {
+        if (state::time_since_startup - udp_ping_pong_time >= UDP_PING_PONG_TIMEOUT) {
             ++udp_ping_pong_tries;
             send_udp_ping_pong();
-            if (udp_ping_pong_tries > MAX_UDP_PING_PONG_TRIES) socket_setup_failed(UDP_PING_PONG_TIMEOUT);
+            if (udp_ping_pong_tries >= MAX_UDP_PING_PONG_TRIES) {
+                CCLOG("udp ping pong timed out");
+                socket_setup_failed(ERR_UDP_PING_PONG_FAILED);
+                udp_ping_pong = false;
+            }
         }
     }
 }
 
 void sock::send_udp_ping_pong() {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
-        message::send(&udp_serv_sock, message::ByteStream() << message::MID_UDP_PING_PONG);
+        message::send(udp_serv_sock, message::ByteStream() << message::MID_UDP_PING_PONG);
         if (!udp_ping_pong) {
-            udp_ping_pong_time = state::time_since_startup;
+            udp_ping_pong_tries = 0;
             udp_ping_pong = true;
         }
+        udp_ping_pong_time = state::time_since_startup;
     }
+}
+
+void sock::begin_relay_test(Socket& sock) {
+    message::send(sock, message::ByteStream() << message::MID_BEGIN_RELAY_TEST);
 }
 
 void sock::init() {
