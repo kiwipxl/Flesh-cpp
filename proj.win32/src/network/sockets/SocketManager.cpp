@@ -1,5 +1,5 @@
 #include "SocketManager.h"
-#include "../StateManager.h"
+#include "../../StateManager.h"
 
 using err::fresult;
 
@@ -15,7 +15,7 @@ int sock::udp_ping_pong_tries = 0;
 bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
-char* serv_ip = "192.168.0.11";
+char* serv_ip = "192.168.0.3";
 u_short serv_port = 4222;
 
 void tcp_connect() {
@@ -36,12 +36,12 @@ void tcp_connect() {
     }
 
     CCLOG("(tcp_serv_sock): connection successful");
-
-    game_msgs::start_recv_thread();
+    
+    msg::game::start_recv_thread();
 }
 
 bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
-    udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", udp_recv_port);
+    udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 0);
     if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
         CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult);
         socket_setup_failed(fresult); return false;
@@ -50,6 +50,9 @@ bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
         CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port());
         socket_setup_failed(fresult); return false;
     }
+    udp_serv_sock.s_update_addr_info();
+    sockaddr_in ay = udp_serv_sock.get_addr_info();
+
     udp_serv_sock.s_change_addr(serv_ip, udp_serv_port);
 
     CCLOG("(udp_serv_sock): creation/binding successful");

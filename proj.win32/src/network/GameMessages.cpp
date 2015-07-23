@@ -1,6 +1,7 @@
 #include "GameMessages.h"
 #include "../StateManager.h"
 #include "sockets/SocketManager.h"
+#include "Peers.h"
 
 using err::fresult;
 
@@ -9,14 +10,6 @@ SocketPoll msg::game::server_poll;
 bool msg::game::accepting_peers = true;
 
 #define VALID_PARAMS(a, b) a == b && msg::param_list_size >= b->num_params
-
-class Peer {
-
-    int id;
-    bool accepted = false;
-};
-
-std::vector<Peer*> peers;
 
 void recv_msgs() {
     using namespace msg::game;
@@ -27,9 +20,9 @@ void recv_msgs() {
 	int msg_len;
 	while (true) {
         if (accepting_peers) {
-            for (int p = 0; p < peers.size(); ++p) {
+            //for (int p = 0; p < peers.size(); ++p) {
 
-            }
+            //}
         }
 
 		int total = 0;
@@ -78,6 +71,10 @@ void recv_msgs() {
                                 sock::udp_ping_pong = false;
                                 sock::connection_finished = true;
                                 sock::connection_error = NO_ERROR;
+                            }else if (VALID_PARAMS(mid, msg::MID_GAME_PEER_JOIN)) {
+                                peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, *(u_short*)msg::param_list[2]->data);
+                            }else if (VALID_PARAMS(mid, msg::MID_GAME_PEER_LEAVE)) {
+                                peers::peer_leave(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, *(u_short*)msg::param_list[2]->data);
 							}
 							msg::clear_param_list();
 						}

@@ -20,6 +20,8 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #include <netdb.h>
 #endif
 
+#define THROW_IF_ERROR 1
+
 enum SocketProtocol {
 	PROTO_TCP, 
 	PROTO_UDP
@@ -40,22 +42,27 @@ class Socket {
 		int s_send(char* buffer, int buffer_len);
 		int s_recv(char* buffer, int buffer_len);
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
-		int s_change_addr(char* c_ip, short c_port);
+        int s_change_addr(char* c_ip, short c_port);
+        int s_update_addr_info();
 
 		uintptr_t get_sock() { return sock; }
 		char* get_ip() { return ip; }
 		short get_port() { return port; }
+        addrinfo& get_sock_info() { return sock_info; }
+        sockaddr_in& get_addr_info() { return addr_info; }
 
 	private:
 		int result;
 		char* ip;
 		short port;
 		uintptr_t sock;
-		struct sockaddr_in serv_addr;
+		struct sockaddr_in addr_info;
 		struct addrinfo sock_info;
 		fd_set* r_set = NULL;
 		fd_set* w_set = NULL;
-		timeval t;
+        timeval t;
+        
+        int throw_error(int err, char* func_err);
 };
 
 #endif

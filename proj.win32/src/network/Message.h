@@ -65,6 +65,8 @@ namespace msg {
 	extern CMID MID_RELAY_TEST;
     extern CMID MID_GET_TCP_AND_UDP_CLIENT_PORTS;
     extern CMID MID_UDP_PING_PONG;
+    extern CMID MID_GAME_PEER_JOIN;
+    extern CMID MID_GAME_PEER_LEAVE;
 
 	//================== Hack to get message variable names ==================
 

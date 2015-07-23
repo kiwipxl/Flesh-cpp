@@ -1,11 +1,8 @@
 #include "StateManager.h"
-#include <sstream>
 #include "debug/Errors.h"
-#include "network/SocketManager.h"
+#include "network/sockets/SocketManager.h"
 
 using state::State;
-
-#define SSTR(x) dynamic_cast<std::ostringstream&>((std::ostringstream() << std::dec << x)).str()
 
 SceneManager* state::scene;
 

@@ -1,5 +1,5 @@
 #include "Errors.h"
-#include "network/Socket.h"
+#include "network/sockets/Socket.h"
 
 int err::fresult;
 
