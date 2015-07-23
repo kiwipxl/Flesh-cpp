@@ -33,6 +33,10 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
     client_id_inc += 1;
     message.send(c.tcp_sock, c, message.MID_GET_TCP_AND_UDP_CLIENT_PORTS, (c.tcp_port, c.udp_port));
 
+    for cl in clients:
+        if (cl is not c):
+            message.send(cl.tcp_sock, cl, message.MID_GAME_PEER_JOIN, (cl.tcp_port, cl.udp_port));
+
 def handle_leave(client_obj, leave_message, remove_from_list = True):
     global clients
     global num_clients

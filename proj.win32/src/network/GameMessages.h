@@ -2,14 +2,18 @@
 #define _GAME_MESSAGES_H_
 
 #include <thread>
-#include "SocketPoll.h"
+#include "sockets/SocketPoll.h"
 
-namespace game_msgs {
+namespace msg {
 
-    extern std::thread msgs_thread;
-    extern SocketPoll server_poll;
+    namespace game {
 
-    extern void start_recv_thread();
+        extern std::thread msgs_thread;
+        extern SocketPoll server_poll;
+        extern bool accepting_peers;
+
+        extern void start_recv_thread();
+    }
 }
 
 #endif

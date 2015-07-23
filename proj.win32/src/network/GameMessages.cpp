@@ -1,22 +1,37 @@
 #include "GameMessages.h"
 #include "../StateManager.h"
-#include "SocketManager.h"
+#include "sockets/SocketManager.h"
 
 using err::fresult;
 
-std::thread game_msgs::msgs_thread;
-SocketPoll game_msgs::server_poll;
+std::thread msg::game::msgs_thread;
+SocketPoll msg::game::server_poll;
+bool msg::game::accepting_peers = true;
 
-#define VALID_PARAMS(a, b) a == b && message::param_list_size >= b->num_params
+#define VALID_PARAMS(a, b) a == b && msg::param_list_size >= b->num_params
+
+class Peer {
+
+    int id;
+    bool accepted = false;
+};
+
+std::vector<Peer*> peers;
 
 void recv_msgs() {
-    using namespace game_msgs;
+    using namespace msg::game;
 
     server_poll.add_sock(sock::tcp_serv_sock);
 
 	char buffer[1024];
 	int msg_len;
 	while (true) {
+        if (accepting_peers) {
+            for (int p = 0; p < peers.size(); ++p) {
+
+            }
+        }
+
 		int total = 0;
 		if ((total = server_poll.poll()) > 0) {
             int size = server_poll.get_size();
@@ -32,39 +47,39 @@ void recv_msgs() {
                     Socket* sock = server_poll.get_sock_at(i);
                     if (!sock) continue;
 					if ((msg_len = sock->s_recv(buffer, 1024)) > 0) {
-						CMID mid = message::extract_mid(buffer, msg_len);
-						if (mid->id > 0 && mid->id < message::MID_list.size()) {
-							message::extract_params(mid, buffer, msg_len);
+						CMID mid = msg::extract_mid(buffer, msg_len);
+						if (mid->id > 0 && mid->id < msg::MID_list.size()) {
+							msg::extract_params(mid, buffer, msg_len);
 
-							if (VALID_PARAMS(mid, message::MID_RELAY_TEST)) {
-								int* a = (int*)message::param_list[0]->data;
-                                char** b = &message::param_list[1]->data;
-								u_short* c = (u_short*)message::param_list[2]->data;
-								u_short* d = (u_short*)message::param_list[3]->data;
+							if (VALID_PARAMS(mid, msg::MID_RELAY_TEST)) {
+								int* a = (int*)msg::param_list[0]->data;
+                                char** b = &msg::param_list[1]->data;
+								u_short* c = (u_short*)msg::param_list[2]->data;
+								u_short* d = (u_short*)msg::param_list[3]->data;
 
-								message::print_extracted_params();
+								msg::print_extracted_params();
 
-								message::send(*sock, message::ByteStream() << message::MID_RELAY_TEST << *a << message::param_list[1] << *c << *d);
+								msg::send(*sock, msg::ByteStream() << msg::MID_RELAY_TEST << *a << msg::param_list[1] << *c << *d);
 
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-							}else if (VALID_PARAMS(mid, message::MID_CLIENT_ID)) {
-								message::print_extracted_params();
-							}else if (VALID_PARAMS(mid, message::MID_GET_TCP_AND_UDP_CLIENT_PORTS)) {
-                                message::print_extracted_params();
+							}else if (VALID_PARAMS(mid, msg::MID_CLIENT_ID)) {
+								msg::print_extracted_params();
+							}else if (VALID_PARAMS(mid, msg::MID_GET_TCP_AND_UDP_CLIENT_PORTS)) {
+                                msg::print_extracted_params();
                                 
-                                if (sock::setup_udp_sock(*(u_short*)message::param_list[0]->data, *(u_short*)message::param_list[1]->data)) {
+                                if (sock::setup_udp_sock(*(u_short*)msg::param_list[0]->data, *(u_short*)msg::param_list[1]->data)) {
                                     server_poll.add_sock(sock::udp_serv_sock);
                                     sock::send_udp_ping_pong();
                                 }else {
                                     sock::connection_finished = true;
                                     sock::connection_error = -1;
                                 }
-                            }else if (VALID_PARAMS(mid, message::MID_UDP_PING_PONG)) {
+                            }else if (VALID_PARAMS(mid, msg::MID_UDP_PING_PONG)) {
                                 sock::udp_ping_pong = false;
                                 sock::connection_finished = true;
                                 sock::connection_error = NO_ERROR;
 							}
-							message::clear_param_list();
+							msg::clear_param_list();
 						}
 					}
 				}
@@ -75,6 +90,6 @@ void recv_msgs() {
 	}
 }
 
-void game_msgs::start_recv_thread() {
+void msg::game::start_recv_thread() {
     msgs_thread = std::thread(recv_msgs);
 }

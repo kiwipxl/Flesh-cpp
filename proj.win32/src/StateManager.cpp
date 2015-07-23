@@ -12,6 +12,7 @@ SceneManager* state::scene;
 State state::s = state::SERVER_CONNECT_SCREEN;
 cc::LabelBMFont* state::info_label;
 float state::time_since_startup = 0;
+cc::TextFieldDelegate username_input;
 
 void create_state(State c_state) {
     using namespace state;
@@ -26,6 +27,8 @@ void create_state(State c_state) {
             scene->scheduleUpdate();
 
             sock::setup_tcp_sock();
+            break;
+        case LOGIN_REGISTER_SCREEN:
             break;
     }
 }

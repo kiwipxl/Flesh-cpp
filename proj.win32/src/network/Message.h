@@ -5,9 +5,9 @@
 #include <stdarg.h>
 #include <sstream>
 #include <vector>
-#include "Socket.h"
+#include "sockets/Socket.h"
 
-namespace message {
+namespace msg {
 
 	//================== Format types begin ==================
 
@@ -20,7 +20,7 @@ namespace message {
 		FormatType(const char* c, const short l, const char* name);
 	};
 
-	#define CFTYPE const message::FormatType*
+	#define CFTYPE const msg::FormatType*
 
 	//format types for packing and unpacking byte data
 	extern CFTYPE FT_CHAR;
@@ -52,7 +52,7 @@ namespace message {
 		MID(int num_args, ...);
 	};
 
-	#define CMID const message::MID*
+	#define CMID const msg::MID*
 
 	extern int MID_id;
 	extern std::vector<CMID> MID_list;
@@ -84,7 +84,7 @@ namespace message {
 		}
 	};
 
-	#define ADD_MID_NAME(name) name; message::MID_AutoName UNIQUE_NAME(_unique_) = message::MID_AutoName(#name);
+	#define ADD_MID_NAME(name) name; msg::MID_AutoName UNIQUE_NAME(_unique_) = msg::MID_AutoName(#name);
 
 	//================== Parameters begin ==================
 
