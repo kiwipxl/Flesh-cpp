@@ -26,10 +26,11 @@ def got_message(sock, client_obj, byte_data):
             elif (verify_params(mid, message.MID_CLIENT_ID, np)):
                 message.print_params(client_obj, sock.type, mid, params);
 
-            elif (verify_params(mid, message.MID_GET_TCP_AND_UDP_CLIENT_PORTS, np)):
+            elif (verify_params(mid, message.MID_CLIENT_UDP_PORT, np)):
                 message.print_params(client_obj, sock.type, mid, params);
-                message.send(sock, client_obj, message.MID_GET_TCP_CLIENT_PORT, (client_obj.tcp_port, client_obj.udp_port,));
-
+                client_obj.udp_port = params[0];
+                message.send(sock, client_obj, message.MID_START_UDP_PING_PONG);
+                
             elif (verify_params(mid, message.MID_BEGIN_RELAY_TEST, np)):
                 message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.tcp_port, client_obj.udp_port));
 

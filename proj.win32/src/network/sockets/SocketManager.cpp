@@ -24,13 +24,13 @@ void tcp_connect() {
     connection_error = NO_ERROR;
 
     CCLOG("attempt connect on thread...");
-    tcp_serv_sock = Socket(PROTO_TCP, serv_ip, serv_port);
+    tcp_serv_sock = Socket(PROTO_TCP);
     if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
         CCLOG("(tcp_serv_sock): error %d occurred while creating tcp socket", fresult);
         socket_setup_failed(fresult); return;
     }
-    if ((fresult = tcp_serv_sock.s_connect()) != NO_ERROR) {
-        CCLOG("(tcp_serv_sock): error %d occurred while trying to connect to (ip: %s, port: %d)", fresult, tcp_serv_sock.get_ip(), tcp_serv_sock.get_port());
+    if ((fresult = tcp_serv_sock.s_connect(serv_ip, serv_port)) != NO_ERROR) {
+        CCLOG("(tcp_serv_sock): error %d occurred while trying to connect to (ip: %s, port: %d)", fresult, tcp_serv_sock.get_binded_ip(), tcp_serv_sock.get_binded_port());
         socket_setup_failed(fresult); return;
     }
 
@@ -40,19 +40,16 @@ void tcp_connect() {
 }
 
 bool sock::setup_udp_sock(u_short udp_serv_port) {
-    udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 0);
+    udp_serv_sock = Socket(PROTO_UDP);
     if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
         CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult);
         socket_setup_failed(fresult); return false;
     }
-    if ((fresult = udp_serv_sock.s_bind()) != NO_ERROR) {
-        CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_ip(), udp_serv_sock.get_port());
+    if ((fresult = udp_serv_sock.s_bind("0.0.0.0", 0)) != NO_ERROR) {
+        CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_binded_ip(), udp_serv_sock.get_binded_port());
         socket_setup_failed(fresult); return false;
     }
-    udp_serv_sock.s_update_addr_info();
-    sockaddr_in ay = udp_serv_sock.get_addr_info();
-
-    udp_serv_sock.s_change_addr(serv_ip, udp_serv_port);
+    udp_serv_sock.s_change_send_addr(serv_ip, udp_serv_port);
 
     CCLOG("(udp_serv_sock): creation/binding successful");
 

@@ -23,7 +23,6 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
     c.id = client_id_inc;
     c.ip = client_ip;
     c.tcp_port = client_port;
-    c.udp_port = new_udp_sock.getsockname()[1];
 
     if (add_to_list): clients.append(c);
 
@@ -31,7 +30,7 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.tcp_sock, c, message.MID_GET_TCP_AND_UDP_CLIENT_PORTS, (c.tcp_port, c.udp_port));
+    message.send(c.tcp_sock, c, message.MID_SERVER_UDP_PORT, (c.udp_port));
 
     for cl in clients:
         if (cl is not c):
