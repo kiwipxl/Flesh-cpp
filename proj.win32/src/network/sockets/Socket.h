@@ -33,36 +33,43 @@ class Socket {
 		static void init_sockets();
 		static int poll_fds(pollfd* fd_array, int array_len, int timeout);
 
-		Socket(SocketProtocol c_protocol = PROTO_TCP, char* c_ip = "undefined", short c_port = -1);
+		Socket(SocketProtocol c_protocol = PROTO_TCP);
 		SocketProtocol protocol;
 
 		int s_create();
-		int s_bind();
-		int s_connect();
+		int s_bind(char* binding_ip, u_short binding_port);
+		int s_connect(char* connect_ip, u_short connect_port);
 		int s_send(char* buffer, int buffer_len);
 		int s_recv(char* buffer, int buffer_len);
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
-        int s_change_addr(char* c_ip, short c_port);
-        int s_update_addr_info();
+        int s_change_send_addr(char* sending_ip, u_short sending_port);
 
 		uintptr_t get_sock() { return sock; }
-		char* get_ip() { return ip; }
-		short get_port() { return port; }
+		char* get_binded_ip() { return binded_ip; }
+		short get_binded_port() { return binded_port; }
+        char* get_send_ip() { return send_ip; }
+        short get_send_port() { return send_port; }
         addrinfo& get_sock_info() { return sock_info; }
-        sockaddr_in& get_addr_info() { return addr_info; }
+        sockaddr_in& get_binded_addr_info() { return binded_addr_info; }
+        sockaddr_in& get_send_addr_info() { return send_addr_info; }
 
 	private:
 		int result;
-		char* ip;
-		short port;
+        char* binded_ip;
+        u_short binded_port;
+        char* send_ip;
+        u_short send_port;
 		uintptr_t sock;
-		struct sockaddr_in addr_info;
-		struct addrinfo sock_info;
+        struct sockaddr_in binded_addr_info;
+        struct sockaddr_in send_addr_info;
+        struct addrinfo sock_info;
 		fd_set* r_set = NULL;
 		fd_set* w_set = NULL;
         timeval t;
         
         int print_error(int err, char* func_err);
+        int s_change_addr(sockaddr_in& addr_info, char* c_ip, u_short c_port);
+        int s_update_addr_info(sockaddr_in& addr_info);
 };
 
 #endif

@@ -29,7 +29,7 @@ namespace sock {
     extern void update();
     extern void setup_tcp_sock();
     extern void socket_setup_failed(int err);
-    extern bool setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port);
+    extern bool setup_udp_sock(u_short udp_serv_port);
     extern void send_udp_ping_pong();
     extern void begin_relay_test(Socket& sock);
     extern void close_all_threads();

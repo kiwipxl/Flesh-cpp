@@ -39,7 +39,7 @@ void tcp_connect() {
     msg::game::start_recv_thread();
 }
 
-bool sock::setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port) {
+bool sock::setup_udp_sock(u_short udp_serv_port) {
     udp_serv_sock = Socket(PROTO_UDP, "0.0.0.0", 0);
     if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
         CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult);
