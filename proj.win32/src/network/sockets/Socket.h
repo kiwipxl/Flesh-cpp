@@ -20,7 +20,7 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #include <netdb.h>
 #endif
 
-#define THROW_IF_ERROR 1
+#define PRINT_IF_ERROR 1
 
 enum SocketProtocol {
 	PROTO_TCP, 
@@ -62,7 +62,7 @@ class Socket {
 		fd_set* w_set = NULL;
         timeval t;
         
-        int throw_error(int err, char* func_err);
+        int print_error(int err, char* func_err);
 };
 
 #endif

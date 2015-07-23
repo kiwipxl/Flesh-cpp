@@ -14,7 +14,6 @@ namespace sock {
 
     extern Socket tcp_serv_sock;
     extern Socket udp_serv_sock;
-    extern std::thread msg_recv_thread;
     extern std::thread tcp_connect_thread;
 
     extern bool udp_ping_pong;
@@ -33,6 +32,7 @@ namespace sock {
     extern bool setup_udp_sock(u_short udp_recv_port, u_short udp_serv_port);
     extern void send_udp_ping_pong();
     extern void begin_relay_test(Socket& sock);
+    extern void close_all_threads();
 };
 
 #endif

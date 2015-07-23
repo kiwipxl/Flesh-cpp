@@ -13,6 +13,7 @@ namespace msg {
         extern bool accepting_peers;
 
         extern void start_recv_thread();
+        extern void close_all_threads();
     }
 }
 

@@ -87,6 +87,10 @@ void recv_msgs() {
 	}
 }
 
+void msg::game::close_all_threads() {
+    msgs_thread.detach();
+}
+
 void msg::game::start_recv_thread() {
     msgs_thread = std::thread(recv_msgs);
 }

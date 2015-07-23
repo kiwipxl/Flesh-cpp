@@ -5,7 +5,6 @@ using err::fresult;
 
 Socket sock::tcp_serv_sock;
 Socket sock::udp_serv_sock;
-std::thread sock::msg_recv_thread;
 std::thread sock::tcp_connect_thread;
 
 bool sock::udp_ping_pong = false;
@@ -92,6 +91,10 @@ void sock::send_udp_ping_pong() {
 
 void sock::begin_relay_test(Socket& sock) {
     msg::send(sock, msg::ByteStream() << msg::MID_BEGIN_RELAY_TEST);
+}
+
+void sock::close_all_threads() {
+    tcp_connect_thread.detach();
 }
 
 void sock::init() {

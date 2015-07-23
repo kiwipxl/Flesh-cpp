@@ -1,8 +1,9 @@
 #include "Socket.h"
 #include "../Message.h"
 #include "../../debug/Errors.h"
+#include "SocketManager.h"
 
-#define THROW_OR_ERROR(str) THROW_IF_ERROR ? throw_error(err::get_last_error(), str) : err::get_last_error()
+#define PRINT_OR_ERROR(str) PRINT_IF_ERROR ? print_error(err::get_last_error(), str) : err::get_last_error()
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
@@ -41,8 +42,8 @@ Socket::Socket(SocketProtocol c_protocol, char* c_ip, short c_port) {
 	}
 }
 
-int Socket::throw_error(int err, char* func_err) {
-    throw std::exception(func_err, err);
+int Socket::print_error(int err, char* func_err) {
+    CCLOG("%s: %d", func_err, err);
     return err;
 }
 
@@ -50,7 +51,7 @@ int Socket::s_create() {
 	s_change_addr(ip, port);
 
 	//create socket
-	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return THROW_OR_ERROR("socket creation error");
+	if ((sock = socket(AF_INET, sock_info.ai_socktype, sock_info.ai_protocol)) < 0) return PRINT_OR_ERROR("socket creation error");
 
 	return NO_ERROR;
 }
@@ -65,25 +66,25 @@ int Socket::s_change_addr(char* c_ip, short c_port) {
 	addr_info.sin_port = htons(port);
 
 	//convert ip and copy into ipv4 structure in_addr
-	if (inet_pton(AF_INET, ip, &addr_info.sin_addr) <= 0) return THROW_OR_ERROR("presentation to network error");
+	if (inet_pton(AF_INET, ip, &addr_info.sin_addr) <= 0) return PRINT_OR_ERROR("presentation to network error");
 
 	return NO_ERROR;
 }
 
 int Socket::s_update_addr_info() {
     int name = sizeof(addr_info);
-    if ((result = getsockname(sock, (sockaddr*)&addr_info, &name)) < 0) return THROW_OR_ERROR("get sock name error");
+    if ((result = getsockname(sock, (sockaddr*)&addr_info, &name)) < 0) return PRINT_OR_ERROR("get sock name error");
     return NO_ERROR;
 }
 
 int Socket::s_bind() {
-    if ((result = bind(sock, (sockaddr*)&addr_info, sizeof(addr_info))) < 0) return THROW_OR_ERROR("bind error");
+    if ((result = bind(sock, (sockaddr*)&addr_info, sizeof(addr_info))) < 0) return PRINT_OR_ERROR("bind error");
     s_update_addr_info();
 	return NO_ERROR;
 }
 
 int Socket::s_connect() {
-	if (connect(sock, (sockaddr*)&addr_info, sizeof(addr_info)) < 0) return THROW_OR_ERROR("connect error");
+	if (connect(sock, (sockaddr*)&addr_info, sizeof(addr_info)) < 0) return PRINT_OR_ERROR("connect error");
 
 	return NO_ERROR;
 }
@@ -103,19 +104,19 @@ int Socket::s_select(fd_set* read_set, fd_set* write_set, bool use_timeout, int 
 
 int Socket::s_send(char* buffer, int buffer_len) {
 	if (protocol == PROTO_TCP) {
-		if ((result = send(sock, buffer, buffer_len, 0)) < 0) return THROW_OR_ERROR("send error");
+		if ((result = send(sock, buffer, buffer_len, 0)) < 0) return PRINT_OR_ERROR("send error");
 	}else if (protocol == PROTO_UDP) {
-		if ((result = sendto(sock, buffer, buffer_len, 0, (sockaddr*)&addr_info, sizeof(addr_info))) < 0) return THROW_OR_ERROR("sendto error");
+		if ((result = sendto(sock, buffer, buffer_len, 0, (sockaddr*)&addr_info, sizeof(addr_info))) < 0) return PRINT_OR_ERROR("sendto error");
 	}
 	return result;
 }
 
 int Socket::s_recv(char* buffer, int buffer_len) {
 	if (protocol == PROTO_TCP) {
-		if ((result = recv(sock, buffer, buffer_len, 0)) < 0) return THROW_OR_ERROR("recv error");
+		if ((result = recv(sock, buffer, buffer_len, 0)) < 0) return PRINT_OR_ERROR("recv error");
 	}else if (protocol == PROTO_UDP) {
 		int addr_info_size = sizeof(addr_info);
-		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&addr_info, &addr_info_size)) < 0) return THROW_OR_ERROR("recvfrom error");
+		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&addr_info, &addr_info_size)) < 0) return PRINT_OR_ERROR("recvfrom error");
 	}
 	return result;
 }
