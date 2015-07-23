@@ -61,14 +61,14 @@ void recv_msgs() {
                                 msg::print_extracted_params();
                                 
                                 if (sock::setup_udp_sock(*(u_short*)msg::param_list[0]->data)) {
-                                    msg::send(*sock, msg::ByteStream() << msg::MID_CLIENT_UDP_PORT << sock->get_binded_port());
+                                    int bp = sock::udp_serv_sock.get_binded_port();
+                                    msg::send(sock::tcp_serv_sock, msg::ByteStream() << msg::MID_CLIENT_UDP_PORT << sock::udp_serv_sock.get_binded_port());
                                     server_poll.add_sock(sock::udp_serv_sock);
+                                    sock::send_udp_ping_pong();
                                 }else {
                                     sock::connection_finished = true;
                                     sock::connection_error = -1;
                                 }
-                            }else if (VALID_PARAMS(mid, msg::MID_START_UDP_PING_PONG)) {
-                                sock::send_udp_ping_pong();
                             }else if (VALID_PARAMS(mid, msg::MID_UDP_PING_PONG)) {
                                 sock::udp_ping_pong = false;
                                 sock::connection_finished = true;

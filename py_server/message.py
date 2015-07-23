@@ -64,7 +64,6 @@ MID_CLIENT_ID                           = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARR
 MID_CLIENT_USER_PASS                    = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 MID_BEGIN_RELAY_TEST                    = MID();
 MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
-MID_START_UDP_PING_PONG                 = MID();
 MID_UDP_PING_PONG                       = MID();
 MID_GAME_PEER_JOIN                      = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 MID_GAME_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);

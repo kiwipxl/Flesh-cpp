@@ -63,7 +63,6 @@ namespace msg {
 	extern CMID MID_CLIENT_USER_PASS;
 	extern CMID MID_BEGIN_RELAY_TEST;
 	extern CMID MID_RELAY_TEST;
-    extern CMID MID_START_UDP_PING_PONG;
     extern CMID MID_UDP_PING_PONG;
     extern CMID MID_GAME_PEER_JOIN;
     extern CMID MID_GAME_PEER_LEAVE;

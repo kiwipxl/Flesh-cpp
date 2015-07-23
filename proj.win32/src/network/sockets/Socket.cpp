@@ -66,7 +66,7 @@ int Socket::s_change_addr(sockaddr_in& addr_info, char* c_ip, u_short c_port) {
     addr_info.sin_port = htons(c_port);
 
     //convert ip and copy into ipv4 structure in_addr
-    if (inet_pton(AF_INET, send_ip, &addr_info.sin_addr) <= 0) return PRINT_OR_ERROR("presentation to network error");
+    if (inet_pton(AF_INET, c_ip, &addr_info.sin_addr) <= 0) return PRINT_OR_ERROR("presentation to network error");
 
     return NO_ERROR;
 }
@@ -84,6 +84,8 @@ int Socket::s_bind(char* binding_ip, u_short binding_port) {
 
     if ((result = bind(sock, (sockaddr*)&binded_addr_info, sizeof(binded_addr_info))) < 0) return PRINT_OR_ERROR("bind error");
     s_update_addr_info(binded_addr_info);
+    binded_port = binded_addr_info.sin_port;
+
 	return NO_ERROR;
 }
 

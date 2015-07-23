@@ -26,11 +26,12 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
 
     if (add_to_list): clients.append(c);
 
-    print("accepted client (client-id: %d, ip: %s, tcp_port: %d, udp_port: %d)" % (c.id, c.ip, c.tcp_port, c.udp_port));
+    #only accept client when all sockets are verified
+    print("accepted client (client-id: %d, ip: %s, tcp_port: %d, udp_port: %d)" % (c.id, c.ip, c.tcp_port, -1));
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.tcp_sock, c, message.MID_SERVER_UDP_PORT, (c.udp_port));
+    message.send(c.tcp_sock, c, message.MID_SERVER_UDP_PORT, (new_udp_sock.getsockname()[1],));
 
     for cl in clients:
         if (cl is not c):
