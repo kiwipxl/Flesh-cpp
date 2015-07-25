@@ -1,12 +1,15 @@
 import message;
+import debug;
 
 class Client:
     id = 0;
     tcp_sock = None;
     udp_sock = None;
     ip = "";
-    tcp_port = 0;
-    udp_port = 0;
+    c_tcp_port = -1;   #binded tcp port on client machine connected to client tcp socket
+    c_udp_port = -1;   #binded udp port on client machine that is listening for messages
+    s_tcp_port = -1;   #binded tcp port on server machine connected to client tcp socket
+    s_udp_port = -1;   #binded udp port on server machine that is listening for messages
 
 clients = [];
 num_clients = 0;
@@ -22,19 +25,22 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
     c.udp_sock = new_udp_sock;
     c.id = client_id_inc;
     c.ip = client_ip;
-    c.tcp_port = client_port;
+    c.c_tcp_port = client_port;
+    c.s_tcp_port = new_tcp_sock.getsockname()[1];
+    c.s_udp_port = new_udp_sock.getsockname()[1];
 
     if (add_to_list): clients.append(c);
 
     #only accept client when all sockets are verified
-    print("accepted client (client-id: %d, ip: %s, tcp_port: %d, udp_port: %d)" % (c.id, c.ip, c.tcp_port, -1));
+    print("accepted client (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d)" %
+          (c.id, c.ip, c.c_tcp_port, c.c_udp_port, c.s_tcp_port, c.s_udp_port));
 
     num_clients += 1;
     client_id_inc += 1;
     message.send(c.tcp_sock, c, message.MID_SEND_SERVER_BINDED_UDP_PORT, (new_udp_sock.getsockname()[1],));
 
     for cl in clients:
-        message.send(cl.tcp_sock, cl, message.MID_SEND_UDP_PEER_BIND_REQUEST, (cl.tcp_port, cl.udp_port));
+        message.send(cl.tcp_sock, cl, message.MID_SEND_UDP_PEER_BIND_REQUEST, (cl.c_tcp_port, cl.c_udp_port));
 
 def handle_leave(client_obj, leave_message, remove_from_list = True):
     global clients
@@ -43,7 +49,9 @@ def handle_leave(client_obj, leave_message, remove_from_list = True):
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();
 
-    print("client disconnected (client-id: %d, ip: %s, tcp_port: %d, udp_port: %d, msg: %s)" % (client_obj.id, client_obj.ip, client_obj.tcp_port, client_obj.udp_port, leave_message));
+    print("client disconnected (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d, msg: %s)" %
+          (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_message));
+
     if (remove_from_list): clients.remove(client_obj);
     num_clients -= 1;
 

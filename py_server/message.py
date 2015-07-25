@@ -2,6 +2,7 @@ from __future__ import print_function;
 import sys;
 import struct;
 import socket;
+import debug;
 
 class FormatType():
 
@@ -81,9 +82,9 @@ MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED
 MID_UDP_PING_PONG                       = MID();
 
 #requests a client to bind to a random port to allow peers to send messages to
-MID_SEND_UDP_PEER_BIND_REQUEST        = MID();
+MID_SEND_UDP_PEER_BIND_REQUEST          = MID();
 #receives the binded udp port from a client after the request was made
-MID_RECV_UDP_PEER_BIND_PORT           = MID(FT_UNSIGNED_SHORT);
+MID_RECV_UDP_PEER_BIND_PORT             = MID(FT_UNSIGNED_SHORT);
 #received when a client successfully connect to their peer
 MID_RECV_PEER_CONNECT_SUCCESS           = MID();
 
@@ -95,9 +96,9 @@ MID_SEND_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 MID_RECV_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 
 #server sends server udp binded port to client
-MID_SEND_SERVER_BINDED_UDP_PORT                     = MID(FT_UNSIGNED_SHORT);
+MID_SEND_SERVER_BINDED_UDP_PORT         = MID(FT_UNSIGNED_SHORT);
 #client sends client binded udp port to server
-MID_RECV_CLIENT_BINDED_UDP_PORT                     = MID(FT_UNSIGNED_SHORT);
+MID_RECV_CLIENT_BINDED_UDP_PORT         = MID(FT_UNSIGNED_SHORT);
 
 #put all MID_x variables into a name array so messages can be debugged easier
 MID_names = MID_id * [None];
@@ -157,19 +158,21 @@ def extract_params(mid, byte_data):
             params.append(s);
         return (params, 0);
     else:
-        print("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes));
+        debug.log("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes), debug.P_WARNING);
         return (params, -1);
 
 def send(sock, client, mid, params = None):
     if (sock.type == socket.SOCK_STREAM):
         sock.send(pack_message(mid, params));
     else:
-        sock.sendto(pack_message(mid, params), (client.ip, client.tcp_port));
+        if (client.c_tcp_port <= 0): debug.log("c_tcp_port is less than zero when trying to send tcp message", debug.P_WARNING); return;
+        sock.sendto(pack_message(mid, params), (client.ip, client.c_tcp_port));
 
 def send_tcp(tcp_sock, mid, params = None):
     tcp_sock.send(pack_message(mid, params));
 
 def send_udp(udp_sock, ip, port, mid, params = None):
+    if (port <= 0): debug.log("port is less than zero when trying to send_udp message", debug.P_WARNING); return;
     udp_sock.sendto(pack_message(mid, params), (ip, port));
 
 def broadcast(sock_list, mid, params = None):
@@ -185,4 +188,4 @@ def print_params(client_obj, sock_type, mid, params):
             i += 1;
             print("") if i >= len(params) else print(", ", end='');
     else:
-        print("could not print params, required %d params, but %d params given" % (len(params), mid.num_params));
+        debug.log("could not print params, required %d params, but %d params given" % (len(params), mid.num_params), debug.P_WARNING);

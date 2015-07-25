@@ -34,7 +34,6 @@ class Socket {
 		static int poll_fds(pollfd* fd_array, int array_len, int timeout);
 
 		Socket(SocketProtocol c_protocol = PROTO_TCP);
-		SocketProtocol protocol;
 
 		int s_create();
 		int s_bind(char* binding_ip, u_short binding_port);
@@ -46,14 +45,16 @@ class Socket {
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }
-		short get_binded_port() { return binded_port; }
+        u_short get_binded_port() { return binded_port; }
         char* get_send_ip() { return send_ip; }
-        short get_send_port() { return send_port; }
+        u_short get_send_port() { return send_port; }
         addrinfo& get_sock_info() { return sock_info; }
         sockaddr_in& get_binded_addr_info() { return binded_addr_info; }
         sockaddr_in& get_send_addr_info() { return send_addr_info; }
+        SocketProtocol get_protocol() { return protocol; }
 
 	private:
+		SocketProtocol protocol;
 		int result;
         char* binded_ip;
         u_short binded_port;
