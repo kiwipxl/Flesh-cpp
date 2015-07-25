@@ -83,8 +83,9 @@ int Socket::s_bind(char* binding_ip, u_short binding_port) {
     s_change_addr(binded_addr_info, binded_ip, binded_port);
 
     if ((result = bind(sock, (sockaddr*)&binded_addr_info, sizeof(binded_addr_info))) < 0) return PRINT_OR_ERROR("bind error");
+
     s_update_addr_info(binded_addr_info);
-    binded_port = binded_addr_info.sin_port;
+    binded_port = ntohs(binded_addr_info.sin_port);
 
 	return NO_ERROR;
 }

@@ -158,7 +158,8 @@ def extract_params(mid, byte_data):
             params.append(s);
         return (params, 0);
     else:
-        debug.log("recv message %s is only %i bytes long when the minimum is %i bytes" % (MID_names[mid.id], len(byte_data) - 4, mid.total_param_bytes), debug.P_WARNING);
+        debug.log("extract params failed. received msg %s is only %i bytes long when the minimum is %i bytes" %
+                  (MID_names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
         return (params, -1);
 
 def send(sock, client, mid, params = None):
@@ -181,6 +182,7 @@ def broadcast(sock_list, mid, params = None):
 
 def print_params(client_obj, sock_type, mid, params):
     if (mid.num_params >= 1 and mid.num_params == len(params)):
+        debug.log("", debug.P_MID_PRINT, "");
         print(MID_names[mid.id] + " (client id %d, %s): " % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
         i = 0;
         for param in params:

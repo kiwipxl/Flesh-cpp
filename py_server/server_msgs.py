@@ -21,7 +21,7 @@ def got_message(sock, client_obj, byte_data):
 
             elif (verify_params(mid, message.MID_RELAY_TEST, np)):
                 message.print_params(client_obj, sock.type, mid, params);
-                message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.tcp_port, client_obj.c_udp_port));
+                message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port));
 
             elif (verify_params(mid, message.MID_SEND_CLIENT_ID, np)):
                 message.print_params(client_obj, sock.type, mid, params);
@@ -31,7 +31,7 @@ def got_message(sock, client_obj, byte_data):
                 client_obj.c_udp_port = params[0];
 
             elif (verify_params(mid, message.MID_BEGIN_RELAY_TEST, np)):
-                message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.tcp_port, client_obj.c_udp_port));
+                message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port));
 
             elif (verify_params(mid, message.MID_UDP_PING_PONG, np) and sock == client_obj.udp_sock):
                 message.send_udp(client_obj.udp_sock, client_obj.ip, client_obj.c_udp_port, message.MID_UDP_PING_PONG);
