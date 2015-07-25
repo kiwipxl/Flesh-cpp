@@ -15,7 +15,7 @@ def got_message(sock, client_obj, byte_data):
         (params, err) = message.extract_params(mid, byte_data);
         if (err != -1):
             np = len(params);
-            if (verify_params(mid, message.MID_CLIENT_USER_PASS, np)):
+            if (verify_params(mid, message.MID_RECV_CLIENT_REGISTER_USER_PASS, np)):
                 print("username: %s, password: %s" % (params[0], params[1]));
                 db.add_user_account(params[0], params[1]);
 
@@ -23,10 +23,10 @@ def got_message(sock, client_obj, byte_data):
                 message.print_params(client_obj, sock.type, mid, params);
                 message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.tcp_port, client_obj.udp_port));
 
-            elif (verify_params(mid, message.MID_CLIENT_ID, np)):
+            elif (verify_params(mid, message.MID_SEND_CLIENT_ID, np)):
                 message.print_params(client_obj, sock.type, mid, params);
 
-            elif (verify_params(mid, message.MID_CLIENT_UDP_PORT, np)):
+            elif (verify_params(mid, message.MID_RECV_CLIENT_UDP_PORT, np)):
                 message.print_params(client_obj, sock.type, mid, params);
                 client_obj.udp_port = params[0];
 

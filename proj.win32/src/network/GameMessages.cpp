@@ -57,12 +57,12 @@ void recv_msgs() {
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, _MID->RECV_ID)) {
 								msg::print_extracted_params();
-							}else if (VALID_PARAMS(mid, _MID->RECV_SERVER_UDP_PORT)) {
+							}else if (VALID_PARAMS(mid, _MID->RECV_SERVER_BINDED_UDP_PORT)) {
                                 msg::print_extracted_params();
                                 
                                 if (sock::setup_udp_sock(*(u_short*)msg::param_list[0]->data)) {
                                     int bp = sock::udp_serv_sock.get_binded_port();
-                                    msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_CLIENT_UDP_PORT << sock::udp_serv_sock.get_binded_port());
+                                    msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << sock::udp_serv_sock.get_binded_port());
                                     server_poll.add_sock(sock::udp_serv_sock);
                                     sock::send_udp_ping_pong();
                                 }else {

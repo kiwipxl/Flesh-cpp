@@ -69,10 +69,10 @@ namespace msg {
     struct MID_AutoName {
 
         MID_AutoName(std::string name) {
-            int index = name.find("MID_");
+            int index = name.find(" ");
             int index_end;
             if (index != -1) index_end = name.find("=");
-            if (index_end != -1) MID_names.push_back(name.substr(index, index_end - index).c_str() + '\0');
+            if (index_end != -1) MID_names.push_back(name.substr(index + 1, index_end - index).c_str() + '\0');
         }
     };
 
@@ -110,16 +110,16 @@ namespace msg {
             ADD_MID_NAME(CMID RELAY_TEST = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
             ADD_MID_NAME(CMID UDP_PING_PONG = new MID(0));
 
-            ADD_MID_NAME(CMID RECV_UDP_BIND_REQUEST = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
-            ADD_MID_NAME(CMID SEND_UDP_BIND_PORT = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID RECV_UDP_PEER_BIND_REQUEST = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID SEND_UDP_PEER_BIND_PORT = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
             ADD_MID_NAME(CMID SEND_PEER_CONNECT_SUCCESS = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
 
             ADD_MID_NAME(CMID RECV_PEER_JOIN = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
             ADD_MID_NAME(CMID RECV_PEER_LEAVE = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
             ADD_MID_NAME(CMID SEND_PEER_LEAVE = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
 
-            ADD_MID_NAME(CMID RECV_SERVER_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
-            ADD_MID_NAME(CMID SEND_CLIENT_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID RECV_SERVER_BINDED_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID SEND_CLIENT_BINDED_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
 
         private:
             static MIDConstants* mid_constant;

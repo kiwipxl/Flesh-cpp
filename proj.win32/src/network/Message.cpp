@@ -63,6 +63,8 @@ MID::MID(int num_args, ...) : id(MID_id) {
 	MID_list.push_back(this);
 }
 
+msg::MIDConstants* msg::MIDConstants::mid_constant;
+
 char msg::byte_buffer[1024];
 int msg::byte_offset;
 
