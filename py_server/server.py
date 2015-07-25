@@ -3,8 +3,6 @@
 import sys;
 import db;
 import socket_manage;
-import message;
-from client import *;
 
 if __name__ == "__main__":
     db.init();

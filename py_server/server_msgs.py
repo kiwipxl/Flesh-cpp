@@ -2,9 +2,10 @@ import sys;
 import db;
 import socket_manage;
 import message;
-from client import *;
+import client;
 import time;
 import random;
+import game;
 
 def verify_params(recv_mid, mid, np):
     return recv_mid == mid and np == mid.num_params;
@@ -30,10 +31,13 @@ def got_message(sock, client_obj, byte_data):
                 message.print_params(client_obj, sock.type, mid, params);
                 client_obj.c_udp_port = params[0];
 
+            elif (verify_params(mid, message.MID_RECV_UDP_SERVER_COMMUNICATION_SUCCESS, np)):
+                game.join_game(client_obj);
+
             elif (verify_params(mid, message.MID_BEGIN_RELAY_TEST, np)):
                 message.send(sock, client_obj, message.MID_RELAY_TEST, (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port));
 
-            elif (verify_params(mid, message.MID_UDP_PING_PONG, np) and sock == client_obj.udp_sock):
-                message.send_udp(client_obj.udp_sock, client_obj.ip, client_obj.c_udp_port, message.MID_UDP_PING_PONG);
+            elif (verify_params(mid, message.MID_INIT_UDP_PING_PONG, np) and sock == client_obj.udp_sock):
+                message.send_udp(client_obj.udp_sock, client_obj.ip, client_obj.c_udp_port, message.MID_INIT_UDP_PING_PONG);
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));

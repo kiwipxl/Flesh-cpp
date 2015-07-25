@@ -65,40 +65,43 @@ class MID():
 #MID_RECV_XXX - a message to receive from a client
 #MID_XXX - a message that can be both sent and received to and from clients
 
-MID_UNKNOWN                             = MID();
+MID_UNKNOWN                                     = MID();
 
 #sends a client id of a specified client
-MID_SEND_CLIENT_ID                      = MID(FT_INT);
+MID_SEND_CLIENT_ID                              = MID(FT_INT);
 #receives a request to register a username and password from a client
-MID_RECV_CLIENT_LOGIN_USER_PASS        = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+MID_RECV_CLIENT_LOGIN_USER_PASS                 = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 #receives a request to register a username and password from a client
-MID_RECV_CLIENT_REGISTER_USER_PASS      = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+MID_RECV_CLIENT_REGISTER_USER_PASS              = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 
 #begins sending a relay test which ping pongs for infinite time
-MID_BEGIN_RELAY_TEST                    = MID();
+MID_BEGIN_RELAY_TEST                            = MID();
 #ping pong relay test messages
-MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
+MID_RELAY_TEST                                  = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
+#init ping pong udp message to test udp communication
+MID_UDP_INIT_PING_PONG                          = MID();
 #ping pong udp messages
-MID_UDP_PING_PONG                       = MID();
+MID_UDP_PING_PONG                               = MID();
 
+MID_RECV_UDP_SERVER_COMMUNICATION_SUCCESS       = MID();
 #requests a client to bind to a random port to allow peers to send messages to
-MID_SEND_UDP_PEER_BIND_REQUEST          = MID();
+MID_SEND_UDP_PEER_BIND_REQUEST                  = MID();
 #receives the binded udp port from a client after the request was made
-MID_RECV_UDP_PEER_BIND_PORT             = MID(FT_UNSIGNED_SHORT);
+MID_RECV_UDP_PEER_BIND_PORT                     = MID(FT_UNSIGNED_SHORT);
 #received when a client successfully connect to their peer
-MID_RECV_PEER_CONNECT_SUCCESS           = MID();
+MID_RECV_PEER_CONNECT_SUCCESS                   = MID();
 
 #sent once a peer has joined and successfully communicated with the client
-MID_SEND_PEER_JOIN                      = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+MID_SEND_PEER_JOIN                              = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 #sent once a client has left the server (tcp, udp connection fail, ect) and needs to tell the client about it
-MID_SEND_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+MID_SEND_PEER_LEAVE                             = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 #received if a client is unable to communicate with other peers
-MID_RECV_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+MID_RECV_PEER_LEAVE                             = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 
 #server sends server udp binded port to client
-MID_SEND_SERVER_BINDED_UDP_PORT         = MID(FT_UNSIGNED_SHORT);
+MID_SEND_SERVER_BINDED_UDP_PORT                 = MID(FT_UNSIGNED_SHORT);
 #client sends client binded udp port to server
-MID_RECV_CLIENT_BINDED_UDP_PORT         = MID(FT_UNSIGNED_SHORT);
+MID_RECV_CLIENT_BINDED_UDP_PORT                 = MID(FT_UNSIGNED_SHORT);
 
 #put all MID_x variables into a name array so messages can be debugged easier
 MID_names = MID_id * [None];

@@ -1,5 +1,6 @@
 import message;
 import debug;
+import game;
 
 class Client:
     id = 0;
@@ -10,6 +11,7 @@ class Client:
     c_udp_port = -1;   #binded udp port on client machine that is listening for messages
     s_tcp_port = -1;   #binded tcp port on server machine connected to client tcp socket
     s_udp_port = -1;   #binded udp port on server machine that is listening for messages
+    joined_game = None;
 
 clients = [];
 num_clients = 0;
@@ -38,9 +40,6 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
     num_clients += 1;
     client_id_inc += 1;
     message.send(c.tcp_sock, c, message.MID_SEND_SERVER_BINDED_UDP_PORT, (new_udp_sock.getsockname()[1],));
-
-    for cl in clients:
-        message.send(cl.tcp_sock, cl, message.MID_SEND_UDP_PEER_BIND_REQUEST, (cl.c_tcp_port, cl.c_udp_port));
 
 def handle_leave(client_obj, leave_message, remove_from_list = True):
     global clients

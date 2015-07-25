@@ -80,7 +80,7 @@ void sock::update() {
 void sock::send_udp_ping_pong(Socket& sock) {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
         //if (sock.get_protocol() != PROTO_UDP) { CCLOG("cannot send udp ping pong: socket is not a udp socket"); return; }
-        msg::send(sock, msg::ByteStream() << _MID->UDP_PING_PONG);
+        msg::send(sock, msg::ByteStream() << _MID->UDP_INIT_PING_PONG);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;
             udp_ping_pong = true;
