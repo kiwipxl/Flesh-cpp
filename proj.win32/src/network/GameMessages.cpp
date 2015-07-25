@@ -44,38 +44,38 @@ void recv_msgs() {
 						if (mid->id > 0 && mid->id < msg::MID_list.size()) {
 							msg::extract_params(mid, buffer, msg_len);
 
-							if (VALID_PARAMS(mid, msg::MID_RELAY_TEST)) {
+							if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {
 								int* a = (int*)msg::param_list[0]->data;
                                 char** b = &msg::param_list[1]->data;
 								u_short* c = (u_short*)msg::param_list[2]->data;
 								u_short* d = (u_short*)msg::param_list[3]->data;
 
-								msg::print_extracted_params();
+                                msg::print_extracted_params();
 
-								msg::send(*sock, msg::ByteStream() << msg::MID_RELAY_TEST << *a << msg::param_list[1] << *c << *d);
+								msg::send(*sock, msg::ByteStream() << _MID->RELAY_TEST << *a << msg::param_list[1] << *c << *d);
 
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-							}else if (VALID_PARAMS(mid, msg::MID_CLIENT_ID)) {
+							}else if (VALID_PARAMS(mid, _MID->RECV_ID)) {
 								msg::print_extracted_params();
-							}else if (VALID_PARAMS(mid, msg::MID_SERVER_UDP_PORT)) {
+							}else if (VALID_PARAMS(mid, _MID->RECV_SERVER_UDP_PORT)) {
                                 msg::print_extracted_params();
                                 
                                 if (sock::setup_udp_sock(*(u_short*)msg::param_list[0]->data)) {
                                     int bp = sock::udp_serv_sock.get_binded_port();
-                                    msg::send(sock::tcp_serv_sock, msg::ByteStream() << msg::MID_CLIENT_UDP_PORT << sock::udp_serv_sock.get_binded_port());
+                                    msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_CLIENT_UDP_PORT << sock::udp_serv_sock.get_binded_port());
                                     server_poll.add_sock(sock::udp_serv_sock);
                                     sock::send_udp_ping_pong();
                                 }else {
                                     sock::connection_finished = true;
                                     sock::connection_error = -1;
                                 }
-                            }else if (VALID_PARAMS(mid, msg::MID_UDP_PING_PONG)) {
+                            }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 sock::udp_ping_pong = false;
                                 sock::connection_finished = true;
                                 sock::connection_error = NO_ERROR;
-                            }else if (VALID_PARAMS(mid, msg::MID_GAME_PEER_JOIN)) {
+                            }else if (VALID_PARAMS(mid, _MID->RECV_PEER_JOIN)) {
                                 peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, *(u_short*)msg::param_list[2]->data);
-                            }else if (VALID_PARAMS(mid, msg::MID_GAME_PEER_LEAVE)) {
+                            }else if (VALID_PARAMS(mid, _MID->RECV_PEER_LEAVE)) {
                                 peers::peer_leave(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, *(u_short*)msg::param_list[2]->data);
 							}
 							msg::clear_param_list();

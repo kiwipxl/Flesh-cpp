@@ -69,7 +69,7 @@ MID_UNKNOWN                             = MID();
 #sends a client id of a specified client
 MID_SEND_CLIENT_ID                      = MID(FT_INT);
 #receives a request to register a username and password from a client
-MID_RECV_CLIENT_LOGINN_USER_PASS        = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+MID_RECV_CLIENT_LOGIN_USER_PASS        = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 #receives a request to register a username and password from a client
 MID_RECV_CLIENT_REGISTER_USER_PASS      = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
 

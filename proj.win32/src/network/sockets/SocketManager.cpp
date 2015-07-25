@@ -77,7 +77,7 @@ void sock::update() {
 
 void sock::send_udp_ping_pong() {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
-        msg::send(udp_serv_sock, msg::ByteStream() << msg::MID_UDP_PING_PONG);
+        msg::send(udp_serv_sock, msg::ByteStream() << _MID->UDP_PING_PONG);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;
             udp_ping_pong = true;
@@ -87,7 +87,7 @@ void sock::send_udp_ping_pong() {
 }
 
 void sock::begin_relay_test(Socket& sock) {
-    msg::send(sock, msg::ByteStream() << msg::MID_BEGIN_RELAY_TEST);
+    msg::send(sock, msg::ByteStream() << _MID->BEGIN_RELAY_TEST);
 }
 
 void sock::close_all_threads() {

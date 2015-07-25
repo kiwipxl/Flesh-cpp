@@ -46,17 +46,6 @@ int msg::MID_id = 0;
 std::vector<CMID> msg::MID_list;
 std::vector<std::string> msg::MID_names;
 
-ADD_MID_NAME(CMID msg::MID_UNKNOWN							= new MID(0));
-ADD_MID_NAME(CMID msg::MID_CLIENT_ID						= new MID(5, FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY));
-ADD_MID_NAME(CMID msg::MID_CLIENT_USER_PASS					= new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));
-ADD_MID_NAME(CMID msg::MID_BEGIN_RELAY_TEST					= new MID(0));
-ADD_MID_NAME(CMID msg::MID_RELAY_TEST						= new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
-ADD_MID_NAME(CMID msg::MID_UDP_PING_PONG                    = new MID(0));
-ADD_MID_NAME(CMID msg::MID_GAME_PEER_JOIN                   = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
-ADD_MID_NAME(CMID msg::MID_GAME_PEER_LEAVE                  = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
-ADD_MID_NAME(CMID msg::MID_SERVER_UDP_PORT                  = new MID(1, FT_UNSIGNED_SHORT));
-ADD_MID_NAME(CMID msg::MID_CLIENT_UDP_PORT                  = new MID(1, FT_UNSIGNED_SHORT));
-
 MID::MID(int num_args, ...) : id(MID_id) {
 	if (num_args > 0) ft_params = new CFTYPE[num_args];
 	num_params = num_args;
@@ -96,7 +85,7 @@ void msg::send(Socket& sock, ByteStream& stream) {
 }
 
 CMID msg::extract_mid(char* buffer, int buffer_len) {
-	CMID mid = MID_UNKNOWN;
+	CMID mid = _MID->UNKNOWN;
 	if (buffer_len >= 4) {
 		int id = 0;
 		memcpy(&id, buffer, 4);
@@ -110,7 +99,7 @@ std::string concat_str = "";
 void msg::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 	clear_param_list();
 
-	if (mid != MID_UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
+	if (mid != _MID->UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
 		int offset = 4;
 		int index = 0;
 		for (int n = 0; n < mid->num_params; ++n) {

@@ -38,7 +38,7 @@ namespace msg {
 	extern CFTYPE FT_FLOAT;
 	extern CFTYPE FT_DOUBLE;
 	extern CFTYPE FT_CHAR_ARRAY;
-	extern CFTYPE FT_VOID_POINTER;
+    extern CFTYPE FT_VOID_POINTER;
 
 	//================== MID begin ==================
 
@@ -56,38 +56,74 @@ namespace msg {
 
 	extern int MID_id;
 	extern std::vector<CMID> MID_list;
-	extern std::vector<std::string> MID_names;
+    extern std::vector<std::string> MID_names;
 
-	extern CMID MID_UNKNOWN;
-	extern CMID MID_CLIENT_ID;
-	extern CMID MID_CLIENT_USER_PASS;
-	extern CMID MID_BEGIN_RELAY_TEST;
-	extern CMID MID_RELAY_TEST;
-    extern CMID MID_UDP_PING_PONG;
-    extern CMID MID_GAME_PEER_JOIN;
-    extern CMID MID_GAME_PEER_LEAVE;
-    extern CMID MID_SERVER_UDP_PORT;
-    extern CMID MID_CLIENT_UDP_PORT;
+    //================== Hack to get message variable names ==================
 
-	//================== Hack to get message variable names ==================
+    #define PP_CAT(a, b) PP_CAT_I(a, b)
+    #define PP_CAT_I(a, b) PP_CAT_II(~, a ## b)
+    #define PP_CAT_II(p, res) res
 
-	#define PP_CAT(a, b) PP_CAT_I(a, b)
-	#define PP_CAT_I(a, b) PP_CAT_II(~, a ## b)
-	#define PP_CAT_II(p, res) res
+    #define UNIQUE_NAME(base) PP_CAT(base, __COUNTER__)
 
-	#define UNIQUE_NAME(base) PP_CAT(base, __COUNTER__)
+    struct MID_AutoName {
 
-	struct MID_AutoName {
+        MID_AutoName(std::string name) {
+            int index = name.find("MID_");
+            int index_end;
+            if (index != -1) index_end = name.find("=");
+            if (index_end != -1) MID_names.push_back(name.substr(index, index_end - index).c_str() + '\0');
+        }
+    };
 
-		MID_AutoName(std::string name) {
-			int index = name.find("MID_");
-			int index_end;
-			if (index != -1) index_end = name.find("=");
-				if (index_end != -1) MID_names.push_back(name.substr(index, index_end - index).c_str() + '\0');
-		}
-	};
+    #define ADD_MID_NAME(name) name; msg::MID_AutoName UNIQUE_NAME(_unique_) = msg::MID_AutoName(#name);
 
-	#define ADD_MID_NAME(name) name; msg::MID_AutoName UNIQUE_NAME(_unique_) = msg::MID_AutoName(#name);
+    //================== All MID constants ==================
+
+    #define _MID msg::MIDConstants::get_instance()
+
+    class MIDConstants {
+
+        public:
+            MIDConstants() {
+                mid_constant = NULL;
+            }
+
+            static MIDConstants* get_instance() {
+                if (mid_constant == NULL) mid_constant = new MIDConstants();
+                return mid_constant;
+            }
+
+            /*  MID syntax note :
+            MID_SEND_XXX - a message to send to a client
+            MID_RECV_XXX - a message to receive from a client
+            MID_XXX - a message that can be both sent and received to and from clients
+            */
+
+            ADD_MID_NAME(CMID UNKNOWN = new MID(0));
+
+            ADD_MID_NAME(CMID RECV_ID = new MID(1, FT_INT));
+            ADD_MID_NAME(CMID SEND_LOGIN_USER_PASS = new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));
+            ADD_MID_NAME(CMID SEND_REGISTER_USER_PASS = new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));
+
+            ADD_MID_NAME(CMID BEGIN_RELAY_TEST = new MID(0));
+            ADD_MID_NAME(CMID RELAY_TEST = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID UDP_PING_PONG = new MID(0));
+
+            ADD_MID_NAME(CMID RECV_UDP_BIND_REQUEST = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID SEND_UDP_BIND_PORT = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID SEND_PEER_CONNECT_SUCCESS = new MID(4, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT));
+
+            ADD_MID_NAME(CMID RECV_PEER_JOIN = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID RECV_PEER_LEAVE = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID SEND_PEER_LEAVE = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
+
+            ADD_MID_NAME(CMID RECV_SERVER_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID SEND_CLIENT_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
+
+        private:
+            static MIDConstants* mid_constant;
+    };
 
 	//================== Parameters begin ==================
 
