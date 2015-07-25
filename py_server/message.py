@@ -59,16 +59,45 @@ class MID():
         MID_id += 1;
         MID_list.append(self);
 
+#MID syntax note:
+#MID_SEND_XXX - a message to send to a client
+#MID_RECV_XXX - a message to receive from a client
+#MID_XXX - a message that can be both sent and received to and from clients
+
 MID_UNKNOWN                             = MID();
-MID_CLIENT_ID                           = MID(FT_INT, FT_CHAR_ARRAY, FT_CHAR_ARRAY, FT_INT, FT_CHAR_ARRAY);
-MID_CLIENT_USER_PASS                    = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+
+#sends a client id of a specified client
+MID_SEND_CLIENT_ID                      = MID(FT_INT);
+#receives a request to register a username and password from a client
+MID_RECV_CLIENT_LOGINN_USER_PASS        = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+#receives a request to register a username and password from a client
+MID_RECV_CLIENT_REGISTER_USER_PASS      = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
+
+#begins sending a relay test which ping pongs for infinite time
 MID_BEGIN_RELAY_TEST                    = MID();
+#ping pong relay test messages
 MID_RELAY_TEST                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
+#ping pong udp messages
 MID_UDP_PING_PONG                       = MID();
-MID_GAME_PEER_JOIN                      = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-MID_GAME_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-MID_SERVER_UDP_PORT                     = MID(FT_UNSIGNED_SHORT);
-MID_CLIENT_UDP_PORT                     = MID(FT_UNSIGNED_SHORT);
+
+#requests a client to bind to a random port to allow peers to send messages to
+MID_SEND_UDP_CLIENT_BIND_REQUEST        = MID();
+#receives the binded udp port from a client after the request was made
+MID_RECV_UDP_CLIENT_BIND_PORT           = MID(FT_UNSIGNED_SHORT);
+#received when a client successfully connect to their peer
+MID_RECV_PEER_CONNECT_SUCCESS           = MID();
+
+#sent once a peer has joined and successfully communicated with the client
+MID_SEND_PEER_JOIN                      = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+#sent once a client has left the server (tcp, udp connection fail, ect) and needs to tell the client about it
+MID_SEND_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+#received if a client is unable to communicate with other peers
+MID_RECV_PEER_LEAVE                     = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+
+#server sends server udp binded port to client
+MID_SEND_SERVER_UDP_PORT                     = MID(FT_UNSIGNED_SHORT);
+#client sends client binded udp port to server
+MID_RECV_CLIENT_UDP_PORT                     = MID(FT_UNSIGNED_SHORT);
 
 #put all MID_x variables into a name array so messages can be debugged easier
 MID_names = MID_id * [None];
@@ -84,15 +113,18 @@ def pack_message(mid, params = None):
     i = 0;
     byte_buffer[0:4] = struct.pack(FT_INT.struct_char, mid.id);
     if (params):
-        for param in params:
-            t = mid.ft_params[i];
-            if (t.struct_char == 's'):
-                s = param + '\0';
-            else:
-                s = struct.pack(t.struct_char, param);
-            byte_buffer[byte_offset:byte_offset + s.__len__()] = s;
-            byte_offset += s.__len__();
-            i += 1;
+        try:
+            for param in params:
+                t = mid.ft_params[i];
+                if (t.struct_char == 's'):
+                    s = param + '\0';
+                else:
+                    s = struct.pack(t.struct_char, param);
+                byte_buffer[byte_offset:byte_offset + s.__len__()] = s;
+                byte_offset += s.__len__();
+                i += 1;
+        except:
+            params = [];
     return byte_buffer;
 
 def extract_mid(byte_data):
