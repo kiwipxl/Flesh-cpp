@@ -32,8 +32,8 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
     if (add_to_list): clients.append(c);
 
     #only accept client when all sockets are verified
-    print("accepted client (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d)" %
-          (c.id, c.ip, c.c_tcp_port, c.c_udp_port, c.s_tcp_port, c.s_udp_port));
+    debug.log("accepted client (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d)" %
+          (c.id, c.ip, c.c_tcp_port, c.c_udp_port, c.s_tcp_port, c.s_udp_port), debug.P_INFO);
 
     num_clients += 1;
     client_id_inc += 1;
@@ -49,8 +49,8 @@ def handle_leave(client_obj, leave_message, remove_from_list = True):
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();
 
-    print("client disconnected (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d, msg: %s)" %
-          (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_message));
+    debug.log("client disconnected (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d, msg: %s)" %
+          (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_message), debug.P_INFO);
 
     if (remove_from_list): clients.remove(client_obj);
     num_clients -= 1;

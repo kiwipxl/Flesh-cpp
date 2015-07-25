@@ -4,6 +4,7 @@ import sys;
 import client;
 import server_msgs;
 import time;
+import debug;
 
 #used to listen to a port for incoming connections and accepting them
 tcp_sock = None;
@@ -19,7 +20,7 @@ def socket_loop(listen_ip, listen_port):
 
     tcp_sock.bind((listen_ip, listen_port));
     tcp_sock.listen(1);
-    print("awaiting clients...");
+    debug.log("awaiting clients...", debug.P_INFO);
 
     while (1):
         try:
@@ -31,7 +32,7 @@ def socket_loop(listen_ip, listen_port):
             client.handle_join(client_sock, udp_sock, addr[0], addr[1], True);
         except socket.error as serr:
             if (serr.errno != socket.errno.EWOULDBLOCK):
-                print("error occurred while accepting client: %s", serr.strerror);
+                debug.log("error occurred while accepting client: %s", serr.strerror, debug.P_ERROR);
 
         c = 0;
         for i in range(0, len(client.clients)):
@@ -71,7 +72,7 @@ def socket_loop(listen_ip, listen_port):
                 if (sockerr.errno == socket.errno.ECONNRESET):
                     client.handle_leave(client_obj, "HOST_FORCE_QUIT", False);
                 else:
-                    print("socket error occurred (or not handled for). err: %s" % serr.strerror);
+                    debug.log("socket error occurred (or not handled for). err: %s" % serr.strerror, debug.P_ERROR);
                     client.handle_leave(client_obj, serr.strerror, False);
             else:
                 c += 1;
