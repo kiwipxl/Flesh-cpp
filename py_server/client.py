@@ -31,7 +31,7 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.tcp_sock, c, message.MID_SEND_SERVER_UDP_PORT, (new_udp_sock.getsockname()[1],));
+    message.send(c.tcp_sock, c, message.MID_SEND_SERVER_BINDED_UDP_PORT, (new_udp_sock.getsockname()[1],));
 
     for cl in clients:
         message.send(cl.tcp_sock, cl, message.MID_SEND_UDP_PEER_BIND_REQUEST, (cl.tcp_port, cl.udp_port));

@@ -26,7 +26,7 @@ def got_message(sock, client_obj, byte_data):
             elif (verify_params(mid, message.MID_SEND_CLIENT_ID, np)):
                 message.print_params(client_obj, sock.type, mid, params);
 
-            elif (verify_params(mid, message.MID_RECV_CLIENT_UDP_PORT, np)):
+            elif (verify_params(mid, message.MID_RECV_CLIENT_BINDED_UDP_PORT, np)):
                 message.print_params(client_obj, sock.type, mid, params);
                 client_obj.udp_port = params[0];
 

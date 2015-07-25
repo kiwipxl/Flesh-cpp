@@ -45,14 +45,15 @@ namespace msg {
 	struct MID {
 
 		const int id = 0;
-		CFTYPE* ft_params = NULL;
+		const CFTYPE* ft_params = NULL;
 		int total_param_bytes = 0;
-		int num_params = 0;
+        int num_params = 0;
+        const char* name;
 
 		MID(int num_args, ...);
 	};
 
-	#define CMID const msg::MID*
+	#define CMID msg::MID*
 
 	extern int MID_id;
 	extern std::vector<CMID> MID_list;
@@ -72,7 +73,10 @@ namespace msg {
             int index = name.find(" ");
             int index_end;
             if (index != -1) index_end = name.find("=");
-            if (index_end != -1) MID_names.push_back(name.substr(index + 1, index_end - index).c_str() + '\0');
+            if (index_end != -1) {
+                MID_names.push_back(name.substr(index + 1, index_end - (index + 1)).c_str() + '\0');
+                MID_list[MID_list.size() - 1]->name = MID_names[MID_names.size() - 1].c_str();
+            }
         }
     };
 
