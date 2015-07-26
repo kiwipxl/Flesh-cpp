@@ -17,6 +17,7 @@ namespace peers {
             Socket udp_sock;
             
             int bind_udp_sock();
+            void set_port(u_short port) { udp_port = port; }
 
         private:
             bool accepted = false;
@@ -24,9 +25,9 @@ namespace peers {
     
     extern std::vector<Peer*> peer_list;
 
-    extern void peer_join(int id, char* ip, u_short port);
-    extern void peer_leave(int id, char* ip, u_short port);
-    extern void send_ping_pong_all();
+    extern void peer_join(int id, char* ip);
+    extern void peer_leave(int id, char* ip);
+    extern Peer* get_peer(int id, char* ip);
 };
 
 #endif

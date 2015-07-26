@@ -72,8 +72,9 @@ def socket_loop(listen_ip, listen_port):
                 if (sockerr.errno == socket.errno.ECONNRESET):
                     client.handle_leave(client_obj, "HOST_FORCE_QUIT", False);
                 else:
-                    debug.log("socket error occurred (or not handled for). err: %s" % serr.strerror, debug.P_ERROR);
-                    client.handle_leave(client_obj, serr.strerror, False);
+                    errno = sockerr.errno;
+                    debug.log("socket error occurred (or not handled for). err: %s" % sockerr.strerror, debug.P_ERROR);
+                    client.handle_leave(client_obj, sockerr.strerror, False);
             else:
                 c += 1;
 

@@ -75,19 +75,19 @@ void recv_msgs() {
 
                                 msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_UDP_SERVER_COMMUNICATION_SUCCESS);
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_BIND_REQUEST)) {
-                                peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, 0);
+                                peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data);
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 CCLOG("caught udp ping pong!");
-                            }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_BEGIN_PING_PONG)) {
-                                peers::send_ping_pong_all();
-                            }else if (VALID_PARAMS(mid, _MID->PO_INIT_PING)) {
-                                msg::send(*sock, msg::ByteStream() << _MID->PO_INIT_PONG);
-                            }else if (VALID_PARAMS(mid, _MID->PO_INIT_PONG)) {
+                            }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
+                                peers::Peer* p = peers::get_peer(*(int*)msg::param_list[0]->data, msg::param_list[1]->data);
+                                if (p != NULL) {
+                                    p->udp_port = *(u_short*)msg::param_list[2]->data;
+                                    msg::send(p->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
+                                }
+                            }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
+                                msg::send(*sock, msg::ByteStream() << _MID->PO_PONG_CONNECT_TEST);
+                            }else if (VALID_PARAMS(mid, _MID->PO_PONG_CONNECT_TEST)) {
                                 msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS);
-                            }else if (VALID_PARAMS(mid, _MID->RECV_PEER_JOIN)) {
-                                peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, *(u_short*)msg::param_list[2]->data);
-                            }else if (VALID_PARAMS(mid, _MID->RECV_PEER_LEAVE)) {
-                                peers::peer_leave(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, *(u_short*)msg::param_list[2]->data);
 							}
 							msg::clear_param_list();
 						}

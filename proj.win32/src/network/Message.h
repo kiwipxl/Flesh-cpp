@@ -121,7 +121,7 @@ namespace msg {
             ADD_MID_NAME(CMID RECV_UDP_PEER_BIND_REQUEST = new MID(2, FT_INT, FT_CHAR_ARRAY));
             ADD_MID_NAME(CMID SEND_UDP_PEER_BIND_PORT_SUCCESS = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
             ADD_MID_NAME(CMID SEND_UDP_PEER_BIND_PORT_FAILED = new MID(2, FT_INT, FT_CHAR_ARRAY));
-            ADD_MID_NAME(CMID RECV_UDP_PEER_BEGIN_PING_PONG = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
+            ADD_MID_NAME(CMID RECV_UDP_PEER_PORT = new MID(3, FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
             ADD_MID_NAME(CMID SEND_PEER_CONNECT_SUCCESS = new MID(0));
 
             ADD_MID_NAME(CMID RECV_PEER_JOIN = new MID(2, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT));
@@ -132,8 +132,8 @@ namespace msg {
             ADD_MID_NAME(CMID SEND_CLIENT_BINDED_UDP_PORT = new MID(1, FT_UNSIGNED_SHORT));
 
             //the following messages are peer messages which the server will not handle and can only be sent to peers
-            ADD_MID_NAME(CMID PO_INIT_PING = new MID(0));
-            ADD_MID_NAME(CMID PO_INIT_PONG = new MID(0));
+            ADD_MID_NAME(CMID PO_PING_CONNECT_TEST = new MID(0));
+            ADD_MID_NAME(CMID PO_PONG_CONNECT_TEST = new MID(0));
 
         private:
             static MIDConstants* mid_constant;

@@ -49,6 +49,8 @@ def handle_leave(client_obj, leave_message, remove_from_list = True):
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();
 
+    game.client_leave(client_obj);
+
     debug.log("client disconnected (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d, msg: %s)" %
           (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_message), debug.P_INFO);
 
