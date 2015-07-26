@@ -35,12 +35,15 @@ def got_message(sock, client_obj, byte_data):
                 game.join_game(client_obj);
 
             elif (verify_params(mid, message.MID_RECV_UDP_PEER_BIND_PORT_SUCCESS, np)):
+                message.print_params(client_obj, sock.type, mid, params);
                 client_obj.joined_game.received_udp_bind_port(client_obj.game_client, params[0], params[1], params[2]);
 
             elif (verify_params(mid, message.MID_RECV_UDP_PEER_BIND_PORT_FAILED, np)):
+                message.print_params(client_obj, sock.type, mid, params);
                 client_obj.joined_game.received_udp_bind_port(client_obj.game_client, params[0], params[1], -1);
 
             elif (verify_params(mid, message.MID_RECV_PEER_CONNECT_SUCCESS, np)):
+                message.print_params(client_obj, sock.type, mid, params);
                 client_obj.joined_game.received_connect_success(client_obj.game_client, params[0], params[1], params[2]);
 
             elif (verify_params(mid, message.MID_BEGIN_RELAY_TEST, np)):

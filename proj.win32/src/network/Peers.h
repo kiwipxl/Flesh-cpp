@@ -10,14 +10,19 @@ namespace peers {
 
         public:
             Peer() { }
+            ~Peer() {
+                if (ip) {
+                    delete[] ip;
+                }
+            }
 
-            int id;
-            char* ip;
-            u_short udp_port;
-            Socket udp_sock;
-            
+            int id = -1;
+            char* ip = NULL;
+            u_short udp_send_port = 0;
+            u_short udp_recv_port = 0;
+            Socket* udp_sock = NULL;
+
             int bind_udp_sock();
-            void set_port(u_short port) { udp_port = port; }
 
         private:
             bool accepted = false;
@@ -27,7 +32,7 @@ namespace peers {
 
     extern void peer_join(int id, char* ip);
     extern void peer_leave(int id, char* ip);
-    extern Peer* get_peer(int id, char* ip);
+    extern Peer* get_peer(int id);
 };
 
 #endif

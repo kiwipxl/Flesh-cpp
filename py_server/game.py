@@ -89,10 +89,13 @@ class Game:
                 print("all binded, sending ping pong requests");
                 for gcl in self.g_clients:
                     for p in gcl.peers:
-                        client_obj = p.game_client.client_obj;
-                        message.send(client_obj.tcp_sock, client_obj, message.MID_SEND_UDP_PEER_PORT, (client_obj.id, client_obj.ip, p.port));
+                        pcl = p.game_client.client_obj;
+                        message.send(pcl.tcp_sock, pcl, message.MID_SEND_UDP_PEER_PORT, (gcl.client_obj.id, gcl.client_obj.ip, p.port));
         else:
             print("udp bind failed, dunno how to handle this right now");
+
+    def received_connect_success(self, game_client, peer_id, peer_ip, port):
+        print("successful communication with peer %d" % peer_id);
 
 games = [];
 

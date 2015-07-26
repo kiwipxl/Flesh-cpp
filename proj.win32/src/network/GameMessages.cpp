@@ -79,10 +79,12 @@ void recv_msgs() {
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 CCLOG("caught udp ping pong!");
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
-                                peers::Peer* p = peers::get_peer(*(int*)msg::param_list[0]->data, msg::param_list[1]->data);
+                                peers::Peer* p = peers::get_peer(*(int*)msg::param_list[0]->data);
                                 if (p != NULL) {
-                                    p->udp_port = *(u_short*)msg::param_list[2]->data;
-                                    msg::send(p->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
+                                    p->udp_send_port = *(u_short*)msg::param_list[2]->data;
+                                    p->udp_sock->s_change_send_addr(msg::param_list[1]->data, p->udp_send_port);
+                                    server_poll.add_sock(*p->udp_sock);
+                                    msg::send(*p->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
                                 msg::send(*sock, msg::ByteStream() << _MID->PO_PONG_CONNECT_TEST);
