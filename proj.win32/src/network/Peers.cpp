@@ -10,7 +10,7 @@ int Peer::bind_udp_sock() {
     udp_sock = Socket(PROTO_UDP);
     if ((fresult = udp_sock.s_create()) > 0) { return fresult; }
     if ((fresult = udp_sock.s_bind(ip, 0)) > 0) { return fresult; }
-    udp_port = udp_sock.get_binded_port;
+    udp_port = udp_sock.get_binded_port();
 
     return NO_ERROR;
 }
