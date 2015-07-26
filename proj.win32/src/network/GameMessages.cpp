@@ -84,7 +84,7 @@ void recv_msgs() {
                                 peer = peers::get_peer(*(int*)msg::param_list[0]->data);
                                 if (peer != NULL) {
                                     peer->udp_send_port = *(u_short*)msg::param_list[2]->data;
-                                    peer->udp_sock->s_change_send_addr(msg::param_list[1]->data, peer->udp_send_port);
+                                    peer->udp_sock->s_change_send_addr("127.0.0.1", peer->udp_send_port);
                                     server_poll.add_sock(*peer->udp_sock);
                                     msg::send(*peer->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
                                 }

@@ -90,7 +90,7 @@ class Game:
                 for gcl in self.g_clients:
                     for p in gcl.peers:
                         pcl = p.game_client.client_obj;
-                        message.send(pcl.tcp_sock, pcl, message.MID_SEND_UDP_PEER_PORT, (gcl.client_obj.id, gcl.client_obj.ip, p.port));
+                        message.send(pcl.tcp_sock, pcl, message.MID_SEND_UDP_PEER_PORT, (gcl.client_obj.id, p.port));
         else:
             print("udp bind failed, dunno how to handle this right now");
 

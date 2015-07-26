@@ -91,7 +91,7 @@ MID_RECV_UDP_PEER_BIND_PORT_SUCCESS             = MID(FT_INT, FT_CHAR_ARRAY, FT_
 #the request to bind a udp port on a client failed
 MID_RECV_UDP_PEER_BIND_PORT_FAILED              = MID(FT_INT, FT_CHAR_ARRAY);
 #the request to bind a udp port on a client failed
-MID_SEND_UDP_PEER_PORT                          = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+MID_SEND_UDP_PEER_PORT                          = MID(FT_INT, FT_UNSIGNED_SHORT);
 #received when a client successfully connect to their peer
 MID_RECV_PEER_CONNECT_SUCCESS                   = MID(FT_INT, FT_CHAR_ARRAY);
 
