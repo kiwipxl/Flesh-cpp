@@ -14,6 +14,7 @@ float state::time_since_startup = 0;
 cc::TextFieldDelegate username_input;
 
 cc::Sprite* state::player;
+cc::DrawNode* d_node;
 
 void create_state(State c_state) {
     using namespace state;
@@ -57,28 +58,45 @@ void state::init(SceneManager* scene_ref) {
     input::init();
 
     create_state(s);
-    
+
     player = cc::Sprite::create("HelloWorld.png");
     player->setPosition(player->getContentSize().width, player->getContentSize().height);
     player->setScale(.25f);
     scene->addChild(player, 1);
+
+    auto physics_body = cc::PhysicsBody::createBox(cc::Size(player->getContentSize().width * player->getScaleX(), 
+                                                            player->getContentSize().height * player->getScaleY()));
+    player->setPhysicsBody(physics_body);
+    physics_body->setLinearDamping(1.0f);
+
+    const cc::Vec2* verts = new cc::Vec2[4] { cc::Vec2(0, 200), cc::Vec2(700, 180), cc::Vec2(700, 0), cc::Vec2(0, 0) };
+    scene->p_world->setDebugDrawMask(cc::PhysicsWorld::DEBUGDRAW_ALL);
+    auto dphysics_body = cc::PhysicsBody::create();
+    dphysics_body->addShape(cc::PhysicsShapePolygon::create(verts, 3));
+
+    d_node = cc::DrawNode::create();
+    d_node->drawPolygon(verts, 3, cc::Color4F(1, 0, 1, 1), 1, cc::Color4F(1, 1, 1, 1));
+    d_node->setPhysicsBody(dphysics_body);
+    dphysics_body->setGravityEnable(false);
+    dphysics_body->setDynamic(false);
+    scene->addChild(d_node, 1);
 }
 
 void state::update(float dt) {
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
-        player->setPosition(player->getPositionX() + 2.0f, player->getPositionY());
+        player->getPhysicsBody()->applyImpulse(cc::Vec2(10000.0f, 0));
     }
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
-        player->setPosition(player->getPositionX() - 2.0f, player->getPositionY());
+        player->getPhysicsBody()->applyImpulse(cc::Vec2(-10000.0f, 0));
     }
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_UP_ARROW)) {
-        player->setPosition(player->getPositionX(), player->getPositionY() + 2.0f);
+        player->getPhysicsBody()->applyImpulse(cc::Vec2(0, 40000.0f));
     }
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
-        player->setPosition(player->getPositionX(), player->getPositionY() - 2.0f);
+        player->getPhysicsBody()->applyImpulse(cc::Vec2(0, -40000.0f));
     }
     for (int n = 0; n < peers::peer_list.size(); ++n) {
-        msg::send(*peers::peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_PLAYER_MOVEMENT << peers::peer_list[n]->id << 
+        msg::send(*peers::peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_PLAYER_MOVEMENT << 
             (int)player->getPositionX() << (int)player->getPositionY());
     }
 

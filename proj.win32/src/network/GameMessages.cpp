@@ -83,20 +83,23 @@ void recv_msgs() {
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
                                 peer = peers::get_peer(*(int*)msg::param_list[0]->data);
                                 if (peer != NULL) {
-                                    peer->udp_send_port = *(u_short*)msg::param_list[2]->data;
+                                    peer->udp_send_port = *(u_short*)msg::param_list[1]->data;
                                     peer->udp_sock->s_change_send_addr("127.0.0.1", peer->udp_send_port);
                                     server_poll.add_sock(*peer->udp_sock);
                                     msg::send(*peer->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PLAYER_MOVEMENT)) {
-                                peer = peers::get_peer(*(int*)msg::param_list[0]->data);
+                                peer = peers::get_peer(*sock);
                                 if (peer != NULL) {
-                                    state::player->setPosition(*(int*)msg::param_list[1]->data, *(int*)msg::param_list[2]->data);
+                                    state::player->setPosition(*(int*)msg::param_list[0]->data, *(int*)msg::param_list[1]->data);
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
                                 msg::send(*sock, msg::ByteStream() << _MID->PO_PONG_CONNECT_TEST);
                             }else if (VALID_PARAMS(mid, _MID->PO_PONG_CONNECT_TEST)) {
-                                msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS << peer->id << peer->ip);
+                                peer = peers::get_peer(*sock);
+                                if (peer != NULL) {
+                                    msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS << peer->id << peer->ip);
+                                }
 							}
 							msg::clear_param_list();
 						}

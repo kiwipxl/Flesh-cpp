@@ -18,6 +18,8 @@ class SceneManager : public cocos2d::Layer {
         virtual void menu_close(cc::Ref* r);
 		virtual void update(float dt);
 
+        static cc::PhysicsWorld* p_world;
+        
         float time_since_startup = 0;
         cc::Size screen_size;
         cc::Vec2 screen_origin;

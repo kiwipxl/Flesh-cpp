@@ -3,7 +3,6 @@
 
 #include "../StateManager.h"
 
-
 namespace input {
 
     extern const int last_key_code;

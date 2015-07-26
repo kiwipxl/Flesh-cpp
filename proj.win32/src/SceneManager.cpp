@@ -1,9 +1,12 @@
 #include "SceneManager.h"
 #include "StateManager.h"
 
+cc::PhysicsWorld* SceneManager::p_world;
+
 cc::Scene* SceneManager::create_scene() {
 	//auto release objects
-	auto scene = cc::Scene::create();
+    auto scene = cc::Scene::createWithPhysics();
+    p_world = scene->getPhysicsWorld();
     auto layer = SceneManager::create();
 	scene->addChild(layer);
 

@@ -52,7 +52,6 @@ def got_message(sock, client_obj, byte_data):
 
             elif (verify_params(mid, message.MID_UDP_INIT_PING_PONG, np)):
                 message.log(client_obj, sock.type, mid, params);
-                print("ip: %s, udp_port: %d" % (client_obj.ip, client_obj.c_udp_port));
                 message.send_udp(client_obj.udp_sock, client_obj.ip, client_obj.c_udp_port, message.MID_UDP_INIT_PING_PONG);
     else:
         print("received message (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));

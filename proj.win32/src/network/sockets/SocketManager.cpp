@@ -15,7 +15,7 @@ Socket* sock::udp_ping_pong_sock = NULL;
 bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
-char* serv_ip = "104.236.253.123";
+char* serv_ip = "127.0.0.1";
 u_short serv_port = 4222;
 
 void tcp_connect() {
