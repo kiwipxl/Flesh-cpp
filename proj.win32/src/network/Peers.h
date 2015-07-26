@@ -33,6 +33,7 @@ namespace peers {
     extern void peer_join(int id, char* ip);
     extern void peer_leave(int id, char* ip);
     extern Peer* get_peer(int id);
+    extern Peer* get_peer(Socket& sock);
 };
 
 #endif

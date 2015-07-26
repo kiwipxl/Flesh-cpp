@@ -39,6 +39,8 @@ void recv_msgs() {
 				}else if (revents & POLLRDNORM || revents & POLLRDBAND || revents & POLLIN || revents & POLLPRI) {
                     Socket* sock = server_poll.get_sock_at(i);
                     if (!sock) continue;
+                    peers::Peer* peer;
+
 					if ((msg_len = sock->s_recv(buffer, 1024)) > 0) {
 						CMID mid = msg::extract_mid(buffer, msg_len);
 						if (mid->id > 0 && mid->id < msg::MID_list.size()) {
@@ -79,17 +81,17 @@ void recv_msgs() {
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 CCLOG("caught udp ping pong!");
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
-                                peers::Peer* p = peers::get_peer(*(int*)msg::param_list[0]->data);
-                                if (p != NULL) {
-                                    p->udp_send_port = *(u_short*)msg::param_list[2]->data;
-                                    p->udp_sock->s_change_send_addr(msg::param_list[1]->data, p->udp_send_port);
-                                    server_poll.add_sock(*p->udp_sock);
-                                    msg::send(*p->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
+                                peer = peers::get_peer(*(int*)msg::param_list[0]->data);
+                                if (peer != NULL) {
+                                    peer->udp_send_port = *(u_short*)msg::param_list[2]->data;
+                                    peer->udp_sock->s_change_send_addr(msg::param_list[1]->data, peer->udp_send_port);
+                                    server_poll.add_sock(*peer->udp_sock);
+                                    msg::send(*peer->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
                                 msg::send(*sock, msg::ByteStream() << _MID->PO_PONG_CONNECT_TEST);
                             }else if (VALID_PARAMS(mid, _MID->PO_PONG_CONNECT_TEST)) {
-                                msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS);
+                                msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS << peer->id << peer->ip);
 							}
 							msg::clear_param_list();
 						}

@@ -94,7 +94,7 @@ class Game:
         else:
             print("udp bind failed, dunno how to handle this right now");
 
-    def received_connect_success(self, game_client, peer_id, peer_ip, port):
+    def received_connect_success(self, game_client, peer_id, peer_ip):
         print("successful communication with peer %d" % peer_id);
 
 games = [];

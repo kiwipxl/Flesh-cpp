@@ -43,3 +43,12 @@ Peer* peers::get_peer(int id) {
     }
     return NULL;
 }
+
+Peer* peers::get_peer(Socket& sock) {
+    for (int n = 0; n < peer_list.size(); ++n) {
+        if (peer_list[n]->udp_sock == &sock) {
+            return peer_list[n];
+        }
+    }
+    return NULL;
+}
