@@ -1,6 +1,7 @@
 #include "StateManager.h"
 #include "debug/Errors.h"
 #include "network/sockets/SocketManager.h"
+#include "input/SimpleInput.h"
 
 using state::State;
 
@@ -10,6 +11,8 @@ State state::s = state::SERVER_CONNECT_SCREEN;
 cc::LabelBMFont* state::info_label;
 float state::time_since_startup = 0;
 cc::TextFieldDelegate username_input;
+
+cc::Sprite* player;
 
 void create_state(State c_state) {
     using namespace state;
@@ -50,11 +53,21 @@ void state::init(SceneManager* scene_ref) {
     scene = scene_ref;
 
     sock::init();
+    input::init();
 
     create_state(s);
+    
+    player = cc::Sprite::create("HelloWorld.png");
+    player->setPosition(player->getContentSize().width, player->getContentSize().height);
+    player->setScale(.25f);
+    scene->addChild(player, 1);
 }
 
 void state::update(float dt) {
+    if (input::keys[(int)cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) {
+        player->setPosition(player->getPositionX() + .5f, player->getPositionY());
+    }
+
     switch (s) {
         case SERVER_CONNECT_SCREEN:
             sock::update();
