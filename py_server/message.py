@@ -90,6 +90,8 @@ MID_SEND_UDP_PEER_BIND_REQUEST                  = MID(FT_INT, FT_CHAR_ARRAY);
 MID_RECV_UDP_PEER_BIND_PORT_SUCCESS             = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 #the request to bind a udp port on a client failed
 MID_RECV_UDP_PEER_BIND_PORT_FAILED              = MID(FT_INT, FT_CHAR_ARRAY);
+#the request to bind a udp port on a client failed
+MID_SEND_UDP_PEER_BEGIN_PING_PONG               = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
 #received when a client successfully connect to their peer
 MID_RECV_PEER_CONNECT_SUCCESS                   = MID();
 

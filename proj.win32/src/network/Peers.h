@@ -26,6 +26,7 @@ namespace peers {
 
     extern void peer_join(int id, char* ip, u_short port);
     extern void peer_leave(int id, char* ip, u_short port);
+    extern void send_ping_pong_all();
 };
 
 #endif

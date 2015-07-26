@@ -12,13 +12,11 @@ class Peer:
         self.connected = False;
 
 class GameClient:
-    id = None;
     client_obj = None;
     current_game = None;
     peers = [];
 
     def __init__(self):
-        self.id = -1;
         self.client_obj = None;
         self.current_game = None;
         self.peers = [];
@@ -32,11 +30,15 @@ class Game:
 
     def client_join(self, client_obj):
         new_gcl = GameClient();
-        client_obj.joined_game = self;
-        client_obj.game_client = new_gcl;
-        new_gcl.id = client_obj.id;
         new_gcl.client_obj = client_obj;
         self.g_clients.append(new_gcl);
+
+        client_obj.joined_game = self;
+        client_obj.game_client = new_gcl;
+
+        self_peer = Peer();
+        self_peer.game_client = new_gcl;
+        new_gcl.peers.append(self_peer);
 
         if (len(self.g_clients) >= 2):
             for gcl in self.g_clients:
@@ -57,15 +59,11 @@ class Game:
                     new_gcl.peers.append(client_peer);
                     print("2added peer id %d to game client %d. peers len: %d" % (gcl.client_obj.id, new_gcl.client_obj.id, len(new_gcl.peers)));
 
-    def received_udp_bind_port(self, game_client, port):
+    def received_udp_bind_port(self, game_client, peer_id, peer_ip, port):
         if (port >= 0):
-            c_id = game_client.client_obj.id;
-            c_ip = game_client.client_obj.ip;
-
-            for gcl in self.g_clients:
-                for p in gcl.peers:
-                    if (p.game_client.client_obj.id == c_id and p.game_client.client_obj.ip == c_ip):
-                        p.binded = True;
+            for p in game_client.peers:
+                if (p.game_client.client_obj.id == peer_id and p.game_client.client_obj.ip == peer_ip):
+                    p.binded = True;
 
             print("peer id %d binded" % game_client.client_obj.id);
 
@@ -77,7 +75,9 @@ class Game:
                         break;
 
             if (all_binded):
-                print("all are binded!");
+                for gcl in self.g_clients:
+                    for p in gcl.peers:
+                        message.send(client_obj.tcp_sock, client_obj, message.MID_SEND_UDP_PEER_BIND_REQUEST, (gcl.client_obj.id, client_obj.ip,));
         else:
             print("udp bind failed, dunno how to handle this right now");
 

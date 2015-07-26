@@ -30,3 +30,9 @@ void peers::peer_join(int id, char* ip, u_short port) {
 void peers::peer_leave(int id, char* ip, u_short port) {
 
 }
+
+void peers::send_ping_pong_all() {
+    for (int n = 0; n < peer_list.size(); ++n) {
+        msg::send(peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_INIT_PING);
+    }
+}
