@@ -87,7 +87,9 @@ MID_RECV_UDP_SERVER_COMMUNICATION_SUCCESS       = MID();
 #requests a client to bind to a random port to allow peers to send messages to
 MID_SEND_UDP_PEER_BIND_REQUEST                  = MID();
 #receives the binded udp port from a client after the request was made
-MID_RECV_UDP_PEER_BIND_PORT                     = MID(FT_UNSIGNED_SHORT);
+MID_RECV_UDP_PEER_BIND_PORT_SUCCESS             = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
+#the request to bind a udp port on a client failed
+MID_RECV_UDP_PEER_BIND_PORT_FAILED              = MID(FT_INT, FT_CHAR_ARRAY);
 #received when a client successfully connect to their peer
 MID_RECV_PEER_CONNECT_SUCCESS                   = MID();
 

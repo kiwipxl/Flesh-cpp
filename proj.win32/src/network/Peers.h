@@ -9,8 +9,14 @@ namespace peers {
     class Peer {
 
         public:
+            Peer() { }
+
             int id;
+            char* ip;
+            u_short udp_port;
             Socket udp_sock;
+            
+            int bind_udp_sock();
 
         private:
             bool accepted = false;

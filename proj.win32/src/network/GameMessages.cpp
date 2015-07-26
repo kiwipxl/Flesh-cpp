@@ -75,7 +75,7 @@ void recv_msgs() {
 
                                 msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_UDP_SERVER_COMMUNICATION_SUCCESS);
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_BIND_REQUEST)) {
-
+                                peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data, 0);
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 CCLOG("caught udp ping pong!");
                             }else if (VALID_PARAMS(mid, _MID->RECV_PEER_JOIN)) {

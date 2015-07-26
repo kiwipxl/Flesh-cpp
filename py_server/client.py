@@ -12,6 +12,7 @@ class Client:
     s_tcp_port = -1;   #binded tcp port on server machine connected to client tcp socket
     s_udp_port = -1;   #binded udp port on server machine that is listening for messages
     joined_game = None;
+    game_client = None;
 
 clients = [];
 num_clients = 0;
