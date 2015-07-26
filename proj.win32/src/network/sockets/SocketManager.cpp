@@ -15,7 +15,7 @@ Socket* sock::udp_ping_pong_sock = NULL;
 bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
-char* serv_ip = "192.168.0.3";
+char* serv_ip = "104.236.253.123";
 u_short serv_port = 4222;
 
 void tcp_connect() {
@@ -79,7 +79,7 @@ void sock::update() {
 
 void sock::send_udp_ping_pong(Socket& sock) {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
-        //if (sock.get_protocol() != PROTO_UDP) { CCLOG("cannot send udp ping pong: socket is not a udp socket"); return; }
+        if (sock.get_protocol() != PROTO_UDP) { CCLOG("cannot send udp ping pong: socket is not a udp socket"); return; }
         msg::send(sock, msg::ByteStream() << _MID->UDP_INIT_PING_PONG);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;

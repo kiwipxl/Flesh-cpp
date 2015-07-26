@@ -18,7 +18,7 @@ clients = [];
 num_clients = 0;
 client_id_inc = 0;
 
-def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list = True):
+def handle_join(new_tcp_sock, new_udp_sock, client_port, add_to_list = True):
     global clients
     global num_clients
     global client_id_inc
@@ -27,7 +27,7 @@ def handle_join(new_tcp_sock, new_udp_sock, client_ip, client_port, add_to_list 
     c.tcp_sock = new_tcp_sock;
     c.udp_sock = new_udp_sock;
     c.id = client_id_inc;
-    c.ip = client_ip;
+    c.ip = new_tcp_sock.getsockname()[0];
     c.c_tcp_port = client_port;
     c.s_tcp_port = new_tcp_sock.getsockname()[1];
     c.s_udp_port = new_udp_sock.getsockname()[1];

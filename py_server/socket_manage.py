@@ -29,7 +29,7 @@ def socket_loop(listen_ip, listen_port):
             udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
             udp_sock.bind(("0.0.0.0", 0));
             udp_sock.setblocking(0);
-            client.handle_join(client_sock, udp_sock, addr[0], addr[1], True);
+            client.handle_join(client_sock, udp_sock, addr[1], True);
         except socket.error as serr:
             if (serr.errno != socket.errno.EWOULDBLOCK):
                 debug.log("error occurred while accepting client: %s", serr.strerror, debug.P_ERROR);

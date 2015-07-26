@@ -187,14 +187,18 @@ def broadcast(sock_list, mid, params = None):
     for sock in sock_list:
         sock.send(pack_message(mid, params));
 
-def print_params(client_obj, sock_type, mid, params):
-    if (mid.num_params >= 1 and mid.num_params == len(params)):
+def log(client_obj, sock_type, mid, params = None):
+    if (params == None or (mid.num_params >= 0 and mid.num_params == len(params))):
         debug.log("", debug.P_MID, "");
-        print(MID_names[mid.id] + " (client id %d, %s): " % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
-        i = 0;
-        for param in params:
-            print(("(%s): %" + mid.ft_params[i].printf_char) % (mid.ft_params[i].type_name, param), end='');
-            i += 1;
-            print("") if i >= len(params) else print(", ", end='');
+        print(MID_names[mid.id] + " (client id %d, %s)" % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
+        if (mid.num_params >= 1 and params != None):
+            print(": ", end='');
+            i = 0;
+            for param in params:
+                print(("(%s): %" + mid.ft_params[i].printf_char) % (mid.ft_params[i].type_name, param), end='');
+                i += 1;
+                print("") if i >= len(params) else print(", ", end='');
+        else:
+            print("");
     else:
         debug.log("could not print params, required %d params, but %d params given" % (len(params), mid.num_params), debug.P_WARNING);

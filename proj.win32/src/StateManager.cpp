@@ -2,6 +2,7 @@
 #include "debug/Errors.h"
 #include "network/sockets/SocketManager.h"
 #include "input/SimpleInput.h"
+#include "network/Peers.h"
 
 using state::State;
 
@@ -12,7 +13,7 @@ cc::LabelBMFont* state::info_label;
 float state::time_since_startup = 0;
 cc::TextFieldDelegate username_input;
 
-cc::Sprite* player;
+cc::Sprite* state::player;
 
 void create_state(State c_state) {
     using namespace state;
@@ -75,6 +76,10 @@ void state::update(float dt) {
     }
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
         player->setPosition(player->getPositionX(), player->getPositionY() - 2.0f);
+    }
+    for (int n = 0; n < peers::peer_list.size(); ++n) {
+        msg::send(*peers::peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_PLAYER_MOVEMENT << peers::peer_list[n]->id << 
+            (int)player->getPositionX() << (int)player->getPositionY());
     }
 
     switch (s) {

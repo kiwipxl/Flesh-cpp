@@ -88,6 +88,11 @@ void recv_msgs() {
                                     server_poll.add_sock(*peer->udp_sock);
                                     msg::send(*peer->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
                                 }
+                            }else if (VALID_PARAMS(mid, _MID->PO_PLAYER_MOVEMENT)) {
+                                peer = peers::get_peer(*(int*)msg::param_list[0]->data);
+                                if (peer != NULL) {
+                                    state::player->setPosition(*(int*)msg::param_list[1]->data, *(int*)msg::param_list[2]->data);
+                                }
                             }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
                                 msg::send(*sock, msg::ByteStream() << _MID->PO_PONG_CONNECT_TEST);
                             }else if (VALID_PARAMS(mid, _MID->PO_PONG_CONNECT_TEST)) {

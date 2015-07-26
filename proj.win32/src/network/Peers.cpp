@@ -36,6 +36,7 @@ void peers::peer_leave(int id, char* ip) {
 }
 
 Peer* peers::get_peer(int id) {
+    return peer_list[0];
     for (int n = 0; n < peer_list.size(); ++n) {
         if (peer_list[n]->id == id) {
             return peer_list[n];
