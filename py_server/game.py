@@ -95,7 +95,21 @@ class Game:
             print("udp bind failed, dunno how to handle this right now");
 
     def received_connect_success(self, game_client, peer_id, peer_ip):
+        for p in game_client.peers:
+            if (p.game_client.client_obj.id == peer_id and p.game_client.client_obj.ip == peer_ip):
+                p.connected = True;
+
         print("successful communication with peer %d" % peer_id);
+
+        all_connected = True;
+        for gcl in self.g_clients:
+            for p in gcl.peers:
+                if (p.binded == False):
+                    all_connected = False;
+                    break;
+
+        if (all_connected):
+            print("all connected!");
 
 games = [];
 
