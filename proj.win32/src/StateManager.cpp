@@ -64,8 +64,17 @@ void state::init(SceneManager* scene_ref) {
 }
 
 void state::update(float dt) {
-    if (input::keys[(int)cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) {
-        player->setPosition(player->getPositionX() + .5f, player->getPositionY());
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
+        player->setPosition(player->getPositionX() + 2.0f, player->getPositionY());
+    }
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
+        player->setPosition(player->getPositionX() - 2.0f, player->getPositionY());
+    }
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_UP_ARROW)) {
+        player->setPosition(player->getPositionX(), player->getPositionY() + 2.0f);
+    }
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
+        player->setPosition(player->getPositionX(), player->getPositionY() - 2.0f);
     }
 
     switch (s) {

@@ -11,7 +11,7 @@ namespace input {
     extern cc::EventListenerKeyboard* kb_event;
 
     extern void init();
-    extern void update();
+    extern bool key_down(cc::EventKeyboard::KeyCode key_code);
 }
 
 #endif
