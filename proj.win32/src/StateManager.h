@@ -24,6 +24,7 @@ namespace state {
     extern void update(float dt);
 
     extern void switch_state(State new_state);
+    extern void on_draw();
 };
 
 #endif

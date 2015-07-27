@@ -25,6 +25,7 @@ bool SceneManager::init() {
 }
 
 void SceneManager::update(float dt) {
+    time_since_startup += dt;
     state::update(dt);
 }
 

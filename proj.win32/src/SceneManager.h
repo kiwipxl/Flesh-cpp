@@ -2,6 +2,7 @@
 #define _SCENE_MANAGER_H_
 
 #include "cocos2d.h"
+#include "math/CCVertex.h"
 
 namespace cc = cocos2d;
 
