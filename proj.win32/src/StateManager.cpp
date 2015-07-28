@@ -17,10 +17,31 @@ cc::TextFieldDelegate username_input;
 cc::Sprite* state::player;
 cc::DrawNode* d_node;
 std::vector<cc::V3F_C4B_T2F> points;
+std::vector<cc::Vec2> debug_points;
 
 cc::TrianglesCommand tri_cmd;
 cc::TrianglesCommand::Triangles tri;
-u_short* indices;
+std::vector<u_short> indices;
+
+#include <string>
+#include <sstream>
+#include <vector>
+
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, elems);
+    return elems;
+}
 
 void create_state(State c_state) {
     using namespace state;
@@ -66,39 +87,60 @@ void state::init(SceneManager* scene_ref) {
 
     create_state(s);
 
+    d_node = cc::DrawNode::create();
+
     FILE* f = fopen("terrain.t2d", "r");
 
     if (f != NULL) {
-        const int max_buf = 1024;
-        char buf[max_buf];
-        fgets(buf, max_buf, f);
+        fseek(f, 0, SEEK_END);
+        int file_len = ftell(f);
+        rewind(f);
 
-        float v_x = 0;
-        float v_y = 0;
-        std::string temp = "";
-        bool s = false;
-        for (int n = 12; n < max_buf; ++n) {
-            char c = buf[n];
-            if (c == '\0') break;
-            if (c == ',') {
-                if (s) {
-                    v_y = std::stof(temp);
-                    cc::V3F_C4B_T2F v;
-                    v.vertices.x = v_x * 100.0f;
-                    v.vertices.y = v_y * 100.0f;
-                    v.colors = cc::Color4B(255, 255, 255, 255);
-                    v.texCoords.u = 0;
-                    v.texCoords.v = 0;
-                    points.push_back(v);
+        char* temp = new char[file_len];
+        fread(temp, 1, file_len, f);
 
-                    //if (points.size() >= 12) break;
-                }else v_x = std::stof(temp);
-                temp = "";
-                s = !s;
-            }else if (c == ' ') {
-                break;
-            }else {
-                temp += c;
+        std::string data = temp;
+        int index = -1;
+        int nl_index = -1;
+        int co_index = -1;
+        if ((index = data.find("vertex_data:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
+            std::vector<std::string> v_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
+
+            for (int n = 0; n < v_strs.size(); n += 2) {
+                cc::V3F_C4B_T2F v;
+                v.vertices.x = std::stof(v_strs[n]) * 150.0f;
+                v.vertices.y = std::stof(v_strs[n + 1]) * 150.0f;
+                v.colors = cc::Color4B(255, 255, 255, 255);
+                points.push_back(v);
+
+                cc::Vec2 dv;
+                dv.x = v.vertices.x;
+                dv.y = v.vertices.y;
+                debug_points.push_back(dv);
+            }
+        }
+        if ((index = data.find("indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
+            std::vector<std::string> i_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
+
+            for (int n = 0; n < i_strs.size(); ++n) {
+                indices.push_back(std::stof(i_strs[n]));
+
+                if (n >= 1) {
+                    if (n % 3 == 0) {
+                        d_node->drawLine(debug_points[indices[indices.size() - 2]], debug_points[indices[indices.size() - 4]], cc::Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+                    }else {
+                        d_node->drawLine(debug_points[indices[indices.size() - 2]], debug_points[indices[indices.size() - 1]], cc::Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+                    }
+                }
+            }
+        }
+        if ((index = data.find("uvs:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
+            std::vector<std::string> uv_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
+
+            for (int n = 0; n < uv_strs.size(); n += 2) {
+                cc::V3F_C4B_T2F& v = points[n / 2];
+                v.texCoords.u = std::stof(uv_strs[n]);
+                v.texCoords.v = std::stof(uv_strs[n + 1]);
             }
         }
     }
@@ -117,24 +159,22 @@ void state::init(SceneManager* scene_ref) {
 
     scene->p_world->setDebugDrawMask(cc::PhysicsWorld::DEBUGDRAW_ALL);
 
-    d_node = cc::DrawNode::create();
     //dphysics_body->setGravityEnable(false);
     //dphysics_body->setDynamic(false);
-    scene->addChild(d_node, 1);
+    d_node->retain();
 
-    indices = new u_short[points.size()] { 0,1,2,3,1,0,3,4,1,3,5,4,3,6,5,3,7,6,7,3,8,9,10,11,12,9,11,13,14,14,13,13,14,15,16,16,15,15,16,17,18,19,20,17,19,21,22,22,21,21,22,23,24,24,23,23,24,25,26,27,28,25,27,29,30,31,32,29,31,33,34,35,36,33,35,37,38,39,40,37,39,41,42,43,44,41,43,45,46,46,45,45,46,47,48,48,47,47,48,49,50,51,52,49,51,53,54,55,56,53,55,57,58,59,60,57,59,61,62,63,64,61,63,65,66,67,68,65,67,69,70,71,72,69,71,73,74,75,76,73,75,77,78,79,80,77,79,81,82,83,84,81,83, };
-
-    tri.indices = indices;
-    tri.indexCount = points.size();
+    tri.indices = &indices[0];
+    tri.indexCount = indices.size();
     tri.verts = &points[0];
     tri.vertCount = points.size();
 
-    tri_cmd.init(0.0f, player->getTexture()->getName(), player->getGLProgramState(), 
+    tri_cmd.init(0.0f, cc::Director::getInstance()->getTextureCache()->addImage("MossyEdges.png")->getName(), player->getGLProgramState(), 
         player->getBlendFunc(), tri, player->getNodeToWorldTransform(), 1);
 }
 
 void state::update(float dt) {
     cc::Director::getInstance()->getRenderer()->addCommand(&tri_cmd);
+    d_node->draw(cc::Director::getInstance()->getRenderer(), player->getNodeToWorldTransform(), 0);
 
     player->getPhysicsBody()->applyForce(cc::Vec2(0, -2000.0f));
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
