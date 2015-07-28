@@ -30,6 +30,8 @@ int edge_indices_end;
 int fill_indices_start;
 int fill_indices_end;
 
+cc::Node* terrain_node;
+
 #include <string>
 #include <sstream>
 #include <vector>
@@ -95,6 +97,8 @@ void state::init(SceneManager* scene_ref) {
     create_state(s);
 
     d_node = cc::DrawNode::create();
+    terrain_node = cc::Node::create();
+    terrain_node->setPosition(500, 100);
 
     FILE* f = fopen("terrain.t2d", "r");
 
@@ -115,8 +119,8 @@ void state::init(SceneManager* scene_ref) {
 
             for (int n = 0; n < v_strs.size(); n += 2) {
                 cc::V3F_C4B_T2F v;
-                v.vertices.x = std::stof(v_strs[n]) * 150.0f;
-                v.vertices.y = std::stof(v_strs[n + 1]) * 150.0f;
+                v.vertices.x = std::stof(v_strs[n]) * 40.0f;
+                v.vertices.y = std::stof(v_strs[n + 1]) * 40.0f;
                 v.colors = cc::Color4B(255, 255, 255, 255);
                 points.push_back(v);
 
@@ -150,6 +154,20 @@ void state::init(SceneManager* scene_ref) {
                 v.texCoords.v = 1 - std::stof(uv_strs[n + 1]);
             }
         }
+        if ((index = data.find("collider_points:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
+            std::vector<std::string> c_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
+
+            for (int n = 0; n < c_strs.size(); n += 2) {
+                cc::Vec2 v;
+                v.x = std::stof(c_strs[n]) * 40.0f;
+                v.y = std::stof(c_strs[n + 1]) * 40.0f;
+                collider_points.push_back(v);
+
+                if (n >= 1) {
+                    d_node->drawLine(collider_points[collider_points.size() - 2], collider_points[collider_points.size() - 1], cc::Color4F(0.0f, 0.0f, 1.0f, .8f));
+                }
+            }
+        }
         if ((index = data.find("edge_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
             std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
             if (attribs.size() >= 2) {
@@ -172,7 +190,7 @@ void state::init(SceneManager* scene_ref) {
     player->setPosition(player->getContentSize().width, player->getContentSize().height);
     player->setScale(.25f);
     player->retain();
-    //scene->addChild(player, 1);
+    scene->addChild(player, 1);
 
     auto physics_body = cc::PhysicsBody::createBox(cc::Size(player->getContentSize().width * player->getScaleX(), 
                                                             player->getContentSize().height * player->getScaleY()));
@@ -180,8 +198,11 @@ void state::init(SceneManager* scene_ref) {
 
     scene->p_world->setDebugDrawMask(cc::PhysicsWorld::DEBUGDRAW_ALL);
 
-    //dphysics_body->setGravityEnable(false);
-    //dphysics_body->setDynamic(false);
+    auto dphysics_body = cc::PhysicsBody::createEdgePolygon(&collider_points[0], collider_points.size());
+    dphysics_body->setGravityEnable(false);
+    dphysics_body->setDynamic(false);
+    terrain_node->setPhysicsBody(dphysics_body);
+    scene->addChild(terrain_node, 1);
     d_node->retain();
 
     edge_tris.indices = &indices[edge_indices_start];
@@ -193,26 +214,27 @@ void state::init(SceneManager* scene_ref) {
     edge_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
     edge_tris_cmd.init(0.0f, edge_t->getName(), player->getGLProgramState(),
-        player->getBlendFunc(), edge_tris, player->getNodeToWorldTransform(), 1);
+                       player->getBlendFunc(), edge_tris, terrain_node->getNodeToWorldTransform(), 1);
 
     fill_tris.indices = &indices[fill_indices_start];
     fill_tris.indexCount = fill_indices_end;
     fill_tris.verts = &points[0];
     fill_tris.vertCount = points.size();
 
+
     cc::Texture2D* fill_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyFill.png");
     fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
     fill_tris_cmd.init(0.0f, fill_t->getName(), player->getGLProgramState(),
-        player->getBlendFunc(), fill_tris, player->getNodeToWorldTransform(), 1);
+                       player->getBlendFunc(), fill_tris, terrain_node->getNodeToWorldTransform(), 1);
 }
 
 void state::update(float dt) {
     cc::Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
     cc::Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
-    d_node->draw(cc::Director::getInstance()->getRenderer(), player->getNodeToWorldTransform(), 0);
+    d_node->draw(cc::Director::getInstance()->getRenderer(), terrain_node->getNodeToWorldTransform(), 0);
 
-    player->getPhysicsBody()->applyForce(cc::Vec2(0, -2000.0f));
+    player->getPhysicsBody()->applyImpulse(cc::Vec2(0, -10000.0f));
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
         player->getPhysicsBody()->applyImpulse(cc::Vec2(10000.0f, 0));
     }
