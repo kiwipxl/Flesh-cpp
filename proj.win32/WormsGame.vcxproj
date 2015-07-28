@@ -106,6 +106,10 @@
 xcopy /Y /Q "$(COCOS2DX_ROOT)\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
 xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     </PreLinkEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

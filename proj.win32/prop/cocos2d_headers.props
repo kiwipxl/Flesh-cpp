@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <EngineRoot>$(MSBuildThisFileDirectory)..\..\</EngineRoot>
+	<COCOS2DX_ROOT>E:\cocos2d-js-develop\frameworks\js-bindings\cocos2d-x</COCOS2DX_ROOT>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(COCOS2DX_ROOT)\cocos\editor-support;$(COCOS2DX_ROOT)\cocos;$(COCOS2DX_ROOT)\cocos\platform;$(COCOS2DX_ROOT)\cocos\platform\desktop;$(COCOS2DX_ROOT)\external\glfw3\include\win32;$(COCOS2DX_ROOT)\external\win32-specific\gles\include\OGLES;$(COCOS2DX_ROOT)\external\freetype2\include\win32\freetype2;$(COCOS2DX_ROOT)\external\freetype2\include\win32\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+</Project>
