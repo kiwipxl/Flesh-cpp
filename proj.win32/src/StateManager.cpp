@@ -18,6 +18,7 @@ cc::Sprite* state::player;
 cc::DrawNode* d_node;
 std::vector<cc::V3F_C4B_T2F> points;
 std::vector<cc::Vec2> debug_points;
+std::vector<cc::Vec2> collider_points;
 
 cc::TrianglesCommand edge_tris_cmd;
 cc::TrianglesCommand::Triangles edge_tris;
