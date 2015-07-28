@@ -19,9 +19,15 @@ cc::DrawNode* d_node;
 std::vector<cc::V3F_C4B_T2F> points;
 std::vector<cc::Vec2> debug_points;
 
-cc::TrianglesCommand tri_cmd;
-cc::TrianglesCommand::Triangles tri;
+cc::TrianglesCommand edge_tris_cmd;
+cc::TrianglesCommand::Triangles edge_tris;
+cc::TrianglesCommand fill_tris_cmd;
+cc::TrianglesCommand::Triangles fill_tris;
 std::vector<u_short> indices;
+int edge_indices_start;
+int edge_indices_end;
+int fill_indices_start;
+int fill_indices_end;
 
 #include <string>
 #include <sstream>
@@ -127,9 +133,9 @@ void state::init(SceneManager* scene_ref) {
 
                 if (n >= 1) {
                     if (n % 3 == 0) {
-                        d_node->drawLine(debug_points[indices[indices.size() - 2]], debug_points[indices[indices.size() - 4]], cc::Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+                        d_node->drawLine(debug_points[indices[indices.size() - 2]], debug_points[indices[indices.size() - 4]], cc::Color4F(1.0f, 1.0f, 1.0f, .4f));
                     }else {
-                        d_node->drawLine(debug_points[indices[indices.size() - 2]], debug_points[indices[indices.size() - 1]], cc::Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+                        d_node->drawLine(debug_points[indices[indices.size() - 2]], debug_points[indices[indices.size() - 1]], cc::Color4F(1.0f, 1.0f, 1.0f, .4f));
                     }
                 }
             }
@@ -141,6 +147,20 @@ void state::init(SceneManager* scene_ref) {
                 cc::V3F_C4B_T2F& v = points[n / 2];
                 v.texCoords.u = std::stof(uv_strs[n]);
                 v.texCoords.v = 1 - std::stof(uv_strs[n + 1]);
+            }
+        }
+        if ((index = data.find("edge_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
+            std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
+            if (attribs.size() >= 2) {
+                edge_indices_start = std::stof(attribs[0]);
+                edge_indices_end = std::stof(attribs[1]);
+            }
+        }
+        if ((index = data.find("fill_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
+            std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
+            if (attribs.size() >= 2) {
+                fill_indices_start = std::stof(attribs[0]);
+                fill_indices_end = std::stof(attribs[1]);
             }
         }
     }
@@ -163,17 +183,32 @@ void state::init(SceneManager* scene_ref) {
     //dphysics_body->setDynamic(false);
     d_node->retain();
 
-    tri.indices = &indices[0];
-    tri.indexCount = indices.size();
-    tri.verts = &points[0];
-    tri.vertCount = points.size();
+    edge_tris.indices = &indices[edge_indices_start];
+    edge_tris.indexCount = edge_indices_end;
+    edge_tris.verts = &points[0];
+    edge_tris.vertCount = points.size();
 
-    tri_cmd.init(0.0f, cc::Director::getInstance()->getTextureCache()->addImage("MossyEdges.png")->getName(), player->getGLProgramState(), 
-        player->getBlendFunc(), tri, player->getNodeToWorldTransform(), 1);
+    cc::Texture2D* edge_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyEdges.png");
+    edge_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
+
+    edge_tris_cmd.init(0.0f, edge_t->getName(), player->getGLProgramState(),
+        player->getBlendFunc(), edge_tris, player->getNodeToWorldTransform(), 1);
+
+    fill_tris.indices = &indices[fill_indices_start];
+    fill_tris.indexCount = fill_indices_end;
+    fill_tris.verts = &points[0];
+    fill_tris.vertCount = points.size();
+
+    cc::Texture2D* fill_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyFill.png");
+    fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
+
+    fill_tris_cmd.init(0.0f, fill_t->getName(), player->getGLProgramState(),
+        player->getBlendFunc(), fill_tris, player->getNodeToWorldTransform(), 1);
 }
 
 void state::update(float dt) {
-    cc::Director::getInstance()->getRenderer()->addCommand(&tri_cmd);
+    cc::Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
+    cc::Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
     d_node->draw(cc::Director::getInstance()->getRenderer(), player->getNodeToWorldTransform(), 0);
 
     player->getPhysicsBody()->applyForce(cc::Vec2(0, -2000.0f));
