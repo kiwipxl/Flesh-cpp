@@ -31,6 +31,9 @@ int fill_indices_start;
 int fill_indices_end;
 
 cc::Node* terrain_node;
+bool can_jump = false;
+
+cc::Camera* camera;
 
 #include <string>
 #include <sstream>
@@ -196,11 +199,17 @@ void state::init(SceneManager* scene_ref) {
                                                             player->getContentSize().height * player->getScaleY()));
     player->setPhysicsBody(physics_body);
 
-    scene->p_world->setDebugDrawMask(cc::PhysicsWorld::DEBUGDRAW_ALL);
+    //scene->p_world->setDebugDrawMask(cc::PhysicsWorld::DEBUGDRAW_ALL);
 
     auto dphysics_body = cc::PhysicsBody::createEdgePolygon(&collider_points[0], collider_points.size());
     dphysics_body->setGravityEnable(false);
     dphysics_body->setDynamic(false);
+    dphysics_body->setCategoryBitmask(0x02);
+    dphysics_body->setCollisionBitmask(0x04);
+    dphysics_body->setContactTestBitmask(0x04);
+    physics_body->setCategoryBitmask(0x04);
+    physics_body->setCollisionBitmask(0x02);
+    physics_body->setContactTestBitmask(0x02);
     terrain_node->setPhysicsBody(dphysics_body);
     scene->addChild(terrain_node, 1);
     d_node->retain();
@@ -221,32 +230,61 @@ void state::init(SceneManager* scene_ref) {
     fill_tris.verts = &points[0];
     fill_tris.vertCount = points.size();
 
-
     cc::Texture2D* fill_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyFill.png");
     fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
     fill_tris_cmd.init(0.0f, fill_t->getName(), player->getGLProgramState(),
                        player->getBlendFunc(), fill_tris, terrain_node->getNodeToWorldTransform(), 1);
+
+    auto spritePos = cc::Vec3(scene->screen_size.width / 2 + 0,
+        scene->screen_size.height / 2 + 0,
+        0);
+
+    // position the sprite on the center of the screen
+    //this is the layer, when adding camera to it, all its children will be affect only when you set the second parameter to true
+    scene->setCameraMask((unsigned short)cc::CameraFlag::USER1, true);
+    // add the sprite as a child to this layer
+
+    camera = cc::Camera::createPerspective(60, (float)scene->screen_size.width / scene->screen_size.height, 1.0, 1000);
+    camera->setCameraFlag(cc::CameraFlag::USER1);
+    //the calling order matters, we should first call setPosition3D, then call lookAt.
+    camera->setPosition3D(spritePos + cc::Vec3(0, 0, 800));
+    camera->lookAt(spritePos, cc::Vec3(0.0, 1.0, 0.0));
+    scene->addChild(camera);
 }
 
 void state::update(float dt) {
+    cc::Vec3 pos;
+    pos.x = player->getPositionX();
+    pos.y = player->getPositionY();
+    camera->setPosition3D(pos + cc::Vec3(0, 0, 600));
+    camera->lookAt(pos, cc::Vec3(0.0, 1.0, 0.0));
+
     cc::Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
     cc::Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
     d_node->draw(cc::Director::getInstance()->getRenderer(), terrain_node->getNodeToWorldTransform(), 0);
 
     player->getPhysicsBody()->applyImpulse(cc::Vec2(0, -10000.0f));
+    player->getPhysicsBody()->setVelocityLimit(500.0f);
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
         player->getPhysicsBody()->applyImpulse(cc::Vec2(10000.0f, 0));
     }
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
         player->getPhysicsBody()->applyImpulse(cc::Vec2(-10000.0f, 0));
     }
-    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_UP_ARROW)) {
+    if (can_jump && input::key_down(cc::EventKeyboard::KeyCode::KEY_UP_ARROW)) {
         player->getPhysicsBody()->applyImpulse(cc::Vec2(0, 40000.0f));
+        can_jump = false;
     }
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
         player->getPhysicsBody()->applyImpulse(cc::Vec2(0, -40000.0f));
     }
+    int a = player->getPhysicsBody()->getContactTestBitmask();
+    int b = 0;
+    if (a != 0) {
+        can_jump = true;
+    }
+
     for (int n = 0; n < peers::peer_list.size(); ++n) {
         msg::send(*peers::peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_PLAYER_MOVEMENT << 
             (int)player->getPositionX() << (int)player->getPositionY());
