@@ -140,7 +140,7 @@ void state::init(SceneManager* scene_ref) {
             for (int n = 0; n < uv_strs.size(); n += 2) {
                 cc::V3F_C4B_T2F& v = points[n / 2];
                 v.texCoords.u = std::stof(uv_strs[n]);
-                v.texCoords.v = std::stof(uv_strs[n + 1]);
+                v.texCoords.v = 1 - std::stof(uv_strs[n + 1]);
             }
         }
     }
