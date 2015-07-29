@@ -24,6 +24,8 @@
     <ClCompile Include="src\network\sockets\SocketManager.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
     <ClCompile Include="src\input\SimpleInput.cpp" />
+    <ClCompile Include="src\terrain\Ferr2DSystem.cpp" />
+    <ClCompile Include="src\entities\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -39,6 +41,8 @@
     <ClInclude Include="src\network\sockets\SocketManager.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
+    <ClInclude Include="src\terrain\Ferr2DSystem.h" />
+    <ClInclude Include="src\entities\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
