@@ -18,8 +18,6 @@ namespace state {
     extern cc::LabelBMFont* info_label;
     extern float time_since_startup;
 
-    extern cc::Sprite* player;
-
     extern void init(SceneManager* scene_ref);
     extern void update(float dt);
 

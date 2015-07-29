@@ -162,6 +162,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\input\SimpleInput.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\map\Camera.cpp" />
     <ClCompile Include="src\network\GameMessages.cpp" />
     <ClCompile Include="src\network\Message.cpp" />
     <ClCompile Include="src\network\Peers.cpp" />
@@ -170,7 +171,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\network\sockets\SocketManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
-    <ClCompile Include="src\terrain\Ferr2DSystem.cpp" />
+    <ClCompile Include="src\map\Ferr2DSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -179,6 +180,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\debug\PlatformConfig.h" />
     <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
+    <ClInclude Include="src\map\Camera.h" />
     <ClInclude Include="src\network\GameMessages.h" />
     <ClInclude Include="src\network\Message.h" />
     <ClInclude Include="src\network\Peers.h" />
@@ -187,7 +189,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\network\sockets\SocketManager.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\StateManager.h" />
-    <ClInclude Include="src\terrain\Ferr2DSystem.h" />
+    <ClInclude Include="src\map\Ferr2DSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

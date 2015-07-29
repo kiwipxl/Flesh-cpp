@@ -13,7 +13,6 @@ std::vector<std::string> &split(const std::string &s, char delim, std::vector<st
 	return elems;
 }
 
-
 std::vector<std::string> split(const std::string &s, char delim) {
 	std::vector<std::string> elems;
 	split(s, delim, elems);
@@ -27,8 +26,8 @@ void ferr2d::print_load_error(int err) {
 Terrain::Terrain(TerrainData& t_data) {
     terrain_data = &t_data;
 
-    node->cc::Node::create();
-    node->setPosition(500, 100);
+    node = cc::Node::create();
+    node->setPosition(0, 0);
 
     pbody = cc::PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
     pbody->setGravityEnable(false);
@@ -65,6 +64,12 @@ Terrain::Terrain(TerrainData& t_data) {
     fill_tris_cmd.init(0.0f, fill_t->getName(), state::scene->getGLProgramState(), blend_func, fill_tris, node->getNodeToWorldTransform(), 1);
 }
 
+void Terrain::draw() {
+    cc::Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
+    cc::Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
+    terrain_data->debug_draw_node->draw(cc::Director::getInstance()->getRenderer(), node->getNodeToWorldTransform(), 0);
+}
+
 TerrainData* ferr2d::load(std::string file_name) {
 	TerrainData* ter = new TerrainData();
 	
@@ -75,7 +80,7 @@ TerrainData* ferr2d::load(std::string file_name) {
         int file_len = ftell(f);
         rewind(f);
 
-        if (file_len <= 0) { print_load_error(FERR2D_LOAD_ERROR_FILE_LEN_LZERO); return; }
+        if (file_len <= 0) { print_load_error(FERR2D_LOAD_ERROR_FILE_LEN_LZERO); return NULL; }
         char* temp = new char[file_len];
         fread(temp, 1, file_len, f);
 
@@ -103,7 +108,7 @@ TerrainData* ferr2d::load(std::string file_name) {
 		}else {
 			delete[] temp;
 			print_load_error(FERR2D_LOAD_ERROR_VERTEX_DATA_MISSING);
-			return;
+			return NULL;
         }
         if ((index = data.find("indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
             std::vector<std::string> i_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
@@ -122,7 +127,7 @@ TerrainData* ferr2d::load(std::string file_name) {
 		}else {
 			delete[] temp;
 			print_load_error(FERR2D_LOAD_ERROR_INDICES_MISSING);
-			return;
+			return NULL;
         }
         if ((index = data.find("uvs:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
             std::vector<std::string> uv_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
@@ -135,7 +140,7 @@ TerrainData* ferr2d::load(std::string file_name) {
 		}else {
 			delete[] temp;
 			print_load_error(FERR2D_LOAD_ERROR_UV_DATA_MISSING);
-			return;
+			return NULL;
         }
         if ((index = data.find("collider_points:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
             std::vector<std::string> c_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
@@ -153,7 +158,7 @@ TerrainData* ferr2d::load(std::string file_name) {
 		}else {
 			delete[] temp;
 			print_load_error(FERR2D_LOAD_ERROR_COLLIDER_POINTS_MISSING);
-			return;
+			return NULL;
         }
         if ((index = data.find("edge_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
             std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
@@ -162,7 +167,7 @@ TerrainData* ferr2d::load(std::string file_name) {
             }
 		}else {
 			print_load_error(FERR2D_LOAD_ERROR_ATTRIB_EDGE_INDICES_MISSING);
-			return;
+			return NULL;
         }
         if ((index = data.find("fill_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
             std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
@@ -172,7 +177,7 @@ TerrainData* ferr2d::load(std::string file_name) {
 		}else {
 			delete[] temp;
 			print_load_error(FERR2D_LOAD_ERROR_ATTRIB_FILL_INDICES_MISSING);
-			return;
+			return NULL;
         }
 		delete[] temp;
 	}else {
@@ -180,4 +185,6 @@ TerrainData* ferr2d::load(std::string file_name) {
     }
 
     fclose(f);
+
+    return ter;
 }

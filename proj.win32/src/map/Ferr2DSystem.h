@@ -17,22 +17,6 @@
 
 namespace ferr2d {
 
-	class Terrain {
-
-		public:
-            Terrain(TerrainData& t_data);
-
-            cc::Node* node;
-            cc::PhysicsBody* pbody;
-            TerrainData* terrain_data;
-
-        private:
-            cc::TrianglesCommand edge_tris_cmd;
-            cc::TrianglesCommand::Triangles edge_tris;
-            cc::TrianglesCommand fill_tris_cmd;
-            cc::TrianglesCommand::Triangles fill_tris;
-    };
-
     class TerrainData {
 
 		public:
@@ -59,6 +43,24 @@ namespace ferr2d {
 				fill_indices_start = start;
 				fill_indices_end = end;
 			}
+    };
+
+	class Terrain {
+
+		public:
+            Terrain(TerrainData& t_data);
+
+            cc::Node* node;
+            cc::PhysicsBody* pbody;
+            TerrainData* terrain_data;
+
+            void draw();
+
+        private:
+            cc::TrianglesCommand edge_tris_cmd;
+            cc::TrianglesCommand::Triangles edge_tris;
+            cc::TrianglesCommand fill_tris_cmd;
+            cc::TrianglesCommand::Triangles fill_tris;
     };
 
 	extern TerrainData* load(std::string file_name);
