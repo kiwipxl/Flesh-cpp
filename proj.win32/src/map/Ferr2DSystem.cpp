@@ -24,8 +24,13 @@ void ferr2d::print_load_error(int err) {
 	CCLOG("ferr2d load error occurred: %d", err);
 }
 
-void Terrain::init() {
-    pbody = cc::PhysicsBody::createEdgePolygon(&collider_points[0], collider_points.size());
+Terrain::Terrain(TerrainData& t_data) {
+    terrain_data = &t_data;
+
+    node->cc::Node::create();
+    node->setPosition(500, 100);
+
+    pbody = cc::PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
     pbody->setGravityEnable(false);
     pbody->setDynamic(false);
     pbody->setCategoryBitmask(0x02);
@@ -33,28 +38,31 @@ void Terrain::init() {
     pbody->setContactTestBitmask(0x04);
     node->setPhysicsBody(pbody);
     state::scene->addChild(node, 1);
-    debug_draw_node->retain();
+    t_data.debug_draw_node->retain();
 
-    edge_tris.indices = &indices[edge_indices_start];
-    edge_tris.indexCount = edge_indices_end;
-    edge_tris.verts = &points[0];
-    edge_tris.vertCount = points.size();
+    edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
+    edge_tris.indexCount = t_data.edge_indices_end;
+    edge_tris.verts = &t_data.points[0];
+    edge_tris.vertCount = t_data.points.size();
 
     cc::Texture2D* edge_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyEdges.png");
     edge_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
+    cc::BlendFunc blend_func;
+    blend_func.src = GL_SRC_ALPHA;
+    blend_func.dst = GL_ONE_MINUS_SRC_ALPHA;
+
     edge_tris_cmd.init(0.0f, edge_t->getName(), state::scene->getGLProgramState(), blend_func, edge_tris, node->getNodeToWorldTransform(), 1);
 
-    fill_tris.indices = &indices[fill_indices_start];
-    fill_tris.indexCount = fill_indices_end;
-    fill_tris.verts = &points[0];
-    fill_tris.vertCount = points.size();
+    fill_tris.indices = &t_data.indices[t_data.fill_indices_start];
+    fill_tris.indexCount = t_data.fill_indices_end;
+    fill_tris.verts = &t_data.points[0];
+    fill_tris.vertCount = t_data.points.size();
 
     cc::Texture2D* fill_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyFill.png");
     fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
     fill_tris_cmd.init(0.0f, fill_t->getName(), state::scene->getGLProgramState(), blend_func, fill_tris, node->getNodeToWorldTransform(), 1);
-
 }
 
 TerrainData* ferr2d::load(std::string file_name) {
@@ -72,8 +80,6 @@ TerrainData* ferr2d::load(std::string file_name) {
         fread(temp, 1, file_len, f);
 
         ter->debug_draw_node = cc::DrawNode::create();
-        ter->node->cc::Node::create();
-        ter->node->setPosition(500, 100);
 
         std::string data = temp;
         int index = -1;
