@@ -11,7 +11,7 @@ void Socket::init_sockets() {
 		WSAData wsa_data;
 		int err;
 		if ((err = WSAStartup(MAKEWORD(2, 2), &wsa_data)) != 0) {
-			CCLOG("WSA Startup failed! Sockets could not be initialised. Err: %d", err);
+            log_error << "WSA Startup failed! Sockets could not be initialised. Err: " << err;
 		}
 	#endif
 }
@@ -42,7 +42,7 @@ Socket::Socket(SocketProtocol c_protocol) {
 }
 
 int Socket::print_error(int err, char* func_err) {
-    file_print_log << err << ": " << func_err;
+    log_error << err << ": " << func_err;
     return err;
 }
 

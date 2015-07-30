@@ -83,7 +83,7 @@ void recv_msgs() {
 
                                 std::this_thread::sleep_for(std::chrono::milliseconds(2000));
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
-                                CCLOG("caught udp ping pong!");
+                                log_info << "caught udp ping pong!";
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
                                 peer = peers::get_peer(*(int*)msg::param_list[0]->data);
                                 if (peer != NULL && !peer->connected) {

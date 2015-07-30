@@ -1,6 +1,7 @@
 #include "Ferr2DSystem.h"
 #include "../StateManager.h"
 #include "../entities/Unit.h"
+#include "../debug/Logger.h"
 
 using ferr2d::Terrain;
 using ferr2d::TerrainData;
@@ -21,7 +22,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
 }
 
 void ferr2d::print_load_error(int err) {
-	CCLOG("ferr2d load error occurred: %d", err);
+    log_error << "ferr2d load error occurred: " << err;
 }
 
 Terrain::Terrain(TerrainData& t_data) {

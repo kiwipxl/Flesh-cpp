@@ -69,10 +69,10 @@ void sock::update() {
     if (udp_ping_pong) {
         if (state::time_since_startup - udp_ping_pong_time >= UDP_PING_PONG_TIMEOUT) {
             ++udp_ping_pong_tries;
-            if (udp_ping_pong_sock == NULL) { CCLOG("udp ping pong sock is null"); return; }
+            if (udp_ping_pong_sock == NULL) { log_info << "udp ping pong sock is null"; return; }
             send_udp_ping_pong(*udp_ping_pong_sock);
             if (udp_ping_pong_tries >= MAX_UDP_PING_PONG_TRIES) {
-                CCLOG("udp ping pong timed out");
+                log_info << "udp ping pong timed out";
                 socket_setup_failed(ERR_UDP_PING_PONG_FAILED);
                 udp_ping_pong = false;
             }
@@ -82,7 +82,7 @@ void sock::update() {
 
 void sock::send_udp_ping_pong(Socket& sock) {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
-        if (sock.get_protocol() != PROTO_UDP) { CCLOG("cannot send udp ping pong: socket is not a udp socket"); return; }
+        if (sock.get_protocol() != PROTO_UDP) { log_warning << "cannot send udp ping pong: socket is not a udp socket"; return; }
         msg::send(sock, msg::ByteStream() << _MID->UDP_INIT_PING_PONG);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;
@@ -107,6 +107,6 @@ void sock::init() {
 }
 
 void sock::setup_tcp_sock() {
-    CCLOG("attempt connect...");
+    log_info << "attempt connect...";
     tcp_connect_thread = std::thread(tcp_connect);
 }

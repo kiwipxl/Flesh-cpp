@@ -1,4 +1,5 @@
 #include "Message.h"
+#include "../debug/Logger.h"
 
 //the following namespace inclusions are used to avoid redundant "msg::" accesses
 using msg::MID;
@@ -165,10 +166,10 @@ void msg::print_extracted_params() {
 			offset += len;
 			if (n < param_list_size - 1) offset += sprintf(print_buf + offset, ", ", t->type_name);
 		}
-		print_buf[offset + 1] = '\0';
-		CCLOG(print_buf, "");
+        print_buf[offset + 1] = '\0';
+        log_info << print_buf;
 	}else {
-		CCLOG("could not print params, required %d params, but %d params given", last_extracted_mid->num_params, param_list_size);
+        log_error << "could not print params, required " << last_extracted_mid->num_params << "params, but " << param_list_size << " params given";
 	}
 }
 

@@ -8,7 +8,7 @@
 #define log_print debug::Logger(debug::ACTION_INFO | debug::ACTION_PRINT)
 #define log_print_file debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 
-#define log_info debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE)
+#define log_info debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 #define log_warning debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 #define log_error debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 
