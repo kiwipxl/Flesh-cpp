@@ -66,7 +66,16 @@ void msg::init() {
 	}
 }
 
-void msg::send(Socket& sock, ByteStream& stream) {
+void msg::send(Socket& sock, ByteStream& stream, bool print_output, bool write_to_file) {
+    if (print_output) log_print << "sent mid: " << debug::ACTION_NO_NEW_LINE;
+    if (write_to_file) log_file << "sent mid: " << debug::ACTION_NO_NEW_LINE;
+
+    if (print_output || write_to_file) {
+        CMID mid = extract_mid(byte_buffer, byte_offset);
+        extract_params(mid, byte_buffer, byte_offset);
+        print_extracted_params(print_output, write_to_file);
+    }
+
 	sock.s_send(byte_buffer, byte_offset);
 }
 
@@ -123,7 +132,7 @@ void msg::clear_param_list() {
 	param_tbytes = 0;
 }
 
-void msg::print_extracted_params() {
+void msg::print_extracted_params(bool print_output, bool write_to_file) {
 	if (last_extracted_mid->num_params == param_list_size) {
 		static const char header[] = ": ";
 		int header_size = sizeof(header);
@@ -167,9 +176,11 @@ void msg::print_extracted_params() {
 			if (n < param_list_size - 1) offset += sprintf(print_buf + offset, ", ", t->type_name);
 		}
         print_buf[offset + 1] = '\0';
-        log_info << print_buf;
+        
+        if (print_output) log_print << print_buf;
+        if (write_to_file) log_file << print_buf;
 	}else {
-        log_error << "could not print params, required " << last_extracted_mid->num_params << "params, but " << param_list_size << " params given";
+        log_warning << "could not print params, required " << last_extracted_mid->num_params << " params, but " << param_list_size << " params given";
 	}
 }
 

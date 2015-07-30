@@ -178,11 +178,11 @@ namespace msg {
 	};
 
 	void init();
-	void send(Socket& sock, ByteStream& stream);
+	void send(Socket& sock, ByteStream& stream, bool print_output = false, bool write_to_file = false);
 	CMID extract_mid(char* buffer, int buffer_len);
 	void extract_params(CMID mid, char* byte_data, int byte_data_len);
 	void clear_param_list();
-	void print_extracted_params();
+	void print_extracted_params(bool print_output = true, bool write_to_file = false);
     inline const char* get_MID_name(CMID mid);
 }
 

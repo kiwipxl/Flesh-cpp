@@ -1,5 +1,11 @@
 #include "Logger.h"
 
-void debug::init_logger() {
+FILE* debug::lfile;
 
+void debug::init_logger() {
+    lfile = fopen("log.txt", "w");
+
+    if (lfile != NULL) {
+
+    }
 }

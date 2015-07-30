@@ -1,0 +1,1872 @@
+attempt connect...
+attempt connect on thread...
+(tcp_serv_sock): connection successful
+RECV_SERVER_BINDED_UDP_PORT: (ushort): 57372
+(udp_serv_sock): creation / binding successful
+sent mid: SEND_CLIENT_BINDED_UDP_PORT: (ushort): 62506
+sent mid: UDP_INIT_PING_PONG: 
+UDP_INIT_PING_PONG: 
+sent mid: SEND_UDP_SERVER_COMMUNICATION_SUCCESS: 
+RECV_UDP_PEER_BIND_REQUEST: (int): 11, (char*): 122.111.95.195
+sent mid: SEND_UDP_PEER_BIND_PORT_SUCCESS: (int): 11, (char*): 122.111.95.195, (ushort): 62508
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 302, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 299, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 296, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 293, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 290, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 286, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 282, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 279, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 274, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 270, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 266, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 261, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 256, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 251, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 246, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 240, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 234, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 229, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 222, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 211, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 209, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 203, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 196, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 189, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 182, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 174, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 166, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 158, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 150, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 142, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 133, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 124, (float): 0.000000
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 484, (int): 119, (float): 7.819749
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 486, (int): 117, (float): 11.295876
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 489, (int): 112, (float): 17.241623
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 492, (int): 108, (float): 23.034115
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 496, (int): 103, (float): 28.838530
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 499, (int): 104, (float): 27.582333
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 503, (int): 105, (float): 26.184565
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 507, (int): 105, (float): 25.091137
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 511, (int): 105, (float): 24.042942
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 514, (int): 105, (float): 23.048149
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 518, (int): 104, (float): 22.050699
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 521, (int): 104, (float): 21.056690
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 525, (int): 103, (float): 20.058699
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 529, (int): 102, (float): 19.003880
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 532, (int): 101, (float): 18.007277
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 536, (int): 99, (float): 16.981474
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 540, (int): 97, (float): 16.014311
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 544, (int): 96, (float): 14.981933
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 547, (int): 94, (float): 13.986475
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 551, (int): 91, (float): 12.953856
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 554, (int): 89, (float): 12.012572
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 558, (int): 86, (float): 11.018925
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 562, (int): 85, (float): 12.259688
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 566, (int): 83, (float): 13.480724
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 569, (int): 81, (float): 14.703860
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 573, (int): 78, (float): 15.981811
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 577, (int): 75, (float): 17.181343
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 581, (int): 73, (float): 18.408304
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 584, (int): 71, (float): 20.634123
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 588, (int): 69, (float): 22.875860
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 592, (int): 66, (float): 25.297842
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 596, (int): 64, (float): 27.395441
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 600, (int): 61, (float): 29.781694
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 604, (int): 58, (float): 32.017330
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 607, (int): 56, (float): 34.189358
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 611, (int): 52, (float): 36.553555
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 615, (int): 49, (float): 38.719765
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 619, (int): 45, (float): 41.082474
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 623, (int): 41, (float): 43.324871
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 627, (int): 37, (float): 45.561047
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 631, (int): 33, (float): 47.863129
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 634, (int): 28, (float): 50.055458
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 638, (int): 24, (float): 52.220448
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 642, (int): 19, (float): 54.583832
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 646, (int): 14, (float): 56.750584
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 649, (int): 9, (float): 58.984055
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 653, (int): 3, (float): 61.266647
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 657, (int): -2, (float): 63.545177
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 661, (int): -8, (float): 65.795425
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 668, (int): -19, (float): 69.998878
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 669, (int): -20, (float): 70.399185
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 672, (int): -26, (float): 72.501381
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 676, (int): -33, (float): 74.826607
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 680, (int): -40, (float): 77.196754
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 684, (int): -47, (float): 79.304634
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 688, (int): -54, (float): 81.552315
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 692, (int): -62, (float): 83.781456
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 697, (int): -63, (float): 89.537277
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 703, (int): -65, (float): 95.471367
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 707, (int): -62, (float): 97.723999
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 711, (int): -60, (float): 100.338776
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 716, (int): -58, (float): 103.032265
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 721, (int): -56, (float): 105.943558
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 725, (int): -55, (float): 108.759666
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 729, (int): -53, (float): 111.502235
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 734, (int): -52, (float): 114.343246
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 738, (int): -51, (float): 117.344398
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 743, (int): -51, (float): 120.189354
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 747, (int): -50, (float): 122.858391
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 752, (int): -50, (float): 125.855423
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 756, (int): -50, (float): 128.625107
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 761, (int): -50, (float): 131.535568
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 765, (int): -50, (float): 134.342285
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 770, (int): -51, (float): 137.334335
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 774, (int): -51, (float): 140.094940
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 778, (int): -52, (float): 143.062317
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 783, (int): -54, (float): 145.808685
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 787, (int): -55, (float): 148.551453
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 792, (int): -56, (float): 151.469437
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 796, (int): -58, (float): 154.320389
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 801, (int): -60, (float): 157.316223
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 805, (int): -62, (float): 160.067047
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 810, (int): -65, (float): 163.070084
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 814, (int): -67, (float): 165.910248
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 818, (int): -70, (float): 168.568314
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 823, (int): -73, (float): 171.567230
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 827, (int): -76, (float): 174.311020
+10047: sendto error
+sent mid: PO_PLAYER_MOVEMENT: (int): 832, (int): -79, (float): 177.324341
+10047: sendto error
+RECV_UDP_PEER_PORT: (int): 11, (ushort): 62507
+sent mid: PO_PING_CONNECT_TEST: 
+PO_PING_CONNECT_TEST: 
+sent mid: PO_PONG_CONNECT_TEST: 
+PO_PONG_CONNECT_TEST: 
+sent mid: SEND_PEER_CONNECT_SUCCESS: (int): 11, (char*): 122.111.95.195
+PO_PLAYER_MOVEMENT: (int): 0, (int): 0, (float): 180.837585
+sent mid: PO_PLAYER_MOVEMENT: (int): 0, (int): 0, (float): 180.104660
+sent mid: PO_PLAYER_MOVEMENT: (int): 4, (int): -3, (float): 183.039795
+PO_PLAYER_MOVEMENT: (int): 0, (int): 0, (float): 180.837952
+sent mid: PO_PLAYER_MOVEMENT: (int): 8, (int): -7, (float): 185.699753
+PO_PLAYER_MOVEMENT: (int): 0, (int): 0, (float): 180.837952
+sent mid: PO_PLAYER_MOVEMENT: (int): 13, (int): -11, (float): 188.545044
+PO_PLAYER_MOVEMENT: (int): 0, (int): 0, (float): 180.837952
+PO_PLAYER_MOVEMENT: (int): 0, (int): -1, (float): 180.837952
+sent mid: PO_PLAYER_MOVEMENT: (int): 17, (int): -17, (float): 191.815002
+sent mid: PO_PLAYER_MOVEMENT: (int): 21, (int): -24, (float): 193.822800
+PO_PLAYER_MOVEMENT: (int): -2, (int): -3, (float): 179.129013
+sent mid: PO_PLAYER_MOVEMENT: (int): 25, (int): -26, (float): 189.658096
+PO_PLAYER_MOVEMENT: (int): -2, (int): -7, (float): 180.713959
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -29, (float): 186.317352
+PO_PLAYER_MOVEMENT: (int): -2, (int): -11, (float): 182.217697
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -32, (float): 182.866806
+PO_PLAYER_MOVEMENT: (int): -3, (int): -16, (float): 184.269043
+sent mid: PO_PLAYER_MOVEMENT: (int): 33, (int): -37, (float): 178.505371
+PO_PLAYER_MOVEMENT: (int): -3, (int): -21, (float): 186.174530
+sent mid: PO_PLAYER_MOVEMENT: (int): 33, (int): -37, (float): 180.765060
+PO_PLAYER_MOVEMENT: (int): -4, (int): -26, (float): 187.639252
+sent mid: PO_PLAYER_MOVEMENT: (int): 33, (int): -37, (float): 180.880615
+PO_PLAYER_MOVEMENT: (int): -5, (int): -32, (float): 188.837860
+PO_PLAYER_MOVEMENT: (int): -6, (int): -34, (float): 185.940338
+sent mid: PO_PLAYER_MOVEMENT: (int): 33, (int): -37, (float): 180.991348
+PO_PLAYER_MOVEMENT: (int): -7, (int): -36, (float): 183.858841
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.019669
+PO_PLAYER_MOVEMENT: (int): -7, (int): -35, (float): 184.074478
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.068085
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.105530
+PO_PLAYER_MOVEMENT: (int): -7, (int): -36, (float): 183.227814
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.137451
+PO_PLAYER_MOVEMENT: (int): -8, (int): -36, (float): 183.187531
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.170837
+PO_PLAYER_MOVEMENT: (int): -8, (int): -36, (float): 183.178665
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.199295
+PO_PLAYER_MOVEMENT: (int): -8, (int): -36, (float): 183.169983
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.225281
+PO_PLAYER_MOVEMENT: (int): -8, (int): -36, (float): 183.165421
+PO_PLAYER_MOVEMENT: (int): -9, (int): -36, (float): 183.252533
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.247971
+PO_PLAYER_MOVEMENT: (int): -9, (int): -36, (float): 183.240524
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.271179
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.307312
+PO_PLAYER_MOVEMENT: (int): -9, (int): -36, (float): 183.400177
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.308487
+PO_PLAYER_MOVEMENT: (int): -9, (int): -36, (float): 183.392960
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -36, (float): 181.323181
+PO_PLAYER_MOVEMENT: (int): -9, (int): -36, (float): 183.387756
+sent mid: PO_PLAYER_MOVEMENT: (int): 32, (int): -33, (float): 181.148392
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 183.584412
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.703751
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -33, (float): 179.635620
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -32, (float): 180.635834
+PO_PLAYER_MOVEMENT: (int): -10, (int): -34, (float): 182.883224
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.272171
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -33, (float): 178.813232
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.476807
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -32, (float): 179.764923
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -33, (float): 178.310394
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.582245
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.631805
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -32, (float): 179.268097
+sent mid: PO_PLAYER_MOVEMENT: 
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.678238
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -33, (float): 178.320053
+PO_PLAYER_MOVEMENT: (int): -10, (int): -35, (float): 182.725769
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -33, (float): 179.287598
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.762955
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.800598
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -34, (float): 180.263321
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -34, (float): 181.214569
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.831451
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 182.007614
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.690857
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.813461
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.556671
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.429596
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.673706
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.324203
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.698105
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.705566
+PO_PLAYER_MOVEMENT: (int): -11, (int): -35, (float): 182.227417
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.716324
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 182.130997
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.724945
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 182.046890
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.732300
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.977371
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.740051
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.915146
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.748077
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.855713
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.750443
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.806625
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.758682
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -35, (float): 181.752777
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -35, (float): 181.755142
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.718384
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.756699
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.680725
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.647415
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.758530
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.619431
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.760117
+PO_PLAYER_MOVEMENT: (int): -12, (int): -35, (float): 181.593353
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.761551
+PO_PLAYER_MOVEMENT: (int): -12, (int): -34, (float): 181.568390
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.762955
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.764038
+PO_PLAYER_MOVEMENT: (int): -12, (int): -34, (float): 181.546539
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.764862
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.526688
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.765503
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.508530
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.766266
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.492859
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.478745
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.767319
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.768768
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.466614
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.770569
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.454590
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.772156
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.443314
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.774063
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.434128
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.425888
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.775253
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.776718
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.418594
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.777756
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.411194
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.778870
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.404663
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.780289
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.399307
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.781265
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.394394
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -36, (float): 181.781982
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.389572
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.783142
+PO_PLAYER_MOVEMENT: (int): -14, (int): -34, (float): 181.385086
+PO_PLAYER_MOVEMENT: (int): -14, (int): -34, (float): 181.381302
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.783676
+PO_PLAYER_MOVEMENT: (int): -14, (int): -34, (float): 181.377975
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.784485
+PO_PLAYER_MOVEMENT: (int): -14, (int): -34, (float): 181.332077
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.786392
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.787964
+PO_PLAYER_MOVEMENT: (int): -14, (int): -34, (float): 181.294052
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.257721
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.789886
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.225357
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.792282
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.197693
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.794266
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.796585
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.169434
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.798767
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.145065
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.125015
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.800400
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.802826
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.106216
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.804596
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.087860
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.806152
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.070801
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.807877
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.057251
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.809296
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 181.044052
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.031631
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.811310
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.021881
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.812454
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.011612
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.814758
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.002472
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.817444
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.820587
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.994339
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.823456
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.986710
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.979675
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.826126
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -36, (float): 181.829239
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.973633
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -36, (float): 181.831512
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.967834
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -36, (float): 181.833588
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.962296
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -36, (float): 181.836243
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.956940
+sent mid: PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.951004
+PO_PLAYER_MOVEMENT: (int): 31, (int): -36, (float): 181.838318
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -35, (float): 181.840530
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.944717
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -34, (float): 181.601486
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.966873
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.978104
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -34, (float): 181.253281
+sent mid: PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.980194
+PO_PLAYER_MOVEMENT: (int): 31, (int): -35, (float): 178.914078
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -35, (float): 179.786392
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.001465
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -34, (float): 180.274918
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.011429
+sent mid: PO_PLAYER_MOVEMENT: (int): 31, (int): -35, (float): 181.626740
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 181.008728
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.999481
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -33, (float): 181.023544
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -34, (float): 178.356598
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.988235
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -32, (float): 178.653076
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.980865
+sent mid: PO_PLAYER_MOVEMENT: (int): 30, (int): -31, (float): 178.697052
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.975281
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -31, (float): 176.476593
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.965866
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.957352
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -30, (float): 176.371201
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.950958
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -29, (float): 176.194595
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -30, (float): 173.810059
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.948059
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -29, (float): 173.859161
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.947052
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.947647
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -29, (float): 173.881927
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -28, (float): 173.859039
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.949738
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -28, (float): 173.834534
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.953049
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -28, (float): 173.984772
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.956207
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -29, (float): 174.168121
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.960052
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -29, (float): 174.514435
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.963593
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -29, (float): 174.832382
+PO_PLAYER_MOVEMENT: (int): -15, (int): -35, (float): 180.966904
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -30, (float): 175.307556
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.969757
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -30, (float): 175.829010
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.972061
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -31, (float): 176.432968
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.973923
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -31, (float): 177.141220
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.975571
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.975922
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -32, (float): 177.887115
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -33, (float): 178.857025
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.975281
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.974045
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -33, (float): 179.785965
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -33, (float): 180.373535
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.971619
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -33, (float): 180.782028
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.967728
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.963608
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -35, (float): 178.105011
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -34, (float): 178.335419
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.960571
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.961823
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -33, (float): 178.316238
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -32, (float): 178.043564
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.959061
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -31, (float): 177.556015
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.957611
+sent mid: PO_PLAYER_MOVEMENT: (int): 29, (int): -29, (float): 177.370499
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.956207
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -30, (float): 174.259109
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.955551
+sent mid: PO_PLAYER_MOVEMENT: (int): 28, (int): -28, (float): 173.943512
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.954971
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -26, (float): 173.476089
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.955185
+sent mid: PO_PLAYER_MOVEMENT: (int): 26, (int): -26, (float): 170.551224
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.957123
+sent mid: PO_PLAYER_MOVEMENT: (int): 25, (int): -24, (float): 169.956802
+PO_PLAYER_MOVEMENT: (int): -14, (int): -35, (float): 180.960159
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 180.966629
+sent mid: PO_PLAYER_MOVEMENT: (int): 25, (int): -21, (float): 169.084656
+sent mid: PO_PLAYER_MOVEMENT: (int): 23, (int): -21, (float): 165.691467
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 180.974762
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 180.984268
+sent mid: PO_PLAYER_MOVEMENT: (int): 23, (int): -18, (float): 164.595276
+sent mid: PO_PLAYER_MOVEMENT: (int): 22, (int): -17, (float): 160.773880
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 180.994232
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.006317
+sent mid: PO_PLAYER_MOVEMENT: (int): 21, (int): -14, (float): 159.257797
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.019196
+sent mid: PO_PLAYER_MOVEMENT: (int): 21, (int): -12, (float): 154.920685
+sent mid: PO_PLAYER_MOVEMENT: (int): 20, (int): -8, (float): 152.293564
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.033051
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.048508
+sent mid: PO_PLAYER_MOVEMENT: (int): 22, (int): -2, (float): 149.957077
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.063583
+sent mid: PO_PLAYER_MOVEMENT: (int): 21, (int): 6, (float): 150.719666
+sent mid: PO_PLAYER_MOVEMENT: (int): 19, (int): 15, (float): 150.917389
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.080566
+sent mid: PO_PLAYER_MOVEMENT: (int): 17, (int): 23, (float): 150.596375
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.096909
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.115234
+sent mid: PO_PLAYER_MOVEMENT: (int): 15, (int): 33, (float): 149.836548
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.134888
+sent mid: PO_PLAYER_MOVEMENT: (int): 12, (int): 42, (float): 148.629745
+sent mid: PO_PLAYER_MOVEMENT: (int): 10, (int): 52, (float): 147.024445
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.155441
+sent mid: PO_PLAYER_MOVEMENT: (int): 7, (int): 61, (float): 144.958084
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.178513
+sent mid: PO_PLAYER_MOVEMENT: (int): 5, (int): 70, (float): 142.676636
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.197388
+sent mid: PO_PLAYER_MOVEMENT: (int): 2, (int): 80, (float): 139.871918
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.215332
+sent mid: PO_PLAYER_MOVEMENT: (int): -1, (int): 91, (float): 136.838791
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.231461
+sent mid: PO_PLAYER_MOVEMENT: (int): -4, (int): 101, (float): 133.929932
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.245789
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.260132
+sent mid: PO_PLAYER_MOVEMENT: (int): -8, (int): 113, (float): 130.761368
+sent mid: PO_PLAYER_MOVEMENT: (int): -11, (int): 124, (float): 127.904694
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.271271
+sent mid: PO_PLAYER_MOVEMENT: (int): -15, (int): 136, (float): 124.975952
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.282303
+sent mid: PO_PLAYER_MOVEMENT: (int): -19, (int): 148, (float): 122.033363
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.291962
+sent mid: PO_PLAYER_MOVEMENT: (int): -23, (int): 159, (float): 119.105339
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.300583
+sent mid: PO_PLAYER_MOVEMENT: (int): -27, (int): 171, (float): 116.026237
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.308807
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.315796
+sent mid: PO_PLAYER_MOVEMENT: (int): -31, (int): 182, (float): 113.264191
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.322113
+sent mid: PO_PLAYER_MOVEMENT: (int): -35, (int): 194, (float): 110.060997
+sent mid: PO_PLAYER_MOVEMENT: (int): -39, (int): 205, (float): 107.106697
+PO_PLAYER_MOVEMENT: (int): -13, (int): -35, (float): 181.327652
+sent mid: PO_PLAYER_MOVEMENT: (int): -43, (int): 215, (float): 104.359734
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.332901
+sent mid: PO_PLAYER_MOVEMENT: (int): -47, (int): 225, (float): 101.417862
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.337524
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.341797
+sent mid: PO_PLAYER_MOVEMENT: (int): -51, (int): 236, (float): 98.396278
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.345428
+sent mid: PO_PLAYER_MOVEMENT: (int): -56, (int): 246, (float): 95.267822
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.348785
+sent mid: PO_PLAYER_MOVEMENT: (int): -59, (int): 256, (float): 92.332520
+sent mid: PO_PLAYER_MOVEMENT: (int): -63, (int): 266, (float): 89.397743
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.351822
+sent mid: PO_PLAYER_MOVEMENT: (int): -66, (int): 275, (float): 86.579948
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.354599
+sent mid: PO_PLAYER_MOVEMENT: (int): -70, (int): 284, (float): 83.581978
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.357117
+sent mid: PO_PLAYER_MOVEMENT: (int): -73, (int): 294, (float): 80.478020
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.359436
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.361359
+sent mid: PO_PLAYER_MOVEMENT: (int): -76, (int): 302, (float): 77.620644
+sent mid: PO_PLAYER_MOVEMENT: (int): -79, (int): 311, (float): 74.574921
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.363098
+sent mid: PO_PLAYER_MOVEMENT: (int): -81, (int): 319, (float): 71.818016
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.364761
+sent mid: PO_PLAYER_MOVEMENT: (int): -84, (int): 327, (float): 68.799988
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.366196
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.367523
+sent mid: PO_PLAYER_MOVEMENT: (int): -86, (int): 335, (float): 65.827217
+sent mid: PO_PLAYER_MOVEMENT: (int): -88, (int): 344, (float): 62.717587
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.368729
+sent mid: PO_PLAYER_MOVEMENT: (int): -90, (int): 351, (float): 59.870327
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.369781
+sent mid: PO_PLAYER_MOVEMENT: (int): -92, (int): 359, (float): 56.910164
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.370728
+sent mid: PO_PLAYER_MOVEMENT: (int): -94, (int): 366, (float): 53.887516
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.371613
+sent mid: PO_PLAYER_MOVEMENT: (int): -95, (int): 372, (float): 50.976883
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.372375
+sent mid: PO_PLAYER_MOVEMENT: (int): -96, (int): 378, (float): 48.043171
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.373077
+sent mid: PO_PLAYER_MOVEMENT: (int): -97, (int): 382, (float): 45.027626
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.373703
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.374252
+sent mid: PO_PLAYER_MOVEMENT: (int): -98, (int): 386, (float): 42.094444
+sent mid: PO_PLAYER_MOVEMENT: (int): -99, (int): 389, (float): 39.079964
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.374756
+sent mid: PO_PLAYER_MOVEMENT: (int): -100, (int): 391, (float): 36.043289
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.375244
+sent mid: PO_PLAYER_MOVEMENT: (int): -100, (int): 392, (float): 33.183960
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.375626
+sent mid: PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.375992
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.376328
+sent mid: PO_PLAYER_MOVEMENT: (int): -100, (int): 391, (float): 27.335711
+sent mid: PO_PLAYER_MOVEMENT: (int): -100, (int): 389, (float): 24.405018
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.376617
+sent mid: PO_PLAYER_MOVEMENT: (int): -100, (int): 387, (float): 21.443968
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.376907
+sent mid: PO_PLAYER_MOVEMENT: (int): -99, (int): 383, (float): 18.321375
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.377151
+sent mid: PO_PLAYER_MOVEMENT: (int): -99, (int): 379, (float): 15.402043
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.377365
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.377548
+sent mid: PO_PLAYER_MOVEMENT: (int): -98, (int): 374, (float): 12.554785
+sent mid: PO_PLAYER_MOVEMENT: (int): -97, (int): 367, (float): 9.525212
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.377731
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.377899
+sent mid: PO_PLAYER_MOVEMENT: (int): -97, (int): 360, (float): 6.681149
+sent mid: PO_PLAYER_MOVEMENT: (int): 
+PO_PLAYER_MOVEMENT: (int): -96, (int): 352, (float): 3.549502
+sent mid: PO_PLAYER_MOVEMENT: (int): -95, (int): 335, (float): -1.967671
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378281
+sent mid: PO_PLAYER_MOVEMENT: (int): -95, (int): 335, (float): -2.129392
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378296
+sent mid: PO_PLAYER_MOVEMENT: (int): -94, (int): 324, (float): -5.131982
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378387
+sent mid: PO_PLAYER_MOVEMENT: (int): -93, (int): 313, (float): -8.108476
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378418
+sent mid: PO_PLAYER_MOVEMENT: (int): -93, (int): 300, (float): -11.135207
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378448
+sent mid: PO_PLAYER_MOVEMENT: (int): -92, (int): 287, (float): -14.076907
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378387
+sent mid: PO_PLAYER_MOVEMENT: (int): -91, (int): 272, (float): -17.032099
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378326
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378265
+sent mid: PO_PLAYER_MOVEMENT: (int): -91, (int): 257, (float): -19.987999
+sent mid: PO_PLAYER_MOVEMENT: (int): -90, (int): 241, (float): -23.010649
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378204
+sent mid: PO_PLAYER_MOVEMENT: (int): -90, (int): 225, (float): -25.866783
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378204
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378357
+sent mid: PO_PLAYER_MOVEMENT: (int): -89, (int): 206, (float): -28.884638
+sent mid: PO_PLAYER_MOVEMENT: (int): -88, (int): 188, (float): -31.819059
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378433
+sent mid: PO_PLAYER_MOVEMENT: (int): -88, (int): 168, (float): -34.746914
+PO_PLAYER_MOVEMENT: (int): -13, (int): -33, (float): 181.378525
+sent mid: PO_PLAYER_MOVEMENT: (int): -87, (int): 148, (float): -37.683819
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378601
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378677
+sent mid: PO_PLAYER_MOVEMENT: (int): -86, (int): 127, (float): -40.653923
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378738
+sent mid: PO_PLAYER_MOVEMENT: (int): -86, (int): 104, (float): -43.660416
+sent mid: PO_PLAYER_MOVEMENT: (int): -85, (int): 80, (float): -46.742001
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378799
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378860
+sent mid: PO_PLAYER_MOVEMENT: (int): -84, (int): 58, (float): -49.508842
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378906
+sent mid: PO_PLAYER_MOVEMENT: (int): -84, (int): 33, (float): -52.615814
+sent mid: PO_PLAYER_MOVEMENT: (int): -93, (int): 21, (float): -52.730461
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378952
+sent mid: PO_PLAYER_MOVEMENT: (int): -100, (int): 9, (float): -53.106377
+PO_PLAYER_MOVEMENT: (int): -13, (int): -34, (float): 181.378983
+sent mid: PO_PLAYER_MOVEMENT: (int): -109, (int): -4, (float): -53.743519
+PO_PLAYER_MOVEMENT: (int): -9, (int): -34, (float): 181.379059
+sent mid: PO_PLAYER_MOVEMENT: (int): -115, (int): 0, (float): -58.221050
+PO_PLAYER_MOVEMENT: (int): -6, (int): -34, (float): 181.379074
+PO_PLAYER_MOVEMENT: (int): -2, (int): -34, (float): 181.379089
+sent mid: PO_PLAYER_MOVEMENT: (int): -120, (int): 0, (float): -61.874756
+sent mid: PO_PLAYER_MOVEMENT: (int): -126, (int): 2, (float): -65.779037
+PO_PLAYER_MOVEMENT: (int): 0, (int): -35, (float): 181.379120
+sent mid: PO_PLAYER_MOVEMENT: (int): -131, (int): 3, (float): -69.246033
+PO_PLAYER_MOVEMENT: (int): 3, (int): -35, (float): 181.379135
+sent mid: PO_PLAYER_MOVEMENT: (int): -137, (int): 4, (float): -72.946190
+PO_PLAYER_MOVEMENT: (int): 6, (int): -35, (float): 181.379150
+sent mid: PO_PLAYER_MOVEMENT: (int): -143, (int): 5, (float): -76.745285
+PO_PLAYER_MOVEMENT: (int): 8, (int): -35, (float): 181.379166
+PO_PLAYER_MOVEMENT: (int): 11, (int): -35, (float): 181.379196
+sent mid: PO_PLAYER_MOVEMENT: (int): -149, (int): 6, (float): -80.542809
+sent mid: PO_PLAYER_MOVEMENT: (int): -154, (int): 7, (float): -84.345474
+PO_PLAYER_MOVEMENT: (int): 14, (int): -35, (float): 181.379196
+sent mid: PO_PLAYER_MOVEMENT: (int): -160, (int): 7, (float): -88.035362
+PO_PLAYER_MOVEMENT: (int): 17, (int): -35, (float): 181.379211
+sent mid: PO_PLAYER_MOVEMENT: (int): -166, (int): 7, (float): -91.833557
+PO_PLAYER_MOVEMENT: (int): 19, (int): -35, (float): 181.379227
+PO_PLAYER_MOVEMENT: (int): 22, (int): -35, (float): 181.379242
+sent mid: PO_PLAYER_MOVEMENT: (int): -171, (int): 7, (float): -95.426964
+PO_PLAYER_MOVEMENT: (int): 24, (int): -35, (float): 181.379242
+sent mid: PO_PLAYER_MOVEMENT: (int): -177, (int): 7, (float): -99.235878
+sent mid: PO_PLAYER_MOVEMENT: (int): -183, (int): 6, (float): -102.922188
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379257
+PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.379257
+sent mid: PO_PLAYER_MOVEMENT: (int): -188, (int): 5, (float): -106.638206
+sent mid: PO_PLAYER_MOVEMENT: (int): -194, (int): 4, (float): -110.427689
+PO_PLAYER_MOVEMENT: (int): 32, (int): -35, (float): 181.379272
+sent mid: PO_PLAYER_MOVEMENT: (int): -199, (int): 4, (float): -113.903847
+PO_PLAYER_MOVEMENT: (int): 31, (int): -35, (float): 181.375458
+sent mid: PO_PLAYER_MOVEMENT: (int): -198, (int): 3, (float): -112.262825
+PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.376801
+sent mid: PO_PLAYER_MOVEMENT: (int): -196, (int): 2, (float): -110.639854
+PO_PLAYER_MOVEMENT: (int): 30, (int): -35, (float): 181.376816
+sent mid: PO_PLAYER_MOVEMENT: (int): -195, (int): 2, (float): -109.062531
+PO_PLAYER_MOVEMENT: (int): 29, (int): -35, (float): 181.377121
+sent mid: PO_PLAYER_MOVEMENT: (int): -194, (int): 2, (float): -107.527878
+PO_PLAYER_MOVEMENT: (int): 29, (int): -35, (float): 181.377319
+sent mid: PO_PLAYER_MOVEMENT: (int): -192, (int): 3, (float): -105.904915
+PO_PLAYER_MOVEMENT: (int): 28, (int): -35, (float): 181.377533
+sent mid: PO_PLAYER_MOVEMENT: (int): -190, (int): 4, (float): -104.282707
+PO_PLAYER_MOVEMENT: (int): 28, (int): -35, (float): 181.377716
+sent mid: PO_PLAYER_MOVEMENT: (int): -188, (int): 6, (float): -102.731064
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.377869
+sent mid: PO_PLAYER_MOVEMENT: (int): -186, (int): 9, (float): -101.107330
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.378021
+sent mid: PO_PLAYER_MOVEMENT: (int): -183, (int): 11, (float): -99.500877
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.378143
+sent mid: PO_PLAYER_MOVEMENT: (int): -181, (int): 15, (float): -97.945511
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.378265
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.378372
+sent mid: PO_PLAYER_MOVEMENT: (int): -178, (int): 18, (float): -96.321686
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.378464
+sent mid: PO_PLAYER_MOVEMENT: (int): -175, (int): 23, (float): -94.762024
+sent mid: PO_PLAYER_MOVEMENT: (int): -172, (int): 27, (float): -93.140488
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378555
+sent mid: PO_PLAYER_MOVEMENT: (int): -168, (int): 33, (float): -91.556664
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378647
+sent mid: PO_PLAYER_MOVEMENT: (int): -165, (int): 38, (float): -89.931404
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378738
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378784
+sent mid: PO_PLAYER_MOVEMENT: (int): -162, (int): 42, (float): -88.447266
+sent mid: PO_PLAYER_MOVEMENT: (int): -157, (int): 47, (float): -86.728531
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378845
+sent mid: PO_PLAYER_MOVEMENT: (int): -154, (int): 51, (float): -85.232170
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378891
+sent mid: PO_PLAYER_MOVEMENT: (int): -150, (int): 56, (float): -83.655891
+PO_PLAYER_MOVEMENT: (int): 26, (int): -35, (float): 181.378937
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.378967
+sent mid: PO_PLAYER_MOVEMENT: (int): -145, (int): 60, (float): -81.989761
+sent mid: PO_PLAYER_MOVEMENT: (int): -141, (int): 64, (float): -80.442604
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379013
+sent mid: PO_PLAYER_MOVEMENT: (int): -136, (int): 67, (float): -78.861557
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379044
+sent mid: PO_PLAYER_MOVEMENT: (int): -131, (int): 71, (float): -77.278404
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379074
+sent mid: PO_PLAYER_MOVEMENT: (int): -126, (int): 74, (float): -75.700974
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379089
+sent mid: PO_PLAYER_MOVEMENT: (int): -121, (int): 77, (float): -74.125557
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379120
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379135
+sent mid: PO_PLAYER_MOVEMENT: (int): -115, (int): 80, (float): -72.445877
+sent mid: PO_PLAYER_MOVEMENT: (int): -110, (int): 82, (float): -70.875519
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379150
+sent mid: PO_PLAYER_MOVEMENT: (int): -104, (int): 85, (float): -69.245483
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379181
+sent mid: PO_PLAYER_MOVEMENT: (int): -98, (int): 87, (float): -67.636742
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379196
+sent mid: PO_PLAYER_MOVEMENT: (int): -92, (int): 89, (float): -66.109062
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379196
+sent mid: PO_PLAYER_MOVEMENT: (int): -86, (int): 91, (float): -64.517792
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379211
+sent mid: PO_PLAYER_MOVEMENT: (int): -80, (int): 92, (float): -62.939892
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379227
+sent mid: PO_PLAYER_MOVEMENT: (int): -73, (int): 94, (float): -61.353683
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379242
+sent mid: PO_PLAYER_MOVEMENT: (int): -66, (int): 95, (float): -59.772438
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379242
+sent mid: PO_PLAYER_MOVEMENT: (int): -59, (int): 96, (float): -58.158447
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379257
+sent mid: PO_PLAYER_MOVEMENT: (int): -52, (int): 97, (float): -56.484875
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379257
+sent mid: PO_PLAYER_MOVEMENT: (int): -45, (int): 98, (float): -55.003407
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379272
+sent mid: PO_PLAYER_MOVEMENT: (int): -38, (int): 98, (float): -53.402973
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379272
+sent mid: PO_PLAYER_MOVEMENT: (int): -30, (int): 98, (float): -51.780479
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379272
+sent mid: PO_PLAYER_MOVEMENT: (int): 
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379288
+sent mid: PO_PLAYER_MOVEMENT: (int): -14, (int): 99, (float): -48.567486
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379288
+sent mid: PO_PLAYER_MOVEMENT: (int): -6, (int): 100, (float): -46.944710
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379288
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379288
+sent mid: PO_PLAYER_MOVEMENT: (int): 1, (int): 101, (float): -45.465054
+sent mid: PO_PLAYER_MOVEMENT: (int): 10, (int): 103, (float): -43.840179
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+sent mid: PO_PLAYER_MOVEMENT: (int): 18, (int): 106, (float): -42.253681
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): 109, (float): -40.684280
+sent mid: PO_PLAYER_MOVEMENT: (int): 37, (int): 112, (float): -39.011757
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+sent mid: PO_PLAYER_MOVEMENT: (int): 46, (int): 116, (float): -37.432709
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+sent mid: PO_PLAYER_MOVEMENT: (int): 55, (int): 120, (float): -35.849747
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379303
+sent mid: PO_PLAYER_MOVEMENT: (int): 65, (int): 124, (float): -34.226017
+sent mid: PO_PLAYER_MOVEMENT: (int): 74, (int): 127, (float): -32.649353
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 84, (int): 130, (float): -31.116425
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 94, (int): 133, (float): -29.530502
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 104, (int): 136, (float): -27.951168
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 113, (int): 138, (float): -26.368492
+sent mid: PO_PLAYER_MOVEMENT: (int): 124, (int): 141, (float): -24.686518
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 134, (int): 143, (float): -23.109190
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 143, (int): 145, (float): -21.592300
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 153, (int): 146, (float): -20.014685
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 163, (int): 148, (float): -18.324213
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 173, (int): 149, (float): -16.750511
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 183, (int): 151, (float): -15.174997
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 193, (int): 152, (float): -13.569311
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 203, (int): 152, (float): -11.992746
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 213, (int): 153, (float): -10.369778
+sent mid: PO_PLAYER_MOVEMENT: (int): 223, (int): 153, (float): -8.744614
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 233, (int): 153, (float): -7.163370
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 242, (int): 153, (float): -5.628339
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 252, (int): 153, (float): -4.088725
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 262, (int): 153, (float): -2.512255
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 272, (int): 152, (float): -0.886516
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 282, (int): 151, (float): 0.703989
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 292, (int): 150, (float): 2.369255
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 301, (int): 149, (float): 3.869340
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 312, (int): 147, (float): 5.540812
+sent mid: PO_PLAYER_MOVEMENT: (int): 321, (int): 146, (float): 7.085296
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 331, (int): 144, (float): 8.622809
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 341, (int): 142, (float): 10.252174
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 351, (int): 140, (float): 11.834468
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 361, (int): 137, (float): 13.515584
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 370, (int): 137, (float): 12.094918
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 379, (int): 136, (float): 11.062284
+sent mid: PO_PLAYER_MOVEMENT: (int): 389, (int): 136, (float): 9.975235
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 398, (int): 135, (float): 8.938705
+sent mid: PO_PLAYER_MOVEMENT: (int): 407, (int): 133, (float): 7.852358
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 416, (int): 132, (float): 6.834095
+sent mid: PO_PLAYER_MOVEMENT: (int): 426, (int): 130, (float): 5.738934
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 435, (int): 129, (float): 4.703938
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 444, (int): 127, (float): 3.619570
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 453, (int): 125, (float): 2.562028
+sent mid: PO_PLAYER_MOVEMENT: (int): 463, (int): 124, (float): 3.991344
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: 
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 480, (int): 121, (float): 6.589930
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 490, (int): 120, (float): 7.993688
+sent mid: PO_PLAYER_MOVEMENT: (int): 498, (int): 118, (float): 9.278435
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 507, (int): 117, (float): 10.601410
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 516, (int): 114, (float): 11.959967
+sent mid: PO_PLAYER_MOVEMENT: (int): 525, (int): 112, (float): 13.321651
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 534, (int): 110, (float): 14.566808
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 543, (int): 107, (float): 16.010155
+sent mid: PO_PLAYER_MOVEMENT: (int): 552, (int): 104, (float): 17.342426
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 561, (int): 101, (float): 18.629097
+sent mid: PO_PLAYER_MOVEMENT: (int): 570, (int): 98, (float): 19.992702
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 579, (int): 95, (float): 21.275526
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 588, (int): 91, (float): 22.641376
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 597, (int): 87, (float): 23.947441
+sent mid: PO_PLAYER_MOVEMENT: (int): 606, (int): 83, (float): 25.357050
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 614, (int): 79, (float): 26.601807
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 623, (int): 74, (float): 27.930712
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 633, (int): 70, (float): 29.338957
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 642, (int): 65, (float): 30.657362
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 651, (int): 60, (float): 32.021610
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 659, (int): 55, (float): 33.270695
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 668, (int): 49, (float): 34.673729
+sent mid: PO_PLAYER_MOVEMENT: (int): 678, (int): 43, (float): 36.036617
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 686, (int): 38, (float): 37.279770
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 695, (int): 31, (float): 38.684010
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 704, (int): 25, (float): 40.048416
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 713, (int): 19, (float): 41.366180
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 722, (int): 12, (float): 42.616467
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 731, (int): 5, (float): 43.966610
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 740, (int): -1, (float): 45.293270
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 749, (int): -8, (float): 46.661125
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 758, (int): -16, (float): 48.002453
+sent mid: PO_PLAYER_MOVEMENT: (int): 767, (int): -24, (float): 49.387295
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 776, (int): -31, (float): 50.709629
+sent mid: PO_PLAYER_MOVEMENT: (int): 785, (int): -40, (float): 52.073475
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 794, (int): -47, (float): 53.355659
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 803, (int): -56, (float): 54.679195
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 810, (int): -53, (float): 60.232727
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 817, (int): -51, (float): 66.028107
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 823, (int): -49, (float): 71.640762
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 830, (int): -47, (float): 77.260223
+sent mid: PO_PLAYER_MOVEMENT: (int): 837, (int): -46, (float): 83.051888
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 837, (int): -46, (float): 83.051888
+sent mid: PO_PLAYER_MOVEMENT: (int): 844, (int): -44, (float): 88.669983
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 851, (int): -43, (float): 94.285362
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 858, (int): -42, (float): 99.910950
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 865, (int): -42, (float): 105.863586
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 872, (int): -41, (float): 111.656273
+sent mid: PO_PLAYER_MOVEMENT: (int): 878, (int): -41, (float): 117.274368
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379410
+sent mid: PO_PLAYER_MOVEMENT: (int): 885, (int): -41, (float): 122.550446
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379364
+sent mid: PO_PLAYER_MOVEMENT: (int): 892, (int): -41, (float): 128.483002
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379364
+sent mid: PO_PLAYER_MOVEMENT: (int): 899, (int): -41, (float): 133.928894
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379364
+sent mid: PO_PLAYER_MOVEMENT: (int): 906, (int): -42, (float): 139.966614
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379364
+sent mid: PO_PLAYER_MOVEMENT: (int): 913, (int): -43, (float): 145.585403
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379349
+PO_PLAYER_MOVEMENT: (int): 27, (int): -36, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 911, (int): -42, (float): 146.438156
+sent mid: PO_PLAYER_MOVEMENT: (int): 909, (int): -41, (float): 147.596100
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 908, (int): -40, (float): 148.644623
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379349
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 906, (int): -40, (float): 149.768204
+sent mid: PO_PLAYER_MOVEMENT: (int): 905, (int): -40, (float): 150.820465
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 904, (int): -40, (float): 151.899445
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 902, (int): -40, (float): 152.962357
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 901, (int): -41, (float): 154.133469
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 899, (int): -42, (float): 155.194870
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 898, (int): -43, (float): 156.278641
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 897, (int): -44, (float): 157.439011
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 895, (int): -45, (float): 158.487473
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 894, (int): -47, (float): 159.499924
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 893, (int): -48, (float): 160.613235
+sent mid: PO_PLAYER_MOVEMENT: (int): 
+PO_PLAYER_MOVEMENT: (int): 891, (int): -50, (float): 161.727661
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 890, (int): -53, (float): 162.840714
+sent mid: PO_PLAYER_MOVEMENT: (int): 888, (int): -55, (float): 163.953506
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 887, (int): -57, (float): 165.031052
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 886, (int): -60, (float): 166.110901
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 884, (int): -63, (float): 167.163147
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 883, (int): -66, (float): 168.277054
+sent mid: PO_PLAYER_MOVEMENT: (int): 881, (int): -70, (float): 169.388336
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 880, (int): -73, (float): 170.402161
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 879, (int): -77, (float): 171.546646
+sent mid: PO_PLAYER_MOVEMENT: (int): 878, (int): -79, (float): 174.785110
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 877, (int): -82, (float): 177.736954
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 876, (int): -84, (float): 180.972565
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 875, (int): -88, (float): 184.304977
+sent mid: PO_PLAYER_MOVEMENT: (int): 873, (int): -88, (float): 182.313507
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 872, (int): -87, (float): 182.381348
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 871, (int): -87, (float): 182.342453
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 182.121063
+sent mid: PO_PLAYER_MOVEMENT: (int): 869, (int): -87, (float): 181.995483
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 869, (int): -87, (float): 181.882889
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 868, (int): -87, (float): 181.772278
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 867, (int): -87, (float): 181.684708
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT  (int): -572662307, 
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 865, (int): -87, (float): 181.521179
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 865, (int): -87, (float): 181.455902
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 864, (int): -87, (float): 181.391174
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 864, (int): -87, (float): 181.338394
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 863, (int): -87, (float): 181.290436
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 863, (int): -87, (float): 181.245422
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 181.204163
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 181.166061
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 181.134933
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 181.103943
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 181.078644
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 181.055847
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 181.033691
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 181.013992
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.997421
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.980972
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.967972
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.955292
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.943268
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.933334
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.923950
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.915497
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.908066
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.901291
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.895340
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.890289
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.885117
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.880890
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.876953
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.873184
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.870117
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.867096
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.864578
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.862213
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.860184
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.858231
+PO_PLAYER_MOVEMENT: (int): 27, (int): -35, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.856491
+PO_PLAYER_MOVEMENT: (int): 27, (int): -34, (float): 181.379318
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.854919
+PO_PLAYER_MOVEMENT: (int): 27, (int): -32, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.853638
+PO_PLAYER_MOVEMENT: (int): 27, (int): -30, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.852402
+PO_PLAYER_MOVEMENT: (int): 27, (int): -28, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -25, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.851288
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.850204
+PO_PLAYER_MOVEMENT: (int): 27, (int): -21, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -17, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.849365
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.848511
+PO_PLAYER_MOVEMENT: (int): 27, (int): -13, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): -7, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.847809
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.847107
+PO_PLAYER_MOVEMENT: (int): 27, (int): -2, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.846558
+PO_PLAYER_MOVEMENT: (int): 27, (int): 3, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.846008
+PO_PLAYER_MOVEMENT: (int): 27, (int): 9, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): 16, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.845520
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.845078
+PO_PLAYER_MOVEMENT: (int): 27, (int): 21, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): 28, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.844681
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.844345
+PO_PLAYER_MOVEMENT: (int): 27, (int): 33, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.844025
+PO_PLAYER_MOVEMENT: (int): 27, (int): 39, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 27, (int): 44, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.843750
+PO_PLAYER_MOVEMENT: (int): 27, (int): 49, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.843475
+PO_PLAYER_MOVEMENT: (int): 27, (int): 54, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.843246
+PO_PLAYER_MOVEMENT: (int): 27, (int): 58, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.843048
+PO_PLAYER_MOVEMENT: (int): 27, (int): 63, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842865
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842682
+PO_PLAYER_MOVEMENT: (int): 27, (int): 67, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842545
+PO_PLAYER_MOVEMENT: (int): 27, (int): 71, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842407
+PO_PLAYER_MOVEMENT: (int): 28, (int): 75, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842285
+PO_PLAYER_MOVEMENT: (int): 28, (int): 79, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842178
+PO_PLAYER_MOVEMENT: (int): 28, (int): 82, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.842072
+PO_PLAYER_MOVEMENT: (int): 29, (int): 85, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841980
+PO_PLAYER_MOVEMENT: (int): 30, (int): 88, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841904
+PO_PLAYER_MOVEMENT: (int): 31, (int): 91, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 32, (int): 94, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841827
+PO_PLAYER_MOVEMENT: (int): 34, (int): 96, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841766
+PO_PLAYER_MOVEMENT: (int): 35, (int): 99, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841705
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841660
+PO_PLAYER_MOVEMENT: (int): 37, (int): 101, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841614
+PO_PLAYER_MOVEMENT: (int): 39, (int): 103, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 41, (int): 104, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841568
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841522
+PO_PLAYER_MOVEMENT: (int): 43, (int): 106, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 46, (int): 107, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841492
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841461
+PO_PLAYER_MOVEMENT: (int): 48, (int): 108, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 51, (int): 109, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841431
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841415
+PO_PLAYER_MOVEMENT: (int): 54, (int): 109, (float): 181.379333
+PO_PLAYER_MOVEMENT: (int): 57, (int): 110, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841385
+PO_PLAYER_MOVEMENT: (int): 60, (int): 110, (float): 181.379333
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841370
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841339
+PO_PLAYER_MOVEMENT: (int): 64, (int): 110, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841339
+PO_PLAYER_MOVEMENT: (int): 67, (int): 110, (float): 181.379349
+PO_PLAYER_MOVEMENT: (int): 71, (int): 110, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841309
+PO_PLAYER_MOVEMENT: (int): 75, (int): 109, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841309
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841293
+PO_PLAYER_MOVEMENT: (int): 79, (int): 108, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841278
+PO_PLAYER_MOVEMENT: (int): 84, (int): 107, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841263
+PO_PLAYER_MOVEMENT: (int): 89, (int): 106, (float): 181.379349
+PO_PLAYER_MOVEMENT: (int): 93, (int): 105, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841263
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841248
+PO_PLAYER_MOVEMENT: (int): 98, (int): 103, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841248
+PO_PLAYER_MOVEMENT: (int): 103, (int): 101, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841248
+PO_PLAYER_MOVEMENT: (int): 108, (int): 99, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841232
+PO_PLAYER_MOVEMENT: (int): 114, (int): 97, (float): 181.379349
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841232
+PO_PLAYER_MOVEMENT: (int): 117, (int): 97, (float): 178.657288
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 121, (int): 97, (float): 176.077560
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 125, (int): 97, (float): 173.616638
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 130, (int): 97, (float): 171.003876
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 134, (int): 96, (float): 168.464493
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 139, (int): 95, (float): 165.917450
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 144, (int): 94, (float): 163.342072
+PO_PLAYER_MOVEMENT: (int): 148, (int): 93, (float): 160.908722
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 154, (int): 92, (float): 158.365219
+PO_PLAYER_MOVEMENT: (int): 157, (int): 94, (float): 159.074905
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 159, (int): 95, (float): 159.834473
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 163, (int): 97, (float): 160.616562
+PO_PLAYER_MOVEMENT: (int): 166, (int): 98, (float): 161.382645
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 169, (int): 100, (float): 162.122284
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 173, (int): 101, (float): 162.910950
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 177, (int): 101, (float): 163.721680
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 181, (int): 102, (float): 164.458740
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 185, (int): 103, (float): 165.546127
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 189, (int): 103, (float): 166.680466
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 193, (int): 104, (float): 166.558289
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 197, (int): 105, (float): 166.484894
+PO_PLAYER_MOVEMENT: (int): 202, (int): 106, (float): 166.494064
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 206, (int): 107, (float): 166.483597
+PO_PLAYER_MOVEMENT: (int): 210, (int): 108, (float): 166.478149
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 214, (int): 109, (float): 166.472076
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 219, (int): 110, (float): 166.466599
+PO_PLAYER_MOVEMENT: (int): 223, (int): 111, (float): 166.461914
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 228, (int): 112, (float): 166.457825
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 232, (int): 113, (float): 166.453888
+PO_PLAYER_MOVEMENT: (int): 237, (int): 114, (float): 166.450226
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 
+PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 246, (int): 116, (float): 166.444550
+PO_PLAYER_MOVEMENT: (int): 252, (int): 118, (float): 166.441910
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 256, (int): 120, (float): 166.441147
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 262, (int): 123, (float): 166.442627
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 267, (int): 126, (float): 166.444016
+PO_PLAYER_MOVEMENT: (int): 273, (int): 130, (float): 166.445541
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 278, (int): 133, (float): 166.446930
+PO_PLAYER_MOVEMENT: (int): 284, (int): 136, (float): 166.448410
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 290, (int): 139, (float): 166.449814
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 296, (int): 142, (float): 166.451279
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 303, (int): 145, (float): 166.452805
+PO_PLAYER_MOVEMENT: (int): 310, (int): 148, (float): 166.454285
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 316, (int): 150, (float): 166.455643
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 323, (int): 152, (float): 166.457169
+PO_PLAYER_MOVEMENT: (int): 331, (int): 154, (float): 166.458649
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 338, (int): 155, (float): 166.460007
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 345, (int): 157, (float): 166.461533
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 353, (int): 158, (float): 166.462906
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 361, (int): 159, (float): 166.464386
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 368, (int): 160, (float): 166.465790
+PO_PLAYER_MOVEMENT: (int): 377, (int): 161, (float): 166.467316
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 385, (int): 161, (float): 166.468719
+PO_PLAYER_MOVEMENT: (int): 393, (int): 162, (float): 166.470200
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 402, (int): 162, (float): 166.471619
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841171
+PO_PLAYER_MOVEMENT: (int): 419, (int): 161, (float): 166.474670
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 427, (int): 161, (float): 166.476013
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841248
+PO_PLAYER_MOVEMENT: (int): 435, (int): 160, (float): 166.477478
+PO_PLAYER_MOVEMENT: (int): 444, (int): 160, (float): 166.478943
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 452, (int): 159, (float): 166.480347
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 460, (int): 158, (float): 166.481796
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 469, (int): 156, (float): 166.483322
+PO_PLAYER_MOVEMENT: (int): 477, (int): 155, (float): 166.484772
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841217
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 485, (int): 153, (float): 166.486115
+PO_PLAYER_MOVEMENT: (int): 494, (int): 151, (float): 166.487640
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 502, (int): 149, (float): 166.489090
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 510, (int): 146, (float): 166.490479
+PO_PLAYER_MOVEMENT: (int): 519, (int): 144, (float): 166.492004
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 527, (int): 141, (float): 166.493393
+PO_PLAYER_MOVEMENT: (int): 535, (int): 138, (float): 166.494888
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 543, (int): 135, (float): 166.496292
+PO_PLAYER_MOVEMENT: (int): 552, (int): 131, (float): 166.497818
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 560, (int): 128, (float): 166.499207
+PO_PLAYER_MOVEMENT: (int): 569, (int): 124, (float): 166.500732
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 577, (int): 120, (float): 166.502090
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 585, (int): 116, (float): 166.503632
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 594, (int): 111, (float): 166.505081
+PO_PLAYER_MOVEMENT: (int): 602, (int): 107, (float): 166.506485
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 610, (int): 102, (float): 166.507904
+PO_PLAYER_MOVEMENT: (int): 618, (int): 97, (float): 166.509430
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 626, (int): 92, (float): 166.510834
+PO_PLAYER_MOVEMENT: (int): 634, (int): 86, (float): 166.512360
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 642, (int): 81, (float): 166.513733
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 649, (int): 75, (float): 166.515259
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 656, (int): 70, (float): 166.516602
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 664, (int): 63, (float): 166.518127
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 671, (int): 57, (float): 166.519608
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 677, (int): 52, (float): 166.520996
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 684, (int): 47, (float): 166.522537
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 690, (int): 43, (float): 166.523880
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 697, (int): 39, (float): 166.525406
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 703, (int): 36, (float): 166.526810
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 709, (int): 34, (float): 166.528259
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 715, (int): 31, (float): 166.529785
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 720, (int): 30, (float): 166.531158
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 726, (int): 28, (float): 166.532684
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 731, (int): 28, (float): 166.534073
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 736, (int): 27, (float): 166.535568
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 740, (int): 28, (float): 166.536957
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 745, (int): 28, (float): 166.538391
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 750, (int): 30, (float): 166.539917
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 754, (int): 30, (float): 166.541290
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 759, (int): 31, (float): 166.542801
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 763, (int): 32, (float): 166.595261
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 767, (int): 33, (float): 166.575821
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 772, (int): 33, (float): 166.556580
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 777, (int): 33, (float): 166.536331
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 781, (int): 33, (float): 166.517242
+PO_PLAYER_MOVEMENT: (int): 785, (int): 33, (float): 166.498077
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 790, (int): 32, (float): 166.480148
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 794, (int): 32, (float): 166.459885
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 799, (int): 31, (float): 166.440796
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 803, (int): 30, (float): 166.421051
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 808, (int): 28, (float): 166.402618
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 812, (int): 27, (float): 166.383499
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 817, (int): 25, (float): 166.363190
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 821, (int): 23, (float): 166.343445
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+PO_PLAYER_MOVEMENT: (int): 825, (int): 21, (float): 166.324966
+PO_PLAYER_MOVEMENT: (int): 828, (int): 19, (float): 166.305725
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.841187
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.771790
+PO_PLAYER_MOVEMENT: (int): 832, (int): 16, (float): 166.286667
+PO_PLAYER_MOVEMENT: (int): 835, (int): 14, (float): 166.267593
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -86, (float): 181.997467
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -85, (float): 183.091125
+PO_PLAYER_MOVEMENT: (int): 839, (int): 13, (float): 166.248917
+PO_PLAYER_MOVEMENT: (int): 842, (int): 12, (float): 166.229111
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -84, (float): 183.965515
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -83, (float): 184.807358
+PO_PLAYER_MOVEMENT: (int): 845, (int): 10, (float): 166.210632
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -82, (float): 185.437546
+PO_PLAYER_MOVEMENT: (int): 847, (int): 9, (float): 166.190750
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -82, (float): 185.996964
+PO_PLAYER_MOVEMENT: (int): 850, (int): 8, (float): 167.116730
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -81, (float): 186.375443
+PO_PLAYER_MOVEMENT: (int): 852, (int): 6, (float): 168.011368
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -81, (float): 186.635925
+PO_PLAYER_MOVEMENT: (int): 854, (int): 5, (float): 169.036942
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -81, (float): 186.745529
+PO_PLAYER_MOVEMENT: (int): 856, (int): 3, (float): 170.033066
+PO_PLAYER_MOVEMENT: (int): 857, (int): 3, (float): 170.273804
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -81, (float): 186.716751
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -81, (float): 186.554230
+PO_PLAYER_MOVEMENT: (int): 858, (int): 2, (float): 170.526764
+PO_PLAYER_MOVEMENT: (int): 860, (int): 1, (float): 170.749954
+sent mid: PO_PLAYER_MOVEMENT: (int): 860, (int): -82, (float): 186.260406
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -82, (float): 185.807205
+PO_PLAYER_MOVEMENT: (int): 860, (int): 0, (float): 170.870117
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -83, (float): 185.278259
+PO_PLAYER_MOVEMENT: (int): 861, (int): -2, (float): 170.982788
+PO_PLAYER_MOVEMENT: (int): 862, (int): -4, (float): 171.081009
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -83, (float): 184.596237
+PO_PLAYER_MOVEMENT: (int): 863, (int): -7, (float): 171.187164
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -84, (float): 183.787399
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -85, (float): 183.361572
+PO_PLAYER_MOVEMENT: (int): 864, (int): -9, (float): 171.343613
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -85, (float): 182.720215
+PO_PLAYER_MOVEMENT: (int): 866, (int): -10, (float): 174.243637
+sent mid: PO_PLAYER_MOVEMENT: (int): 858, (int): -86, (float): 181.850632
+PO_PLAYER_MOVEMENT: (int): 867, (int): -11, (float): 176.815216
+sent mid: PO_PLAYER_MOVEMENT: (int): 858, (int): -87, (float): 180.927338
+PO_PLAYER_MOVEMENT: (int): 868, (int): -11, (float): 176.826782
+sent mid: PO_PLAYER_MOVEMENT: (int): 858, (int): -87, (float): 181.095123
+PO_PLAYER_MOVEMENT: (int): 869, (int): -10, (float): 177.041077
+PO_PLAYER_MOVEMENT: (int): 870, (int): -9, (float): 177.209183
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.190964
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.159439
+PO_PLAYER_MOVEMENT: (int): 871, (int): -8, (float): 177.654953
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.127899
+PO_PLAYER_MOVEMENT: (int): 872, (int): -6, (float): 178.006012
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.099121
+PO_PLAYER_MOVEMENT: (int): 873, (int): -4, (float): 178.197876
+PO_PLAYER_MOVEMENT: (int): 873, (int): -2, (float): 178.232590
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.072693
+PO_PLAYER_MOVEMENT: (int): 874, (int): 0, (float): 178.207901
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.049850
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.029633
+PO_PLAYER_MOVEMENT: (int): 874, (int): 4, (float): 178.182953
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 181.009537
+PO_PLAYER_MOVEMENT: (int): 874, (int): 8, (float): 178.154846
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.994080
+PO_PLAYER_MOVEMENT: (int): 874, (int): 12, (float): 178.131180
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.978409
+PO_PLAYER_MOVEMENT: (int): 874, (int): 17, (float): 178.104156
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.965210
+PO_PLAYER_MOVEMENT: (int): 873, (int): 23, (float): 178.079468
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.951401
+PO_PLAYER_MOVEMENT: (int): 873, (int): 29, (float): 178.051636
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.941727
+PO_PLAYER_MOVEMENT: (int): 872, (int): 35, (float): 178.027420
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.931412
+PO_PLAYER_MOVEMENT: (int): 871, (int): 42, (float): 178.002762
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.921982
+PO_PLAYER_MOVEMENT: (int): 870, (int): 50, (float): 177.975876
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.914444
+PO_PLAYER_MOVEMENT: (int): 868, (int): 58, (float): 177.949600
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.906738
+PO_PLAYER_MOVEMENT: (int): 867, (int): 66, (float): 177.924896
+PO_PLAYER_MOVEMENT: (int): 866, (int): 74, (float): 177.899384
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.900436
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.894394
+PO_PLAYER_MOVEMENT: (int): 865, (int): 82, (float): 177.874695
+PO_PLAYER_MOVEMENT: (int): 863, (int): 91, (float): 177.846939
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.888947
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.884064
+PO_PLAYER_MOVEMENT: (int): 862, (int): 98, (float): 177.822830
+PO_PLAYER_MOVEMENT: (int): 861, (int): 106, (float): 177.795853
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.880066
+PO_PLAYER_MOVEMENT: (int): 859, (int): 112, (float): 177.771408
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.875885
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.872452
+PO_PLAYER_MOVEMENT: (int): 858, (int): 119, (float): 177.745758
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.869507
+PO_PLAYER_MOVEMENT: (int): 857, (int): 126, (float): 177.719391
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.866592
+PO_PLAYER_MOVEMENT: (int): 855, (int): 133, (float): 177.692963
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.864151
+PO_PLAYER_MOVEMENT: (int): 854, (int): 139, (float): 177.668274
+PO_PLAYER_MOVEMENT: (int): 853, (int): 146, (float): 177.641281
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.861740
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.859619
+PO_PLAYER_MOVEMENT: (int): 852, (int): 152, (float): 177.617096
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.857910
+PO_PLAYER_MOVEMENT: (int): 850, (int): 158, (float): 177.590820
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.856186
+PO_PLAYER_MOVEMENT: (int): 849, (int): 163, (float): 177.564529
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.854706
+PO_PLAYER_MOVEMENT: (int): 848, (int): 169, (float): 177.539795
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.853317
+PO_PLAYER_MOVEMENT: (int): 846, (int): 174, (float): 177.512787
+PO_PLAYER_MOVEMENT: (int): 845, (int): 179, (float): 177.488098
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.852158
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.850998
+PO_PLAYER_MOVEMENT: (int): 844, (int): 184, (float): 177.463425
+PO_PLAYER_MOVEMENT: (int): 842, (int): 188, (float): 177.437057
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.850082
+PO_PLAYER_MOVEMENT: (int): 841, (int): 193, (float): 177.409195
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.849060
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.848328
+PO_PLAYER_MOVEMENT: (int): 840, (int): 197, (float): 177.385376
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.847672
+PO_PLAYER_MOVEMENT: (int): 839, (int): 201, (float): 177.360657
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.846970
+PO_PLAYER_MOVEMENT: (int): 837, (int): 205, (float): 177.333572
+PO_PLAYER_MOVEMENT: (int): 836, (int): 209, (float): 177.308441
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.846405
+sent mid: PO_PLAYER_MOVEMENT: (int): 835, (int): 212, (float): 177.282852
+PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.845856
+PO_PLAYER_MOVEMENT: (int): 833, (int): 215, (float): 177.256470
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.845398
+PO_PLAYER_MOVEMENT: (int): 832, (int): 218, (float): 177.231873
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.844986
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.844589
+PO_PLAYER_MOVEMENT: (int): 831, (int): 221, (float): 177.205063
+PO_PLAYER_MOVEMENT: (int): 829, (int): 224, (float): 177.178818
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.844269
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.843964
+PO_PLAYER_MOVEMENT: (int): 828, (int): 226, (float): 177.154846
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.843689
+PO_PLAYER_MOVEMENT: (int): 827, (int): 229, (float): 177.128571
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.843445
+PO_PLAYER_MOVEMENT: (int): 826, (int): 230, (float): 177.103622
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.843216
+PO_PLAYER_MOVEMENT: (int): 824, (int): 232, (float): 177.077667
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.843002
+PO_PLAYER_MOVEMENT: (int): 823, (int): -87, (float): 180.843002
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842819
+PO_PLAYER_MOVEMENT: (int): 822, (int): 235, (float): 177.025208
+PO_PLAYER_MOVEMENT: (int): 820, (int): 237, (float): 177.000809
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842667
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842499
+PO_PLAYER_MOVEMENT: (int): 819, (int): 238, (float): 176.974609
+PO_PLAYER_MOVEMENT: (int): 818, (int): 239, (float): 176.947449
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842377
+PO_PLAYER_MOVEMENT: (int): 816, (int): 239, (float): 176.923508
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842255
+sent mid: PO_PLAYER_MOVEMENT: 
+PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842148
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.842041
+PO_PLAYER_MOVEMENT: (int): 814, (int): 240, (float): 176.870987
+PO_PLAYER_MOVEMENT: (int): 813, (int): 240, (float): 176.844696
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841965
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841888
+PO_PLAYER_MOVEMENT: (int): 811, (int): 240, (float): 176.820679
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841812
+PO_PLAYER_MOVEMENT: (int): 810, (int): 239, (float): 176.793503
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841751
+PO_PLAYER_MOVEMENT: (int): 809, (int): 239, (float): 176.768738
+PO_PLAYER_MOVEMENT: (int): 807, (int): 238, (float): 176.742493
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841690
+PO_PLAYER_MOVEMENT: (int): 806, (int): 237, (float): 176.717773
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841644
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841599
+PO_PLAYER_MOVEMENT: (int): 805, (int): 236, (float): 176.691513
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841553
+PO_PLAYER_MOVEMENT: (int): 803, (int): 234, (float): 176.665848
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841522
+PO_PLAYER_MOVEMENT: (int): 802, (int): 233, (float): 176.639618
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841492
+PO_PLAYER_MOVEMENT: (int): 801, (int): 231, (float): 176.614868
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841461
+PO_PLAYER_MOVEMENT: (int): 800, (int): 229, (float): 176.589493
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841431
+PO_PLAYER_MOVEMENT: (int): 798, (int): 227, (float): 176.561752
+PO_PLAYER_MOVEMENT: (int): 797, (int): 224, (float): 176.537888
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841400
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841385
+PO_PLAYER_MOVEMENT: (int): 796, (int): 222, (float): 176.511688
+PO_PLAYER_MOVEMENT: (int): 794, (int): 219, (float): 176.484680
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841354
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841339
+PO_PLAYER_MOVEMENT: (int): 793, (int): 216, (float): 176.460510
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841324
+PO_PLAYER_MOVEMENT: (int): 792, (int): 213, (float): 176.434280
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841309
+PO_PLAYER_MOVEMENT: (int): 790, (int): 210, (float): 176.409668
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841293
+PO_PLAYER_MOVEMENT: (int): 789, (int): 206, (float): 176.383423
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841293
+PO_PLAYER_MOVEMENT: (int): 788, (int): 202, (float): 176.357864
+PO_PLAYER_MOVEMENT: (int): 786, (int): 198, (float): 176.330582
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841278
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841263
+PO_PLAYER_MOVEMENT: (int): 785, (int): 194, (float): 176.306366
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841263
+PO_PLAYER_MOVEMENT: (int): 784, (int): 190, (float): 176.280777
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841248
+PO_PLAYER_MOVEMENT: (int): 783, (int): 185, (float): 176.253799
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841248
+PO_PLAYER_MOVEMENT: (int): 781, (int): 180, (float): 176.229080
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841232
+PO_PLAYER_MOVEMENT: (int): 780, (int): 175, (float): 176.202881
+PO_PLAYER_MOVEMENT: (int): 779, (int): 170, (float): 176.176605
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841232
+PO_PLAYER_MOVEMENT: (int): 777, (int): 165, (float): 176.152512
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841232
+PO_PLAYER_MOVEMENT: (int): 776, (int): 159, (float): 176.126984
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 775, (int): 153, (float): 176.100723
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 773, (int): 147, (float): 176.073761
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 772, (int): 141, (float): 176.048065
+PO_PLAYER_MOVEMENT: (int): 771, (int): 134, (float): 176.023392
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 770, (int): 128, (float): 175.997757
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 768, (int): 121, (float): 175.971558
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 767, (int): 114, (float): 175.944855
+PO_PLAYER_MOVEMENT: (int): 766, (int): 107, (float): 175.920959
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 764, (int): 99, (float): 175.894638
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 763, (int): 92, (float): 175.868347
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 760, (int): 75, (float): 175.813385
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 759, (int): 68, (float): 175.791962
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841232
+PO_PLAYER_MOVEMENT: (int): 758, (int): 60, (float): 175.767090
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 757, (int): 51, (float): 175.739639
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 755, (int): 43, (float): 175.714859
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 754, (int): 34, (float): 175.688644
+PO_PLAYER_MOVEMENT: (int): 753, (int): 25, (float): 175.662231
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 751, (int): 16, (float): 175.637436
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841217
+PO_PLAYER_MOVEMENT: (int): 750, (int): 6, (float): 175.611954
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+PO_PLAYER_MOVEMENT: (int): 749, (int): -3, (float): 175.585739
+PO_PLAYER_MOVEMENT: (int): 748, (int): -12, (float): 175.560242
+sent mid: PO_PLAYER_MOVEMENT: (int): 859, (int): -87, (float): 180.841202
+sent mid: PO_PLAYER_MOVEMENT: (int): 744, (int): -17, (float): 168.199295
+PO_PLAYER_MOVEMENT: (int): 860, (int): -87, (float): 180.872726
+sent mid: PO_PLAYER_MOVEMENT: (int): 861, (int): -87, (float): 180.862122
+PO_PLAYER_MOVEMENT: (int): 741, (int): -21, (float): 160.791718
+PO_PLAYER_MOVEMENT: (int): 738, (int): -27, (float): 153.441620
+sent mid: PO_PLAYER_MOVEMENT: (int): 862, (int): -87, (float): 180.861923
+sent mid: PO_PLAYER_MOVEMENT: (int): 863, (int): -87, (float): 180.859314
+PO_PLAYER_MOVEMENT: (int): 735, (int): -32, (float): 146.488144
+sent mid: PO_PLAYER_MOVEMENT: (int): 864, (int): -87, (float): 180.857620
+PO_PLAYER_MOVEMENT: (int): 732, (int): -37, (float): 139.102219
+sent mid: PO_PLAYER_MOVEMENT: (int): 864, (int): -87, (float): 180.855896
+PO_PLAYER_MOVEMENT: (int): 729, (int): -43, (float): 131.895401
+PO_PLAYER_MOVEMENT: (int): 724, (int): -47, (float): 124.206070
+sent mid: PO_PLAYER_MOVEMENT: (int): 865, (int): -87, (float): 180.854446
+PO_PLAYER_MOVEMENT: (int): 721, (int): -53, (float): 117.246170
+sent mid: PO_PLAYER_MOVEMENT: (int): 866, (int): -87, (float): 180.853134
+sent mid: PO_PLAYER_MOVEMENT: (int): 866, (int): -87, (float): 180.851944
+PO_PLAYER_MOVEMENT: (int): 716, (int): -52, (float): 111.755783
+PO_PLAYER_MOVEMENT: (int): 711, (int): -52, (float): 105.801010
+sent mid: PO_PLAYER_MOVEMENT: (int): 867, (int): -87, (float): 180.850876
+sent mid: PO_PLAYER_MOVEMENT: (int): 867, (int): -87, (float): 180.849884
+PO_PLAYER_MOVEMENT: (int): 707, (int): -53, (float): 100.492943
+sent mid: PO_PLAYER_MOVEMENT: (int): 868, (int): -87, (float): 180.849045
+PO_PLAYER_MOVEMENT: (int): 702, (int): -53, (float): 94.857567
+sent mid: PO_PLAYER_MOVEMENT: (int): 868, (int): -87, (float): 180.848267
+PO_PLAYER_MOVEMENT: (int): 697, (int): -54, (float): 89.453712
+sent mid: PO_PLAYER_MOVEMENT: (int): 869, (int): -87, (float): 180.847565
+PO_PLAYER_MOVEMENT: (int): 693, (int): -55, (float): 84.002632
+sent mid: PO_PLAYER_MOVEMENT: (int): 869, (int): -87, (float): 180.846893
+PO_PLAYER_MOVEMENT: (int): 688, (int): -56, (float): 78.390038
+sent mid: PO_PLAYER_MOVEMENT: (int): 869, (int): -87, (float): 180.846344
+PO_PLAYER_MOVEMENT: (int): 683, (int): -57, (float): 73.072067
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.845825
+PO_PLAYER_MOVEMENT: (int): 679, (int): -55, (float): 69.528564
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.845352
+PO_PLAYER_MOVEMENT: (int): 674, (int): -52, (float): 65.767288
+PO_PLAYER_MOVEMENT: (int): 670, (int): -51, (float): 62.250874
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.844940
+PO_PLAYER_MOVEMENT: (int): 665, (int): -49, (float): 58.493340
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.844543
+PO_PLAYER_MOVEMENT: (int): 661, (int): -48, (float): 54.944782
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.844223
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.843918
+PO_PLAYER_MOVEMENT: (int): 657, (int): -47, (float): 51.295483
+PO_PLAYER_MOVEMENT: (int): 652, (int): -46, (float): 47.622375
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.843628
+PO_PLAYER_MOVEMENT: (int): 648, (int): -45, (float): 43.945744
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.843369
+PO_PLAYER_MOVEMENT: (int): 643, (int): -45, (float): 40.167271
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.843155
+PO_PLAYER_MOVEMENT: (int): 639, (int): -45, (float): 36.534286
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.842957
+PO_PLAYER_MOVEMENT: (int): 634, (int): -45, (float): 32.987492
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.842773
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.842621
+PO_PLAYER_MOVEMENT: (int): 630, (int): -45, (float): 29.133629
+sent mid: PO_PLAYER_MOVEMENT: (int): 625, (int): -45, (float): 25.493368
+PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.842468
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.842346
+PO_PLAYER_MOVEMENT: (int): 626, (int): -44, (float): 23.514946
+sent mid: PO_PLAYER_MOVEMENT: (int): 870, (int): -87, (float): 180.842239
+PO_PLAYER_MOVEMENT: (int): 627, (int): -43, (float): 21.400547
+sent mid: PO_PLAYER_MOVEMENT: (int): 872, (int): -87, (float): 181.453125
+PO_PLAYER_MOVEMENT: (int): 627, (int): -43, (float): 19.243771
+PO_PLAYER_MOVEMENT: (int): 628, (int): -43, (float): 17.198977
+sent mid: PO_PLAYER_MOVEMENT: (int): 873, (int): -86, (float): 181.829346
+PO_PLAYER_MOVEMENT: (int): 629, (int): -43, (float): 15.268878
+sent mid: PO_PLAYER_MOVEMENT: (int): 874, (int): -86, (float): 182.095840
+sent mid: PO_PLAYER_MOVEMENT: (int): 875, (int): -86, (float): 182.226334
+PO_PLAYER_MOVEMENT: (int): 629, (int): -43, (float): 13.170618
+sent mid: PO_PLAYER_MOVEMENT: (int): 876, (int): -86, (float): 182.235703
+PO_PLAYER_MOVEMENT: (int): 630, (int): -43, (float): 11.060163
+sent mid: PO_PLAYER_MOVEMENT: (int): 877, (int): -86, (float): 182.127914
+PO_PLAYER_MOVEMENT: (int): 631, (int): -43, (float): 9.131911
+sent mid: PO_PLAYER_MOVEMENT: (int): 878, (int): -86, (float): 181.876694
+PO_PLAYER_MOVEMENT: (int): 631, (int): -44, (float): 6.917233
+sent mid: PO_PLAYER_MOVEMENT: (int): 632, (int): -45, (float): 4.938102
+PO_PLAYER_MOVEMENT: (int): 879, (int): -87, (float): 181.534805
+sent mid: PO_PLAYER_MOVEMENT: (int): 633, (int): -46, (float): 2.898853
+PO_PLAYER_MOVEMENT: (int): 879, (int): -87, (float): 181.534653
+PO_PLAYER_MOVEMENT: (int): 629, (int): -47, (float): 0.659679
+sent mid: PO_PLAYER_MOVEMENT: (int): 880, (int): -87, (float): 181.452560
+sent mid: 

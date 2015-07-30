@@ -32,7 +32,7 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
     if ((fresult = tcp_serv_sock.s_connect(serv_ip, serv_port)) != NO_ERROR) {
-        log_error << "(tcp_serv_sock): error " << fresult << "occurred while trying to connect to (ip: " <<
+        log_error << "(tcp_serv_sock): error " << fresult << " occurred while trying to connect to (ip: " <<
                            tcp_serv_sock.get_binded_ip() << ", port: " << tcp_serv_sock.get_binded_port() << ")";
         socket_setup_failed(fresult); return;
     }

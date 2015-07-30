@@ -69,7 +69,6 @@ void state::init(SceneManager* scene_ref) {
     sock::init();
     input::init();
     debug::init_logger();
-
     create_state(s);
 }
 

@@ -47,6 +47,7 @@ void recv_msgs() {
 						CMID mid = msg::extract_mid(buffer, msg_len);
 						if (mid->id > 0 && mid->id < msg::MID_list.size()) {
 							msg::extract_params(mid, buffer, msg_len);
+                            msg::print_extracted_params(false, true);
 
 							if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {
 								int* a = (int*)msg::param_list[0]->data;
