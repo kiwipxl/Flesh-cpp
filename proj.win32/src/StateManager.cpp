@@ -1,11 +1,12 @@
 #include "StateManager.h"
-#include "debug/Errors.h"
 #include "network/sockets/SocketManager.h"
-#include "input/SimpleInput.h"
 #include "network/Peers.h"
+#include "input/SimpleInput.h"
 #include "map/Ferr2DSystem.h"
-#include "entities/Unit.h"
 #include "map/Camera.h"
+#include "entities/Unit.h"
+#include "debug/Errors.h"
+#include "debug/Logger.h"
 #include <stdio.h>
 
 using state::State;
@@ -67,6 +68,7 @@ void state::init(SceneManager* scene_ref) {
 
     sock::init();
     input::init();
+    debug::init_logger();
 
     create_state(s);
 }

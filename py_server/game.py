@@ -54,7 +54,7 @@ class Game:
                     print("added peer id %d to game client %d. peers len: %d" % (new_gcl.client_obj.id, gcl.client_obj.id, len(gcl.peers)));
 
                     #send a bind request to the newly joined client for every other client in the game
-                    message.send(client_obj.tcp_sock, client_obj, message.MID_SEND_UDP_PEER_BIND_REQUEST, (gcl.client_obj.id, client_obj.ip,));
+                    message.send(client_obj.tcp_sock, client_obj, message.MID_SEND_UDP_PEER_BIND_REQUEST, (gcl.client_obj.id, gcl.client_obj.ip,));
                     #append the newly joined clients peer list with every other client in the game
                     client_peer = Peer();
                     client_peer.game_client = gcl;

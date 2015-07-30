@@ -9,7 +9,7 @@
 
 #define SSTR(x) dynamic_cast<std::ostringstream&>((std::ostringstream() << std::dec << x)).str()
 
-namespace err {
+namespace debug {
 
     extern int get_last_error();
     extern int fresult;
