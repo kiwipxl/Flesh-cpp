@@ -24,9 +24,9 @@
     <ClCompile Include="src\network\sockets\SocketManager.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
     <ClCompile Include="src\input\SimpleInput.cpp" />
-    <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\map\Ferr2DSystem.cpp" />
     <ClCompile Include="src\map\Camera.cpp" />
+    <ClCompile Include="src\entities\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -42,9 +42,9 @@
     <ClInclude Include="src\network\sockets\SocketManager.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
-    <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\map\Ferr2DSystem.h" />
     <ClInclude Include="src\map\Camera.h" />
+    <ClInclude Include="src\entities\Unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

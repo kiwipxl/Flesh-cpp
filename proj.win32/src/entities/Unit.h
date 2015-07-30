@@ -1,22 +1,23 @@
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _UNIT_H_
+#define _UNIT_H_
 
 #include "../SceneManager.h"
 
 namespace entity {
 
-    class Player {
+    class Unit {
 
         public:
             cc::Sprite* base;
             cc::PhysicsBody* pbody;
+            bool player_input = false;
 
-            Player();
+            Unit();
 
             void update();
     };
 
-    extern Player* player;
+    extern Unit* test_player;
 };
 
 #endif

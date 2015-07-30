@@ -159,7 +159,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
   <ItemGroup>
     <ClCompile Include="src\AppDelegate.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
-    <ClCompile Include="src\entities\Player.cpp" />
+    <ClCompile Include="src\entities\Unit.cpp" />
     <ClCompile Include="src\input\SimpleInput.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\map\Camera.cpp" />
@@ -178,7 +178,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\AppDelegate.h" />
     <ClInclude Include="src\debug\Errors.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
-    <ClInclude Include="src\entities\Player.h" />
+    <ClInclude Include="src\entities\Unit.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
     <ClInclude Include="src\map\Camera.h" />
     <ClInclude Include="src\network\GameMessages.h" />

@@ -1,6 +1,6 @@
 #include "Ferr2DSystem.h"
 #include "../StateManager.h"
-#include "../entities/Player.h"
+#include "../entities/Unit.h"
 
 using ferr2d::Terrain;
 using ferr2d::TerrainData;

@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "../StateManager.h"
-#include "../entities/Player.h"
+#include "../entities/Unit.h"
 
 using map::Camera;
 
@@ -14,8 +14,8 @@ Camera::Camera() {
 
 void Camera::update() {
     cc::Vec3 pos;
-    pos.x = entity::player->base->getPositionX();
-    pos.y = entity::player->base->getPositionY();
+    pos.x = entity::test_player->base->getPositionX();
+    pos.y = entity::test_player->base->getPositionY();
     cam_node->setPosition3D(pos + cc::Vec3(0, 0, 600));
     cam_node->lookAt(pos, cc::Vec3(0.0, 1.0, 0.0));
 }

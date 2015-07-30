@@ -7,9 +7,10 @@
 namespace state {
 
     enum State {
-
-        SERVER_CONNECT_SCREEN,  
-        LOGIN_REGISTER_SCREEN
+        
+        STATE_SERVER_CONNECT_SCREEN,  
+        STATE_LOGIN_REGISTER_SCREEN, 
+        STATE_GAME
     };
 
     extern SceneManager* scene;
