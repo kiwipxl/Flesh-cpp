@@ -27,6 +27,7 @@
     <ClCompile Include="src\map\Ferr2DSystem.cpp" />
     <ClCompile Include="src\map\Camera.cpp" />
     <ClCompile Include="src\entities\Unit.cpp" />
+    <ClCompile Include="src\debug\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="src\map\Ferr2DSystem.h" />
     <ClInclude Include="src\map\Camera.h" />
     <ClInclude Include="src\entities\Unit.h" />
+    <ClInclude Include="src\debug\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

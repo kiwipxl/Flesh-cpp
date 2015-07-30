@@ -3,8 +3,9 @@
 #include "sockets/SocketManager.h"
 #include "Peers.h"
 #include "../entities/Unit.h"
+#include "../debug/Logger.h"
 
-using err::fresult;
+using debug::fresult;
 
 std::thread msg::game::msgs_thread;
 SocketPoll msg::game::server_poll;
@@ -112,7 +113,7 @@ void recv_msgs() {
 				}
 			}
 		}else if (total == -1) {
-			CCLOG("polling error occurred: %d", err::get_last_error());
+            file_print_log << "polling error occurred: " << debug::get_last_error() << ACTION_SAVE_TO_FILE;
 		}
 	}
 }

@@ -1,7 +1,8 @@
 #include "SocketManager.h"
 #include "../../StateManager.h"
+#include "../../debug/Logger.h"
 
-using err::fresult;
+using debug::fresult;
 
 Socket sock::tcp_serv_sock;
 Socket sock::udp_serv_sock;
@@ -23,20 +24,21 @@ void tcp_connect() {
 
     connection_finished = false;
     connection_error = NO_ERROR;
-
-    CCLOG("attempt connect on thread...");
+    
+    file_log << "attempt connect on thread...";
     tcp_serv_sock = Socket(PROTO_TCP);
     if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
-        CCLOG("(tcp_serv_sock): error %d occurred while creating tcp socket", fresult);
+        file_print_log << "(tcp_serv_sock): error " << fresult << " occurred while creating tcp socket";
         socket_setup_failed(fresult); return;
     }
     if ((fresult = tcp_serv_sock.s_connect(serv_ip, serv_port)) != NO_ERROR) {
-        CCLOG("(tcp_serv_sock): error %d occurred while trying to connect to (ip: %s, port: %d)", fresult, tcp_serv_sock.get_binded_ip(), tcp_serv_sock.get_binded_port());
+        file_print_log << "(tcp_serv_sock): error " << fresult << "occurred while trying to connect to (ip: " <<
+                           tcp_serv_sock.get_binded_ip() << ", port: " << tcp_serv_sock.get_binded_port() << ")";
         socket_setup_failed(fresult); return;
     }
-
-    CCLOG("(tcp_serv_sock): connection successful");
     
+    file_log << "(tcp_serv_sock): connection successful";
+
     msg::game::start_recv_thread();
 }
 

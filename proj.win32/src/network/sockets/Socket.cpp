@@ -2,8 +2,9 @@
 #include "../Message.h"
 #include "../../debug/Errors.h"
 #include "SocketManager.h"
+#include "../../debug/Logger.h"
 
-#define PRINT_OR_ERROR(str) PRINT_IF_ERROR ? print_error(err::get_last_error(), str) : err::get_last_error()
+#define PRINT_OR_ERROR(str) PRINT_IF_ERROR ? print_error(debug::get_last_error(), str) : debug::get_last_error()
 
 void Socket::init_sockets() {
 	#if defined(PLATFORM_WIN32)
@@ -41,7 +42,7 @@ Socket::Socket(SocketProtocol c_protocol) {
 }
 
 int Socket::print_error(int err, char* func_err) {
-    CCLOG("%s: %d", func_err, err);
+    file_print_log << err << ": " << func_err;
     return err;
 }
 

@@ -2,7 +2,7 @@
 #include "../debug/Errors.h"
 
 using peers::Peer;
-using err::fresult;
+using debug::fresult;
 
 std::vector<Peer*> peers::peer_list;
 
