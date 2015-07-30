@@ -33,11 +33,11 @@ void recv_msgs() {
             for (int i = 0; i < size; ++i) {
                 int revents = server_poll.get_fd_at(i)->revents;
 				if (revents & POLLERR) {
-					CCLOG("poll error occurred");
+                    log_warning << "poll error occurred";
 				}else if (revents & POLLHUP) {
-					CCLOG("poll hang up error occurred");
+                    log_warning << "poll hang up error occurred";
 				}else if (revents & POLLNVAL) {
-					CCLOG("poll invalid request occurred");
+                    log_warning << "poll invalid request occurred";
 				}else if (revents & POLLRDNORM || revents & POLLRDBAND || revents & POLLIN || revents & POLLPRI) {
                     Socket* sock = server_poll.get_sock_at(i);
                     if (!sock) continue;
@@ -113,7 +113,7 @@ void recv_msgs() {
 				}
 			}
 		}else if (total == -1) {
-            file_print_log << "polling error occurred: " << debug::get_last_error() << ACTION_SAVE_TO_FILE;
+            log_error << "polling error occurred: " << debug::get_last_error();
 		}
 	}
 }

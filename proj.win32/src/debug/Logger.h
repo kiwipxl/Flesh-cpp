@@ -4,16 +4,24 @@
 #include <sstream>
 #include "../SceneManager.h"
 
-#define file_log debug::Logger(debug::ACTION_SAVE_TO_FILE)
-#define print_log debug::Logger(debug::ACTION_PRINT)
-#define file_print_log debug::Logger(debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+#define log_file debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE)
+#define log_print debug::Logger(debug::ACTION_INFO | debug::ACTION_PRINT)
+#define log_print_file debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+
+#define log_info debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE)
+#define log_warning debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+#define log_error debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 
 namespace debug {
 
     enum LogAction {
 
-        ACTION_SAVE_TO_FILE = 1,
-        ACTION_PRINT = 2
+        ACTION_INFO = 1 << 1, 
+        ACTION_WARNING = 1 << 2, 
+        ACTION_ERROR = 1 << 3, 
+
+        ACTION_SAVE_TO_FILE = 1 << 4,
+        ACTION_PRINT = 1 << 5, 
     };
 
     class Logger {
@@ -39,7 +47,13 @@ namespace debug {
                 if (action & ACTION_SAVE_TO_FILE) {
                     int a = 5;
                 }else if (action & ACTION_PRINT) {
-                    cc::log(stream.str().c_str());
+                    if (action & ACTION_INFO) {
+                        cc::log(stream.str().c_str());
+                    }else if (action & ACTION_WARNING) {
+                        cc::log(stream.str().c_str());
+                    }else if (action & ACTION_ERROR) {
+                        cc::log(stream.str().c_str());
+                    }
                 }
             }
     };

@@ -25,19 +25,19 @@ void tcp_connect() {
     connection_finished = false;
     connection_error = NO_ERROR;
     
-    file_log << "attempt connect on thread...";
+    log_info << "attempt connect on thread...";
     tcp_serv_sock = Socket(PROTO_TCP);
     if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
-        file_print_log << "(tcp_serv_sock): error " << fresult << " occurred while creating tcp socket";
+        log_error << "(tcp_serv_sock): error " << fresult << " occurred while creating tcp socket";
         socket_setup_failed(fresult); return;
     }
     if ((fresult = tcp_serv_sock.s_connect(serv_ip, serv_port)) != NO_ERROR) {
-        file_print_log << "(tcp_serv_sock): error " << fresult << "occurred while trying to connect to (ip: " <<
+        log_error << "(tcp_serv_sock): error " << fresult << "occurred while trying to connect to (ip: " <<
                            tcp_serv_sock.get_binded_ip() << ", port: " << tcp_serv_sock.get_binded_port() << ")";
         socket_setup_failed(fresult); return;
     }
     
-    file_log << "(tcp_serv_sock): connection successful";
+    log_info << "(tcp_serv_sock): connection successful";
 
     msg::game::start_recv_thread();
 }
@@ -45,16 +45,17 @@ void tcp_connect() {
 bool sock::setup_udp_sock(u_short udp_serv_port) {
     udp_serv_sock = Socket(PROTO_UDP);
     if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
-        CCLOG("(udp_serv_sock): error %d occurred while creating tcp socket", fresult);
+        log_error << "(udp_serv_sock): error " << fresult << " occurred while creating tcp socket";
         socket_setup_failed(fresult); return false;
     }
     if ((fresult = udp_serv_sock.s_bind("0.0.0.0", 0)) != NO_ERROR) {
-        CCLOG("(udp_serv_sock): error %d occurred while trying to bind to (ip: %s, port: %d)", fresult, udp_serv_sock.get_binded_ip(), udp_serv_sock.get_binded_port());
+        log_error << "(udp_serv_sock): error " << fresult << " occurred while trying to bind to (ip: " <<
+            udp_serv_sock.get_binded_ip() << ", port: " << udp_serv_sock.get_binded_port() << ")";
         socket_setup_failed(fresult); return false;
     }
     udp_serv_sock.s_change_send_addr(serv_ip, udp_serv_port);
-
-    CCLOG("(udp_serv_sock): creation/binding successful");
+    
+    log_info << "(udp_serv_sock): creation / binding successful";
 
     return true;
 }
