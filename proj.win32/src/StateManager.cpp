@@ -5,6 +5,7 @@
 #include "network/Peers.h"
 #include "map/Ferr2DSystem.h"
 #include "entities/Player.h"
+#include "map/Camera.h"
 #include <stdio.h>
 
 using state::State;
@@ -16,10 +17,8 @@ cc::LabelBMFont* state::info_label;
 float state::time_since_startup = 0;
 cc::TextFieldDelegate username_input;
 
-cc::Camera* camera;
-
 ferr2d::Terrain* terrain;
-entity::Player* player;
+map::Camera* camera;
 
 void create_state(State c_state) {
     using namespace state;
@@ -65,56 +64,18 @@ void state::init(SceneManager* scene_ref) {
 
     create_state(s);
 
-
-    player = new entity::Player();
     terrain = new ferr2d::Terrain(*ferr2d::load("terrain.t2d"));
-
-    auto spritePos = cc::Vec3(scene->screen_size.width / 2 + 0,
-        scene->screen_size.height / 2 + 0,
-        0);
-
-    // position the sprite on the center of the screen
-    //this is the layer, when adding camera to it, all its children will be affect only when you set the second parameter to true
-    scene->setCameraMask((unsigned short)cc::CameraFlag::USER1, true);
-    // add the sprite as a child to this layer
-
-    camera = cc::Camera::createPerspective(60, (float)scene->screen_size.width / scene->screen_size.height, 1.0, 1000);
-    camera->setCameraFlag(cc::CameraFlag::USER1);
-    //the calling order matters, we should first call setPosition3D, then call lookAt.
-    camera->setPosition3D(spritePos + cc::Vec3(0, 0, 800));
-    camera->lookAt(spritePos, cc::Vec3(0.0, 1.0, 0.0));
-    scene->addChild(camera);
+    camera = new map::Camera();
 }
 
 void state::update(float dt) {
-    player->update();
-
-    cc::Vec3 pos;
-    pos.x = player->base->getPositionX();
-    pos.y = player->base->getPositionY();
-    camera->setPosition3D(pos + cc::Vec3(0, 0, 600));
-    camera->lookAt(pos, cc::Vec3(0.0, 1.0, 0.0));
-
+    entity::player->update();
+    camera->update();
     terrain->draw();
-
-    player->pbody->applyImpulse(cc::Vec2(0, -10000.0f));
-    player->pbody->setVelocityLimit(500.0f);
-    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
-        player->pbody->applyImpulse(cc::Vec2(10000.0f, 0));
-    }
-    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
-        player->pbody->applyImpulse(cc::Vec2(-10000.0f, 0));
-    }
-    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_UP_ARROW)) {
-        player->pbody->applyImpulse(cc::Vec2(0, 40000.0f));
-    }
-    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
-        player->pbody->applyImpulse(cc::Vec2(0, -40000.0f));
-    }
 
     for (int n = 0; n < peers::peer_list.size(); ++n) {
         msg::send(*peers::peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_PLAYER_MOVEMENT << 
-            (int)player->base->getPositionX() << (int)player->base->getPositionY());
+            (int)entity::player->base->getPositionX() << (int)entity::player->base->getPositionY());
     }
 
     return;

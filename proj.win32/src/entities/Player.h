@@ -15,6 +15,8 @@ namespace entity {
 
             void update();
     };
+
+    extern Player* player;
 };
 
 #endif

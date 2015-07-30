@@ -3,4 +3,17 @@
 
 #include "../SceneManager.h"
 
+namespace map {
+
+    class Camera {
+
+        public:
+            Camera();
+
+            cc::Camera* cam_node;
+
+            void update();
+    };
+};
+
 #endif

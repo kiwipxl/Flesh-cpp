@@ -1,7 +1,10 @@
 #include "Player.h"
 #include "../StateManager.h"
+#include "input/SimpleInput.h"
 
 using entity::Player;
+
+Player* entity::player;
 
 Player::Player() {
     base = cc::Sprite::create("HelloWorld.png");
@@ -22,5 +25,18 @@ Player::Player() {
 }
 
 void Player::update() {
-
+    pbody->applyImpulse(cc::Vec2(0, -10000.0f));
+    pbody->setVelocityLimit(500.0f);
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
+        pbody->applyImpulse(cc::Vec2(10000.0f, 0));
+    }
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
+        pbody->applyImpulse(cc::Vec2(-10000.0f, 0));
+    }
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_UP_ARROW)) {
+        pbody->applyImpulse(cc::Vec2(0, 40000.0f));
+    }
+    if (input::key_down(cc::EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
+        pbody->applyImpulse(cc::Vec2(0, -40000.0f));
+    }
 }
