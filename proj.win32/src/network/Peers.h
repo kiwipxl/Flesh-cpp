@@ -21,6 +21,7 @@ namespace peers {
             u_short udp_send_port = 0;
             u_short udp_recv_port = 0;
             Socket* udp_sock = NULL;
+            bool connected = false;
 
             int bind_udp_sock();
 

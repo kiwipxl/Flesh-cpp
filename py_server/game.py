@@ -104,7 +104,7 @@ class Game:
         all_connected = True;
         for gcl in self.g_clients:
             for p in gcl.peers:
-                if (p.binded == False):
+                if (p.connected == False):
                     all_connected = False;
                     break;
 
