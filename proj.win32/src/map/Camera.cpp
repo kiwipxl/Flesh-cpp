@@ -5,7 +5,7 @@
 using map::Camera;
 
 Camera::Camera() {
-    state::scene->setCameraMask((unsigned short)cc::CameraFlag::USER1, true);
+    state::scene->setCameraMask((u_short)cc::CameraFlag::USER1, true);
 
     cam_node = cc::Camera::createPerspective(60, (float)state::scene->screen_size.width / state::scene->screen_size.height, 1.0, 1000);
     cam_node->setCameraFlag(cc::CameraFlag::USER1);

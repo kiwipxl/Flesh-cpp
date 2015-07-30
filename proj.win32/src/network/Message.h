@@ -134,7 +134,7 @@ namespace msg {
             //the following messages are peer messages which the server will not handle and can only be sent to peers
             ADD_MID_NAME(CMID PO_PING_CONNECT_TEST = new MID(0));
             ADD_MID_NAME(CMID PO_PONG_CONNECT_TEST = new MID(0));
-            ADD_MID_NAME(CMID PO_PLAYER_MOVEMENT = new MID(2, FT_INT, FT_INT));
+            ADD_MID_NAME(CMID PO_PLAYER_MOVEMENT = new MID(3, FT_INT, FT_INT, FT_FLOAT));
 
         private:
             static MIDConstants* mid_constant;

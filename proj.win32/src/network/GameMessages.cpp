@@ -2,6 +2,7 @@
 #include "../StateManager.h"
 #include "sockets/SocketManager.h"
 #include "Peers.h"
+#include "../entities/Unit.h"
 
 using err::fresult;
 
@@ -78,6 +79,8 @@ void recv_msgs() {
                                 msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_UDP_SERVER_COMMUNICATION_SUCCESS);
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_BIND_REQUEST)) {
                                 peers::peer_join(*(int*)msg::param_list[0]->data, msg::param_list[1]->data);
+
+                                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 CCLOG("caught udp ping pong!");
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
@@ -91,7 +94,7 @@ void recv_msgs() {
                             }else if (VALID_PARAMS(mid, _MID->PO_PLAYER_MOVEMENT)) {
                                 peer = peers::get_peer(*sock);
                                 if (peer != NULL) {
-                                    //state::player->setPosition(*(int*)msg::param_list[0]->data, *(int*)msg::param_list[1]->data);
+                                    entity::test_peer_movement(peer, *(int*)msg::param_list[0]->data, *(int*)msg::param_list[1]->data, *(float*)msg::param_list[2]->data);
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
                                 msg::send(*sock, msg::ByteStream() << _MID->PO_PONG_CONNECT_TEST);
@@ -99,6 +102,7 @@ void recv_msgs() {
                                 peer = peers::get_peer(*sock);
                                 if (peer != NULL) {
                                     msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS << peer->id << peer->ip);
+                                    entity::test_peer_join(peer);
                                 }
 							}
 							msg::clear_param_list();

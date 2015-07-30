@@ -33,9 +33,9 @@ Terrain::Terrain(TerrainData& t_data) {
     pbody = cc::PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
     pbody->setGravityEnable(false);
     pbody->setDynamic(false);
-    pbody->setCategoryBitmask(0x02);
-    pbody->setCollisionBitmask(0x04);
-    pbody->setContactTestBitmask(0x04);
+    //pbody->setCategoryBitmask(0x02);
+    //pbody->setCollisionBitmask(0x04);
+    //pbody->setContactTestBitmask(0x04);
     node->setPhysicsBody(pbody);
     state::scene->addChild(node, 1);
     t_data.debug_draw_node->retain();
