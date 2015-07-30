@@ -57,15 +57,16 @@ void state::switch_state(State new_state) {
 
 void state::init(SceneManager* scene_ref) {
     scene = scene_ref;
-    scene->setGLProgram(cc::ShaderCache::getInstance()->getGLProgram(cc::GLProgram::SHADER_NAME_POSITION_COLOR));
+    scene->setGLProgram(cc::ShaderCache::getInstance()->getGLProgram(cc::GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     sock::init();
     input::init();
 
     create_state(s);
 
-    terrain = new ferr2d::Terrain(*ferr2d::load("terrain.t2d"));
+    entity::player = new entity::Player();
     camera = new map::Camera();
+    terrain = new ferr2d::Terrain(*ferr2d::load("terrain.t2d"));
 }
 
 void state::update(float dt) {

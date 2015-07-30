@@ -46,6 +46,7 @@ Terrain::Terrain(TerrainData& t_data) {
     edge_tris.vertCount = t_data.points.size();
 
     cc::Texture2D* edge_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyEdges.png");
+    edge_t->retain();
     edge_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
     cc::BlendFunc blend_func;
@@ -60,6 +61,7 @@ Terrain::Terrain(TerrainData& t_data) {
     fill_tris.vertCount = t_data.points.size();
 
     cc::Texture2D* fill_t = cc::Director::getInstance()->getTextureCache()->addImage("MossyFill.png");
+    fill_t->retain();
     fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
     fill_tris_cmd.init(0.0f, fill_t->getName(), state::scene->getGLProgramState(), blend_func, fill_tris, node->getNodeToWorldTransform(), 1);

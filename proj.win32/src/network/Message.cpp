@@ -5,23 +5,6 @@ using msg::MID;
 using msg::FormatType;
 using msg::Param;
 
-using msg::FT_CHAR;
-using msg::FT_SIGNED_CHAR;
-using msg::FT_UNSIGNED_CHAR;
-using msg::FT_BOOL;
-using msg::FT_SHORT;
-using msg::FT_UNSIGNED_SHORT;
-using msg::FT_INT;
-using msg::FT_UNSIGNED_INT;
-using msg::FT_LONG;
-using msg::FT_UNSIGNED_LONG;
-using msg::FT_LONG_LONG;
-using msg::FT_UNSIGNED_LONG_LONG;
-using msg::FT_FLOAT;
-using msg::FT_DOUBLE;
-using msg::FT_CHAR_ARRAY;
-using msg::FT_VOID_POINTER;
-
 FormatType::FormatType(const char* c, const short l, const char* name) : printf_format(c), len(l), type_name(name) { }
 
 //format types for packing and unpacking byte data
