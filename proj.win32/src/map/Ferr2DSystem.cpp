@@ -1,4 +1,5 @@
 #include "Ferr2DSystem.h"
+
 #include "../StateManager.h"
 #include "../entities/Unit.h"
 #include "../debug/Logger.h"
@@ -28,8 +29,9 @@ void ferr2d::print_load_error(int err) {
 Terrain::Terrain(TerrainData& t_data) {
     terrain_data = &t_data;
 
+    t_data.debug_draw_node->retain();
+
     node = cc::Node::create();
-    node->setPosition(0, 0);
 
     pbody = cc::PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
     pbody->setGravityEnable(false);
@@ -37,9 +39,12 @@ Terrain::Terrain(TerrainData& t_data) {
     //pbody->setCategoryBitmask(0x02);
     //pbody->setCollisionBitmask(0x04);
     //pbody->setContactTestBitmask(0x04);
+
     node->setPhysicsBody(pbody);
+    node->setPosition(0, 0);
+    //node->setAnchorPoint(cc::Vec2::ANCHOR_TOP_RIGHT);
+    //node->setScale(1.1f, 1.1f);
     state::scene->addChild(node, 1);
-    t_data.debug_draw_node->retain();
 
     edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
     edge_tris.indexCount = t_data.edge_indices_end;

@@ -3,6 +3,7 @@ import sys;
 import struct;
 import socket;
 import debug;
+import time;
 
 class FormatType():
 
@@ -139,11 +140,11 @@ def extract_mid(byte_data):
     mid = MID_UNKNOWN;
     if (len(byte_data) >= 4):
         id = struct.unpack("i", byte_data[0:4])[0];
-        if (id >= 0 and id < len(MID_list)):
+        if (id >= 0 and id <= len(MID_list)):
             mid = MID_list[id];
+        else:
+            debug.log("MID id %d is unknown" % id, debug.P_WARNING);
     return mid;
-
-import time;
 
 def extract_params(mid, byte_data):
     params = [];

@@ -1,4 +1,5 @@
 #include "SocketManager.h"
+
 #include "../../StateManager.h"
 #include "../../debug/Logger.h"
 
@@ -90,6 +91,8 @@ void sock::send_udp_ping_pong(Socket& sock) {
         }
         udp_ping_pong_time = state::time_since_startup;
         udp_ping_pong_sock = &sock;
+    }else {
+        log_warning << "udp ping pong tries timed out?!?!?1";
     }
 }
 

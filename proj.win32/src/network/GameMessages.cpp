@@ -1,4 +1,5 @@
 #include "GameMessages.h"
+
 #include "../StateManager.h"
 #include "sockets/SocketManager.h"
 #include "Peers.h"
@@ -89,10 +90,15 @@ void recv_msgs() {
                                 peer = peers::get_peer(*(int*)msg::param_list[0]->data);
                                 if (peer != NULL && !peer->connected) {
                                     peer->udp_send_port = *(u_short*)msg::param_list[1]->data;
-                                    peer->udp_sock->s_change_send_addr("127.0.0.1", peer->udp_send_port);
+                                    peer->udp_sock->s_change_send_addr(peer->ip, peer->udp_send_port);
                                     server_poll.add_sock(*peer->udp_sock);
                                     peer->connected = true;
                                     msg::send(*peer->udp_sock, msg::ByteStream() << _MID->PO_PING_CONNECT_TEST);
+
+                                    log_info << "sending ping to peer (peer_id: " << peer->id << 
+                                                ", peer_recv_port: " << peer->udp_recv_port << ", peer_send_port: " << peer->udp_send_port << ")";
+                                }else {
+                                    log_warning << "peer " << *(int*)msg::param_list[0]->data << " could not be found (recv_peer_port)";
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PLAYER_MOVEMENT)) {
                                 peer = peers::get_peer(*sock);
@@ -106,6 +112,8 @@ void recv_msgs() {
                                 if (peer != NULL) {
                                     msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_PEER_CONNECT_SUCCESS << peer->id << peer->ip);
                                     entity::test_peer_join(peer);
+                                }else {
+                                    log_warning << "peer could not be found (binded_port: " << sock->get_binded_port() << ")";
                                 }
 							}
 							msg::clear_param_list();

@@ -1,4 +1,5 @@
 #include "Message.h"
+
 #include "../debug/Logger.h"
 
 //the following namespace inclusions are used to avoid redundant "msg::" accesses
@@ -67,13 +68,12 @@ void msg::init() {
 }
 
 void msg::send(Socket& sock, ByteStream& stream, bool print_output, bool write_to_file) {
-    if (print_output) log_print << "sent mid: " << debug::ACTION_NO_NEW_LINE;
-    if (write_to_file) log_file << "sent mid: " << debug::ACTION_NO_NEW_LINE;
-
     if (print_output || write_to_file) {
         CMID mid = extract_mid(byte_buffer, byte_offset);
         extract_params(mid, byte_buffer, byte_offset);
-        print_extracted_params(print_output, write_to_file);
+        std::string temp = last_MID_to_string();
+        if (print_output) log_print << "sent mid: " << temp;
+        if (write_to_file) log_file << "sent mid: " << temp;
     }
 
 	sock.s_send(byte_buffer, byte_offset);
@@ -133,14 +133,28 @@ void msg::clear_param_list() {
 }
 
 void msg::print_extracted_params(bool print_output, bool write_to_file) {
-	if (last_extracted_mid->num_params == param_list_size) {
-		static const char header[] = ": ";
-		int header_size = sizeof(header);
-		const char* MID_name = get_MID_name(last_extracted_mid);
-		int MID_name_len = strlen(MID_name) - 1;
-		strcpy(print_buf, MID_name);
-		strcpy(print_buf + MID_name_len, header);
-		int offset = header_size + MID_name_len - 1;
+    std::string temp = last_MID_to_string();
+    if (print_output) log_print << temp;
+    if (write_to_file) log_file << temp;
+}
+
+std::string msg::last_MID_to_string() {
+    if (last_extracted_mid->num_params != param_list_size) {
+        log_warning << "could not print params, required " << last_extracted_mid->num_params << " params, but " << param_list_size << " params given";
+        last_extracted_mid = _MID->UNKNOWN;
+    }
+
+	static const char header[] = ": ";
+	int header_size = sizeof(header);
+
+	const char* MID_name = get_MID_name(last_extracted_mid);
+	int MID_name_len = strlen(MID_name) - 1;
+    strcpy(print_buf, MID_name);
+
+    int offset = MID_name_len - 1;
+    if (last_extracted_mid != _MID->UNKNOWN && param_list_size > 0) {
+        strcpy(print_buf + MID_name_len, header);
+        offset += header_size;
 		for (int n = 0; n < param_list_size; ++n) {
 			//unsure if the below code can be shortened in c++, but this is a quick work around for now at least
 			//sprintf requires that arguments be the same type of the format specifier, but the type is variable
@@ -175,13 +189,10 @@ void msg::print_extracted_params(bool print_output, bool write_to_file) {
 			offset += len;
 			if (n < param_list_size - 1) offset += sprintf(print_buf + offset, ", ", t->type_name);
 		}
-        print_buf[offset + 1] = '\0';
-        
-        if (print_output) log_print << print_buf;
-        if (write_to_file) log_file << print_buf;
-	}else {
-        log_warning << "could not print params, required " << last_extracted_mid->num_params << " params, but " << param_list_size << " params given";
-	}
+    }
+    print_buf[offset + 1] = '\0';
+
+    return print_buf;
 }
 
 inline const char* msg::get_MID_name(CMID mid) {

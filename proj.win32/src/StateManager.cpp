@@ -1,4 +1,7 @@
 #include "StateManager.h"
+
+#include <stdio.h>
+
 #include "network/sockets/SocketManager.h"
 #include "network/Peers.h"
 #include "input/SimpleInput.h"
@@ -7,7 +10,6 @@
 #include "entities/Unit.h"
 #include "debug/Errors.h"
 #include "debug/Logger.h"
-#include <stdio.h>
 
 using state::State;
 
@@ -77,10 +79,9 @@ void state::update(float dt) {
         switch_state(state::STATE_GAME);
     }
 
+    sock::update();
     switch (s) {
         case STATE_SERVER_CONNECT_SCREEN:
-            sock::update();
-
             info_label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 
             if (sock::connection_finished) {

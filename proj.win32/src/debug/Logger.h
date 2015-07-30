@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <stdio.h>
+
 #include "../SceneManager.h"
 
 #define log_file debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE)
