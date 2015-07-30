@@ -1,362 +1,1261 @@
 attempt connect...
 attempt connect on thread...
 (tcp_serv_sock): connection successful
-RECV_SERVER_BINDED_UDP_PORT: (ushort): 40201
+RECV_SERVER_BINDED_UDP_PORT: (ushort): 33310
 (udp_serv_sock): creation / binding successful
-sent mid: SEND_CLIENT_BINDED_UDP_PORT: (ushort): 60176
-sent mid: UDP_INIT_PING_PONG
 UDP_INIT_PING_PONG
-sent mid: SEND_UDP_SERVER_COMMUNICATION_SUCCESS
-RECV_UDP_PEER_BIND_REQUEST: (int): 3, (char*): 122.111.95.195
-udp peer socket successfully binded (peer_id: 3, ip: 122.111.95.195, binded_port: 60179
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, 
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): -42189407257640234000000000000000000000.000000
+RECV_UDP_PEER_BIND_REQUEST: (int): 7, (char*): 122.111.95.195
+udp peer socket successfully binded (peer_id: 7, ip: 122.111.95.195, binded_port: 65127
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.842346
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.842224
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.842133
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.842026
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841949
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841873
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841797
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841736
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841690
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841629
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841583
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841553
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841507
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841476
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841446
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841415
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841400
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841370
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841354
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841339
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841324
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841309
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841293
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841278
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841278
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841263
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841263
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841248
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841248
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841232
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841232
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841232
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841217
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841217
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841217
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841202
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.841187
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840973
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840790
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840607
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840454
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840317
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840454
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840225
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840134
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.840027
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839920
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839844
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839767
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839981
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839783
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839737
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839661
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839600
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839554
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839508
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839752
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839584
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839554
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839493
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839447
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839417
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839615
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839462
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839447
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839401
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839340
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839310
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839584
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839447
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839432
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839386
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839355
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839325
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839294
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839264
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839539
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839401
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839386
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839355
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839325
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839294
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839264
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839462
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839294
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839310
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839249
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839233
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839508
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839355
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839417
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839432
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839478
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839706
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839539
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839508
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839584
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839523
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839478
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839539
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839478
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839706
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839554
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839539
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839478
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839432
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839401
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839630
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839478
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839462
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839417
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839386
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839340
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839310
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839569
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839432
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839417
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839340
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839310
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839279
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839523
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839325
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839294
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839279
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839249
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839508
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839355
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839325
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839294
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839279
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839249
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839523
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839325
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839294
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839264
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839249
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839478
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839371
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839340
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839401
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839447
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839493
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839447
 10047: sendto error
-sent mid: PO_PLAYER_MOVEMENT: (int): 921, (int): -88, (float): 180.839676
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
+10047: sendto error
 10047: sendto error

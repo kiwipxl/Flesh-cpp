@@ -68,13 +68,16 @@ void msg::init() {
 }
 
 void msg::send(Socket& sock, ByteStream& stream, bool print_output, bool write_to_file) {
-    if (print_output || write_to_file) {
+    //not thread safe, will crash if params are used inn another thread
+    //todo: param lists can be moved innto MID class to fix
+    /*if (print_output || write_to_file) {
         CMID mid = extract_mid(byte_buffer, byte_offset);
         extract_params(mid, byte_buffer, byte_offset);
         std::string temp = last_MID_to_string();
         if (print_output) log_print << "sent mid: " << temp;
         if (write_to_file) log_file << "sent mid: " << temp;
-    }
+        clear_param_list();
+    }*/
 
 	sock.s_send(byte_buffer, byte_offset);
 }
