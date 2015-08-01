@@ -1,5 +1,5 @@
 #include "Socket.h"
-#include "../Message.h"
+#include "../message/Message.h"
 #include "../../debug/Errors.h"
 #include "SocketManager.h"
 #include "../../debug/Logger.h"

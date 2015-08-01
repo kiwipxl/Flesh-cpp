@@ -21,16 +21,16 @@ char* serv_ip = "104.236.253.123";
 u_short serv_port = 4222;
 
 void test_pass(std::function<void()> func) {
-    func();
+    //func();
 }
 
 void tcp_connect() {
     using namespace sock;
 
-    int b = 0;
+    /*int b = 0;
     test_pass([b](CMID mid, std::vector<msg::Param>& params) {
         int a = 5;
-    });
+    });*/
 
     connection_finished = false;
     connection_error = NO_ERROR;
@@ -93,7 +93,7 @@ void sock::update() {
 void sock::send_udp_ping_pong(Socket& sock) {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
         if (sock.get_protocol() != PROTO_UDP) { log_warning << "cannot send udp ping pong: socket is not a udp socket"; return; }
-        msg::send(sock, msg::ByteStream() << _MID->UDP_INIT_PING_PONG);
+        msg::send(sock, msg::MsgStream() << _MID->UDP_INIT_PING_PONG);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;
             udp_ping_pong = true;
@@ -106,7 +106,7 @@ void sock::send_udp_ping_pong(Socket& sock) {
 }
 
 void sock::begin_relay_test(Socket& sock) {
-    msg::send(sock, msg::ByteStream() << _MID->BEGIN_RELAY_TEST);
+    msg::send(sock, msg::MsgStream() << _MID->BEGIN_RELAY_TEST);
 }
 
 void sock::close_all_threads() {

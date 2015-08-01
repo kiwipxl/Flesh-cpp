@@ -28,10 +28,10 @@ void peers::peer_join(int id, char* ip) {
     peer_list.push_back(p);
     if (p->bind_udp_sock() == NO_ERROR) {
         log_info << "udp peer socket successfully binded (peer_id: " << id << ", ip: " << ip << ", binded_port: " << p->udp_recv_port;
-        msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_UDP_PEER_BIND_PORT_SUCCESS << p->id << p->ip << p->udp_recv_port);
+        msg::send(sock::tcp_serv_sock, msg::MsgStream() << _MID->SEND_UDP_PEER_BIND_PORT_SUCCESS << p->id << p->ip << p->udp_recv_port);
     }else {
         log_warning << "udp peer socket binnd failed (peer_id: " << id << ", ip: " << ip << ")";
-        msg::send(sock::tcp_serv_sock, msg::ByteStream() << _MID->SEND_UDP_PEER_BIND_PORT_FAILED << p->id << p->ip);
+        msg::send(sock::tcp_serv_sock, msg::MsgStream() << _MID->SEND_UDP_PEER_BIND_PORT_FAILED << p->id << p->ip);
     }
 }
 

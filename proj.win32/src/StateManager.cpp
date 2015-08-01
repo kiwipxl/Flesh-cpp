@@ -101,7 +101,7 @@ void state::update(float dt) {
             terrain->draw();
 
             for (int n = 0; n < peers::peer_list.size(); ++n) {
-                msg::send(*peers::peer_list[n]->udp_sock, msg::ByteStream() << _MID->PO_PLAYER_MOVEMENT <<
+                msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<
                     (int)entity::test_player->base->getPositionX() << (int)entity::test_player->base->getPositionY() << 
                     (float)entity::test_player->base->getRotation());
             }

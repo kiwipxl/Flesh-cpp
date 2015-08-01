@@ -6,7 +6,7 @@ handles the tcp and udp socket connection between the server and udp sockets bet
 */
 
 #include "Socket.h"
-#include "../Message.h"
+#include "../message/Message.h"
 #include "../GameMessages.h"
 #include "../../debug/Errors.h"
 
