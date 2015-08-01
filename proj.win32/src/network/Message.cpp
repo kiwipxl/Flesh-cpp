@@ -67,8 +67,8 @@ void msg::init() {
 	}
 }
 
-void msg::send(Socket& sock, ByteStream& stream, bool print_output, bool write_to_file) {
-    //not thread safe, will crash if params are used inn another thread
+void msg::send(Socket& sock, ByteStream& stream, std::function<void()> callback) {
+    //not thread safe, will crash if params are used in another thread
     //todo: param lists can be moved innto MID class to fix
     /*if (print_output || write_to_file) {
         CMID mid = extract_mid(byte_buffer, byte_offset);
@@ -79,7 +79,8 @@ void msg::send(Socket& sock, ByteStream& stream, bool print_output, bool write_t
         clear_param_list();
     }*/
 
-	sock.s_send(byte_buffer, byte_offset);
+    sock.s_send(byte_buffer, byte_offset);
+    sock.add_callback(callback);
 }
 
 CMID msg::extract_mid(char* buffer, int buffer_len) {

@@ -23,8 +23,16 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #define PRINT_IF_ERROR 1
 
 enum SocketProtocol {
-	PROTO_TCP, 
-	PROTO_UDP
+    PROTO_TCP,
+    PROTO_UDP
+};
+
+struct SocketCallback {
+
+    SocketCallback(std::function<void()>& f) : func(f) { }
+
+    std::function<void()> func;
+    int id;
 };
 
 class Socket {
@@ -42,6 +50,8 @@ class Socket {
 		int s_recv(char* buffer, int buffer_len);
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
         int s_change_send_addr(char* sending_ip, u_short sending_port);
+
+        void add_callback(std::function<void()>& callback);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }
@@ -67,7 +77,8 @@ class Socket {
 		fd_set* r_set = NULL;
 		fd_set* w_set = NULL;
         timeval t;
-        
+        std::vector<SocketCallback> callbacks;
+
         int print_error(int err, char* func_err);
         int s_change_addr(sockaddr_in& addr_info, char* c_ip, u_short c_port);
         int s_update_addr_info(sockaddr_in& addr_info);

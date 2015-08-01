@@ -20,8 +20,17 @@ int sock::connection_error = -1;
 char* serv_ip = "104.236.253.123";
 u_short serv_port = 4222;
 
+void test_pass(std::function<void()> func) {
+    func();
+}
+
 void tcp_connect() {
     using namespace sock;
+
+    int b = 0;
+    test_pass([b](CMID mid, std::vector<msg::Param>& params) {
+        int a = 5;
+    });
 
     connection_finished = false;
     connection_error = NO_ERROR;

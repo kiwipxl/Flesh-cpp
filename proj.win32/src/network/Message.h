@@ -160,7 +160,7 @@ namespace msg {
 	//================== Message begin ==================
 
 	extern char byte_buffer[1024];
-	extern int byte_offset;
+    extern int byte_offset;
 
 	class ByteStream {
 
@@ -172,14 +172,37 @@ namespace msg {
 				byte_offset += len;
 			}
 
-			template <class T> ByteStream& operator<<(const T& v) { cpy_to_buf(&v, sizeof(v)); return *this; }
-			ByteStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); return *this; }
-			ByteStream& operator<<(char* str) { cpy_to_buf(str, strlen(str) + 1); return *this; }
-			ByteStream& operator<<(Param* p) { if (p != NULL) cpy_to_buf(p->data, p->len); return *this; }
+            template <class T> ByteStream& operator<<(const T& v) {
+                check_MID_add();
+                cpy_to_buf(&v, sizeof(v)); return *this;
+            }
+            ByteStream& operator<<(CMID v) {
+                cpy_to_buf(&v->id, sizeof(int)); added_MID = true; return *this;
+            }
+            ByteStream& operator<<(char* str) {
+                check_MID_add();
+                cpy_to_buf(str, strlen(str) + 1); return *this;
+            }
+            ByteStream& operator<<(Param* p) {
+                check_MID_add();
+                if (p != NULL) cpy_to_buf(p->data, p->len); return *this;
+            }
+
+            inline void check_MID_add() {
+                if (!added_MID) assert("an MID must be added to the stream first, before any other values");
+            }
+
+            ~ByteStream() {
+                if (!stream_complete) assert("byte stream must be complete whenever used - MID required");
+            }
+
+        private:
+            bool added_MID = false;
+            bool stream_complete = false;
 	};
 
 	void init();
-	void send(Socket& sock, ByteStream& stream, bool print_output = false, bool write_to_file = true);
+    void send(Socket& sock, ByteStream& stream, std::function<void()> callback = NULL);
 	CMID extract_mid(char* buffer, int buffer_len);
 	void extract_params(CMID mid, char* byte_data, int byte_data_len);
 	void clear_param_list();

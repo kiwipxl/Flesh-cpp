@@ -132,3 +132,8 @@ int Socket::s_recv(char* buffer, int buffer_len) {
 	}
 	return result;
 }
+
+void Socket::add_callback(std::function<void()>& callback) {
+    SocketCallback* cb = new SocketCallback(callback);
+    callbacks.push_back(callback);
+}
