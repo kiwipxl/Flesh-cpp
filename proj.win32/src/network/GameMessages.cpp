@@ -45,9 +45,9 @@ void recv_msgs() {
                     peers::Peer* peer;
 
 					if ((msg_len = sock->s_recv(buffer, 1024)) > 0) {
-						CMID mid = msg::extract_mid(buffer, msg_len);
-						if (mid->id > 0 && mid->id < msg::MID_list.size()) {
-							msg::extract_params(mid, buffer, msg_len);
+                        msg::extract_msg(buffer, msg_len);
+                        CMID mid = msg::last_MID;
+						if (mid != _MID->UNKNOWN) {
                             msg::print_extracted_params(false, true);
 
 							if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {

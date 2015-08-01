@@ -27,11 +27,6 @@ void test_pass(std::function<void()> func) {
 void tcp_connect() {
     using namespace sock;
 
-    /*int b = 0;
-    test_pass([b](CMID mid, std::vector<msg::Param>& params) {
-        int a = 5;
-    });*/
-
     connection_finished = false;
     connection_error = NO_ERROR;
     
