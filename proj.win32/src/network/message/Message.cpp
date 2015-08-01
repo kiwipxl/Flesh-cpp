@@ -7,64 +7,19 @@ using msg::MID;
 using msg::FormatType;
 using msg::Param;
 
-FormatType::FormatType(const char* c, const short l, const char* name) : printf_format(c), len(l), type_name(name) { }
-
-//format types for packing and unpacking byte data
-CFTYPE msg::FT_CHAR								= new FormatType("%c", 1, "char");
-CFTYPE msg::FT_SIGNED_CHAR						= new FormatType("%c", 1, "schar");
-CFTYPE msg::FT_UNSIGNED_CHAR					= new FormatType("%c", 1, "uchar");
-CFTYPE msg::FT_BOOL								= new FormatType("%d", 1, "bool");
-CFTYPE msg::FT_SHORT							= new FormatType("%d", 2, "short");
-CFTYPE msg::FT_UNSIGNED_SHORT					= new FormatType("%d", 2, "ushort");
-CFTYPE msg::FT_INT								= new FormatType("%i", 4, "int");
-CFTYPE msg::FT_UNSIGNED_INT						= new FormatType("%u", 4, "uint");
-CFTYPE msg::FT_LONG								= new FormatType("%li", 8, "long");
-CFTYPE msg::FT_UNSIGNED_LONG					= new FormatType("%lu", 8, "ulong");
-CFTYPE msg::FT_LONG_LONG						= new FormatType("%lli", 8, "llong");
-CFTYPE msg::FT_UNSIGNED_LONG_LONG				= new FormatType("%llu", 8, "ullong");
-CFTYPE msg::FT_FLOAT							= new FormatType("%f", 4, "float");
-CFTYPE msg::FT_DOUBLE							= new FormatType("%f", 8, "double");
-CFTYPE msg::FT_CHAR_ARRAY						= new FormatType("%s", 1, "char*");
-CFTYPE msg::FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
-
-int msg::MID_id = 0;
-std::vector<CMID> msg::MID_list;
-std::vector<std::string> msg::MID_names;
-
-MID::MID(int num_args, ...) : id(MID_id) {
-	if (num_args > 0) ft_params = new CFTYPE[num_args];
-	num_params = num_args;
-
-	va_list ap;
-	va_start(ap, num_args);
-	for (int n = 0; n < num_args; ++n) {
-		CFTYPE ft = va_arg(ap, CFTYPE); 
-		ft_params[n] = ft;
-		total_param_bytes += ft->len;
-	}
-	va_end(ap);
-
-	++MID_id;
-	MID_list.push_back(this);
-}
-
-msg::MIDConstants* msg::MIDConstants::mid_constant;
-
-char msg::byte_buffer[1024];
-int msg::byte_offset;
-u_short msg::callback_id = 0;
-
+CMID msg::last_MID;
+u_short msg::last_callback_id = 0;
 const int msg::MAX_NUM_PARAMS = 16;
-Param* msg::param_list[MAX_NUM_PARAMS];
-int msg::param_list_size = 0;
-int msg::param_tbytes = 0;
-CMID msg::last_extracted_mid;
+Param* msg::last_param_list[MAX_NUM_PARAMS];
+int msg::last_param_list_size = 0;
+int msg::last_param_tbytes = 0;
+
 const int msg::MAX_PRINT_BUF = 1024;
 char msg::print_buf[MAX_PRINT_BUF];
 
 void msg::init() {
 	for (int n = 0; n < MAX_NUM_PARAMS; ++n) {
-		param_list[n] = new Param();
+        last_param_list[n] = new Param();
 	}
 }
 
@@ -91,16 +46,24 @@ CMID msg::extract_mid(char* buffer, int buffer_len) {
 		memcpy(&id, buffer, 4);
 		if (id >= 0 && id < MID_list.size()) mid = MID_list[id];
 	}
-	last_extracted_mid = mid;
+    last_MID = mid;
 	return mid;
+}
+
+u_short msg::extract_callback_id(char* buffer, int buffer_len) {
+    int callback_id = 0;
+    if (buffer_len >= MSG_HEADER_SIZE) {
+        memcpy(callback_id, buffer + 4, 4);
+    }
+    return callback_id;
 }
 
 std::string concat_str = "";
 void msg::extract_params(CMID mid, char* byte_data, int byte_data_len) {
 	clear_param_list();
 
-	if (mid != _MID->UNKNOWN && byte_data_len - 4 >= mid->total_param_bytes) {
-		int offset = 4;
+	if (mid != _MID->UNKNOWN && byte_data_len - MSG_HEADER_SIZE >= mid->total_param_bytes) {
+        int offset = MSG_HEADER_SIZE;
 		int index = 0;
 		for (int n = 0; n < mid->num_params; ++n) {
 			int len = 0;

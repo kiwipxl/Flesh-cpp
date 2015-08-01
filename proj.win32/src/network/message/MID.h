@@ -1,16 +1,13 @@
-#ifndef _MESSAGE_H_
-#define _MESSAGE_H_
+#ifndef _MID_H_
+#define _MID_H_
 
+#include <vector>
 #include <string>
 #include <stdarg.h>
-#include <sstream>
-#include <vector>
-
-#include "sockets/Socket.h"
 
 namespace msg {
 
-	//================== Format types begin ==================
+    //================== Format types begin ==================
 
 	struct FormatType {
 
@@ -41,7 +38,7 @@ namespace msg {
 	extern CFTYPE FT_CHAR_ARRAY;
     extern CFTYPE FT_VOID_POINTER;
 
-	//================== MID begin ==================
+    //================== MID begin ==================
 
 	struct MID {
 
@@ -60,7 +57,7 @@ namespace msg {
 	extern std::vector<CMID> MID_list;
     extern std::vector<std::string> MID_names;
 
-    //================== Hack to get message variable names ==================
+    //================== Hack to get MID variable names ==================
 
     #define PP_CAT(a, b) PP_CAT_I(a, b)
     #define PP_CAT_I(a, b) PP_CAT_II(~, a ## b)
@@ -140,70 +137,6 @@ namespace msg {
         private:
             static MIDConstants* mid_constant;
     };
-
-	//================== Parameters begin ==================
-
-	struct Param {
-
-		char* data;
-		int len;
-	};
-
-	extern const int MAX_NUM_PARAMS;
-	extern Param* param_list[];
-	extern int param_list_size;
-	extern int param_tbytes;
-	extern CMID last_extracted_mid;
-	extern const int MAX_PRINT_BUF;
-	extern char print_buf[];
-
-	//================== Message begin ==================
-
-	extern char byte_buffer[1024];
-    extern int byte_offset;
-    extern u_short callback_id;
-
-	class ByteStream {
-
-		public:
-			ByteStream() { byte_offset = 0; }
-
-			template <class T> inline void cpy_to_buf(const T* v, int len) {
-				memcpy(byte_buffer + byte_offset, v, len);
-				byte_offset += len;
-			}
-
-            template <class T> ByteStream& operator<<(const T& v) { check_MID_add(); cpy_to_buf(&v, sizeof(v)); return *this; }
-            ByteStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); added_MID = true; write_callback_id(); return *this; }
-            ByteStream& operator<<(char* str) { check_MID_add(); cpy_to_buf(str, strlen(str) + 1); return *this; }
-            ByteStream& operator<<(Param* p) { check_MID_add(); if (p != NULL) cpy_to_buf(p->data, p->len); return *this; }
-
-            ~ByteStream() {
-                if (!stream_complete) assert("byte stream must be complete whenever used - MID required");
-            }
-
-        private:
-            bool added_MID = false;
-            bool stream_complete = false;
-
-            inline void write_callback_id() {
-                cpy_to_buf(&callback_id, sizeof(callback_id));
-                ++callback_id;
-            }
-
-            inline void check_MID_add() {
-                if (!added_MID) assert("an MID must be added to the stream first, before any other values");
-            }
-	};
-
-	void init();
-    void send(Socket& sock, ByteStream& stream, std::function<void()> callback = NULL);
-	CMID extract_mid(char* buffer, int buffer_len);
-	void extract_params(CMID mid, char* byte_data, int byte_data_len);
-	void clear_param_list();
-    void print_extracted_params(bool print_output = true, bool write_to_file = false);
-    std::string last_MID_to_string();
-    inline const char* get_MID_name(CMID mid);
-}
+};
 
 #endif
