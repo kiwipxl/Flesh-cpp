@@ -161,6 +161,7 @@ namespace msg {
 
 	extern char byte_buffer[1024];
     extern int byte_offset;
+    extern u_short callback_id;
 
 	class ByteStream {
 
@@ -172,25 +173,10 @@ namespace msg {
 				byte_offset += len;
 			}
 
-            template <class T> ByteStream& operator<<(const T& v) {
-                check_MID_add();
-                cpy_to_buf(&v, sizeof(v)); return *this;
-            }
-            ByteStream& operator<<(CMID v) {
-                cpy_to_buf(&v->id, sizeof(int)); added_MID = true; return *this;
-            }
-            ByteStream& operator<<(char* str) {
-                check_MID_add();
-                cpy_to_buf(str, strlen(str) + 1); return *this;
-            }
-            ByteStream& operator<<(Param* p) {
-                check_MID_add();
-                if (p != NULL) cpy_to_buf(p->data, p->len); return *this;
-            }
-
-            inline void check_MID_add() {
-                if (!added_MID) assert("an MID must be added to the stream first, before any other values");
-            }
+            template <class T> ByteStream& operator<<(const T& v) { check_MID_add(); cpy_to_buf(&v, sizeof(v)); return *this; }
+            ByteStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); added_MID = true; write_callback_id(); return *this; }
+            ByteStream& operator<<(char* str) { check_MID_add(); cpy_to_buf(str, strlen(str) + 1); return *this; }
+            ByteStream& operator<<(Param* p) { check_MID_add(); if (p != NULL) cpy_to_buf(p->data, p->len); return *this; }
 
             ~ByteStream() {
                 if (!stream_complete) assert("byte stream must be complete whenever used - MID required");
@@ -199,6 +185,15 @@ namespace msg {
         private:
             bool added_MID = false;
             bool stream_complete = false;
+
+            inline void write_callback_id() {
+                cpy_to_buf(&callback_id, sizeof(callback_id));
+                ++callback_id;
+            }
+
+            inline void check_MID_add() {
+                if (!added_MID) assert("an MID must be added to the stream first, before any other values");
+            }
 	};
 
 	void init();

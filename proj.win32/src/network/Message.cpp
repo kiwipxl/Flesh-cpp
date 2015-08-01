@@ -52,6 +52,7 @@ msg::MIDConstants* msg::MIDConstants::mid_constant;
 
 char msg::byte_buffer[1024];
 int msg::byte_offset;
+u_short msg::callback_id = 0;
 
 const int msg::MAX_NUM_PARAMS = 16;
 Param* msg::param_list[MAX_NUM_PARAMS];
