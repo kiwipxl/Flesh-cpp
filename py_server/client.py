@@ -1,6 +1,7 @@
 import message;
 import debug;
 import game;
+import _MID;
 
 class Client:
     id = 0;
@@ -40,7 +41,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.tcp_sock, c, message.MID_SEND_SERVER_BINDED_UDP_PORT, (new_udp_sock.getsockname()[1],));
+    message.send(c.tcp_sock, c, message.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]));
 
 def handle_leave(client_obj, leave_message, remove_from_list = True):
     global clients

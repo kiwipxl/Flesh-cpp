@@ -4,115 +4,8 @@ import struct;
 import socket;
 import debug;
 import time;
-
-class FormatType():
-
-    struct_char = '';
-    printf_char = '';
-    len = 0;
-    type_name = "";
-
-    def __init__(self, schar, pchar, len, name):
-        self.struct_char = schar;
-        self.printf_char = pchar;
-        self.len = len;
-        self.type_name = name;
-
-#format types for packing and unpacking byte data
-FT_CHAR                     = FormatType('c', 'c', 1, "char");
-FT_SIGNED_CHAR              = FormatType('b', 'c', 1, "schar");
-FT_UNSIGNED_CHAR            = FormatType('B', 'c', 1, "uchar");
-FT_BOOL                     = FormatType('?', 'd', 1, "bool");
-FT_SHORT                    = FormatType('h', 'd', 2, "short");
-FT_UNSIGNED_SHORT           = FormatType('H', 'd', 2, "ushort");
-FT_INT                      = FormatType('i', 'i', 4, "int");
-FT_UNSIGNED_INT             = FormatType('I', 'u', 4, "uint");
-FT_LONG                     = FormatType('l', 'li', 8, "long");
-FT_UNSIGNED_LONG            = FormatType('L', 'lu', 8, "ulong");
-FT_LONG_LONG                = FormatType('q', 'lli', 8, "llong");
-FT_UNSIGNED_LONG_LONG       = FormatType('Q', 'llu', 8, "ullong");
-FT_FLOAT                    = FormatType('f', 'f', 4, "float");
-FT_DOUBLE                   = FormatType('d', 'f', 8, "double");
-FT_CHAR_ARRAY               = FormatType('s', 's', 1, "char*");
-FT_VOID_POINTER             = FormatType('p', 'lu', 4, "void*");
-
-MID_id = 0;
-MID_list = [];
-
-class MID():
-
-    id = 0;
-    ft_params = [];
-    total_param_bytes = 0;
-    num_params = 0;
-
-    def __init__(self, *ft_params_list):
-        global MID_id;
-        global MID_list;
-
-        self.id = MID_id;
-        self.ft_params = ft_params_list;
-        i = 0;
-        for param in ft_params_list:
-            self.total_param_bytes += param.len;
-            i += 1;
-        self.num_params = i;
-
-        MID_id += 1;
-        MID_list.append(self);
-
-#MID syntax note:
-#MID_SEND_XXX - a message to send to a client
-#MID_RECV_XXX - a message to receive from a client
-#MID_XXX - a message that can be both sent and received to and from clients
-
-MID_UNKNOWN                                     = MID();
-
-#sends a client id of a specified client
-MID_SEND_CLIENT_ID                              = MID(FT_INT);
-#receives a request to register a username and password from a client
-MID_RECV_CLIENT_LOGIN_USER_PASS                 = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
-#receives a request to register a username and password from a client
-MID_RECV_CLIENT_REGISTER_USER_PASS              = MID(FT_CHAR_ARRAY, FT_CHAR_ARRAY);
-
-#begins sending a relay test which ping pongs for infinite time
-MID_BEGIN_RELAY_TEST                            = MID();
-#ping pong relay test messages
-MID_RELAY_TEST                                  = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT, FT_UNSIGNED_SHORT);
-#init ping pong udp message to test udp communication
-MID_UDP_INIT_PING_PONG                          = MID();
-#ping pong udp messages
-MID_UDP_PING_PONG                               = MID();
-
-MID_RECV_UDP_SERVER_COMMUNICATION_SUCCESS       = MID();
-#requests a client to bind to a random port to allow peers to send messages to
-MID_SEND_UDP_PEER_BIND_REQUEST                  = MID(FT_INT, FT_CHAR_ARRAY);
-#receives the binded udp port from a client after the request was made
-MID_RECV_UDP_PEER_BIND_PORT_SUCCESS             = MID(FT_INT, FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-#the request to bind a udp port on a client failed
-MID_RECV_UDP_PEER_BIND_PORT_FAILED              = MID(FT_INT, FT_CHAR_ARRAY);
-#the request to bind a udp port on a client failed
-MID_SEND_UDP_PEER_PORT                          = MID(FT_INT, FT_UNSIGNED_SHORT);
-#received when a client successfully connect to their peer
-MID_RECV_PEER_CONNECT_SUCCESS                   = MID(FT_INT, FT_CHAR_ARRAY);
-
-#sent once a peer has joined and successfully communicated with the client
-MID_SEND_PEER_JOIN                              = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-#sent once a client has left the server (tcp, udp connection fail, ect) and needs to tell the client about it
-MID_SEND_PEER_LEAVE                             = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-#received if a client is unable to communicate with other peers
-MID_RECV_PEER_LEAVE                             = MID(FT_CHAR_ARRAY, FT_UNSIGNED_SHORT);
-
-#server sends server udp binded port to client
-MID_SEND_SERVER_BINDED_UDP_PORT                 = MID(FT_UNSIGNED_SHORT);
-#client sends client binded udp port to server
-MID_RECV_CLIENT_BINDED_UDP_PORT                 = MID(FT_UNSIGNED_SHORT);
-
-#put all MID_x variables into a name array so messages can be debugged easier
-MID_names = MID_id * [None];
-for k, v in list(locals().iteritems()):
-    if (k != None and len(k) >= 4 and k[0:4] == "MID_" and isinstance(v, MID)):
-        MID_names[v.id] = k;
+import _MID;
+import _FT;
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
@@ -121,7 +14,7 @@ MSG_HEADER_SIZE = 8;
 def build(mid, params = None):
     byte_offset = 4;
     i = 0;
-    byte_buffer[0:4] = struct.pack(FT_INT.struct_char, mid.id);
+    byte_buffer[0:4] = struct.pack(_FT.INT.struct_char, mid.id);
     if (params):
         try:
             for param in params:
@@ -138,11 +31,11 @@ def build(mid, params = None):
     return byte_buffer;
 
 def extract_mid(byte_data):
-    mid = MID_UNKNOWN;
+    mid = _MID.UNKNOWN;
     if (len(byte_data) >= MSG_HEADER_SIZE):
         id = struct.unpack("i", byte_data[0:4])[0];
-        if (id >= 0 and id <= len(MID_list)):
-            mid = MID_list[id];
+        if (id >= 0 and id <= len(_MID.list)):
+            mid = _MID.list[id];
         else:
             debug.log("MID id %d is unknown" % id, debug.P_WARNING);
     return mid;
@@ -174,7 +67,7 @@ def extract_params(mid, byte_data):
         return (params, 0);
     else:
         debug.log("extract params failed. received msg %s is only %i bytes long when the minimum is %i bytes" %
-                  (MID_names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
+                  (_MID.names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
         return (params, -1);
 
 def send(sock, client_obj, built_msg):
@@ -197,7 +90,7 @@ def broadcast(sock_list, client_obj, built_msg):
 def log(client_obj, sock_type, mid, params = None):
     if (params == None or (mid.num_params >= 0 and mid.num_params == len(params))):
         debug.log("", debug.P_MID, "");
-        print(MID_names[mid.id] + " (client id %d, %s)" % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
+        print(_MID.names[mid.id] + " (client id %d, %s)" % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
         if (mid.num_params >= 1 and params != None):
             print(": ", end='');
             i = 0;
