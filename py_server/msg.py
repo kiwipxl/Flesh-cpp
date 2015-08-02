@@ -72,6 +72,9 @@ def extract_params(mid, byte_data):
         return (params, -1);
 
 def send(sock, client_obj, built_msg, callback_func = None, callback_type = callback.NONE):
+    if (len(built_msg) < MSG_HEADER_SIZE):
+        debug.log("built message does not contain a full header", debug.P_WARNING);
+
     if (sock.type == socket.SOCK_STREAM):
         send_tcp(sock, built_msg);
     else:

@@ -13,3 +13,6 @@ class MessageCallback:
     mid = _MID.UNKNOWN;
     type = NONE;
     num_callbacks_left = 0;
+
+    def __init__(self):
+        pass;

@@ -1,4 +1,4 @@
-import message;
+import msg;
 import debug;
 import game;
 import _MID;
@@ -10,17 +10,17 @@ class Client:
     udp_sock = None;
     ip = "";
     c_tcp_port = -1;   #binded tcp port on client machine connected to client tcp socket
-    c_udp_port = -1;   #binded udp port on client machine that is listening for messages
+    c_udp_port = -1;   #binded udp port on client machine that is listening for msgs
     s_tcp_port = -1;   #binded tcp port on server machine connected to client tcp socket
-    s_udp_port = -1;   #binded udp port on server machine that is listening for messages
+    s_udp_port = -1;   #binded udp port on server machine that is listening for msgs
     joined_game = None;
     game_client = None;
     callbacks = [];
 
     def add_callback(self, callback_func, callback_type):
         cb = callback.MessageCallback();
-        db.func = callback;
-        callbacks.append(db);
+        cb.func = callback_func;
+        self.callbacks.append(cb);
 
 clients = [];
 num_clients = 0;
@@ -48,11 +48,12 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.tcp_sock, c, message.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), ssbupcb, callback.MID_LOOP);
+
     def ssbupcb():
         pass;
+    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), ssbupcb, callback.MID_LOOP);
 
-def handle_leave(client_obj, leave_message, remove_from_list = True):
+def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients
     global num_clients
 
@@ -62,7 +63,7 @@ def handle_leave(client_obj, leave_message, remove_from_list = True):
     game.client_leave(client_obj);
 
     debug.log("client disconnected (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d, msg: %s)" %
-          (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_message), debug.P_INFO);
+          (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_msg), debug.P_INFO);
 
     if (remove_from_list): clients.remove(client_obj);
     num_clients -= 1;

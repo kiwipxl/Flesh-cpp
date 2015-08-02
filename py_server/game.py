@@ -1,5 +1,5 @@
 import client;
-import message;
+import msg;
 import _MID;
 
 class Peer:
@@ -47,7 +47,7 @@ class Game:
             for gcl in self.g_clients:
                 if (gcl != new_gcl):
                     #send a bind request to all clients except the newly joined one
-                    message.send(gcl.client_obj.tcp_sock, gcl.client_obj, message.build(_MID.SEND_UDP_PEER_BIND_REQUEST, client_obj.id, client_obj.ip));
+                    msg.send(gcl.client_obj.tcp_sock, gcl.client_obj, msg.build(_MID.SEND_UDP_PEER_BIND_REQUEST, client_obj.id, client_obj.ip));
                     #add 1 new peer for the newly joined client
                     joined_peer = Peer();
                     joined_peer.game_client = new_gcl;
@@ -55,7 +55,7 @@ class Game:
                     print("added peer id %d to game client %d. peers len: %d" % (new_gcl.client_obj.id, gcl.client_obj.id, len(gcl.peers)));
 
                     #send a bind request to the newly joined client for every other client in the game
-                    message.send(client_obj.tcp_sock, client_obj, message.build(_MID.SEND_UDP_PEER_BIND_REQUEST, gcl.client_obj.id, gcl.client_obj.ip));
+                    msg.send(client_obj.tcp_sock, client_obj, msg.build(_MID.SEND_UDP_PEER_BIND_REQUEST, gcl.client_obj.id, gcl.client_obj.ip));
                     #append the newly joined clients peer list with every other client in the game
                     client_peer = Peer();
                     client_peer.game_client = gcl;
@@ -91,7 +91,7 @@ class Game:
                 for gcl in self.g_clients:
                     for p in gcl.peers:
                         pcl = p.game_client.client_obj;
-                        message.send(pcl.tcp_sock, pcl, message.build(_MID.SEND_UDP_PEER_PORT, gcl.client_obj.id, p.port));
+                        msg.send(pcl.tcp_sock, pcl, msg.build(_MID.SEND_UDP_PEER_PORT, gcl.client_obj.id, p.port));
         else:
             print("udp bind failed, dunno how to handle this right now");
 
