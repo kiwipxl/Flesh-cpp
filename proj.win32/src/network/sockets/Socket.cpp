@@ -1,8 +1,9 @@
 #include "Socket.h"
+
 #include "../message/Message.h"
 #include "../../debug/Errors.h"
-#include "SocketManager.h"
 #include "../../debug/Logger.h"
+#include "SocketManager.h"
 
 #define PRINT_OR_ERROR(str) PRINT_IF_ERROR ? print_error(debug::get_last_error(), str) : debug::get_last_error()
 
@@ -133,7 +134,25 @@ int Socket::s_recv(char* buffer, int buffer_len) {
 	return result;
 }
 
-void Socket::add_callback(std::function<void()>& callback) {
-    SocketCallback* cb = new SocketCallback(callback);
-    callbacks.push_back(callback);
+void Socket::add_unique_id_callback(std::function<void()> callback, CMID mid, u_int unique_id) {
+    SocketCallback* cb = new SocketCallback(callback, mid, unique_id, CALLBACK_UNIQUE_ID);
+    callbacks.push_back(cb);
+}
+
+void Socket::add_MID_callback(std::function<void()> callback, CMID mid, int num_callbacks) {
+    SocketCallback* cb = new SocketCallback(callback, mid, 0, CALLBACK_MID);
+    cb->num_callbacks_left = num_callbacks;
+    callbacks.push_back(cb);
+}
+
+void Socket::add_MID_callback_once(std::function<void()> callback, CMID mid) {
+    SocketCallback* cb = new SocketCallback(callback, mid, mid->callback_id_inc, CALLBACK_MID);
+    cb->num_callbacks_left = 1;
+    callbacks.push_back(cb);
+}
+
+void Socket::add_MID_callback_loop(std::function<void()> callback, CMID mid) {
+    SocketCallback* cb = new SocketCallback(callback, mid, mid->callback_id_inc, CALLBACK_MID_LOOP);
+    cb->num_callbacks_left = -1;
+    callbacks.push_back(cb);
 }

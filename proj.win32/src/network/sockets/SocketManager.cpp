@@ -17,7 +17,7 @@ Socket* sock::udp_ping_pong_sock = NULL;
 bool sock::connection_finished = false;
 int sock::connection_error = -1;
 
-char* serv_ip = "104.236.253.123";
+char* serv_ip = "127.0.0.1";
 u_short serv_port = 4222;
 
 void test_pass(std::function<void()> func) {
@@ -41,7 +41,20 @@ void tcp_connect() {
                            tcp_serv_sock.get_binded_ip() << ", port: " << tcp_serv_sock.get_binded_port() << ")";
         socket_setup_failed(fresult); return;
     }
-    
+
+    tcp_serv_sock.add_MID_callback_loop([]() {
+        msg::print_extracted_params();
+
+        if (sock::setup_udp_sock(*(u_short*)msg::last_param_list[0]->data)) {
+            msg::send(sock::tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << sock::udp_serv_sock.get_binded_port());
+            msg::game::server_poll.add_sock(sock::udp_serv_sock);
+            sock::send_udp_ping_pong(sock::udp_serv_sock);
+        }else {
+            sock::connection_finished = true;
+            sock::connection_error = -1;
+        }
+    }, _MID->RECV_SERVER_BINDED_UDP_PORT);
+
     log_info << "(tcp_serv_sock): connection successful";
 
     msg::game::start_recv_thread();

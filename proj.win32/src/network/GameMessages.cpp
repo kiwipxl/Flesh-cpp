@@ -48,6 +48,43 @@ void recv_msgs() {
                         msg::extract_msg(buffer, msg_len);
                         CMID mid = msg::last_MID;
 						if (mid != _MID->UNKNOWN) {
+                            //if (msg::last_callback_id != 0) {
+                                bool called = false;
+                                for (int n = 0; n < sock->callbacks.size(); ++n) {
+                                    bool verified = false;
+                                    switch (sock->callbacks[n]->type) {
+                                        case CALLBACK_UNIQUE_ID:
+                                            verified = (sock->callbacks[n]->mid == mid && sock->callbacks[n]->id == msg::last_callback_id);
+                                            break;
+                                        case CALLBACK_MID:
+                                        case CALLBACK_MID_LOOP:
+                                            verified = (sock->callbacks[n]->mid == mid);
+                                            break;
+                                    }
+                                    if (verified) {
+                                        sock->callbacks[n]->func();
+                                        bool erase = true;
+                                        switch (sock->callbacks[n]->type) {
+                                            case CALLBACK_UNIQUE_ID:
+                                                break;
+                                            case CALLBACK_MID:
+                                                if (--sock->callbacks[n]->num_callbacks_left > 0) erase = false;
+                                                break;
+                                            case CALLBACK_MID_LOOP:
+                                                erase = false;
+                                                break;
+                                        }
+                                        if (erase) {
+                                            sock->callbacks.erase(sock->callbacks.begin() + n);
+                                            --n;
+                                        }
+                                        called = true;
+                                        break;
+                                    }
+                                }
+                                if (called) continue;
+                            //}
+
                             msg::print_extracted_params(false, true);
 
 							if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {
@@ -62,18 +99,7 @@ void recv_msgs() {
 
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, _MID->RECV_ID)) {
-								msg::print_extracted_params();
-							}else if (VALID_PARAMS(mid, _MID->RECV_SERVER_BINDED_UDP_PORT)) {
                                 msg::print_extracted_params();
-                                
-                                if (sock::setup_udp_sock(*(u_short*)msg::last_param_list[0]->data)) {
-                                    msg::send(sock::tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << sock::udp_serv_sock.get_binded_port());
-                                    server_poll.add_sock(sock::udp_serv_sock);
-                                    sock::send_udp_ping_pong(sock::udp_serv_sock);
-                                }else {
-                                    sock::connection_finished = true;
-                                    sock::connection_error = -1;
-                                }
                             }else if (VALID_PARAMS(mid, _MID->UDP_INIT_PING_PONG)) {
                                 sock::udp_ping_pong = false;
                                 sock::connection_finished = true;

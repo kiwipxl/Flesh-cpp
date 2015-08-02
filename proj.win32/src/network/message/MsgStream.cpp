@@ -1,13 +1,11 @@
 #include "MsgStream.h"
 
-#include "../sockets/Socket.h"
 #include "Message.h"
 
 using msg::MsgStream;
 
 char msg::byte_buffer[1024];
 int msg::byte_offset;
-u_short callback_id_inc = 1;
 
 MsgStream& MsgStream::operator<<(msg::Param* p) {
     check_MID_add();
@@ -15,7 +13,7 @@ MsgStream& MsgStream::operator<<(msg::Param* p) {
     return *this;
 }
 
-void MsgStream::write_callback_id() {
-    cpy_to_buf(&callback_id_inc, sizeof(callback_id_inc));
-    ++callback_id_inc;
+void MsgStream::write_callback_id(CMID v) {
+    ++v->callback_id_inc;
+    cpy_to_buf(&v->callback_id_inc, sizeof(u_short));
 }

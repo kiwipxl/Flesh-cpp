@@ -47,6 +47,7 @@ namespace msg {
 		int total_param_bytes = 0;
         int num_params = 0;
         const char* name;
+        unsigned int callback_id_inc = 10;
 
 		MID(int num_args, ...);
 	};

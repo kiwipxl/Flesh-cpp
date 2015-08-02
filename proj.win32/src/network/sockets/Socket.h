@@ -6,7 +6,9 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 */
 
 #include <base/CCConsole.h>
+
 #include "debug/PlatformConfig.h"
+#include "../message/MID.h"
 
 #if defined(PLATFORM_WIN32)
 #include <WinSock2.h>
@@ -27,12 +29,22 @@ enum SocketProtocol {
     PROTO_UDP
 };
 
+enum SocketCallbackType {
+
+    CALLBACK_UNIQUE_ID, 
+    CALLBACK_MID, 
+    CALLBACK_MID_LOOP
+};
+
 struct SocketCallback {
 
-    SocketCallback(std::function<void()>& f) : func(f) { }
+    SocketCallback(std::function<void()>& f, CMID m, u_int i, SocketCallbackType t) : func(f), mid(m), id(i), type(t) { }
 
     std::function<void()> func;
-    int id;
+    u_int id = 0;
+    CMID mid;
+    SocketCallbackType type;
+    int num_callbacks_left = -1;
 };
 
 class Socket {
@@ -41,7 +53,7 @@ class Socket {
 		static void init_sockets();
 		static int poll_fds(pollfd* fd_array, int array_len, int timeout);
 
-		Socket(SocketProtocol c_protocol = PROTO_TCP);
+        Socket(SocketProtocol c_protocol = PROTO_TCP);
 
 		int s_create();
 		int s_bind(char* binding_ip, u_short binding_port);
@@ -51,7 +63,11 @@ class Socket {
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
         int s_change_send_addr(char* sending_ip, u_short sending_port);
 
-        void add_callback(std::function<void()>& callback);
+        std::vector<SocketCallback*> callbacks;
+        void add_unique_id_callback(std::function<void()> callback, CMID mid, u_int unique_id);
+        void add_MID_callback(std::function<void()> callback, CMID mid, int num_callbacks = 1);
+        void add_MID_callback_once(std::function<void()> callback, CMID mid);
+        void add_MID_callback_loop(std::function<void()> callback, CMID mid);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }
@@ -77,7 +93,6 @@ class Socket {
 		fd_set* r_set = NULL;
 		fd_set* w_set = NULL;
         timeval t;
-        std::vector<SocketCallback> callbacks;
 
         int print_error(int err, char* func_err);
         int s_change_addr(sockaddr_in& addr_info, char* c_ip, u_short c_port);

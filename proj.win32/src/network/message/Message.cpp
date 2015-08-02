@@ -36,7 +36,7 @@ void msg::send(Socket& sock, MsgStream& stream, std::function<void()> callback) 
     }*/
 
     sock.s_send(byte_buffer, byte_offset);
-    sock.add_callback(callback);
+    sock.add_unique_id_callback(callback, stream.mid, stream.mid->callback_id_inc);
 }
 
 void msg::extract_msg(char* buffer, int buffer_len) {
