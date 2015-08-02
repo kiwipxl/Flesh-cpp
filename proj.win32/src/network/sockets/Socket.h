@@ -70,7 +70,7 @@ class Socket {
         void add_MID_callback(std::function<void()> callback, CMID mid, int num_callbacks = 1);
         void add_MID_callback_once(std::function<void()> callback, CMID mid);
         void add_MID_callback_loop(std::function<void()> callback, CMID mid);
-        void add_MID_any_callback(std::function<void()> callback);
+        void add_MID_any_callback(std::function<void()> callback, int num_callbacks = 1);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }

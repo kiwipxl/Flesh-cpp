@@ -25,13 +25,15 @@ def got_msg(sock, client_obj, byte_data):
                     verified = (cb.mid == mid and cb.id == callback_id);
                 elif (cb.type == callback.MID or cb.type == callback.MID_LOOP):
                     verified = (cb.mid == mid);
+                elif (cb.type == callback.MID_ANY):
+                    verified = True;
                 if (verified):
                     cb.func();
                     erase = True;
                     if (cb.type == callback.MID):
                         cb.num_callbacks_left -= 1;
                         if (cb.num_callbacks_left): erase = False;
-                    elif (cb.type == callback.MID_LOOP):
+                    elif (cb.type == callback.MID_LOOP or cb.type == callback.MID_ANY):
                         erase = False;
                     if (erase):
                         del client_obj.callbacks[n];

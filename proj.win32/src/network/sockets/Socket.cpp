@@ -156,7 +156,7 @@ void Socket::add_MID_callback_loop(std::function<void()> callback, CMID mid) {
     callbacks.push_back(cb);
 }
 
-void Socket::add_MID_any_callback(std::function<void()> callback) {
-    SocketCallback* cb = new SocketCallback(callback, NULL, 0, CALLBACK_MID_ANY);
+void Socket::add_MID_any_callback(std::function<void()> callback, int num_callbacks) {
+    SocketCallback* cb = new SocketCallback(callback, NULL, num_callbacks, CALLBACK_MID_ANY);
     callbacks.push_back(cb);
 }
