@@ -6,6 +6,7 @@ import debug;
 import time;
 import _MID;
 import _FT;
+import callback;
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
@@ -70,11 +71,12 @@ def extract_params(mid, byte_data):
                   (_MID.names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
         return (params, -1);
 
-def send(sock, client_obj, built_msg):
+def send(sock, client_obj, built_msg, callback_func = None, callback_type = callback.NONE):
     if (sock.type == socket.SOCK_STREAM):
         send_tcp(sock, built_msg);
     else:
         send_udp(sock, client_obj.ip, client_obj.c_udp_port);
+    client_obj.add_callback(callback_func, callback_type);
 
 def send_tcp(tcp_sock, built_msg):
     tcp_sock.send(built_msg);

@@ -65,8 +65,6 @@ void recv_msgs() {
                                         sock->callbacks[n]->func();
                                         bool erase = true;
                                         switch (sock->callbacks[n]->type) {
-                                            case CALLBACK_UNIQUE_ID:
-                                                break;
                                             case CALLBACK_MID:
                                                 if (--sock->callbacks[n]->num_callbacks_left > 0) erase = false;
                                                 break;

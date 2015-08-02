@@ -2,6 +2,7 @@ import message;
 import debug;
 import game;
 import _MID;
+import callback;
 
 class Client:
     id = 0;
@@ -14,6 +15,12 @@ class Client:
     s_udp_port = -1;   #binded udp port on server machine that is listening for messages
     joined_game = None;
     game_client = None;
+    callbacks = [];
+
+    def add_callback(self, callback_func, callback_type):
+        cb = callback.MessageCallback();
+        db.func = callback;
+        callbacks.append(db);
 
 clients = [];
 num_clients = 0;
@@ -41,7 +48,9 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     num_clients += 1;
     client_id_inc += 1;
-    message.send(c.tcp_sock, c, message.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]));
+    message.send(c.tcp_sock, c, message.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), ssbupcb, callback.MID_LOOP);
+    def ssbupcb():
+        pass;
 
 def handle_leave(client_obj, leave_message, remove_from_list = True):
     global clients

@@ -31,6 +31,7 @@ enum SocketProtocol {
 
 enum SocketCallbackType {
 
+    CALLBACK_NONE, 
     CALLBACK_UNIQUE_ID, 
     CALLBACK_MID, 
     CALLBACK_MID_LOOP
@@ -41,7 +42,7 @@ struct SocketCallback {
     SocketCallback(std::function<void()>& f, CMID m, u_int i, SocketCallbackType t) : func(f), mid(m), id(i), type(t) { }
 
     std::function<void()> func;
-    u_int id = 0;
+    u_int id;
     CMID mid;
     SocketCallbackType type;
     int num_callbacks_left = -1;
