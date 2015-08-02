@@ -153,6 +153,5 @@ void Socket::add_MID_callback_once(std::function<void()> callback, CMID mid) {
 
 void Socket::add_MID_callback_loop(std::function<void()> callback, CMID mid) {
     SocketCallback* cb = new SocketCallback(callback, mid, mid->callback_id_inc, CALLBACK_MID_LOOP);
-    cb->num_callbacks_left = -1;
     callbacks.push_back(cb);
 }

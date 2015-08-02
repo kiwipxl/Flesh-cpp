@@ -71,7 +71,7 @@ def extract_params(mid, byte_data):
                   (_MID.names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
         return (params, -1);
 
-def send(sock, client_obj, built_msg, callback_func = None, callback_type = callback.NONE):
+def send(sock, client_obj, built_msg, callback_obj = None):
     if (len(built_msg) < MSG_HEADER_SIZE):
         debug.log("built message does not contain a full header", debug.P_WARNING);
 
@@ -79,7 +79,7 @@ def send(sock, client_obj, built_msg, callback_func = None, callback_type = call
         send_tcp(sock, built_msg);
     else:
         send_udp(sock, client_obj.ip, client_obj.c_udp_port);
-    client_obj.add_callback(callback_func, callback_type);
+    client_obj.add_callback(callback_obj);
 
 def send_tcp(tcp_sock, built_msg):
     tcp_sock.send(built_msg);

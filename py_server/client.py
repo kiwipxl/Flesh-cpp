@@ -17,10 +17,9 @@ class Client:
     game_client = None;
     callbacks = [];
 
-    def add_callback(self, callback_func, callback_type):
-        cb = callback.MessageCallback();
-        cb.func = callback_func;
-        self.callbacks.append(cb);
+    def add_callback(self, callback_obj):
+        if (callback_obj):
+            self.callbacks.append(callback_obj);
 
 clients = [];
 num_clients = 0;
@@ -51,7 +50,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     def ssbupcb():
         pass;
-    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), ssbupcb, callback.MID_LOOP);
+    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), callback.make_any_callback(ssbupcb));
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients

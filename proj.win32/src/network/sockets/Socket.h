@@ -34,7 +34,8 @@ enum SocketCallbackType {
     CALLBACK_NONE, 
     CALLBACK_UNIQUE_ID, 
     CALLBACK_MID, 
-    CALLBACK_MID_LOOP
+    CALLBACK_MID_LOOP, 
+    CALLBACK_ANY_MID
 };
 
 struct SocketCallback {
