@@ -3,19 +3,40 @@ import db;
 import socket_manage;
 import msg;
 import client;
-import time;
 import random;
 import game;
 import _MID;
+import callback;
 
 def verify_params(recv_mid, mid, np):
     return recv_mid == mid and np == mid.num_params;
 
 def got_msg(sock, client_obj, byte_data):
     mid = msg.extract_mid(byte_data);
+    callback_id = msg.extract_callback(byte_data);
     if (mid != _MID.UNKNOWN):
         (params, err) = msg.extract_params(mid, byte_data);
         if (err != -1):
+            n = 0;
+            for i in range(0, len(client_obj.callbacks)):
+                cb = client_obj.callbacks[n];
+                verified = False;
+                if (cb.type == callback.UNIQUE_ID):
+                    verified = (cb.mid == mid and cb.id == callback_id);
+                elif (cb.type == callback.MID or cb.type == callback.MID_LOOP):
+                    verified = (cb.mid == mid);
+                if (verified):
+                    cb.func();
+                    erase = True;
+                    if (cb.type == callback.MID):
+                        cb.num_callbacks_left -= 1;
+                        if (cb.num_callbacks_left): erase = False;
+                    elif (cb.type == callback.MID_LOOP):
+                        erase = False;
+                    if (erase):
+                        del client_obj.callbacks[n];
+                        --n;
+
             np = len(params);
 
             if (verify_params(mid, _MID.RECV_CLIENT_REGISTER_USER_PASS, np)):

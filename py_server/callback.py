@@ -15,7 +15,11 @@ class MessageCallback:
     type = NONE;
     num_callbacks_left = 0;
 
-    def __init__(self):
+    def __init__(self, func, mid, id, type):
+        self.func = func;
+        self.mid = mid;
+        self.id = id;
+        self.type = type;
         pass;
 
 def make_unique_id_callback(callback_func, mid, unique_id):
@@ -36,6 +40,6 @@ def make_MID_callback_loop(callback_func, mid):
     cb = MessageCallback(callback_func, mid, 0, MID_LOOP);
     return cb;
 
-def make_any_callback(callback_func):
-    cb = MessageCallback(callback_func, mid, 0, ANY_MID);
+def make_MID_any_callback(callback_func):
+    cb = MessageCallback(callback_func, None, 0, ANY_MID);
     return cb;

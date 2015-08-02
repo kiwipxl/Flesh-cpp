@@ -35,7 +35,7 @@ enum SocketCallbackType {
     CALLBACK_UNIQUE_ID, 
     CALLBACK_MID, 
     CALLBACK_MID_LOOP, 
-    CALLBACK_ANY_MID
+    CALLBACK_MID_ANY
 };
 
 struct SocketCallback {
@@ -70,6 +70,7 @@ class Socket {
         void add_MID_callback(std::function<void()> callback, CMID mid, int num_callbacks = 1);
         void add_MID_callback_once(std::function<void()> callback, CMID mid);
         void add_MID_callback_loop(std::function<void()> callback, CMID mid);
+        void add_MID_any_callback(std::function<void()> callback);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }

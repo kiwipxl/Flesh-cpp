@@ -50,7 +50,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     def ssbupcb():
         pass;
-    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), callback.make_any_callback(ssbupcb));
+    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), callback.make_MID_any_callback(ssbupcb));
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients

@@ -35,8 +35,8 @@ def extract_mid(byte_data):
     mid = _MID.UNKNOWN;
     if (len(byte_data) >= MSG_HEADER_SIZE):
         id = struct.unpack("i", byte_data[0:4])[0];
-        if (id >= 0 and id <= len(_MID.list)):
-            mid = _MID.list[id];
+        if (id >= 0 and id <= len(_MID.vec)):
+            mid = _MID.vec[id];
         else:
             debug.log("MID id %d is unknown" % id, debug.P_WARNING);
     return mid;

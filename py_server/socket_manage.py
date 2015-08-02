@@ -43,7 +43,7 @@ def socket_loop(listen_ip, listen_port):
             try:
                 byte_data = client_obj.tcp_sock.recv(1024);
                 if (byte_data.__len__() > 0):
-                    server_msgs.got_message(client_obj.tcp_sock, client_obj, byte_data);
+                    server_msgs.got_msg(client_obj.tcp_sock, client_obj, byte_data);
                 else:
                     client.handle_leave(client_obj, "HOST_QUIT", False);
                     client_dc = True;
@@ -55,7 +55,7 @@ def socket_loop(listen_ip, listen_port):
                 try:
                     byte_data, addr = client_obj.udp_sock.recvfrom(1024);
                     if (byte_data.__len__() > 0):
-                        server_msgs.got_message(client_obj.udp_sock, client_obj, byte_data);
+                        server_msgs.got_msg(client_obj.udp_sock, client_obj, byte_data);
                     else:
                         client.handle_leave(client_obj, "HOST_QUIT", False);
                         client_dc = True;
