@@ -49,7 +49,7 @@ void msg::extract_msg(char* buffer, int buffer_len) {
 
 CMID msg::extract_mid(char* buffer, int buffer_len) {
 	CMID mid = _MID->UNKNOWN;
-	if (buffer_len >= 4) {
+	if (buffer_len >= MSG_HEADER_SIZE) {
 		int id = 0;
 		memcpy(&id, buffer, 4);
 		if (id >= 0 && id < MID_list.size()) mid = MID_list[id];

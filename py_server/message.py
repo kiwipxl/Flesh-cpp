@@ -116,8 +116,9 @@ for k, v in list(locals().iteritems()):
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
+MSG_HEADER_SIZE = 8;
 
-def pack_message(mid, params = None):
+def build(mid, params = None):
     byte_offset = 4;
     i = 0;
     byte_buffer[0:4] = struct.pack(FT_INT.struct_char, mid.id);
@@ -138,13 +139,19 @@ def pack_message(mid, params = None):
 
 def extract_mid(byte_data):
     mid = MID_UNKNOWN;
-    if (len(byte_data) >= 4):
+    if (len(byte_data) >= MSG_HEADER_SIZE):
         id = struct.unpack("i", byte_data[0:4])[0];
         if (id >= 0 and id <= len(MID_list)):
             mid = MID_list[id];
         else:
             debug.log("MID id %d is unknown" % id, debug.P_WARNING);
     return mid;
+
+def extract_callback(byte_data):
+    callback_id = 0;
+    if (len(byte_data) >= MSG_HEADER_SIZE):
+        callback_id = struct.unpack("i", byte_data[4:8])[0];
+    return callback_id;
 
 def extract_params(mid, byte_data):
     params = [];
@@ -170,23 +177,22 @@ def extract_params(mid, byte_data):
                   (MID_names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
         return (params, -1);
 
-def send(sock, client, mid, params = None):
+def send(sock, client_obj, built_msg):
     if (sock.type == socket.SOCK_STREAM):
-        sock.send(pack_message(mid, params));
+        send_tcp(sock, built_msg);
     else:
-        if (client.c_tcp_port <= 0): debug.log("c_tcp_port is less than zero when trying to send tcp message", debug.P_WARNING); return;
-        sock.sendto(pack_message(mid, params), (client.ip, client.c_tcp_port));
+        send_udp(sock, client_obj.ip, client_obj.c_udp_port);
 
-def send_tcp(tcp_sock, mid, params = None):
-    tcp_sock.send(pack_message(mid, params));
+def send_tcp(tcp_sock, built_msg):
+    tcp_sock.send(built_msg);
 
-def send_udp(udp_sock, ip, port, mid, params = None):
+def send_udp(udp_sock, ip, port, built_msg):
     if (port <= 0): debug.log("port is less than zero when trying to send_udp message", debug.P_WARNING); return;
-    udp_sock.sendto(pack_message(mid, params), (ip, port));
+    udp_sock.sendto(built_msg, (ip, port));
 
-def broadcast(sock_list, mid, params = None):
+def broadcast(sock_list, client_obj, built_msg):
     for sock in sock_list:
-        sock.send(pack_message(mid, params));
+        send(sock, client_obj, built_msg);
 
 def log(client_obj, sock_type, mid, params = None):
     if (params == None or (mid.num_params >= 0 and mid.num_params == len(params))):
