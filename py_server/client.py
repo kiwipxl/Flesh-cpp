@@ -48,7 +48,12 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     num_clients += 1;
     client_id_inc += 1;
 
-    def ssbupcb(mid, params):
+    def test2(sock, client_obj, mid, callback_id, params):
+        a = 4;
+        return callback.RESPONSE_SUCCESS;
+
+    def ssbupcb(sock, client_obj, mid, callback_id, params):
+        client_obj.add_callback(callback.make_unique_id_callback(test2, _MID.RESPONSE, callback_id));
         a = params[0];
         return callback.RESPONSE_FAIL;
 

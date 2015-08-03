@@ -44,8 +44,8 @@ void tcp_connect() {
 
     msg::make_MID_loop_callback([]() {
         msg::make_unique_id_callback([]() {
-            int a = 5;
-            return msg::RESPONSE_NONE;
+            int a = *(unsigned short*)msg::last_param_list[0]->data;
+            return msg::RESPONSE_SUCCESS;
         }, _MID->RESPONSE, msg::last_callback_id, &sock::tcp_serv_sock);
 
         msg::print_extracted_params();

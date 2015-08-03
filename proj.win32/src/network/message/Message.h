@@ -24,7 +24,8 @@ namespace msg {
     extern u_short last_callback_id;
 	extern Param* last_param_list[];
 	extern int last_param_tbytes;
-	extern int last_param_list_size;
+    extern int last_param_list_size;
+    extern ResponseCode last_response_code;
 
 	void init();
     void send(Socket& sock, MsgStream& stream, std::function<msg::ResponseCode()> callback = nullptr);

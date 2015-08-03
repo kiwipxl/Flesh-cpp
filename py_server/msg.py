@@ -18,7 +18,7 @@ def build(mid, *params):
         callback_id = mid[1];
         mid = mid[0];
     byte_buffer[0:4] = struct.pack(_FT.INT.struct_char, mid.id);
-    byte_buffer[4:8] = struct.pack(_FT.INT.struct_char, callback_id);
+    byte_buffer[4:6] = struct.pack(_FT.INT.struct_char, callback_id);
     byte_offset = MSG_HEADER_SIZE;
     i = 0;
     if (params):

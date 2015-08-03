@@ -13,6 +13,7 @@ const int msg::MAX_NUM_PARAMS = 16;
 Param* msg::last_param_list[MAX_NUM_PARAMS];
 int msg::last_param_list_size = 0;
 int msg::last_param_tbytes = 0;
+msg::ResponseCode msg::last_response_code = msg::RESPONSE_NONE;
 
 const int msg::MAX_PRINT_BUF = 1024;
 char msg::print_buf[MAX_PRINT_BUF];
