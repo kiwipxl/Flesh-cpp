@@ -42,11 +42,11 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    msg::make_MID_loop_callback([]() {
-        msg::make_unique_id_callback([]() {
+    sock::tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
+        sock::tcp_serv_sock.add_callback(msg::make_response_callback([]() {
             int a = *(unsigned short*)msg::last_param_list[0]->data;
             return msg::RESPONSE_SUCCESS;
-        }, _MID->RESPONSE, msg::last_callback_id, &sock::tcp_serv_sock);
+        }, msg::last_callback_id));
 
         msg::print_extracted_params();
 
@@ -60,7 +60,7 @@ void tcp_connect() {
             sock::connection_error = -1;
             return msg::RESPONSE_FAIL;
         }
-    }, _MID->RECV_SERVER_BINDED_UDP_PORT, &sock::tcp_serv_sock);
+    }, _MID->RECV_SERVER_BINDED_UDP_PORT));
 
     log_info << "(tcp_serv_sock): connection successful";
 

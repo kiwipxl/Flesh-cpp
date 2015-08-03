@@ -49,11 +49,13 @@ def make_MID_callback_loop(callback_func, mid):
     return cb;
 
 def make_MID_any_callback(callback_func, num_callbacks = 1):
-    cb = MessageCallback(callback_func, None, num_callbacks, MID_ANY);
+    cb = MessageCallback(callback_func, None, 0, MID_ANY);
+    cb.num_callbacks_left = num_callbacks;
     return cb;
 
-def make_response_callback(callback_func, num_callbacks = 1):
-    cb = MessageCallback(callback_func, _MID.RESPONSE, num_callbacks, MID_ANY);
+def make_response_callback(callback_func, unique_id = -1):
+    if (unique_id): unique_id = id_inc;
+    cb = MessageCallback(callback_func, _MID.RESPONSE, unique_id, UNIQUE_ID);
     return cb;
 
 def get_unique_id():
