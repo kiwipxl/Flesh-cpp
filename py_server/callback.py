@@ -8,6 +8,11 @@ MID_LOOP = 3;
 MID_ANY = 4;
 RESPONSE = 5;
 
+RESPONSE_NONE = 0;
+RESPONSE_SUCCESS = 1;
+RESPONSE_FAIL = 2;
+RESPONNSE_TIMEOUT = 3;
+
 id_inc = 1;
 
 class MessageCallback:

@@ -40,6 +40,8 @@ namespace msg {
             MsgStream& operator<<(msg::ResponseCode rc) { check_MID_add(); cpy_to_buf(rc, sizeof(unsigned short)); return *this; }
             MsgStream& operator<<(Param* p);
 
+            MsgStream& operator>>(int i) { byte_offset -= i; return *this; }
+
             ~MsgStream() {
                 if (!header_complete) assert("byte stream must be complete whenever used - MID required");
             }

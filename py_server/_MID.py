@@ -34,7 +34,7 @@ class MID():
 #XXX - a message that can be both sent and received to and from clients
 
 UNKNOWN                                     = MID();
-RESPONSE                                    = MID(_FT.INT, _FT.RESPONSE);
+RESPONSE                                    = MID(_FT.RESPONSE);
 
 #sends a client id of a specified client
 SEND_CLIENT_ID                              = MID(_FT.INT);

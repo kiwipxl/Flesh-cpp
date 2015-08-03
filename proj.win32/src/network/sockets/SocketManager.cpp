@@ -43,12 +43,17 @@ void tcp_connect() {
     }
 
     msg::make_MID_loop_callback([]() {
+        msg::make_unique_id_callback([]() {
+            int a = 5;
+            return msg::RESPONSE_NONE;
+        }, _MID->RESPONSE, msg::last_callback_id, &sock::tcp_serv_sock);
+
         msg::print_extracted_params();
 
         if (sock::setup_udp_sock(*(u_short*)msg::last_param_list[0]->data)) {
             //msg::send(tcp_serv_sock, msg::MsgStream() << _MID->RESPONSE << sock::udp_serv_sock.get_binded_port());
             msg::game::server_poll.add_sock(sock::udp_serv_sock);
-            sock::send_udp_ping_pong(sock::udp_serv_sock);
+            //sock::send_udp_ping_pong(sock::udp_serv_sock);
             return msg::RESPONSE_SUCCESS;
         }else {
             sock::connection_finished = true;

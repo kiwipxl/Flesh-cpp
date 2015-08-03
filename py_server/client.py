@@ -50,7 +50,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     def ssbupcb(mid, params):
         a = params[0];
-        pass;
+        return callback.RESPONSE_FAIL;
 
     msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), callback.make_response_callback(ssbupcb));
 

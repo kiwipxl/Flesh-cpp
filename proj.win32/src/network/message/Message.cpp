@@ -61,7 +61,7 @@ CMID msg::extract_mid(char* buffer, int buffer_len) {
 u_short msg::extract_callback_id(char* buffer, int buffer_len) {
     int callback_id = 0;
     if (buffer_len >= MSG_HEADER_SIZE) {
-        memcpy(&callback_id, buffer + 4, 4);
+        memcpy(&callback_id, buffer + 4, sizeof(unsigned short));
     }
     return callback_id;
 }

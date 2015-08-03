@@ -10,11 +10,15 @@ import callback;
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
-MSG_HEADER_SIZE = 8;
+MSG_HEADER_SIZE = 6;
 
-def build(mid, params = None):
+def build(mid, *params):
+    callback_id = callback.get_unique_id();
+    if (isinstance(mid, (list, tuple)) and len(mid) >= 2):
+        callback_id = mid[1];
+        mid = mid[0];
     byte_buffer[0:4] = struct.pack(_FT.INT.struct_char, mid.id);
-    byte_buffer[4:8] = struct.pack(_FT.INT.struct_char, callback.get_unique_id());
+    byte_buffer[4:8] = struct.pack(_FT.INT.struct_char, callback_id);
     byte_offset = MSG_HEADER_SIZE;
     i = 0;
     if (params):
@@ -35,7 +39,7 @@ def build(mid, params = None):
 def extract_mid(byte_data):
     mid = _MID.UNKNOWN;
     if (len(byte_data) >= MSG_HEADER_SIZE):
-        id = struct.unpack("i", byte_data[0:4])[0];
+        id = struct.unpack(_FT.INT.struct_char, byte_data[0:4])[0];
         if (id >= 0 and id <= len(_MID.vec)):
             mid = _MID.vec[id];
         else:
@@ -45,7 +49,7 @@ def extract_mid(byte_data):
 def extract_callback(byte_data):
     callback_id = 0;
     if (len(byte_data) >= MSG_HEADER_SIZE):
-        callback_id = struct.unpack("i", byte_data[4:8])[0];
+        callback_id = struct.unpack(_FT.UNSIGNED_SHORT.struct_char, byte_data[4:6])[0];
     return callback_id;
 
 def extract_params(mid, byte_data):
@@ -93,10 +97,10 @@ def broadcast(sock_list, client_obj, built_msg):
     for sock in sock_list:
         send(sock, client_obj, built_msg);
 
-def log(client_obj, sock_type, mid, params = None):
+def log(client_obj, sock_type, mid, callback_id, params = None):
     if (params == None or (mid.num_params >= 0 and mid.num_params == len(params))):
         debug.log("", debug.P_MID, "");
-        print(_MID.names[mid.id] + " (client id %d, %s)" % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp"), end='');
+        print(_MID.names[mid.id] + " (id: %d, %s, cb_id: %d)" % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp", callback_id), end='');
         if (mid.num_params >= 1 and params != None):
             print(": ", end='');
             i = 0;

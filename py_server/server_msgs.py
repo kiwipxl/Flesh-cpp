@@ -28,7 +28,10 @@ def got_msg(sock, client_obj, byte_data):
                 elif (cb.type == callback.MID_ANY):
                     verified = True;
                 if (verified):
-                    cb.func(mid, params);
+                    response_code = cb.func(mid, params);
+                    if (response_code != callback.RESPONSE_NONE):
+                        msg.send(sock, client_obj, msg.build((_MID.RESPONSE, callback_id,), response_code));
+
                     erase = True;
                     if (cb.type == callback.MID or cb.type == callback.MID_ANY or cb.type == callback.RESPONSE):
                         cb.num_callbacks_left -= 1;
@@ -40,7 +43,7 @@ def got_msg(sock, client_obj, byte_data):
                         --n;
 
             np = len(params);
-            msg.log(client_obj, sock.type, mid, params);
+            msg.log(client_obj, sock.type, mid, callback_id, params);
 
             if (verify_params(mid, _MID.RECV_CLIENT_REGISTER_USER_PASS, np)):
                 print("username: %s, password: %s" % (params[0], params[1]));

@@ -66,7 +66,7 @@ void recv_msgs() {
                                 }
                                 if (verified) {
                                     if ((response_code = sock->callbacks[n]->func()) != msg::RESPONSE_NONE) {
-                                        msg::send(*sock, msg::MsgStream() << _MID->RESPONSE << msg::last_callback_id << response_code);
+                                        msg::send(*sock, msg::MsgStream() << _MID->RESPONSE >> sizeof(unsigned short) << msg::last_callback_id << response_code);
                                     }
 
                                     bool erase = true;
