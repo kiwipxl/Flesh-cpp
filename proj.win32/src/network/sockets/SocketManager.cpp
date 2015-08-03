@@ -42,7 +42,7 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    tcp_serv_sock.add_MID_callback_loop([]() {
+    msg::make_MID_loop_callback([]() {
         msg::print_extracted_params();
 
         if (sock::setup_udp_sock(*(u_short*)msg::last_param_list[0]->data)) {
@@ -54,7 +54,7 @@ void tcp_connect() {
             sock::connection_finished = true;
             sock::connection_error = -1;
         }
-    }, _MID->RECV_SERVER_BINDED_UDP_PORT);
+    }, _MID->RECV_SERVER_BINDED_UDP_PORT, sock::tcp_serv_sock);
 
     log_info << "(tcp_serv_sock): connection successful";
 

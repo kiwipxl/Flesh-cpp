@@ -8,6 +8,7 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #include <base/CCConsole.h>
 
 #include "debug/PlatformConfig.h"
+#include "../message/Callback.h"
 
 #if defined(PLATFORM_WIN32)
 #include <WinSock2.h>
@@ -44,7 +45,10 @@ class Socket {
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
         int s_change_send_addr(char* sending_ip, u_short sending_port);
 
-        std::vector<SocketCallback*> callbacks;
+        std::vector<msg::MsgCallback> callbacks;
+        void add_callback(msg::MsgCallback* msg_callback) {
+            callbacks.push_back(msg_callback);
+        }
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }

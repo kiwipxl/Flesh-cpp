@@ -6,6 +6,8 @@
 
 #include "../message/MID.h"
 
+struct Socket;
+
 namespace msg {
 
     enum ResponseCode {
@@ -36,11 +38,20 @@ namespace msg {
         int num_callbacks_left = -1;
     };
 
-    std::unique_ptr<MsgCallback> make_unique_id_callback    (std::function<ResponseCode()> callback, CMID mid, unsigned int unique_id);
-    std::unique_ptr<MsgCallback> make_MID_callback          (std::function<ResponseCode()> callback, CMID mid, int num_callbacks = 1);
-    std::unique_ptr<MsgCallback> make_MID_once_callback     (std::function<ResponseCode()> callback, CMID mid);
-    std::unique_ptr<MsgCallback> make_MID_loop_callback     (std::function<ResponseCode()> callback, CMID mid);
-    std::unique_ptr<MsgCallback> make_any_MID_callback      (std::function<ResponseCode()> callback, int num_callbacks = 1);
+    extern std::unique_ptr<MsgCallback> make_unique_id_callback (std::function<ResponseCode()> callback, 
+                                                                CMID mid, unsigned int unique_id, Socket* add_to_sock = NULL);
+
+    extern std::unique_ptr<MsgCallback> make_MID_callback       (std::function<ResponseCode()> callback, 
+                                                                CMID mid, int num_callbacks = 1, Socket* add_to_sock = NULL);
+
+    extern std::unique_ptr<MsgCallback> make_MID_once_callback  (std::function<ResponseCode()> callback, 
+                                                                CMID mid, Socket* add_to_sock = NULL);
+
+    extern std::unique_ptr<MsgCallback> make_MID_loop_callback  (std::function<ResponseCode()> callback, 
+                                                                CMID mid, Socket* add_to_sock = NULL);
+
+    extern std::unique_ptr<MsgCallback> make_any_MID_callback   (std::function<ResponseCode()> callback, 
+                                                                int num_callbacks = 1, Socket* add_to_sock = NULL);
 };
 
 #endif
