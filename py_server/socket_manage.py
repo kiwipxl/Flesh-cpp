@@ -5,6 +5,8 @@ import client;
 import server_msgs;
 import time;
 import debug;
+import callback;
+import _MID;
 
 #used to listen to a port for incoming connections and accepting them
 tcp_sock = None;
@@ -32,13 +34,23 @@ def socket_loop(listen_ip, listen_port):
             client.handle_join(client_sock, udp_sock, True);
         except socket.error as serr:
             if (serr.errno != socket.errno.EWOULDBLOCK):
-                debug.log("error occurred while accepting client: %s", serr.strerror, debug.P_ERROR);
+                debug.log("error occurred while accepting client: %s" % serr.strerror, debug.P_ERROR);
 
         c = 0;
         for i in range(0, len(client.clients)):
             client_obj = client.clients[c];
             client_dc = False;
             sockerr = None;
+
+            n = 0;
+            for i in range(0, len(client_obj.callbacks)):
+                cb = client_obj.callbacks[n];
+                if (cb.type == callback.UNIQUE_ID or cb.type == callback.MID or cb.type == callback.RESPONSE):
+                    if ((time.time() - cb.creation_time) >= cb.timeout_len):
+                        debug.log("callback timeout (id: %d)" % cb.id, debug.P_INFO);
+                        client_obj.callbacks[n].func(None, None, _MID.UNKNOWN, cb.id, [callback.RESPONSE_TIMEOUT]);
+                        del client_obj.callbacks[n];
+                        --n;
 
             try:
                 byte_data = client_obj.tcp_sock.recv(1024);

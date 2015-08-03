@@ -1,5 +1,6 @@
 import debug;
 import _MID;
+import time;
 
 NONE = 0;
 UNIQUE_ID = 1;
@@ -11,7 +12,7 @@ RESPONSE = 5;
 RESPONSE_NONE = 0;
 RESPONSE_SUCCESS = 1;
 RESPONSE_FAIL = 2;
-RESPONNSE_TIMEOUT = 3;
+RESPONSE_TIMEOUT = 3;
 
 id_inc = 1;
 
@@ -22,13 +23,15 @@ class MessageCallback:
     mid = _MID.UNKNOWN;
     type = NONE;
     num_callbacks_left = 0;
+    creation_time = 0;
+    timeout_len = 5;
 
     def __init__(self, func, mid, id, type):
         self.func = func;
         self.mid = mid;
         self.id = id;
         self.type = type;
-        pass;
+        self.creation_time = time.time();
 
 def make_unique_id_callback(callback_func, mid, unique_id):
     cb = MessageCallback(callback_func, mid, unique_id, UNIQUE_ID);
