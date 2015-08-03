@@ -120,18 +120,10 @@ void recv_msgs() {
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, _MID->RECV_ID)) {
                                 msg::print_extracted_params();
-                            }else if (VALID_PARAMS(mid, _MID->UDP_INIT_PING_PONG)) {
-                                sock::udp_ping_pong = false;
-                                sock::connection_finished = true;
-                                sock::connection_error = NO_ERROR;
-
-                                msg::send(sock::tcp_serv_sock, msg::MsgStream() << _MID->SEND_UDP_SERVER_COMMUNICATION_SUCCESS);
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_BIND_REQUEST)) {
                                 peers::peer_join(msg::last_param_list[0]->get<int>(), msg::last_param_list[1]->get<char*>());
 
                                 std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-                            }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
-                                log_info << "caught udp ping pong!";
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
                                 peer = peers::get_peer(msg::last_param_list[0]->get<int>());
                                 if (peer != NULL && !peer->connected) {

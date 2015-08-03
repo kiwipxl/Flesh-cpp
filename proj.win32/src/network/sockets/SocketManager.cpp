@@ -44,14 +44,20 @@ void tcp_connect() {
 
     tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
         udp_serv_sock.add_callback(msg::make_MID_callback([]() {
-            msg::ResponseCode udp_ping_pong_response() {
+            /*sock::udp_ping_pong = false;
+            sock::connection_finished = true;
+            sock::connection_error = NO_ERROR;*/
+
+            /*msg::ResponseCode udp_ping_pong_response() {
                 msg::ResponseCode rc = msg::last_param_list[0]->get<msg::ResponseCode>();
                 if (msg::last_param_list[0]->get<msg::ResponseCode>() != msg::RESPONSE_SUCCESS) {
                     msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
                 }
-            }
+            }*/
 
-            msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
+            //msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
+
+            return msg::RESPONSE_NONE;
         }, _MID->UDP_PING));
 
         msg::print_extracted_params();
@@ -115,7 +121,7 @@ void sock::update() {
 void sock::send_udp_ping_pong(Socket& sock) {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
         if (sock.get_protocol() != PROTO_UDP) { log_warning << "cannot send udp ping pong: socket is not a udp socket"; return; }
-        msg::send(sock, msg::MsgStream() << _MID->UDP_INIT_PING_PONG);
+        msg::send(sock, msg::MsgStream() << _MID->UDP_PING);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;
             udp_ping_pong = true;
