@@ -40,7 +40,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     c.s_udp_port = new_udp_sock.getsockname()[1];
 
     if (add_to_list): clients.append(c);
-
+    
     #only accept client when all sockets are verified
     debug.log("accepted client (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d)" %
           (c.id, c.ip, c.c_tcp_port, c.c_udp_port, c.s_tcp_port, c.s_udp_port), debug.P_INFO);
@@ -48,16 +48,17 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     num_clients += 1;
     client_id_inc += 1;
 
-    def test2(sock, client_obj, mid, callback_id, params):
+    def cb02(sock, client_obj, mid, callback_id, params):
         a = 4;
         return callback.RESPONSE_NONE;
 
-    def ssbupcb(sock, client_obj, mid, callback_id, params):
-        client_obj.add_callback(callback.make_response_callback(test2, callback_id));
-        a = params[0];
-        return callback.RESPONSE_FAIL;
+    def cb00(sock, client_obj, mid, callback_id, params):
+        client_obj.c_udp_port = params[0];
+        msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING), cb02);
+        return callback.RESPONSE_NONE;
 
-    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]), callback.make_response_callback(ssbupcb));
+    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]),
+             callback.make_MID_callback_once(cb00, _MID.RECV_CLIENT_BINDED_UDP_PORT));
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients;

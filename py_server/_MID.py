@@ -48,9 +48,9 @@ BEGIN_RELAY_TEST                            = MID();
 #ping pong relay test messages
 RELAY_TEST                                  = MID(_FT.INT, _FT.CHAR_ARRAY, _FT.UNSIGNED_SHORT, _FT.UNSIGNED_SHORT);
 #init ping pong udp message to test udp communication
-UDP_INIT_PING_PONG                          = MID();
-#ping pong udp messages
-UDP_PING_PONG                               = MID();
+UDP_PING                                    = MID();
+#init ping pong udp message to test udp communication
+UDP_PONG                                    = MID();
 
 RECV_UDP_SERVER_COMMUNICATION_SUCCESS       = MID();
 #requests a client to bind to a random port to allow peers to send messages to

@@ -42,29 +42,31 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    sock::tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
-        sock::tcp_serv_sock.add_callback(msg::make_response_callback([]() {
-            sock::tcp_serv_sock.add_callback(msg::make_response_callback([]() {
-                int a = msg::last_param_list[0]->get<u_short>();
-                return msg::RESPONSE_SUCCESS;
-            }, msg::last_callback_id));
+    tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
+        udp_serv_sock.add_callback(msg::make_MID_callback([]() {
+            msg::ResponseCode udp_ping_pong_response() {
+                msg::ResponseCode rc = msg::last_param_list[0]->get<msg::ResponseCode>();
+                if (msg::last_param_list[0]->get<msg::ResponseCode>() != msg::RESPONSE_SUCCESS) {
+                    msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
+                }
+            }
 
-            int a = msg::last_param_list[0]->get<u_short>();
-            return msg::RESPONSE_SUCCESS;
-        }, msg::last_callback_id));
+            msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
+        }, _MID->UDP_PING));
 
         msg::print_extracted_params();
 
-        if (sock::setup_udp_sock(*(u_short*)msg::last_param_list[0]->data)) {
-            //msg::send(tcp_serv_sock, msg::MsgStream() << _MID->RESPONSE << sock::udp_serv_sock.get_binded_port());
-            msg::game::server_poll.add_sock(sock::udp_serv_sock);
-            //sock::send_udp_ping_pong(sock::udp_serv_sock);
-            return msg::RESPONSE_SUCCESS;
+        if (setup_udp_sock(msg::last_param_list[0]->get<u_short>())) {
+            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << sock::udp_serv_sock.get_binded_port());
+
+            msg::game::server_poll.add_sock(udp_serv_sock);
         }else {
-            sock::connection_finished = true;
-            sock::connection_error = -1;
-            return msg::RESPONSE_FAIL;
+            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << -1);
+
+            connection_finished = true;
+            connection_error = -1;
         }
+        return msg::RESPONSE_NONE;
     }, _MID->RECV_SERVER_BINDED_UDP_PORT));
 
     log_info << "(tcp_serv_sock): connection successful";

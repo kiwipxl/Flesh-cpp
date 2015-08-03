@@ -27,6 +27,7 @@ void recv_msgs() {
             if (!sock) continue;
             for (int n = 0; n < server_poll.get_sock_at(i)->callbacks.size(); ++n) {
                 msg::MsgCallbackPtr& cb = server_poll.get_sock_at(i)->callbacks[n];
+                if (cb->called) continue;
                 if (cb->type == msg::CALLBACK_UNIQUE_ID || cb->type == msg::CALLBACK_MID) {
                     if ((time(&t) - cb->creation_time) >= cb->timeout_len) {
                         log_info << "callback timeout (id: " << cb->id << ")";

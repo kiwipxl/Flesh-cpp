@@ -141,25 +141,25 @@ std::string msg::last_MID_to_string() {
 			offset += sprintf(print_buf + offset, "(%s): ", t->type_name);
 
 			if (t == FT_INT)
-				len = sprintf(print_buf + offset, t->printf_format, *(int*)last_param_list[n]->data);
+                len = sprintf_buf<int>(offset, t);
 			else if (t == FT_UNSIGNED_INT)
-				len = sprintf(print_buf + offset, t->printf_format, *(unsigned int*)last_param_list[n]->data);
+                len = sprintf_buf<unsigned int>(offset, t);
 			else if (t == FT_SHORT)
-				len = sprintf(print_buf + offset, t->printf_format, *(short*)last_param_list[n]->data);
+                len = sprintf_buf<short>(offset, t);
 			else if (t == FT_UNSIGNED_SHORT)
-				len = sprintf(print_buf + offset, t->printf_format, *(unsigned short*)last_param_list[n]->data);
+                len = sprintf_buf<unsigned short>(offset, t);
 			else if (t == FT_LONG)
-				len = sprintf(print_buf + offset, t->printf_format, *(long*)last_param_list[n]->data);
+                len = sprintf_buf<long>(offset, t);
 			else if (t == FT_UNSIGNED_LONG)
-				len = sprintf(print_buf + offset, t->printf_format, *(unsigned long*)last_param_list[n]->data);
+                len = sprintf_buf<unsigned long>(offset, t);
 			else if (t == FT_FLOAT)
-				len = sprintf(print_buf + offset, t->printf_format, *(float*)last_param_list[n]->data);
+                len = sprintf_buf<float>(offset, t);
 			else if (t == FT_DOUBLE)
-				len = sprintf(print_buf + offset, t->printf_format, *(double*)last_param_list[n]->data);
+                len = sprintf_buf<double>(offset, t);
 			else if (t == FT_BOOL)
-				len = sprintf(print_buf + offset, t->printf_format, *(bool*)last_param_list[n]->data);
+                len = sprintf_buf<bool>(offset, t);
 			else if (t == FT_CHAR_ARRAY)
-				len = sprintf(print_buf + offset, t->printf_format, last_param_list[n]->data);
+                len = sprintf_buf<char*>(offset, t);
 			else
 				len = sprintf(print_buf + offset, "%s", "undefined");
 
@@ -174,4 +174,8 @@ std::string msg::last_MID_to_string() {
 
 inline const char* msg::get_MID_name(CMID mid) {
 	return (MID_names.size() > 0 && mid->id > 0 && mid->id < MID_names.size()) ? MID_names[mid->id].c_str() : "undefined";
+}
+
+template <typename T> inline int sprintf_buf(int offset, CFTYPE t) {
+    return sprintf(msg::print_buf + offset, t->printf_format, *(T*)last_param_list[n]->data);
 }
