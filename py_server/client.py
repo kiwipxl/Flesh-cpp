@@ -50,7 +50,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     def test2(sock, client_obj, mid, callback_id, params):
         a = 4;
-        return callback.RESPONSE_SUCCESS;
+        return callback.RESPONSE_NONE;
 
     def ssbupcb(sock, client_obj, mid, callback_id, params):
         client_obj.add_callback(callback.make_response_callback(test2, callback_id));

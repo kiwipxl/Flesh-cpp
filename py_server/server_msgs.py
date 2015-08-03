@@ -23,7 +23,7 @@ def got_msg(sock, client_obj, byte_data):
                 verified = False;
                 if (cb.type == callback.UNIQUE_ID):
                     verified = (cb.mid == mid and cb.id == callback_id);
-                elif (cb.type == callback.MID or cb.type == callback.MID_LOOP or cb.type == callback.RESPONSE):
+                elif (cb.type == callback.MID or cb.type == callback.MID_LOOP):
                     verified = (cb.mid == mid);
                 elif (cb.type == callback.MID_ANY):
                     verified = True;
@@ -33,7 +33,7 @@ def got_msg(sock, client_obj, byte_data):
                         msg.send(sock, client_obj, msg.build((_MID.RESPONSE, callback_id,), response_code));
 
                     erase = True;
-                    if (cb.type == callback.MID or cb.type == callback.MID_ANY or cb.type == callback.RESPONSE):
+                    if (cb.type == callback.MID or cb.type == callback.MID_ANY):
                         cb.num_callbacks_left -= 1;
                         if (cb.num_callbacks_left > 0): erase = False;
                     elif (cb.type == callback.MID_LOOP):

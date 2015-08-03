@@ -10,7 +10,6 @@ using debug::fresult;
 
 std::thread msg::game::msgs_thread;
 SocketPoll msg::game::server_poll;
-bool msg::game::accepting_peers = true;
 
 #define VALID_PARAMS(a, b) a == b && msg::last_param_list_size >= b->num_params
 
@@ -22,10 +21,26 @@ void recv_msgs() {
 	char buffer[1024];
 	int msg_len;
 	while (true) {
-        if (accepting_peers) {
-            //for (int p = 0; p < peers.size(); ++p) {
-
-            //}
+        time_t t;
+        for (int i = 0; i < server_poll.get_size(); ++i) {
+            Socket* sock = server_poll.get_sock_at(i);
+            if (!sock) continue;
+            for (int n = 0; n < server_poll.get_sock_at(i)->callbacks.size(); ++n) {
+                msg::MsgCallbackPtr& cb = server_poll.get_sock_at(i)->callbacks[n];
+                if (cb->type == msg::CALLBACK_UNIQUE_ID || cb->type == msg::CALLBACK_MID) {
+                    if ((time(&t) - cb->creation_time) >= cb->timeout_len) {
+                        log_info << "callback timeout (id: " << cb->id << ")";
+                        u_short* response_code = new u_short();
+                        *response_code = msg::RESPONSE_TIMEOUT;
+                        msg::last_param_list[0]->data = (char*)response_code;
+                        msg::last_param_list[0]->len = sizeof(response_code);
+                        cb->call();
+                        msg::clear_param_list();
+                        sock->callbacks.erase(sock->callbacks.begin() + n);
+                        --n;
+                    }
+                }
+            }
         }
 
 		int total = 0;
@@ -65,7 +80,7 @@ void recv_msgs() {
                                         break;
                                 }
                                 if (verified) {
-                                    if ((response_code = sock->callbacks[n]->func()) != msg::RESPONSE_NONE) {
+                                    if ((response_code = sock->callbacks[n]->call()) != msg::RESPONSE_NONE) {
                                         msg::send(*sock, msg::MsgStream() << _MID->RESPONSE >> sizeof(unsigned short) << msg::last_callback_id << response_code);
                                     }
 

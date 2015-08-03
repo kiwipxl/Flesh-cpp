@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <memory>
+#include <ctime>
 
 #include "../message/MID.h"
 
@@ -29,13 +30,23 @@ namespace msg {
 
     struct MsgCallback {
 
-        MsgCallback(std::function<ResponseCode()>& f, CMID m, unsigned short i, MsgCallbackType t) : func(f), mid(m), id(i), type(t) { }
+        MsgCallback(std::function<ResponseCode()>& f, CMID m, unsigned short i, MsgCallbackType t) : func(f), mid(m), id(i), type(t) {
+            creation_time = time(&creation_time);
+        }
 
         std::function<ResponseCode()> func;
         unsigned short id;
         CMID mid;
         MsgCallbackType type;
         int num_callbacks_left = -1;
+        time_t creation_time;
+        float timeout_len = 5.0f;
+        bool called = false;
+
+        ResponseCode call() {
+            called = true;
+            return func();
+        }
     };
 
     typedef std::shared_ptr<MsgCallback> MsgCallbackPtr;
