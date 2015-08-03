@@ -14,6 +14,10 @@ namespace msg {
 
 		char* data;
         int len;
+
+        template <typename ParamType> ParamType& get() {
+            return *(ParamType*)data;
+        }
 	};
 
 	extern const int MAX_NUM_PARAMS;

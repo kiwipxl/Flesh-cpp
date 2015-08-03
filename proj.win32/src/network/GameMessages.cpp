@@ -92,14 +92,14 @@ void recv_msgs() {
                             msg::print_extracted_params(false, true);
 
 							if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {
-								int* a = (int*)msg::last_param_list[0]->data;
-                                char** b = &msg::last_param_list[1]->data;
-								u_short* c = (u_short*)msg::last_param_list[2]->data;
-								u_short* d = (u_short*)msg::last_param_list[3]->data;
+                                int a = msg::last_param_list[0]->get<int>();
+                                char* b = msg::last_param_list[1]->get<char*>();
+								u_short c = msg::last_param_list[2]->get<u_short>();
+								u_short d = msg::last_param_list[3]->get<u_short>();
 
                                 msg::print_extracted_params();
 
-								msg::send(*sock, msg::MsgStream() << _MID->RELAY_TEST << *a << msg::last_param_list[1] << *c << *d);
+								msg::send(*sock, msg::MsgStream() << _MID->RELAY_TEST << a << msg::last_param_list[1] << c << d);
 
 								std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							}else if (VALID_PARAMS(mid, _MID->RECV_ID)) {
@@ -111,15 +111,15 @@ void recv_msgs() {
 
                                 msg::send(sock::tcp_serv_sock, msg::MsgStream() << _MID->SEND_UDP_SERVER_COMMUNICATION_SUCCESS);
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_BIND_REQUEST)) {
-                                peers::peer_join(*(int*)msg::last_param_list[0]->data, msg::last_param_list[1]->data);
+                                peers::peer_join(msg::last_param_list[0]->get<int>(), msg::last_param_list[1]->get<char*>());
 
                                 std::this_thread::sleep_for(std::chrono::milliseconds(2000));
                             }else if (VALID_PARAMS(mid, _MID->UDP_PING_PONG)) {
                                 log_info << "caught udp ping pong!";
                             }else if (VALID_PARAMS(mid, _MID->RECV_UDP_PEER_PORT)) {
-                                peer = peers::get_peer(*(int*)msg::last_param_list[0]->data);
+                                peer = peers::get_peer(msg::last_param_list[0]->get<int>());
                                 if (peer != NULL && !peer->connected) {
-                                    peer->udp_send_port = *(u_short*)msg::last_param_list[1]->data;
+                                    peer->udp_send_port = msg::last_param_list[1]->get<u_short>();
                                     peer->udp_sock->s_change_send_addr("127.0.0.1", peer->udp_send_port);
                                     server_poll.add_sock(*peer->udp_sock);
                                     peer->connected = true;
@@ -128,12 +128,14 @@ void recv_msgs() {
                                     log_info << "sending ping to peer (peer_id: " << peer->id << 
                                                 ", peer_recv_port: " << peer->udp_recv_port << ", peer_send_port: " << peer->udp_send_port << ")";
                                 }else {
-                                    log_warning << "peer " << *(int*)msg::last_param_list[0]->data << " could not be found (recv_peer_port)";
+                                    log_warning << "peer " << msg::last_param_list[0]->get<int>() << " could not be found (recv_peer_port)";
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PLAYER_MOVEMENT)) {
                                 peer = peers::get_peer(*sock);
                                 if (peer != NULL) {
-                                    entity::test_peer_movement(peer, *(int*)msg::last_param_list[0]->data, *(int*)msg::last_param_list[1]->data, *(float*)msg::last_param_list[2]->data);
+                                    entity::test_peer_movement(peer, msg::last_param_list[0]->get<int>(), 
+                                                                     msg::last_param_list[1]->get<int>(), 
+                                                                     msg::last_param_list[2]->get<float>());
                                 }
                             }else if (VALID_PARAMS(mid, _MID->PO_PING_CONNECT_TEST)) {
                                 msg::send(*sock, msg::MsgStream() << _MID->PO_PONG_CONNECT_TEST);

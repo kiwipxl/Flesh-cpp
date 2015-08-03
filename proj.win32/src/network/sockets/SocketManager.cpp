@@ -44,7 +44,7 @@ void tcp_connect() {
 
     sock::tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
         sock::tcp_serv_sock.add_callback(msg::make_response_callback([]() {
-            int a = *(unsigned short*)msg::last_param_list[0]->data;
+            int a = msg::last_param_list[0]->get<u_short>();
             return msg::RESPONSE_SUCCESS;
         }, msg::last_callback_id));
 
