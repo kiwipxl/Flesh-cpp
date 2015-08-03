@@ -42,7 +42,7 @@ void msg::send(Socket& sock, MsgStream& stream, std::function<msg::ResponseCode(
 void msg::extract_msg(char* buffer, int buffer_len) {
     CMID mid = extract_mid(buffer, buffer_len);
     if (mid != _MID->UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
-        extract_callback_id(buffer, buffer_len);
+        last_callback_id = extract_callback_id(buffer, buffer_len);
         extract_params(mid, buffer, buffer_len);
     }
 }

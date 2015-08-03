@@ -4,13 +4,14 @@
 #include <cassert>
 
 #include "MID.h"
+#include "Callback.h"
 
 namespace msg {
 
     extern char byte_buffer[1024];
     extern int byte_offset;
 
-    #define MSG_HEADER_SIZE 8
+    #define MSG_HEADER_SIZE 6 //(MID id (int) + callback_id (u_short))
 
     struct Param;
     class MsgStream {
@@ -36,6 +37,7 @@ namespace msg {
                 cpy_to_buf(&v->id, sizeof(int)); added_MID = true; mid = v; write_callback_id(v); return *this;
             }
             MsgStream& operator<<(char* str) { check_MID_add(); cpy_to_buf(str, strlen(str) + 1); return *this; }
+            MsgStream& operator<<(msg::ResponseCode rc) { check_MID_add(); cpy_to_buf(rc, sizeof(unsigned short)); return *this; }
             MsgStream& operator<<(Param* p);
 
             ~MsgStream() {

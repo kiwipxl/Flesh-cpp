@@ -31,4 +31,4 @@ FLOAT                   = FormatType('f', 'f', 4, "float");
 DOUBLE                  = FormatType('d', 'f', 8, "double");
 CHAR_ARRAY              = FormatType('s', 's', 1, "char*");
 VOID_POINTER            = FormatType('p', 'lu', 4, "void*");
-RESPONSE                = FormatType('i', 'i', 4, "response code");
+RESPONSE                = FormatType('H', 'd', 2, "response code");

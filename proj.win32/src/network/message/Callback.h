@@ -29,10 +29,10 @@ namespace msg {
 
     struct MsgCallback {
 
-        MsgCallback(std::function<ResponseCode()>& f, CMID m, unsigned int i, MsgCallbackType t) : func(f), mid(m), id(i), type(t) { }
+        MsgCallback(std::function<ResponseCode()>& f, CMID m, unsigned short i, MsgCallbackType t) : func(f), mid(m), id(i), type(t) { }
 
         std::function<ResponseCode()> func;
-        unsigned int id;
+        unsigned short id;
         CMID mid;
         MsgCallbackType type;
         int num_callbacks_left = -1;
@@ -41,7 +41,7 @@ namespace msg {
     typedef std::shared_ptr<MsgCallback> MsgCallbackPtr;
 
     extern MsgCallbackPtr make_unique_id_callback (std::function<ResponseCode()> callback, 
-                                                                CMID mid, unsigned int unique_id, Socket* add_to_sock = NULL);
+                                                                CMID mid, unsigned short unique_id, Socket* add_to_sock = NULL);
 
     extern MsgCallbackPtr make_MID_callback       (std::function<ResponseCode()> callback, 
                                                                 CMID mid, int num_callbacks = 1, Socket* add_to_sock = NULL);

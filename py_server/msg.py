@@ -50,8 +50,8 @@ def extract_callback(byte_data):
 
 def extract_params(mid, byte_data):
     params = [];
-    if (len(byte_data) - 4 >= mid.total_param_bytes):
-        byte_offset = 4;
+    if (len(byte_data) - MSG_HEADER_SIZE >= mid.total_param_bytes):
+        byte_offset = MSG_HEADER_SIZE;
         for n in range(0, len(mid.ft_params)):
             t = mid.ft_params[n];
             if (t.struct_char == 's'):
@@ -69,7 +69,7 @@ def extract_params(mid, byte_data):
         return (params, 0);
     else:
         debug.log("extract params failed. received msg %s is only %i bytes long when the minimum is %i bytes" %
-                  (_MID.names[mid.id], len(byte_data), mid.total_param_bytes + 4), debug.P_WARNING);
+                  (_MID.names[mid.id], len(byte_data), mid.total_param_bytes + MSG_HEADER_SIZE), debug.P_WARNING);
         return (params, -1);
 
 def send(sock, client_obj, built_msg, callback_obj = None):

@@ -4,7 +4,7 @@
 
 namespace msg {
 
-    MsgCallbackPtr make_unique_id_callback(std::function<ResponseCode()> callback, CMID mid, unsigned int unique_id, Socket* add_to_sock) {
+    MsgCallbackPtr make_unique_id_callback(std::function<ResponseCode()> callback, CMID mid, unsigned short unique_id, Socket* add_to_sock) {
         MsgCallbackPtr cb(new MsgCallback(callback, mid, unique_id, CALLBACK_UNIQUE_ID));
         if (add_to_sock) add_to_sock->add_callback(cb);
         return cb;
