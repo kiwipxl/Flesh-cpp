@@ -37,6 +37,7 @@ namespace msg {
 	extern CFTYPE FT_DOUBLE;
 	extern CFTYPE FT_CHAR_ARRAY;
     extern CFTYPE FT_VOID_POINTER;
+    extern CFTYPE FT_RESPONSE;
 
     //================== MID begin ==================
 
@@ -106,6 +107,7 @@ namespace msg {
             */
 
             ADD_MID_NAME(CMID UNKNOWN = new MID(0));
+            ADD_MID_NAME(CMID RESPONSE = new MID(1, FT_RESPONSE));
 
             ADD_MID_NAME(CMID RECV_ID = new MID(1, FT_INT));
             ADD_MID_NAME(CMID SEND_LOGIN_USER_PASS = new MID(2, FT_CHAR_ARRAY, FT_CHAR_ARRAY));

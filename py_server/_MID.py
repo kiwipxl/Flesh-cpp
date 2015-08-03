@@ -11,6 +11,7 @@ class MID():
     ft_params = [];
     total_param_bytes = 0;
     num_params = 0;
+    name = "";
 
     def __init__(self, *ft_params_list):
         global id;
@@ -33,6 +34,7 @@ class MID():
 #XXX - a message that can be both sent and received to and from clients
 
 UNKNOWN                                     = MID();
+RESPONSE                                    = MID();
 
 #sends a client id of a specified client
 SEND_CLIENT_ID                              = MID(_FT.INT);
@@ -79,3 +81,4 @@ names = id * [None];
 for k, v in list(locals().iteritems()):
     if (k != None and isinstance(v, MID)):
         names[v.id] = k;
+        v.name = k;

@@ -30,6 +30,7 @@
     <ClCompile Include="src\network\message\MID.cpp" />
     <ClCompile Include="src\network\message\MsgStream.cpp" />
     <ClCompile Include="src\network\message\Message.cpp" />
+    <ClCompile Include="src\network\message\Callback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="src\network\message\MID.h" />
     <ClInclude Include="src\network\message\MsgStream.h" />
     <ClInclude Include="src\network\message\Message.h" />
+    <ClInclude Include="src\network\message\Callback.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

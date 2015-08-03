@@ -6,6 +6,7 @@ UNIQUE_ID = 1;
 MID = 2;
 MID_LOOP = 3;
 MID_ANY = 4;
+RESPONSE = 5;
 
 class MessageCallback:
 
@@ -42,4 +43,8 @@ def make_MID_callback_loop(callback_func, mid):
 
 def make_MID_any_callback(callback_func, num_callbacks = 1):
     cb = MessageCallback(callback_func, None, num_callbacks, MID_ANY);
+    return cb;
+
+def make_response_callback(callback_func, num_callbacks = 1):
+    cb = MessageCallback(callback_func, _MID.RESPONSE, num_callbacks, MID_ANY);
     return cb;

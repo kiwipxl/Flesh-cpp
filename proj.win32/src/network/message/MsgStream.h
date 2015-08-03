@@ -26,7 +26,10 @@ namespace msg {
             }
 
             template <class T> MsgStream& operator<<(const T& v) { check_MID_add(); cpy_to_buf(&v, sizeof(v)); return *this; }
-            MsgStream& operator<<(CMID v) { cpy_to_buf(&v->id, sizeof(int)); added_MID = true; mid = v; write_callback_id(v); return *this; }
+            MsgStream& operator<<(CMID v) {
+                if (added_MID) assert("cannot add an MID to a MsgStream when one has already been added");
+                cpy_to_buf(&v->id, sizeof(int)); added_MID = true; mid = v; write_callback_id(v); return *this;
+            }
             MsgStream& operator<<(char* str) { check_MID_add(); cpy_to_buf(str, strlen(str) + 1); return *this; }
             MsgStream& operator<<(Param* p);
 

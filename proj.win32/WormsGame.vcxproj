@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\input\SimpleInput.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\map\Camera.cpp" />
+    <ClCompile Include="src\network\message\Callback.cpp" />
     <ClCompile Include="src\network\GameMessages.cpp" />
     <ClCompile Include="src\network\message\Message.cpp" />
     <ClCompile Include="src\network\message\MID.cpp" />
@@ -185,6 +186,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\entities\Unit.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
     <ClInclude Include="src\map\Camera.h" />
+    <ClInclude Include="src\network\message\Callback.h" />
     <ClInclude Include="src\network\GameMessages.h" />
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\MID.h" />

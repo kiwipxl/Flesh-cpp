@@ -8,7 +8,6 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #include <base/CCConsole.h>
 
 #include "debug/PlatformConfig.h"
-#include "../message/MID.h"
 
 #if defined(PLATFORM_WIN32)
 #include <WinSock2.h>
@@ -29,26 +28,6 @@ enum SocketProtocol {
     PROTO_UDP
 };
 
-enum SocketCallbackType {
-
-    CALLBACK_NONE, 
-    CALLBACK_UNIQUE_ID, 
-    CALLBACK_MID, 
-    CALLBACK_MID_LOOP, 
-    CALLBACK_MID_ANY
-};
-
-struct SocketCallback {
-
-    SocketCallback(std::function<void()>& f, CMID m, u_int i, SocketCallbackType t) : func(f), mid(m), id(i), type(t) { }
-
-    std::function<void()> func;
-    u_int id;
-    CMID mid;
-    SocketCallbackType type;
-    int num_callbacks_left = -1;
-};
-
 class Socket {
 
 	public:
@@ -66,11 +45,6 @@ class Socket {
         int s_change_send_addr(char* sending_ip, u_short sending_port);
 
         std::vector<SocketCallback*> callbacks;
-        void add_unique_id_callback(std::function<void()> callback, CMID mid, u_int unique_id);
-        void add_MID_callback(std::function<void()> callback, CMID mid, int num_callbacks = 1);
-        void add_MID_callback_once(std::function<void()> callback, CMID mid);
-        void add_MID_callback_loop(std::function<void()> callback, CMID mid);
-        void add_MID_any_callback(std::function<void()> callback, int num_callbacks = 1);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }
