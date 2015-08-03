@@ -45,8 +45,8 @@ class Socket {
 		int s_select(fd_set* read_set, fd_set* write_set, bool use_timeout = false, int timeout_seconds = 0, int timeout_ms = 0);
         int s_change_send_addr(char* sending_ip, u_short sending_port);
 
-        std::vector<msg::MsgCallback> callbacks;
-        void add_callback(msg::MsgCallback* msg_callback) {
+        std::vector<msg::MsgCallbackPtr> callbacks;
+        void add_callback(msg::MsgCallbackPtr& msg_callback) {
             callbacks.push_back(msg_callback);
         }
 

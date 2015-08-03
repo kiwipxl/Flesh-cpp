@@ -27,7 +27,7 @@ namespace msg {
 	extern int last_param_list_size;
 
 	void init();
-    void send(Socket& sock, MsgStream& stream, std::function<void()> callback = nullptr);
+    void send(Socket& sock, MsgStream& stream, std::function<msg::ResponseCode()> callback = nullptr);
     
     void extract_msg(char* buffer, int buffer_len);
 	CMID extract_mid(char* buffer, int buffer_len);

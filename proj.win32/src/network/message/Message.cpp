@@ -17,7 +17,13 @@ int msg::last_param_tbytes = 0;
 const int msg::MAX_PRINT_BUF = 1024;
 char msg::print_buf[MAX_PRINT_BUF];
 
-void msg::send(Socket& sock, MsgStream& stream, std::function<void()> callback) {
+void msg::init() {
+    for (int n = 0; n < MAX_NUM_PARAMS; ++n) {
+        last_param_list[n] = new Param();
+    }
+}
+
+void msg::send(Socket& sock, MsgStream& stream, std::function<msg::ResponseCode()> callback) {
     //not thread safe, will crash if params are used in another thread
     //todo: param lists can be moved innto MID class to fix
     /*if (print_output || write_to_file) {
@@ -30,7 +36,7 @@ void msg::send(Socket& sock, MsgStream& stream, std::function<void()> callback) 
     }*/
 
     sock.s_send(byte_buffer, byte_offset);
-    sock.add_unique_id_callback(callback, stream.mid, stream.mid->callback_id_inc);
+    if (callback != nullptr) msg::make_unique_id_callback(callback, stream.mid, stream.mid->callback_id_inc, &sock);
 }
 
 void msg::extract_msg(char* buffer, int buffer_len) {

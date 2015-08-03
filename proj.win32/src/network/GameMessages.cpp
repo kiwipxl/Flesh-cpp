@@ -52,28 +52,28 @@ void recv_msgs() {
                             msg::ResponseCode response_code;
                             for (int n = 0; n < sock->callbacks.size(); ++n) {
                                 bool verified = false;
-                                switch (sock->callbacks[n].type) {
+                                switch (sock->callbacks[n]->type) {
                                     case msg::CALLBACK_UNIQUE_ID:
-                                        verified = (sock->callbacks[n].mid == mid && sock->callbacks[n].id == msg::last_callback_id);
+                                        verified = (sock->callbacks[n]->mid == mid && sock->callbacks[n]->id == msg::last_callback_id);
                                         break;
                                     case msg::CALLBACK_MID:
                                     case msg::CALLBACK_MID_LOOP:
-                                        verified = (sock->callbacks[n].mid == mid);
+                                        verified = (sock->callbacks[n]->mid == mid);
                                         break;
                                     case msg::CALLBACK_MID_ANY:
                                         verified = true;
                                         break;
                                 }
                                 if (verified) {
-                                    if ((response_code = sock->callbacks[n].func()) != msg::RESPONSE_NONE) {
+                                    if ((response_code = sock->callbacks[n]->func()) != msg::RESPONSE_NONE) {
                                         msg::send(*sock, msg::MsgStream() << _MID->RESPONSE << msg::last_callback_id << response_code);
                                     }
 
                                     bool erase = true;
-                                    switch (sock->callbacks[n].type) {
+                                    switch (sock->callbacks[n]->type) {
                                         case msg::CALLBACK_MID_ANY:
                                         case msg::CALLBACK_MID:
-                                            if (--sock->callbacks[n].num_callbacks_left > 0) erase = false;
+                                            if (--sock->callbacks[n]->num_callbacks_left > 0) erase = false;
                                             break;
                                         case msg::CALLBACK_MID_LOOP:
                                             erase = false;
