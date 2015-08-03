@@ -1,6 +1,7 @@
 #include "MsgStream.h"
 
 #include "Message.h"
+#include "Callback.h"
 
 using msg::MsgStream;
 
@@ -14,6 +15,5 @@ MsgStream& MsgStream::operator<<(msg::Param* p) {
 }
 
 void MsgStream::write_callback_id(CMID v) {
-    ++v->callback_id_inc;
-    cpy_to_buf(&v->callback_id_inc, sizeof(u_short));
+    cpy_to_buf(msg::get_unique_callback_id(v), sizeof(u_short));
 }

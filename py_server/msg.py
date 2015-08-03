@@ -13,9 +13,10 @@ byte_offset = 0;
 MSG_HEADER_SIZE = 8;
 
 def build(mid, params = None):
-    byte_offset = 4;
-    i = 0;
     byte_buffer[0:4] = struct.pack(_FT.INT.struct_char, mid.id);
+    byte_buffer[4:8] = struct.pack(_FT.INT.struct_char, callback.get_unique_id());
+    byte_offset = MSG_HEADER_SIZE;
+    i = 0;
     if (params):
         try:
             for param in params:

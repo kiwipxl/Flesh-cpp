@@ -22,7 +22,7 @@ CFTYPE msg::FT_FLOAT							= new FormatType("%f", 4, "float");
 CFTYPE msg::FT_DOUBLE							= new FormatType("%f", 8, "double");
 CFTYPE msg::FT_CHAR_ARRAY						= new FormatType("%s", 1, "char*");
 CFTYPE msg::FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
-CFTYPE msg::FT_RESPONSE                         = new FormatType("%p", 4, "response code");
+CFTYPE msg::FT_RESPONSE                         = new FormatType("%i", 4, "response code");
 
 int msg::MID_id = 0;
 std::vector<CMID> msg::MID_list;

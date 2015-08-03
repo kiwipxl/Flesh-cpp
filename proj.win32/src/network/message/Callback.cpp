@@ -35,4 +35,8 @@ namespace msg {
         if (add_to_sock) add_to_sock->add_callback(cb.get());
         return cb;
     }
+
+    unsigned int get_unique_callback_id(CMID mid) {
+        return mid->callback_id_inc;
+    }
 };

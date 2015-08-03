@@ -52,6 +52,8 @@ namespace msg {
 
     extern std::unique_ptr<MsgCallback> make_any_MID_callback   (std::function<ResponseCode()> callback, 
                                                                 int num_callbacks = 1, Socket* add_to_sock = NULL);
+
+    extern unsigned int get_unique_callback_id(CMID mid);
 };
 
 #endif

@@ -46,15 +46,16 @@ void tcp_connect() {
         msg::print_extracted_params();
 
         if (sock::setup_udp_sock(*(u_short*)msg::last_param_list[0]->data)) {
-            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->RESPONSE << sock::udp_serv_sock.get_binded_port());
+            //msg::send(tcp_serv_sock, msg::MsgStream() << _MID->RESPONSE << sock::udp_serv_sock.get_binded_port());
             msg::game::server_poll.add_sock(sock::udp_serv_sock);
             sock::send_udp_ping_pong(sock::udp_serv_sock);
+            return msg::RESPONSE_SUCCESS;
         }else {
-            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->RESPONSE << -1);
             sock::connection_finished = true;
             sock::connection_error = -1;
+            return msg::RESPONSE_FAIL;
         }
-    }, _MID->RECV_SERVER_BINDED_UDP_PORT, sock::tcp_serv_sock);
+    }, _MID->RECV_SERVER_BINDED_UDP_PORT, &sock::tcp_serv_sock);
 
     log_info << "(tcp_serv_sock): connection successful";
 

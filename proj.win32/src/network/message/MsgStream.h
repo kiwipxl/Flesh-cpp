@@ -20,6 +20,11 @@ namespace msg {
 
             CMID mid;
 
+            template <class T> inline void cpy_to_buf(const T& v, int len) {
+                memcpy(byte_buffer + byte_offset, &v, len);
+                byte_offset += len;
+            }
+
             template <class T> inline void cpy_to_buf(const T* v, int len) {
                 memcpy(byte_buffer + byte_offset, v, len);
                 byte_offset += len;
