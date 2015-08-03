@@ -44,18 +44,19 @@ void tcp_connect() {
 
     tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
         udp_serv_sock.add_callback(msg::make_MID_callback([]() {
-            /*sock::udp_ping_pong = false;
-            sock::connection_finished = true;
-            sock::connection_error = NO_ERROR;*/
-
-            /*msg::ResponseCode udp_ping_pong_response() {
+            msg::CallbackFunc cb00 = [cb00]() {
                 msg::ResponseCode rc = msg::last_param_list[0]->get<msg::ResponseCode>();
-                if (msg::last_param_list[0]->get<msg::ResponseCode>() != msg::RESPONSE_SUCCESS) {
-                    msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
+                if (rc == msg::RESPONSE_SUCCESS) {
+                    sock::udp_ping_pong = false;
+                    sock::connection_finished = true;
+                    sock::connection_error = NO_ERROR;
+                }else {
+                    msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
                 }
-            }*/
+                return msg::RESPONSE_NONE;
+            };
 
-            //msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(udp_ping_pong_response));
+            msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
 
             return msg::RESPONSE_NONE;
         }, _MID->UDP_PING));

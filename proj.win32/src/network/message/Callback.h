@@ -19,6 +19,8 @@ namespace msg {
         RESPONSE_TIMEOUT
     };
 
+    typedef std::function<ResponseCode()> CallbackFunc;
+
     enum MsgCallbackType {
 
         CALLBACK_NONE,
@@ -30,11 +32,11 @@ namespace msg {
 
     struct MsgCallback {
 
-        MsgCallback(std::function<ResponseCode()>& f, CMID m, unsigned short i, MsgCallbackType t) : func(f), mid(m), id(i), type(t) {
+        MsgCallback(CallbackFunc& f, CMID m, unsigned short i, MsgCallbackType t) : func(f), mid(m), id(i), type(t) {
             creation_time = time(&creation_time);
         }
 
-        std::function<ResponseCode()> func;
+        CallbackFunc func;
         unsigned short id;
         CMID mid;
         MsgCallbackType type;
@@ -51,17 +53,17 @@ namespace msg {
 
     typedef std::shared_ptr<MsgCallback> MsgCallbackPtr;
 
-    extern MsgCallbackPtr make_unique_id_callback (std::function<ResponseCode()> callback, CMID mid, unsigned short unique_id);
+    extern MsgCallbackPtr make_unique_id_callback (CallbackFunc callback, CMID mid, unsigned short unique_id);
 
-    extern MsgCallbackPtr make_MID_callback       (std::function<ResponseCode()> callback, CMID mid, int num_callbacks = 1);
+    extern MsgCallbackPtr make_MID_callback       (CallbackFunc callback, CMID mid, int num_callbacks = 1);
 
-    extern MsgCallbackPtr make_MID_once_callback  (std::function<ResponseCode()> callback, CMID mid);
+    extern MsgCallbackPtr make_MID_once_callback  (CallbackFunc callback, CMID mid);
 
-    extern MsgCallbackPtr make_MID_loop_callback  (std::function<ResponseCode()> callback, CMID mid);
+    extern MsgCallbackPtr make_MID_loop_callback  (CallbackFunc callback, CMID mid);
 
-    extern MsgCallbackPtr make_any_MID_callback   (std::function<ResponseCode()> callback, int num_callbacks = 1);
+    extern MsgCallbackPtr make_any_MID_callback   (CallbackFunc callback, int num_callbacks = 1);
 
-    extern MsgCallbackPtr make_response_callback  (std::function<ResponseCode()> callback, unsigned short unique_id = -1);
+    extern MsgCallbackPtr make_response_callback  (CallbackFunc callback, unsigned short unique_id = -1);
 
     extern unsigned int get_unique_callback_id(CMID mid);
 };
