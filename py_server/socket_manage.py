@@ -48,7 +48,7 @@ def socket_loop(listen_ip, listen_port):
                 if (cb.type == callback.UNIQUE_ID or cb.type == callback.MID):
                     if ((time.time() - cb.creation_time) >= cb.timeout_len):
                         debug.log("callback timeout (id: %d)" % cb.id, debug.P_INFO);
-                        client_obj.callbacks[n].func(None, None, _MID.UNKNOWN, cb.id, [callback.RESPONSE_TIMEOUT]);
+                        client_obj.callbacks[n].func(None, None, _MID.UNKNOWN, cb.id, [], callback.RESPONSE_TIMEOUT);
                         del client_obj.callbacks[n];
                         --n;
 

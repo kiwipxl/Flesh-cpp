@@ -48,13 +48,15 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     num_clients += 1;
     client_id_inc += 1;
 
-    def cb02(sock, client_obj, mid, callback_id, params):
-        a = 4;
-        return callback.RESPONSE_NONE;
+    def cb02(sock, client_obj, mid, callback_id, params, response):
+        if (response == callback.RESPONSE_SUCCESS):
+            a = 4;
+            return callback.RESPONSE_NONE;
 
-    def cb00(sock, client_obj, mid, callback_id, params):
-        client_obj.c_udp_port = params[0];
-        msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING), cb02);
+    def cb00(sock, client_obj, mid, callback_id, params, response):
+        if (response == callback.RESPONSE_SUCCESS):
+            client_obj.c_udp_port = params[0];
+            msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING), cb02);
         return callback.RESPONSE_NONE;
 
     msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]),

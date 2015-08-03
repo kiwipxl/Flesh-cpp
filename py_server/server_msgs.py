@@ -28,7 +28,7 @@ def got_msg(sock, client_obj, byte_data):
                 elif (cb.type == callback.MID_ANY):
                     verified = True;
                 if (verified):
-                    response_code = cb.func(sock, client_obj, mid, callback_id, params);
+                    response_code = cb.func(sock, client_obj, mid, callback_id, params, response_code);
                     if (response_code != callback.RESPONSE_NONE):
                         msg.send(sock, client_obj, msg.build((_MID.RESPONSE, callback_id,), response_code));
 

@@ -51,12 +51,12 @@ void tcp_connect() {
                     sock::connection_finished = true;
                     sock::connection_error = NO_ERROR;
                 }else {
-                    msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
+                    //msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
                 }
                 return msg::RESPONSE_NONE;
             };
 
-            msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
+            //msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
 
             return msg::RESPONSE_NONE;
         }, _MID->UDP_PING));
