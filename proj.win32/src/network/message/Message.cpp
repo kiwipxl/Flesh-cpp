@@ -25,7 +25,7 @@ namespace msg {
         }
     }
 
-    void send(Socket& sock, MsgStream& stream, std::function<ResponseCode()> callback) {
+    void send(Socket& sock, MsgStream& stream, MsgCallbackPtr callback) {
         //not thread safe, will crash if params are used in another thread
         //todo: param lists can be moved innto MID class to fix
         /*if (print_output || write_to_file) {
@@ -38,7 +38,7 @@ namespace msg {
         }*/
 
         sock.s_send(byte_buffer, byte_offset);
-        if (callback != nullptr) sock.add_callback(make_unique_id_callback(callback, stream.mid, stream.mid->callback_id_inc));
+        if (callback != nullptr) sock.add_callback(callback);
     }
 
     void extract_msg(char* buffer, int buffer_len) {

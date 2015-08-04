@@ -32,7 +32,7 @@ namespace msg {
     extern ResponseCode last_response_code;
 
 	void init();
-    void send(Socket& sock, MsgStream& stream, std::function<msg::ResponseCode()> callback = nullptr);
+    void send(Socket& sock, MsgStream& stream, MsgCallbackPtr callback = nullptr);
     
     void extract_msg(char* buffer, int buffer_len);
 	CMID extract_mid(char* buffer, int buffer_len);

@@ -1,6 +1,7 @@
 #include "Callback.h"
 
 #include "../sockets/Socket.h"
+#include "Message.h"
 
 namespace msg {
 
@@ -32,6 +33,7 @@ namespace msg {
     }
 
     MsgCallbackPtr make_response_callback(CallbackFunc callback, unsigned short unique_id) {
+        if (unique_id == (unsigned short)-1) unique_id = last_callback_id;
         MsgCallbackPtr cb(new MsgCallback(callback, _MID->RESPONSE, unique_id, CALLBACK_UNIQUE_ID));
         return cb;
     }

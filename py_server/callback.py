@@ -60,6 +60,7 @@ def make_MID_any_callback(callback_func, num_callbacks = 1):
     return cb;
 
 def make_response_callback(callback_func, unique_id = -1):
+    global id_inc;
     if (unique_id): unique_id = id_inc;
     cb = MessageCallback(callback_func, _MID.RESPONSE, unique_id, UNIQUE_ID);
     return cb;

@@ -60,9 +60,6 @@ def got_msg(sock, client_obj, byte_data):
             elif (verify_params(mid, _MID.RECV_CLIENT_BINDED_UDP_PORT, np)):
                 client_obj.c_udp_port = params[0];
 
-            elif (verify_params(mid, _MID.RECV_UDP_SERVER_COMMUNICATION_SUCCESS, np)):
-                game.join_game(client_obj);
-
             elif (verify_params(mid, _MID.RECV_UDP_PEER_BIND_PORT_SUCCESS, np)):
                 client_obj.joined_game.received_udp_bind_port(client_obj.game_client, params[0], params[1], params[2]);
 

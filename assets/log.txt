@@ -3,3 +3,4 @@ attempt connect on thread...
 (tcp_serv_sock): connection successful
 (udp_serv_sock): creation / binding successful
 10040: recvfrom error
+10040: recvfrom error

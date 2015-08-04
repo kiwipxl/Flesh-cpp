@@ -71,9 +71,9 @@ SEND_PEER_LEAVE                             = MID(_FT.CHAR_ARRAY, _FT.UNSIGNED_S
 RECV_PEER_LEAVE                             = MID(_FT.CHAR_ARRAY, _FT.UNSIGNED_SHORT);
 
 #server sends server udp binded port to client
-SEND_SERVER_BINDED_UDP_PORT                 = MID(_FT.UNSIGNED_SHORT);
+SEND_REQUEST_CLIENT_TO_BIND_A_UDP_PORT      = MID(_FT.UNSIGNED_SHORT);
 #client sends client binded udp port to server
-RECV_CLIENT_BINDED_UDP_PORT                 = MID(_FT.UNSIGNED_SHORT);
+RECV_REQUEST_CLIENT_TO_BIND_A_UDP_PORT      = MID(_FT.UNSIGNED_SHORT);
 
 #put all x variables into a name array so messages can be debugged easier
 names = id * [None];
