@@ -80,11 +80,11 @@ def send(sock, client_obj, built_msg, callback_obj = None):
     if (len(built_msg) < MSG_HEADER_SIZE):
         debug.log("built message does not contain a full header", debug.P_WARNING);
 
+    client_obj.add_callback(callback_obj);
     if (sock.type == socket.SOCK_STREAM):
         send_tcp(sock, built_msg);
     else:
-        send_udp(sock, client_obj.ip, client_obj.c_udp_port);
-    client_obj.add_callback(callback_obj);
+        send_udp(sock, client_obj.ip, client_obj.c_udp_port, built_msg);
 
 def send_tcp(tcp_sock, built_msg):
     tcp_sock.send(built_msg);

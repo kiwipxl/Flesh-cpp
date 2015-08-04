@@ -31,7 +31,6 @@ void tcp_connect() {
     connection_error = NO_ERROR;
     
     log_info << "attempt connect on thread...";
-    tcp_serv_sock = Socket(PROTO_TCP);
     if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
         log_error << "(tcp_serv_sock): error " << fresult << " occurred while creating tcp socket";
         socket_setup_failed(fresult); return;
@@ -42,7 +41,7 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    tcp_serv_sock.add_callback(msg::make_MID_loop_callback([]() {
+    tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
         udp_serv_sock.add_callback(msg::make_MID_callback([]() {
             msg::CallbackFunc cb00 = [cb00]() {
                 msg::ResponseCode rc = msg::last_param_list[0]->get<msg::ResponseCode>();
@@ -64,9 +63,8 @@ void tcp_connect() {
         msg::print_extracted_params();
 
         if (setup_udp_sock(msg::last_param_list[0]->get<u_short>())) {
-            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << sock::udp_serv_sock.get_binded_port());
-
-            msg::game::server_poll.add_sock(udp_serv_sock);
+            msg::game::server_poll.add_sock(sock::udp_serv_sock);
+            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
         }else {
             msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << -1);
 
@@ -82,7 +80,6 @@ void tcp_connect() {
 }
 
 bool sock::setup_udp_sock(u_short udp_serv_port) {
-    udp_serv_sock = Socket(PROTO_UDP);
     if ((fresult = udp_serv_sock.s_create()) != NO_ERROR) {
         log_error << "(udp_serv_sock): error " << fresult << " occurred while creating tcp socket";
         socket_setup_failed(fresult); return false;
@@ -144,6 +141,8 @@ void sock::close_all_threads() {
 
 void sock::init() {
     msg::init();
+    udp_serv_sock = Socket(PROTO_UDP);
+    tcp_serv_sock = Socket(PROTO_TCP);
     Socket::init_sockets();
 }
 

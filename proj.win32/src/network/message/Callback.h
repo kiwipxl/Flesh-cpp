@@ -42,7 +42,7 @@ namespace msg {
         MsgCallbackType type;
         int num_callbacks_left = -1;
         time_t creation_time;
-        float timeout_len = 5.0f;
+        float timeout_len = 5000000.0f;
         bool called = false;
 
         ResponseCode call() {

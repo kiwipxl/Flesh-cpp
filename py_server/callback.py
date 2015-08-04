@@ -14,7 +14,7 @@ RESPONSE_FAIL = 2;
 RESPONSE_TIMEOUT = 3;
 
 TIMEOUT_SHORT = 2.5;
-TIMEOUT_NORMAL = 8.0;
+TIMEOUT_NORMAL = 8000000.0;
 TIMEOUT_LONG = 15.0;
 
 id_inc = 1;
@@ -27,7 +27,7 @@ class MessageCallback:
     type = NONE;
     num_callbacks_left = 0;
     creation_time = 0;
-    timeout_len = 5;
+    timeout_len = TIMEOUT_NORMAL;
 
     def __init__(self, func, mid, id, type):
         self.func = func;

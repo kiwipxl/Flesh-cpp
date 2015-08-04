@@ -38,6 +38,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     c.c_tcp_port = new_tcp_sock.getpeername()[1];
     c.s_tcp_port = new_tcp_sock.getsockname()[1];
     c.s_udp_port = new_udp_sock.getsockname()[1];
+    c.callbacks = [];
 
     if (add_to_list): clients.append(c);
     
@@ -56,7 +57,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     def cb00(sock, client_obj, mid, callback_id, params, response):
         if (response == callback.RESPONSE_SUCCESS):
             client_obj.c_udp_port = params[0];
-            msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING), cb02);
+            msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING), callback.make_response_callback(cb02));
         return callback.RESPONSE_NONE;
 
     msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]),
@@ -68,6 +69,7 @@ def handle_leave(client_obj, leave_msg, remove_from_list = True):
 
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();
+    client_obj.callbacks = [];
 
     game.client_leave(client_obj);
 

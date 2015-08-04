@@ -28,6 +28,8 @@ def got_msg(sock, client_obj, byte_data):
                 elif (cb.type == callback.MID_ANY):
                     verified = True;
                 if (verified):
+                    response_code = callback.RESPONSE_SUCCESS;
+                    if (mid == _MID.RESPONSE): response_code = params[0];
                     response_code = cb.func(sock, client_obj, mid, callback_id, params, response_code);
                     if (response_code != callback.RESPONSE_NONE):
                         msg.send(sock, client_obj, msg.build((_MID.RESPONSE, callback_id,), response_code));
@@ -72,8 +74,5 @@ def got_msg(sock, client_obj, byte_data):
 
             elif (verify_params(mid, _MID.BEGIN_RELAY_TEST, np)):
                 msg.send(sock, client_obj, msg.build(_MID.RELAY_TEST, client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port));
-
-            elif (verify_params(mid, _MID.UDP_INIT_PING_PONG, np)):
-                msg.send_udp(client_obj.udp_sock, client_obj.ip, client_obj.c_udp_port, msg.build(_MID.UDP_INIT_PING_PONG));
     else:
         print("received msg (raw: %s, len: %d) has an unknown MID" % (byte_data, byte_data.__len__()));

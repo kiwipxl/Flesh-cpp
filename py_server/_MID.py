@@ -52,7 +52,6 @@ UDP_PING                                    = MID();
 #init ping pong udp message to test udp communication
 UDP_PONG                                    = MID();
 
-RECV_UDP_SERVER_COMMUNICATION_SUCCESS       = MID();
 #requests a client to bind to a random port to allow peers to send messages to
 SEND_UDP_PEER_BIND_REQUEST                  = MID(_FT.INT, _FT.CHAR_ARRAY);
 #receives the binded udp port from a client after the request was made
