@@ -62,5 +62,6 @@
   <ItemGroup>
     <None Include="build-cfg.json" />
     <None Include="game.aps" />
+    <None Include="PropertySheet.props" />
   </ItemGroup>
 </Project>

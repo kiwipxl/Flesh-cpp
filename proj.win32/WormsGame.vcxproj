@@ -205,6 +205,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
   <ItemGroup>
     <None Include="build-cfg.json" />
     <None Include="game.aps" />
+    <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(COCOS2DX_ROOT)\cocos\2d\libcocos2d.vcxproj">
