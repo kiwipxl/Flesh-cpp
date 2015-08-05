@@ -31,22 +31,28 @@ std::vector<CMID> msg::MID_list;
 std::ostringstream str_stream;
 
 inline const char* get_name(msg::MID_enum e) {
-    switch (e) {
-        #define MID_DEF(x,y) case y: return #x;
-        #include "MID_Defines.def"
-        #undef ERROR_DEF
-    }
+    int count = 0;
+    #define MID_DEF(x) if ((int)e == count) return #x; ++count;
+    #include "MID_Defines.def"
+    #undef MID_DEF
+
     return "MID_NAME_NOT_FOUND";
 }
 
-MID::MID(msg::MID_enum e) {
+MID::MID() {
     id = MID_id;
     ++MID_id;
-    name = get_name(e);
-    MID_list.push_back(this);
 }
 
 void msg::MID_init() {
-    MID* mid = new MID(MID_AYY_LMAO);
-    MID* mid2 = new MID(MID_UNKNOWN);
+    int count = 0;
+    #define MID_DEF(x) ++count;
+    #include "MID_Defines.def"
+    #undef MID_DEF
+
+    for (int n = 0; n < count; ++n) {
+        MID* mid = new MID();
+        mid->name = get_name((MID_enum)n);
+        MID_list.push_back(mid);
+    }
 }

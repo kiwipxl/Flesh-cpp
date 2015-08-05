@@ -43,7 +43,7 @@ namespace msg {
 
     enum MID_enum {
 
-        #define MID_DEF(x, y) x = y, 
+        #define MID_DEF(x) x, 
         #include "MID_Defines.def"
         #undef MID_DEF
     };
@@ -53,7 +53,7 @@ namespace msg {
 		int id = 0;
         const char* name;
 
-		MID(MID_enum e);
+		MID();
     };
 
     #define CMID const msg::MID const *
