@@ -55,9 +55,10 @@ namespace msg {
 
     enum MID_enum {
 
-        #define MID_DEF(x, y) x = y, 
+        /*#define MID_DEF(x, y) x = y, 
         #include "MID_Defines.def"
-        #undef MID_DEF
+        #undef MID_DEF*/
+        MID_UNKNOWN
     };
 };
 

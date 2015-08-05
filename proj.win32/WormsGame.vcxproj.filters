@@ -28,9 +28,9 @@
     <ClCompile Include="src\entities\Unit.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\network\message\MID.cpp" />
-    <ClCompile Include="src\network\message\MsgStream.cpp" />
     <ClCompile Include="src\network\message\Message.cpp" />
     <ClCompile Include="src\network\message\Callback.cpp" />
+    <ClCompile Include="src\network\message\Stream.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -50,9 +50,9 @@
     <ClInclude Include="src\entities\Unit.h" />
     <ClInclude Include="src\debug\Logger.h" />
     <ClInclude Include="src\network\message\MID.h" />
-    <ClInclude Include="src\network\message\MsgStream.h" />
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\Callback.h" />
+    <ClInclude Include="src\network\message\Stream.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -63,5 +63,6 @@
     <None Include="build-cfg.json" />
     <None Include="game.aps" />
     <None Include="PropertySheet.props" />
+    <None Include="src\network\message\MID_Defines.def" />
   </ItemGroup>
 </Project>

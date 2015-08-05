@@ -25,9 +25,9 @@ namespace msg {
         float timeout_len = 5000000.0f;
     };
 
-    typedef std::shared_ptr<MIDCallback> MIDCallbackPtr;
+    typedef std::shared_ptr<MIDCallback> CallbackPtr;
 
-    extern MIDCallbackPtr make_MID_callback(CallbackFunc callback, CMID mid);
+    extern CallbackPtr make_MID_callback(CallbackFunc callback, CMID mid);
 };
 
 #endif

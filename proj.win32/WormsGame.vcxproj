@@ -168,7 +168,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\network\GameMessages.cpp" />
     <ClCompile Include="src\network\message\Message.cpp" />
     <ClCompile Include="src\network\message\MID.cpp" />
-    <ClCompile Include="src\network\message\MsgStream.cpp" />
+    <ClCompile Include="src\network\message\Stream.cpp" />
     <ClCompile Include="src\network\Peers.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
     <ClCompile Include="src\network\sockets\Socket.cpp" />
@@ -190,7 +190,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\network\GameMessages.h" />
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\MID.h" />
-    <ClInclude Include="src\network\message\MsgStream.h" />
+    <ClInclude Include="src\network\message\Stream.h" />
     <ClInclude Include="src\network\Peers.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
     <ClInclude Include="src\network\sockets\Socket.h" />
@@ -206,6 +206,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <None Include="build-cfg.json" />
     <None Include="game.aps" />
     <None Include="PropertySheet.props" />
+    <None Include="src\network\message\MID_Defines.def" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(COCOS2DX_ROOT)\cocos\2d\libcocos2d.vcxproj">

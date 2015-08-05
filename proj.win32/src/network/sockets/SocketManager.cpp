@@ -41,7 +41,7 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
+    /*tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
         udp_serv_sock.add_callback(msg::make_MID_callback([]() {
             msg::CallbackFunc cb00;
             cb00 = [&]() {
@@ -76,7 +76,7 @@ void tcp_connect() {
             connection_error = -1;
         }
         return msg::RESPONSE_NONE;
-    }, _MID->RECV_SERVER_BINDED_UDP_PORT));
+    }, _MID->RECV_SERVER_BINDED_UDP_PORT));*/
 
     log_info << "(tcp_serv_sock): connection successful";
 
@@ -123,7 +123,7 @@ void sock::update() {
 void sock::send_udp_ping_pong(Socket& sock) {
     if (udp_ping_pong_tries < MAX_UDP_PING_PONG_TRIES) {
         if (sock.get_protocol() != PROTO_UDP) { log_warning << "cannot send udp ping pong: socket is not a udp socket"; return; }
-        msg::send(sock, msg::MsgStream() << _MID->UDP_PING);
+        //msg::send(sock, msg::Stream() << _MID->UDP_PING);
         if (!udp_ping_pong) {
             udp_ping_pong_tries = 0;
             udp_ping_pong = true;
@@ -136,7 +136,7 @@ void sock::send_udp_ping_pong(Socket& sock) {
 }
 
 void sock::begin_relay_test(Socket& sock) {
-    msg::send(sock, msg::MsgStream() << _MID->BEGIN_RELAY_TEST);
+    //msg::send(sock, msg::Stream() << _MID->BEGIN_RELAY_TEST);
 }
 
 void sock::close_all_threads() {

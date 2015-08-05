@@ -15,7 +15,7 @@ namespace msg {
 
     }
 
-    void send(Socket& sock, MsgStream& stream, MsgCallbackPtr callback) {
+    void send(Socket& sock, Stream& stream, CallbackPtr callback) {
         //not thread safe, will crash if params are used in another thread
         //todo: param lists can be moved innto MID class to fix
         /*if (print_output || write_to_file) {
@@ -32,40 +32,41 @@ namespace msg {
     }
     
     MessagePtr extract_message(char* buffer, int buffer_len) {
-        MessagePtr message_ptr = MessagePtr(new Message());
-        extract_mid(message_ptr, buffer, buffer_len);
-        if (message_ptr->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
-            extract_param_types(message_ptr, buffer, buffer_len);
-            extract_params(message_ptr, buffer, buffer_len);
+        MessagePtr message = MessagePtr(new Message());
+        extract_mid(message, buffer, buffer_len);
+        if (message->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
+            extract_param_types(message, buffer, buffer_len);
+            extract_params(message, buffer, buffer_len);
         }
+        return message;
     }
     
-    void extract_mid(MessagePtr message_ptr, char* buffer, int buffer_len) {
-        message_ptr->mid = MID_list[0];
+    void extract_mid(MessagePtr message, char* buffer, int buffer_len) {
+        message->mid = MID_list[0];
 	    if (buffer_len >= MSG_HEADER_SIZE) {
             int id = 0;
 		    memcpy(&id, buffer, 4);
-		    if (id >= 0 && id < MID_list.size()) message_ptr->mid = MID_list[id];
+		    if (id >= 0 && id < MID_list.size()) message->mid = MID_list[id];
 	    }
     }
     
-    void extract_param_types(MessagePtr message_ptr, char* buffer, int buffer_len) {
+    void extract_param_types(MessagePtr message, char* buffer, int buffer_len) {
 
     }
 
-    void extract_params(MessagePtr message_ptr, char* buffer, int buffer_len) {
-	    if (message_ptr->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message_ptr->param_total_bytes) {
+    void extract_params(MessagePtr message, char* buffer, int buffer_len) {
+	    if (message->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message->param_total_bytes) {
             int offset = MSG_HEADER_SIZE;
-            for (int n = 0; n < message_ptr->types.size(); ++n) {
+            for (int n = 0; n < message->types.size(); ++n) {
 			    int len = 0;
 			    char* pointer;
-			    if (message_ptr->types[n] == FT_CHAR_ARRAY) {
+			    if (message->types[n] == FT_CHAR_ARRAY) {
                     for (int c = offset; c < buffer_len; ++c) {
                         ++len;
 					    if (buffer[c] == '\0') break;
 				    }
 			    }else {
-                    len = message_ptr->types[n]->len;
+                    len = message->types[n]->len;
 			    }
                 pointer = new char[len];
                 memcpy(pointer, buffer + offset, len);
@@ -73,7 +74,7 @@ namespace msg {
                 Param* p = new Param();
                 p->data = pointer;
                 p->len = len;
-                message_ptr->params.push_back(p);
+                message->params.push_back(p);
 
 			    offset += len;
 		    }

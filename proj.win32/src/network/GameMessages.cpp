@@ -21,28 +21,19 @@ void recv_msgs() {
 	char buffer[1024];
 	int msg_len;
 	while (true) {
-        time_t t;
+        /*time_t t;
         for (int i = 0; i < server_poll.get_size(); ++i) {
             Socket* sock = server_poll.get_sock_at(i);
             if (!sock) continue;
             for (int n = 0; n < server_poll.get_sock_at(i)->callbacks.size(); ++n) {
-                msg::MsgCallbackPtr& cb = server_poll.get_sock_at(i)->callbacks[n];
-                if (cb->called) continue;
-                if (cb->type == msg::CALLBACK_UNIQUE_ID || cb->type == msg::CALLBACK_MID) {
-                    if ((time(&t) - cb->creation_time) >= cb->timeout_len) {
-                        log_info << "callback timeout (id: " << cb->id << ")";
-                        u_short* response_code = new u_short();
-                        *response_code = msg::RESPONSE_TIMEOUT;
-                        msg::last_param_list[0]->data = (char*)response_code;
-                        msg::last_param_list[0]->len = sizeof(response_code);
-                        cb->call();
-                        msg::clear_param_list();
-                        sock->callbacks.erase(sock->callbacks.begin() + n);
-                        --n;
-                    }
+                msg::MIDCallbackPtr& cb = server_poll.get_sock_at(i)->callbacks[n];
+                if ((time(&t) - cb->creation_time) >= cb->timeout_len) {
+                    log_info << "callback timeout for " << cb->mid->name;
+                    sock->callbacks.erase(sock->callbacks.begin() + n);
+                    --n;
                 }
             }
-        }
+        }*/
 
 		int total = 0;
 		if ((total = server_poll.poll()) > 0) {
@@ -61,53 +52,17 @@ void recv_msgs() {
                     peers::Peer* peer;
 
 					if ((msg_len = sock->s_recv(buffer, 1024)) > 0) {
-                        msg::extract_msg(buffer, msg_len);
-                        CMID mid = msg::last_MID;
-						if (mid != _MID->UNKNOWN) {
-                            bool called = false;
-                            msg::ResponseCode response_code;
+                        msg::MessagePtr message = msg::extract_message(buffer, msg_len);
+						if (message->mid->id != msg::MID_UNKNOWN) {
                             for (int n = 0; n < sock->callbacks.size(); ++n) {
-                                bool verified = false;
-                                switch (sock->callbacks[n]->type) {
-                                    case msg::CALLBACK_UNIQUE_ID:
-                                        verified = (sock->callbacks[n]->mid == mid && sock->callbacks[n]->id == msg::last_callback_id);
-                                        break;
-                                    case msg::CALLBACK_MID:
-                                    case msg::CALLBACK_MID_LOOP:
-                                        verified = (sock->callbacks[n]->mid == mid);
-                                        break;
-                                    case msg::CALLBACK_MID_ANY:
-                                        verified = true;
-                                        break;
-                                }
-                                if (verified) {
-                                    if ((response_code = sock->callbacks[n]->call()) != msg::RESPONSE_NONE) {
-                                        msg::send(*sock, msg::MsgStream() << _MID->RESPONSE >> sizeof(unsigned short) << msg::last_callback_id << response_code);
-                                    }
-
-                                    bool erase = true;
-                                    switch (sock->callbacks[n]->type) {
-                                        case msg::CALLBACK_MID_ANY:
-                                        case msg::CALLBACK_MID:
-                                            if (--sock->callbacks[n]->num_callbacks_left > 0) erase = false;
-                                            break;
-                                        case msg::CALLBACK_MID_LOOP:
-                                            erase = false;
-                                            break;
-                                    }
-                                    if (erase) {
-                                        sock->callbacks.erase(sock->callbacks.begin() + n);
-                                        --n;
-                                    }
-                                    called = true;
-                                    break;
+                                if (sock->callbacks[n]->mid == message->mid) {
+                                    sock->callbacks[n]->func();
                                 }
                             }
-                            if (called) continue;
 
                             msg::print_extracted_params(false, true);
 
-							if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {
+							/*if (VALID_PARAMS(mid, _MID->RELAY_TEST)) {
                                 int a = msg::last_param_list[0]->get<int>();
                                 char* b = msg::last_param_list[1]->get<char*>();
 								u_short c = msg::last_param_list[2]->get<u_short>();
@@ -155,8 +110,7 @@ void recv_msgs() {
                                 }else {
                                     log_warning << "peer could not be found (binded_port: " << sock->get_binded_port() << ")";
                                 }
-							}
-							msg::clear_param_list();
+							}*/
 						}
 					}
 				}

@@ -6,7 +6,7 @@
 
 #include "../sockets/Socket.h"
 #include "MID.h"
-#include "MsgStream.h"
+#include "Stream.h"
 
 namespace msg {
 
@@ -39,12 +39,12 @@ namespace msg {
     extern char print_buf[];
 
 	void init();
-    void send(Socket& sock, MsgStream& stream, MsgCallbackPtr callback = nullptr);
+    void send(Socket& sock, Stream& stream, CallbackPtr callback = nullptr);
     
     MessagePtr extract_message(char* buffer, int buffer_len);
-    void extract_mid(MessagePtr message_ptr, char* buffer, int buffer_len);
-    void extract_param_types(MessagePtr message_ptr, char* buffer, int buffer_len);
-    void extract_params(MessagePtr message_ptr, char* buffer, int buffer_len);
+    void extract_mid(MessagePtr message, char* buffer, int buffer_len);
+    void extract_param_types(MessagePtr message, char* buffer, int buffer_len);
+    void extract_params(MessagePtr message, char* buffer, int buffer_len);
 
     void print_extracted_params(bool print_output = true, bool write_to_file = false);
     std::string last_MID_to_string();
