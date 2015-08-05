@@ -10,39 +10,45 @@
 
 namespace msg {
 
-	struct Param {
+    struct Param {
 
-		char* data;
+        char* data;
         int len;
 
         template <typename ParamType> ParamType& get() {
             return *(ParamType*)data;
         }
-	};
+    };
+
+    struct Message {
+
+        //identifier
+        const MID* mid;
+
+        //params
+        std::vector<CFTYPE> types;
+        std::vector<Param*> params;
+        int total_bytes;
+        int count;
+    };
+
+    #define MessagePtr std::shared_ptr<Message>
 
 	extern const int MAX_NUM_PARAMS;
 	extern const int MAX_PRINT_BUF;
     extern char print_buf[];
 
-    extern CMID last_MID;
-    extern u_short last_callback_id;
-	extern Param* last_param_list[];
-	extern int last_param_tbytes;
-    extern int last_param_list_size;
-    extern ResponseCode last_response_code;
-
 	void init();
     void send(Socket& sock, MsgStream& stream, MsgCallbackPtr callback = nullptr);
     
-    void extract_msg(char* buffer, int buffer_len);
-	CMID extract_mid(char* buffer, int buffer_len);
-    u_short extract_callback_id(char* buffer, int buffer_len);
-	void extract_params(CMID mid, char* byte_data, int byte_data_len);
-	void clear_param_list();
+    MessagePtr extract_message(char* buffer, int buffer_len);
+    void extract_mid(MessagePtr message_ptr, char* buffer, int buffer_len);
+    void extract_param_types(MessagePtr message_ptr, char* buffer, int buffer_len);
+    void extract_params(MessagePtr message_ptr, char* buffer, int buffer_len);
 
     void print_extracted_params(bool print_output = true, bool write_to_file = false);
     std::string last_MID_to_string();
-    inline const char* get_MID_name(CMID mid);
+    inline const char* get_MID_name(MID* mid);
 }
 
 #endif

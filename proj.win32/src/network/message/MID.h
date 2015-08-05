@@ -41,18 +41,6 @@ namespace msg {
 
     //================== MID begin ==================
 
-    struct Message {
-
-        //identifier
-        MID* mid;
-
-        //params
-        std::vector<CFTYPE> types;
-        std::vector<MessageParam*> params;
-        int total_bytes;
-        int count;
-    };
-
 	struct MID {
 
 		const int id = 0;
@@ -61,15 +49,12 @@ namespace msg {
 		MID(int num_args, ...);
     };
 
-	extern std::vector<msg::MID*> MID_list;
-    extern std::vector<std::string> MID_names;
-
-    //================== All MID constants ==================
+    extern std::vector<msg::MID*> MID_list;
 
     enum MID_enum {
 
         #define MID_DEF(x, y) x = y, 
-        #include "test.def"
+        #include "MID_Defines.def"
         #undef MID_DEF
     };
 };

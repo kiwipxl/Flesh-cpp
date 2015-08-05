@@ -40,36 +40,31 @@ namespace msg {
         sock.s_send(byte_buffer, byte_offset);
         if (callback != nullptr) sock.add_callback(callback);
     }
-
-    void extract_msg(char* buffer, int buffer_len) {
-        CMID mid = extract_mid(buffer, buffer_len);
-        if (mid != _MID->UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
-            last_callback_id = extract_callback_id(buffer, buffer_len);
-            extract_params(mid, buffer, buffer_len);
+    
+    MessagePtr extract_message(char* buffer, int buffer_len) {
+        MessagePtr msg_ptr = MessagePtr(new Message());
+        extract_mid(msg_ptr, buffer, buffer_len);
+        if (msg_ptr->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
+            extract_param_types(msg_ptr, buffer, buffer_len);
+            extract_params(msg_ptr, buffer, buffer_len);
         }
     }
-
-    CMID extract_mid(char* buffer, int buffer_len) {
-	    CMID mid = _MID->UNKNOWN;
+    
+    void extract_mid(MessagePtr message_ptr, char* buffer, int buffer_len) {
+        message_ptr->mid = MID_list[0];
 	    if (buffer_len >= MSG_HEADER_SIZE) {
-		    int id = 0;
+            int id = 0;
 		    memcpy(&id, buffer, 4);
-		    if (id >= 0 && id < MID_list.size()) mid = MID_list[id];
+		    if (id >= 0 && id < MID_list.size()) message_ptr->mid = MID_list[id];
 	    }
-        last_MID = mid;
-        return mid;
     }
+    
+    void extract_param_types(MessagePtr message_ptr, char* buffer, int buffer_len) {
 
-    u_short extract_callback_id(char* buffer, int buffer_len) {
-        int callback_id = 0;
-        if (buffer_len >= MSG_HEADER_SIZE) {
-            memcpy(&callback_id, buffer + 4, sizeof(unsigned short));
-        }
-        return callback_id;
     }
 
     std::string concat_str = "";
-    void extract_params(CMID mid, char* byte_data, int byte_data_len) {
+    void extract_params(MessagePtr message_ptr, char* buffer, int buffer_len) {
 	    clear_param_list();
 
 	    if (mid != _MID->UNKNOWN && byte_data_len - MSG_HEADER_SIZE >= mid->total_param_bytes) {
