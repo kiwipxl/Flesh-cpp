@@ -43,13 +43,15 @@ namespace msg {
 
 	struct MID {
 
-		const int id = 0;
-        const char* name;
+		int id = 0;
+        char* name;
 
-		MID(int num_args, ...);
+		MID();
     };
 
-    extern std::vector<msg::MID*> MID_list;
+    #define CMID const msg::MID const *
+
+    extern std::vector<CMID> MID_list;
 
     enum MID_enum {
 

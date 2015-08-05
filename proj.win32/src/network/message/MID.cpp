@@ -24,25 +24,11 @@ CFTYPE msg::FT_CHAR_ARRAY						= new FormatType("%s", 1, "char*");
 CFTYPE msg::FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
 CFTYPE msg::FT_RESPONSE                         = new FormatType("%d", 2, "response code");
 
-int msg::MID_id = 0;
+int MID_id = 0;
 std::vector<CMID> msg::MID_list;
-std::vector<std::string> msg::MID_names;
 
-MID::MID(int num_args, ...) : id(MID_id) {
-    if (num_args > 0) ft_params = new CFTYPE[num_args];
-    num_params = num_args;
-
-    va_list ap;
-    va_start(ap, num_args);
-    for (int n = 0; n < num_args; ++n) {
-        CFTYPE ft = va_arg(ap, CFTYPE);
-        ft_params[n] = ft;
-        total_param_bytes += ft->len;
-    }
-    va_end(ap);
-
+MID::MID() {
+    id = MID_id;
     ++MID_id;
     MID_list.push_back(this);
 }
-
-msg::MIDConstants* msg::MIDConstants::mid_constant;

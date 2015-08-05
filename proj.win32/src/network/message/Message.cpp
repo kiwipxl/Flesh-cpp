@@ -12,9 +12,7 @@ namespace msg {
     char print_buf[MAX_PRINT_BUF];
 
     void init() {
-        for (int n = 0; n < MAX_NUM_PARAMS; ++n) {
-            last_param_list[n] = new Param();
-        }
+
     }
 
     void send(Socket& sock, MsgStream& stream, MsgCallbackPtr callback) {
@@ -56,8 +54,6 @@ namespace msg {
     }
 
     void extract_params(MessagePtr message_ptr, char* buffer, int buffer_len) {
-	    clear_param_list();
-
 	    if (message_ptr->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message_ptr->param_total_bytes) {
             int offset = MSG_HEADER_SIZE;
             for (int n = 0; n < message_ptr->types.size(); ++n) {
@@ -84,14 +80,6 @@ namespace msg {
 	    }
     }
 
-    void clear_param_list() {
-	    for (int n = 0; n < last_param_list_size; ++n) {
-		    if (last_param_list[n] != NULL) delete[] last_param_list[n]->data;
-	    }
-	    last_param_list_size = 0;
-	    last_param_tbytes = 0;
-    }
-
     void print_extracted_params(bool print_output, bool write_to_file) {
         std::string temp = last_MID_to_string();
         if (print_output) log_print << temp;
@@ -99,63 +87,63 @@ namespace msg {
     }
 
     std::string last_MID_to_string() {
-        if (last_MID->num_params != last_param_list_size) {
-            log_warning << "could not print params, required " << last_MID->num_params << " params, but " << last_param_list_size << " params given";
-            last_MID = _MID->UNKNOWN;
-        }
+     //   if (last_MID->num_params != last_param_list_size) {
+     //       log_warning << "could not print params, required " << last_MID->num_params << " params, but " << last_param_list_size << " params given";
+     //       last_MID = _MID->UNKNOWN;
+     //   }
 
-	    static const char header[] = ": ";
-	    int header_size = sizeof(header);
+	    //static const char header[] = ": ";
+	    //int header_size = sizeof(header);
 
-	    const char* MID_name = get_MID_name(last_MID);
-	    int MID_name_len = strlen(MID_name) - 1;
-        strcpy(print_buf, MID_name);
+	    //const char* MID_name = get_MID_name(last_MID);
+	    //int MID_name_len = strlen(MID_name) - 1;
+     //   strcpy(print_buf, MID_name);
 
-        int offset = MID_name_len - 1;
-        if (last_MID != _MID->UNKNOWN && last_param_list_size > 0) {
-            strcpy(print_buf + MID_name_len, header);
-            offset += header_size;
-		    for (int n = 0; n < last_param_list_size; ++n) {
-			    //unsure if the below code can be shortened in c++, but this is a quick work around for now at least
-			    //sprintf requires that arguments be the same type of the format specifier, but the type is variable
-			    CFTYPE t = last_MID->ft_params[n];
-			    int len;
+     //   int offset = MID_name_len - 1;
+     //   if (last_MID != _MID->UNKNOWN && last_param_list_size > 0) {
+     //       strcpy(print_buf + MID_name_len, header);
+     //       offset += header_size;
+		   // for (int n = 0; n < last_param_list_size; ++n) {
+			  //  //unsure if the below code can be shortened in c++, but this is a quick work around for now at least
+			  //  //sprintf requires that arguments be the same type of the format specifier, but the type is variable
+			  //  CFTYPE t = last_MID->ft_params[n];
+			  //  int len;
 
-			    offset += sprintf(print_buf + offset, "(%s): ", t->type_name);
+			  //  offset += sprintf(print_buf + offset, "(%s): ", t->type_name);
 
-			    if (t == FT_INT)
-                    len = sprintf_buf<int>(offset, t, n);
-			    else if (t == FT_UNSIGNED_INT)
-                    len = sprintf_buf<unsigned int>(offset, t, n);
-			    else if (t == FT_SHORT)
-                    len = sprintf_buf<short>(offset, t, n);
-			    else if (t == FT_UNSIGNED_SHORT)
-                    len = sprintf_buf<unsigned short>(offset, t, n);
-			    else if (t == FT_LONG)
-                    len = sprintf_buf<long>(offset, t, n);
-			    else if (t == FT_UNSIGNED_LONG)
-                    len = sprintf_buf<unsigned long>(offset, t, n);
-			    else if (t == FT_FLOAT)
-                    len = sprintf_buf<float>(offset, t, n);
-			    else if (t == FT_DOUBLE)
-                    len = sprintf_buf<double>(offset, t, n);
-			    else if (t == FT_BOOL)
-                    len = sprintf_buf<bool>(offset, t, n);
-			    else if (t == FT_CHAR_ARRAY)
-                    len = sprintf_buf<char*>(offset, t, n);
-			    else
-				    len = sprintf(print_buf + offset, "%s", "undefined");
+			  //  if (t == FT_INT)
+     //               len = sprintf_buf<int>(offset, t, n);
+			  //  else if (t == FT_UNSIGNED_INT)
+     //               len = sprintf_buf<unsigned int>(offset, t, n);
+			  //  else if (t == FT_SHORT)
+     //               len = sprintf_buf<short>(offset, t, n);
+			  //  else if (t == FT_UNSIGNED_SHORT)
+     //               len = sprintf_buf<unsigned short>(offset, t, n);
+			  //  else if (t == FT_LONG)
+     //               len = sprintf_buf<long>(offset, t, n);
+			  //  else if (t == FT_UNSIGNED_LONG)
+     //               len = sprintf_buf<unsigned long>(offset, t, n);
+			  //  else if (t == FT_FLOAT)
+     //               len = sprintf_buf<float>(offset, t, n);
+			  //  else if (t == FT_DOUBLE)
+     //               len = sprintf_buf<double>(offset, t, n);
+			  //  else if (t == FT_BOOL)
+     //               len = sprintf_buf<bool>(offset, t, n);
+			  //  else if (t == FT_CHAR_ARRAY)
+     //               len = sprintf_buf<char*>(offset, t, n);
+			  //  else
+				 //   len = sprintf(print_buf + offset, "%s", "undefined");
 
-			    offset += len;
-			    if (n < last_param_list_size - 1) offset += sprintf(print_buf + offset, ", ", t->type_name);
-		    }
-        }
-        print_buf[offset + 1] = '\0';
+			  //  offset += len;
+			  //  if (n < last_param_list_size - 1) offset += sprintf(print_buf + offset, ", ", t->type_name);
+		   // }
+     //   }
+     //   print_buf[offset + 1] = '\0';
 
         return print_buf;
     }
 
     inline const char* get_MID_name(CMID mid) {
-	    return (MID_names.size() > 0 && mid->id > 0 && mid->id < MID_names.size()) ? MID_names[mid->id].c_str() : "undefined";
+	    return (MID_list.size() > 0 && mid->id > 0 && mid->id < MID_list.size()) ? MID_list[mid->id]->name : "undefined";
     }
 };

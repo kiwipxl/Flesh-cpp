@@ -23,7 +23,7 @@ namespace msg {
     struct Message {
 
         //identifier
-        const MID* mid;
+        CMID mid;
 
         //params
         std::vector<CFTYPE> types;
@@ -31,8 +31,8 @@ namespace msg {
         int param_total_bytes;
         int param_count;
     };
-
-    #define MessagePtr std::shared_ptr<Message>
+    
+    typedef std::shared_ptr<Message> MessagePtr;
 
 	extern const int MAX_NUM_PARAMS;
 	extern const int MAX_PRINT_BUF;
@@ -48,7 +48,7 @@ namespace msg {
 
     void print_extracted_params(bool print_output = true, bool write_to_file = false);
     std::string last_MID_to_string();
-    inline const char* get_MID_name(MID* mid);
+    inline const char* get_MID_name(CMID mid);
 }
 
 #endif

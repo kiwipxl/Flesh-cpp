@@ -14,10 +14,10 @@ namespace msg {
     #define MSG_HEADER_SIZE 6 //(MID id (int) + callback_id (u_short))
 
     struct Param;
-    class MsgStream {
+    class Stream {
 
         public:
-            MsgStream() { byte_offset = 0; }
+            Stream() { byte_offset = 0; }
 
             CMID mid;
 
@@ -31,26 +31,23 @@ namespace msg {
                 byte_offset += len;
             }
 
-            template <class T> MsgStream& operator<<(const T& v) { check_MID_add(); cpy_to_buf(&v, sizeof(v)); return *this; }
-            MsgStream& operator<<(CMID v) {
-                if (added_MID) assert("cannot add an MID to a MsgStream when one has already been added");
-                cpy_to_buf(&v->id, sizeof(int)); added_MID = true; mid = v; write_callback_id(v); return *this;
+            template <class T> Stream& operator<<(const T& v) { check_MID_add(); cpy_to_buf(&v, sizeof(v)); return *this; }
+            Stream& operator<<(CMID v) {
+                if (added_MID) assert("cannot add an MID to a Stream when one has already been added");
+                cpy_to_buf(&v->id, sizeof(int)); added_MID = true; mid = v; return *this;
             }
-            MsgStream& operator<<(char* str) { check_MID_add(); cpy_to_buf(str, strlen(str) + 1); return *this; }
-            MsgStream& operator<<(msg::ResponseCode rc) { check_MID_add(); cpy_to_buf(rc, sizeof(unsigned short)); return *this; }
-            MsgStream& operator<<(Param* p);
+            Stream& operator<<(char* str) { check_MID_add(); cpy_to_buf(str, strlen(str) + 1); return *this; }
+            Stream& operator<<(Param* p);
 
-            MsgStream& operator>>(int i) { byte_offset -= i; return *this; }
+            Stream& operator>>(int i) { byte_offset -= i; return *this; }
 
-            ~MsgStream() {
+            ~Stream() {
                 if (!header_complete) assert("byte stream must be complete whenever used - MID required");
             }
 
         private:
             bool added_MID = false;
             bool header_complete = false;
-
-            void write_callback_id(CMID v);
 
             inline void check_MID_add() {
                 if (!added_MID) assert("an MID must be added to the stream first, before any other values");
