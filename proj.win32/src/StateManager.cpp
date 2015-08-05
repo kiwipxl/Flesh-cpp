@@ -69,6 +69,7 @@ void state::init(SceneManager* scene_ref) {
     scene->setGLProgram(cc::ShaderCache::getInstance()->getGLProgram(cc::GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     sock::init();
+    msg::init();
     input::init();
     debug::init_logger();
     create_state(s);

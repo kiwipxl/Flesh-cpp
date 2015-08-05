@@ -12,7 +12,7 @@ namespace msg {
     char print_buf[MAX_PRINT_BUF];
 
     void init() {
-
+        MID_init();
     }
 
     void send(Socket& sock, Stream& stream, CallbackPtr callback) {

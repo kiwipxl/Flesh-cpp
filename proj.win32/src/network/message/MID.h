@@ -41,25 +41,26 @@ namespace msg {
 
     //================== MID begin ==================
 
+    enum MID_enum {
+
+        #define MID_DEF(x, y) x = y, 
+        #include "MID_Defines.def"
+        #undef MID_DEF
+    };
+
 	struct MID {
 
 		int id = 0;
-        char* name;
+        const char* name;
 
-		MID();
+		MID(MID_enum e);
     };
 
     #define CMID const msg::MID const *
 
     extern std::vector<CMID> MID_list;
 
-    enum MID_enum {
-
-        /*#define MID_DEF(x, y) x = y, 
-        #include "MID_Defines.def"
-        #undef MID_DEF*/
-        MID_UNKNOWN
-    };
+    extern void MID_init();
 };
 
 #endif

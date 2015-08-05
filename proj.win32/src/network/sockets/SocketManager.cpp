@@ -144,7 +144,6 @@ void sock::close_all_threads() {
 }
 
 void sock::init() {
-    msg::init();
     udp_serv_sock = Socket(PROTO_UDP);
     tcp_serv_sock = Socket(PROTO_TCP);
     Socket::init_sockets();

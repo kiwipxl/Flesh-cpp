@@ -1,5 +1,7 @@
 #include "MID.h"
 
+#include <sstream>
+
 using msg::MID;
 using msg::FormatType;
 
@@ -26,9 +28,25 @@ CFTYPE msg::FT_RESPONSE                         = new FormatType("%d", 2, "respo
 
 int MID_id = 0;
 std::vector<CMID> msg::MID_list;
+std::ostringstream str_stream;
 
-MID::MID() {
+inline const char* get_name(msg::MID_enum e) {
+    switch (e) {
+        #define MID_DEF(x,y) case y: return #x;
+        #include "MID_Defines.def"
+        #undef ERROR_DEF
+    }
+    return "MID_NAME_NOT_FOUND";
+}
+
+MID::MID(msg::MID_enum e) {
     id = MID_id;
     ++MID_id;
+    name = get_name(e);
     MID_list.push_back(this);
+}
+
+void msg::MID_init() {
+    MID* mid = new MID(MID_AYY_LMAO);
+    MID* mid2 = new MID(MID_UNKNOWN);
 }
