@@ -28,8 +28,8 @@ namespace msg {
         //params
         std::vector<CFTYPE> types;
         std::vector<Param*> params;
-        int total_bytes;
-        int count;
+        int param_total_bytes;
+        int param_count;
     };
 
     #define MessagePtr std::shared_ptr<Message>

@@ -8,14 +8,6 @@ template <typename T> inline int sprintf_buf(int offset, CFTYPE t, int n) {
 
 namespace msg {
 
-    CMID last_MID;
-    u_short last_callback_id = 0;
-    const int MAX_NUM_PARAMS = 16;
-    Param* last_param_list[MAX_NUM_PARAMS];
-    int last_param_list_size = 0;
-    int last_param_tbytes = 0;
-    ResponseCode last_response_code = RESPONSE_NONE;
-
     const int MAX_PRINT_BUF = 1024;
     char print_buf[MAX_PRINT_BUF];
 
@@ -42,11 +34,11 @@ namespace msg {
     }
     
     MessagePtr extract_message(char* buffer, int buffer_len) {
-        MessagePtr msg_ptr = MessagePtr(new Message());
-        extract_mid(msg_ptr, buffer, buffer_len);
-        if (msg_ptr->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
-            extract_param_types(msg_ptr, buffer, buffer_len);
-            extract_params(msg_ptr, buffer, buffer_len);
+        MessagePtr message_ptr = MessagePtr(new Message());
+        extract_mid(message_ptr, buffer, buffer_len);
+        if (message_ptr->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
+            extract_param_types(message_ptr, buffer, buffer_len);
+            extract_params(message_ptr, buffer, buffer_len);
         }
     }
     
@@ -63,37 +55,32 @@ namespace msg {
 
     }
 
-    std::string concat_str = "";
     void extract_params(MessagePtr message_ptr, char* buffer, int buffer_len) {
 	    clear_param_list();
 
-	    if (mid != _MID->UNKNOWN && byte_data_len - MSG_HEADER_SIZE >= mid->total_param_bytes) {
+	    if (message_ptr->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message_ptr->param_total_bytes) {
             int offset = MSG_HEADER_SIZE;
-		    int index = 0;
-		    for (int n = 0; n < mid->num_params; ++n) {
+            for (int n = 0; n < message_ptr->types.size(); ++n) {
 			    int len = 0;
 			    char* pointer;
-			    if (mid->ft_params[n] == FT_CHAR_ARRAY) {
-				    concat_str = "";
-				    for (int c = offset; c < byte_data_len; ++c) {
-					    ++len;
-					    concat_str += byte_data[c];
-					    if (byte_data[c] == '\0') break;
+			    if (message_ptr->types[n] == FT_CHAR_ARRAY) {
+                    for (int c = offset; c < buffer_len; ++c) {
+                        ++len;
+					    if (buffer[c] == '\0') break;
 				    }
-				    pointer = new char[len];
-				    strcpy(pointer, concat_str.c_str());
 			    }else {
-				    len = mid->ft_params[n]->len;
-				    pointer = new char[len];
-				    memcpy(pointer, byte_data + offset, len);
+                    len = message_ptr->types[n]->len;
 			    }
-			    last_param_list[index]->data = pointer;
-			    last_param_list[index]->len = len;
+                pointer = new char[len];
+                memcpy(pointer, buffer + offset, len);
+
+                Param* p = new Param();
+                p->data = pointer;
+                p->len = len;
+                message_ptr->params.push_back(p);
+
 			    offset += len;
-			    last_param_tbytes += len;
-			    ++index;
 		    }
-		    last_param_list_size = index;
 	    }
     }
 
