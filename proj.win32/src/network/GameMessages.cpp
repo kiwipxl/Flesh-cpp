@@ -22,26 +22,7 @@ void recv_msgs() {
 	char buffer[1024];
 	int msg_len;
 	while (true) {
-        time_t t;
-        for (int i = 0; i < server_poll.get_size(); ++i) {
-            Socket* sock = server_poll.get_sock_at(i);
-            if (!sock) continue;
-            for (int n = 0; n < server_poll.get_sock_at(i)->callbacks.size(); ++n) {
-                msg::CallbackPtr& cb = server_poll.get_sock_at(i)->callbacks[n];
-                if (cb->timeout_len != msg::TIMEOUT_NONE && (time(&t) - cb->creation_time) >= cb->timeout_len) {
-                    log_info << "callback timeout for " << cb->mid->name;
-                    msg::Message m;
-                    m.callback_result = msg::CALLBACK_RESULT_TIMEOUT;
-                    cb->func(&m);
-                    if (cb->remove_after_call) {
-                        sock->callbacks.erase(sock->callbacks.begin() + n);
-                        --n;
-                    }else {
-                        cb->reset_timeout();
-                    }
-                }
-            }
-        }
+        msg::process_all_callbacks(server_poll);
 
 		int total = 0;
 		if ((total = server_poll.poll()) > 0) {
@@ -60,9 +41,9 @@ void recv_msgs() {
                     peers::Peer* peer;
 
 					if ((msg_len = sock->s_recv(buffer, 1024)) > 0) {
-                        msg::MessagePtr message = msg::extract_message(buffer, msg_len);
+                        msg::MessagePtr message = msg::extract_message(*sock, buffer, msg_len);
 						if (message->mid->id != msg::MID_UNKNOWN) {
-                            msg::callback_process_message(message);
+                            msg::process_message_callback(message);
 
                             msg::print_extracted_params(false, true);
 

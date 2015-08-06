@@ -32,8 +32,9 @@ namespace msg {
         sock.s_send(byte_buffer, byte_offset);
     }
     
-    MessagePtr extract_message(char* buffer, int buffer_len) {
+    MessagePtr extract_message(Socket& sock, char* buffer, int buffer_len) {
         MessagePtr message = MessagePtr(new Message());
+        message->sock = &sock;
         extract_mid(message, buffer, buffer_len);
         if (message->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
             extract_params(message, buffer, buffer_len);

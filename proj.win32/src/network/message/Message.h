@@ -27,6 +27,7 @@ namespace msg {
         CMID mid = get_MID(MID_UNKNOWN);
         std::vector<Param*> params;
         CallbackResult callback_result = CALLBACK_RESULT_UNKNOWN;
+        Socket* sock = NULL;
 
         template <typename ParamType> ParamType& get(int index) {
             if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");
@@ -44,7 +45,7 @@ namespace msg {
     void init();
     void send(Socket& sock, Stream& stream);
     
-    MessagePtr extract_message(char* buffer, int buffer_len);
+    MessagePtr extract_message(Socket& sock, char* buffer, int buffer_len);
     void extract_mid(MessagePtr message, char* buffer, int buffer_len);
     void extract_params(MessagePtr message, char* buffer, int buffer_len);
 

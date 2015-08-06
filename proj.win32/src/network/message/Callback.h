@@ -8,6 +8,7 @@
 #include "MID.h"
 
 struct Socket;
+struct SocketPoll;
 namespace msg {
     struct Message;
 }
@@ -48,6 +49,8 @@ namespace msg {
     typedef std::shared_ptr<MIDCallback> CallbackPtr;
 
     extern CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback, float timeout_len = TIMEOUT_NONE, bool remove_after_call = false);
+    extern void process_message_callback(MessagePtr message);
+    extern void process_all_callbacks(SocketPoll& poll);
 };
 
 #endif

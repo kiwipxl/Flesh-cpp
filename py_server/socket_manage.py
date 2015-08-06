@@ -43,7 +43,7 @@ def socket_loop(listen_ip, listen_port):
             client_dc = False;
             sockerr = None;
 
-            callback.process_callbacks();
+            callback.process_callbacks(client_obj);
 
             try:
                 byte_data = client_obj.tcp_sock.recv(1024);
