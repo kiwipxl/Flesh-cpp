@@ -39,8 +39,16 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    tcp_serv_sock.add_message_handler(msg::MID_AYY_LMAO, [](msg::Message* message) {
+    tcp_serv_sock.add_message_handler(msg::MID_REQUEST_CLIENT_TO_BIND_UDP_SOCKET, [](msg::Message* message) {
+        if (setup_udp_sock(message->get<u_short>(0))) {
+            msg::game::server_poll.add_sock(sock::udp_serv_sock);
+            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_SOCKET << udp_serv_sock.get_binded_port());
+        }else {
+            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_SOCKET << 0);
 
+            connection_finished = true;
+            connection_error = -1;
+        }
     });
 
     /*tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {

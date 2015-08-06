@@ -155,8 +155,8 @@
       <file leaf-file-name="_MID.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_MID.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46153846">
-              <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.42209074">
+              <caret line="61" column="79" selection-start-line="61" selection-start-column="79" selection-end-line="61" selection-end-column="79" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -241,6 +241,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -262,7 +263,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -459,7 +459,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="92" width="1456" height="876" extended-state="7" />
+    <frame x="1912" y="92" width="1456" height="876" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.07638889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -990,8 +990,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_MID.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46153846">
-          <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.42209074">
+          <caret line="61" column="79" selection-start-line="61" selection-start-column="79" selection-end-line="61" selection-end-column="79" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>

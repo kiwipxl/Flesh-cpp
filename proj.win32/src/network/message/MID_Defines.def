@@ -1,3 +1,4 @@
 
 MID_DEF(MID_UNKNOWN)
-MID_DEF(MID_AYY_LMAO) ARG(int) ARG(float)
+MID_DEF(MID_REQUEST_CLIENT_TO_BIND_UDP_SOCKET) ARG(server_udp_recv_port = ushort)
+MID_DEF(MID_SEND_CLIENT_BINDED_UDP_SOCKET) ARG(client_udp_recv_port = ushort)

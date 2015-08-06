@@ -66,11 +66,11 @@ void add_arg(char* str) {
                 ++last_MID->param_count;
                 last_MID->param_total_bytes += msg::FT_list[n]->len;
             }else {
-                assert("argument used before the first MID define");
+                assert(!"argument used before the first MID define");
             }
         }
     }
-    if (!found) assert("argument name could not be found in FT_list");
+    if (!found) assert(!"argument name could not be found in FT_list");
 }
 
 void msg::MID_init() {
@@ -80,8 +80,6 @@ void msg::MID_init() {
     #include "MID_Defines.def"
     #undef MID_DEF
     #undef ARG
-
-    int a = 5;
 }
 
 CMID msg::get_MID(MID_enum mid_enum) {

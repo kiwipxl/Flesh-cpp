@@ -26,6 +26,10 @@ namespace msg {
 
         CMID mid;
         std::vector<Param*> params;
+
+        template <typename ParamType> ParamType& get(int index) {
+            return (index >= 0 && index < params.size()) ? *(ParamType*)params[index]->data : assert("index is out of bounds of message parameters");
+        }
     };
     
     typedef std::shared_ptr<Message> MessagePtr;
