@@ -1,11 +1,14 @@
 #include "MID.h"
 
 #include <sstream>
+#include <cassert>
 
 using msg::MID;
 using msg::FormatType;
 
-FormatType::FormatType(const char* c, const short l, const char* name) : printf_format(c), len(l), type_name(name) { }
+std::vector<CFTYPE> msg::FT_list;
+
+FormatType::FormatType(const char* c, const short l, const char* name) : printf_format(c), len(l), type_name(name) { FT_list.push_back(this); }
 
 //format types for packing and unpacking byte data
 CFTYPE msg::FT_CHAR								= new FormatType("%c", 1, "char");
@@ -24,7 +27,6 @@ CFTYPE msg::FT_FLOAT							= new FormatType("%f", 4, "float");
 CFTYPE msg::FT_DOUBLE							= new FormatType("%f", 8, "double");
 CFTYPE msg::FT_CHAR_ARRAY						= new FormatType("%s", 1, "char*");
 CFTYPE msg::FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
-CFTYPE msg::FT_RESPONSE                         = new FormatType("%d", 2, "response code");
 
 int MID_id = 0;
 std::vector<CMID> msg::MID_list;
@@ -33,8 +35,10 @@ std::ostringstream str_stream;
 inline const char* get_name(msg::MID_enum e) {
     int count = 0;
     #define MID_DEF(x) if ((int)e == count) return #x; ++count;
+    #define ARG(x)
     #include "MID_Defines.def"
     #undef MID_DEF
+    #undef ARG
 
     return "MID_NAME_NOT_FOUND";
 }
@@ -44,17 +48,40 @@ MID::MID() {
     ++MID_id;
 }
 
+MID* last_MID = NULL;
+void create_MID(int index) {
+    MID* mid = new MID();
+    mid->name = get_name((msg::MID_enum)index);
+    msg::MID_list.push_back(mid);
+    last_MID = mid;
+}
+
+void add_arg(char* str) {
+    bool found = false;
+    for (int n = 0; n < msg::FT_list.size(); ++n) {
+        if (strcmp(msg::FT_list[n]->type_name, str) == 0) {
+            found = true;
+            if (last_MID) {
+                last_MID->param_types.push_back(msg::FT_list[n]);
+                ++last_MID->param_count;
+                last_MID->param_total_bytes += msg::FT_list[n]->len;
+            }else {
+                assert("argument used before the first MID define");
+            }
+        }
+    }
+    if (!found) assert("argument name could not be found in FT_list");
+}
+
 void msg::MID_init() {
     int count = 0;
-    #define MID_DEF(x) ++count;
+    #define MID_DEF(x) create_MID(count); ++count;
+    #define ARG(x) add_arg(#x);
     #include "MID_Defines.def"
     #undef MID_DEF
+    #undef ARG
 
-    for (int n = 0; n < count; ++n) {
-        MID* mid = new MID();
-        mid->name = get_name((MID_enum)n);
-        MID_list.push_back(mid);
-    }
+    int a = 5;
 }
 
 CMID msg::get_MID(MID_enum mid_enum) {

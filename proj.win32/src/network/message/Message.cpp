@@ -56,18 +56,18 @@ namespace msg {
     }
 
     void extract_params(MessagePtr message, char* buffer, int buffer_len) {
-	    if (message->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message->param_total_bytes) {
+	    if (message->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message->mid->param_total_bytes) {
             int offset = MSG_HEADER_SIZE;
-            for (int n = 0; n < message->types.size(); ++n) {
+            for (int n = 0; n < message->mid->param_types.size(); ++n) {
 			    int len = 0;
 			    char* pointer;
-			    if (message->types[n] == FT_CHAR_ARRAY) {
+			    if (message->mid->param_types[n] == FT_CHAR_ARRAY) {
                     for (int c = offset; c < buffer_len; ++c) {
                         ++len;
 					    if (buffer[c] == '\0') break;
 				    }
 			    }else {
-                    len = message->types[n]->len;
+                    len = message->mid->param_types[n]->len;
 			    }
                 pointer = new char[len];
                 memcpy(pointer, buffer + offset, len);

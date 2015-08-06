@@ -24,14 +24,8 @@ namespace msg {
 
     struct Message {
 
-        //identifier
         CMID mid;
-
-        //params
-        std::vector<CFTYPE> types;
         std::vector<Param*> params;
-        int param_total_bytes;
-        int param_count;
     };
     
     typedef std::shared_ptr<Message> MessagePtr;

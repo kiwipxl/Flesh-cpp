@@ -19,6 +19,8 @@ namespace msg {
 	};
 
 	#define CFTYPE const msg::FormatType*
+    
+    extern std::vector<CFTYPE> FT_list;
 
 	//format types for packing and unpacking byte data
 	extern CFTYPE FT_CHAR;
@@ -37,21 +39,28 @@ namespace msg {
 	extern CFTYPE FT_DOUBLE;
 	extern CFTYPE FT_CHAR_ARRAY;
     extern CFTYPE FT_VOID_POINTER;
-    extern CFTYPE FT_RESPONSE;
 
     //================== MID begin ==================
 
     enum MID_enum {
 
         #define MID_DEF(x) x, 
+        #define ARG(x) 
         #include "MID_Defines.def"
         #undef MID_DEF
+        #undef ARG
     };
 
 	struct MID {
 
-		int id = 0;
+        //attribs
+        int id;
         const char* name;
+
+        //params
+        std::vector<CFTYPE> param_types;
+        int param_total_bytes = 0;
+        int param_count = 0;
 
 		MID();
     };
