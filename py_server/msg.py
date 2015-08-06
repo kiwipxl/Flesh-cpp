@@ -19,13 +19,15 @@ class Message:
     mid = None;
     params = [];
     raw_data = "";
+    callback_result = callback.CALLBACK_RESULT_UNKNOWN;
 
-    def __init__(self, sock, client_obj, mid, params):
+    def __init__(self, sock = None, client_obj = None, mid = _MID.UNKNOWN, params = []):
         self.sock = sock;
         self.client_obj = client_obj;
         self.mid = mid;
         self.params = params;
         self.raw_data = "";
+        self.callback_result = callback.CALLBACK_RESULT_UNKNOWN;
 
 def build(mid, *params):
     byte_buffer[0:4] = struct.pack(_FT.INT.struct_char, mid.id);

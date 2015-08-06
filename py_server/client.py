@@ -21,8 +21,8 @@ class Client:
         if (callback_obj):
             self.callbacks.append(callback_obj);
 
-    def add_message_handler(self, mid, func):
-        self.callbacks.append(callback.make_MID_callback(mid, func));
+    def add_message_handler(self, mid, func, timeout_len = callback.TIMEOUT_NONE, remove_after_call = False):
+        self.callbacks.append(callback.make_MID_callback(mid, func, timeout_len, remove_after_call));
 
 clients = [];
 num_clients = 0;
@@ -58,12 +58,14 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     c.add_message_handler(_MID.UDP_PONG, cb02);
 
     def cb00(message):
+        if (message.callback_result == callback.CALLBACK_RESULT_TIMEOUT): return;
+
         message.client_obj.c_udp_port = message.params[0];
         msg.send(message.client_obj.udp_sock, message.client_obj, msg.build(_MID.UDP_PING));
 
-    c.add_message_handler(_MID.RECV_CLIENT_BINDED_UDP_PORT, cb00);
+    c.add_message_handler(_MID.RECV_CLIENT_BINDED_UDP_PORT, cb00, callback.TIMEOUT_SHORT, True);
 
-    #msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
+    msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients;

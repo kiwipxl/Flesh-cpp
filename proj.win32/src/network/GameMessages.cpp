@@ -31,7 +31,6 @@ void recv_msgs() {
                 if (cb->timeout_len != msg::TIMEOUT_NONE && (time(&t) - cb->creation_time) >= cb->timeout_len) {
                     log_info << "callback timeout for " << cb->mid->name;
                     msg::Message m;
-                    m.mid = msg::get_MID(msg::MID_UNKNOWN);
                     m.callback_result = msg::CALLBACK_RESULT_TIMEOUT;
                     cb->func(&m);
                     if (cb->remove_after_call) {

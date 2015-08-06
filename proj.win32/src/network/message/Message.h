@@ -24,9 +24,9 @@ namespace msg {
 
     struct Message {
 
-        CMID mid;
+        CMID mid = get_MID(MID_UNKNOWN);
         std::vector<Param*> params;
-        CallbackResult callback_result;
+        CallbackResult callback_result = CALLBACK_RESULT_UNKNOWN;
 
         template <typename ParamType> ParamType& get(int index) {
             if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");

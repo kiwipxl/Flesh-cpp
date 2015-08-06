@@ -21,6 +21,7 @@ namespace msg {
 
     enum CallbackResult {
 
+        CALLBACK_RESULT_UNKNOWN, 
         CALLBACK_RESULT_SUCCESS, 
         CALLBACK_RESULT_TIMEOUT
     };
