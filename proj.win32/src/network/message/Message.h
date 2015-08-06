@@ -4,9 +4,11 @@
 #include <string>
 #include <sstream>
 
-#include "../sockets/Socket.h"
 #include "MID.h"
 #include "Stream.h"
+#include "Callback.h"
+
+class Socket;
 
 namespace msg {
 
@@ -38,8 +40,8 @@ namespace msg {
 	extern const int MAX_PRINT_BUF;
     extern char print_buf[];
 
-	void init();
-    void send(Socket& sock, Stream& stream, CallbackPtr callback = nullptr);
+    void init();
+    void send(Socket& sock, Stream& stream);
     
     MessagePtr extract_message(char* buffer, int buffer_len);
     void extract_mid(MessagePtr message, char* buffer, int buffer_len);

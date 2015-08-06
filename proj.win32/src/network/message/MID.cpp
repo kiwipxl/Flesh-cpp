@@ -56,3 +56,7 @@ void msg::MID_init() {
         MID_list.push_back(mid);
     }
 }
+
+CMID msg::get_MID(MID_enum mid_enum) {
+    return (mid_enum > 0 && mid_enum < MID_list.size()) ? MID_list[mid_enum] : MID_list[0];
+}

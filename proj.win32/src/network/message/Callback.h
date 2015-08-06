@@ -5,13 +5,16 @@
 #include <memory>
 #include <ctime>
 
-#include "../message/MID.h"
+#include "MID.h"
 
 struct Socket;
+namespace msg {
+    struct Message;
+}
 
 namespace msg {
 
-    typedef std::function<void()> CallbackFunc;
+    typedef std::function<void(Message*)> CallbackFunc;
 
     struct MIDCallback {
 

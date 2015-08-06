@@ -10,6 +10,7 @@
 #include "entities/Unit.h"
 #include "debug/Errors.h"
 #include "debug/Logger.h"
+#include "network/message/Message.h"
 
 using state::State;
 

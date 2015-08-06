@@ -1,6 +1,8 @@
 #include "Message.h"
 
 #include "../../debug/Logger.h"
+#include "../sockets/Socket.h"
+#include "Callback.h"
 
 template <typename T> inline int sprintf_buf(int offset, CFTYPE t, int n) {
     return sprintf(msg::print_buf + offset, t->printf_format, *(T*)msg::last_param_list[n]->data);
@@ -15,7 +17,7 @@ namespace msg {
         MID_init();
     }
 
-    void send(Socket& sock, Stream& stream, CallbackPtr callback) {
+    void send(Socket& sock, Stream& stream) {
         //not thread safe, will crash if params are used in another thread
         //todo: param lists can be moved innto MID class to fix
         /*if (print_output || write_to_file) {
@@ -28,7 +30,6 @@ namespace msg {
         }*/
 
         sock.s_send(byte_buffer, byte_offset);
-        if (callback != nullptr) sock.add_callback(callback);
     }
     
     MessagePtr extract_message(char* buffer, int buffer_len) {

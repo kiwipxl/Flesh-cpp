@@ -5,6 +5,7 @@
 #include "Peers.h"
 #include "../entities/Unit.h"
 #include "../debug/Logger.h"
+#include "message/Message.h"
 
 using debug::fresult;
 
@@ -56,7 +57,7 @@ void recv_msgs() {
 						if (message->mid->id != msg::MID_UNKNOWN) {
                             for (int n = 0; n < sock->callbacks.size(); ++n) {
                                 if (sock->callbacks[n]->mid == message->mid) {
-                                    sock->callbacks[n]->func();
+                                    sock->callbacks[n]->func(message.get());
                                 }
                             }
 

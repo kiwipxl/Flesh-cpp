@@ -46,9 +46,8 @@ class Socket {
         int s_change_send_addr(char* sending_ip, u_short sending_port);
 
         std::vector<msg::CallbackPtr> callbacks;
-        void add_callback(msg::CallbackPtr& msg_callback) {
-            callbacks.push_back(msg_callback);
-        }
+        void add_callback(msg::CallbackPtr& msg_callback);
+        void add_message_handler(msg::MID_enum mid, msg::CallbackFunc func);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }

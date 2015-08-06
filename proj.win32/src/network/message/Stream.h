@@ -4,7 +4,6 @@
 #include <cassert>
 
 #include "MID.h"
-#include "Callback.h"
 
 namespace msg {
 

@@ -2,6 +2,8 @@
 
 #include "../../StateManager.h"
 #include "../../debug/Logger.h"
+#include "../message/Message.h"
+#include "../GameMessages.h"
 
 using debug::fresult;
 
@@ -20,10 +22,6 @@ int sock::connection_error = -1;
 char* serv_ip = "127.0.0.1";
 u_short serv_port = 4222;
 
-void test_pass(std::function<void()> func) {
-    //func();
-}
-
 void tcp_connect() {
     using namespace sock;
 
@@ -40,6 +38,10 @@ void tcp_connect() {
                            tcp_serv_sock.get_binded_ip() << ", port: " << tcp_serv_sock.get_binded_port() << ")";
         socket_setup_failed(fresult); return;
     }
+
+    tcp_serv_sock.add_message_handler(msg::MID_AYY_LMAO, [](msg::Message* message) {
+
+    });
 
     /*tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
         udp_serv_sock.add_callback(msg::make_MID_callback([]() {

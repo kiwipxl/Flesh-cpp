@@ -61,6 +61,7 @@ namespace msg {
     extern std::vector<CMID> MID_list;
 
     extern void MID_init();
+    extern CMID get_MID(MID_enum mid_enum);
 };
 
 #endif

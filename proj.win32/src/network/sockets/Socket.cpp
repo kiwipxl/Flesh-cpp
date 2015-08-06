@@ -1,6 +1,8 @@
 #include "Socket.h"
 
 #include "../message/Message.h"
+#include "../message/Callback.h"
+#include "../message/MID.h"
 #include "../../debug/Errors.h"
 #include "../../debug/Logger.h"
 #include "SocketManager.h"
@@ -132,4 +134,12 @@ int Socket::s_recv(char* buffer, int buffer_len) {
 		if ((result = recvfrom(sock, buffer, buffer_len, 0, (sockaddr*)&send_addr_info, &addr_info_size)) < 0) return PRINT_OR_ERROR("recvfrom error");
 	}
 	return result;
+}
+
+void Socket::add_callback(msg::CallbackPtr& msg_callback) {
+    callbacks.push_back(msg_callback);
+}
+
+void Socket::add_message_handler(msg::MID_enum mid, msg::CallbackFunc func) {
+    msg::make_MID_callback(func, msg::get_MID(mid));
 }
