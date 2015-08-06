@@ -22,7 +22,7 @@ void recv_msgs() {
 	char buffer[1024];
 	int msg_len;
 	while (true) {
-        /*time_t t;
+        time_t t;
         for (int i = 0; i < server_poll.get_size(); ++i) {
             Socket* sock = server_poll.get_sock_at(i);
             if (!sock) continue;
@@ -34,7 +34,7 @@ void recv_msgs() {
                     --n;
                 }
             }
-        }*/
+        }
 
 		int total = 0;
 		if ((total = server_poll.poll()) > 0) {

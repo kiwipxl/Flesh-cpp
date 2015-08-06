@@ -26,6 +26,7 @@ namespace msg {
 
         CMID mid;
         std::vector<Param*> params;
+        CallbackResult callback_result;
 
         template <typename ParamType> ParamType& get(int index) {
             if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");

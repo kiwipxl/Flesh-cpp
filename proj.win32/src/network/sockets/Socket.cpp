@@ -140,6 +140,6 @@ void Socket::add_callback(msg::CallbackPtr& msg_callback) {
     callbacks.push_back(msg_callback);
 }
 
-void Socket::add_message_handler(msg::MID_enum mid, msg::CallbackFunc func) {
-    callbacks.push_back(msg::make_MID_callback(msg::get_MID(mid), func));
+void Socket::add_message_handler(msg::MID_enum mid, msg::CallbackFunc func, float timeout_len) {
+    callbacks.push_back(msg::make_MID_callback(msg::get_MID(mid), func, timeout_len));
 }
