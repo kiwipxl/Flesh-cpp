@@ -62,18 +62,7 @@ void recv_msgs() {
 					if ((msg_len = sock->s_recv(buffer, 1024)) > 0) {
                         msg::MessagePtr message = msg::extract_message(buffer, msg_len);
 						if (message->mid->id != msg::MID_UNKNOWN) {
-                            message->callback_result = msg::CALLBACK_RESULT_SUCCESS;
-                            for (int n = 0; n < sock->callbacks.size(); ++n) {
-                                if (sock->callbacks[n]->mid == message->mid) {
-                                    sock->callbacks[n]->func(message.get());
-                                    if (sock->callbacks[n]->remove_after_call) {
-                                        sock->callbacks.erase(sock->callbacks.begin() + n);
-                                        --n;
-                                    }else {
-                                        sock->callbacks[n]->reset_timeout();
-                                    }
-                                }
-                            }
+                            msg::callback_process_message(message);
 
                             msg::print_extracted_params(false, true);
 

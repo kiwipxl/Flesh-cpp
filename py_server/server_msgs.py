@@ -17,18 +17,7 @@ def got_msg(sock, client_obj, byte_data):
         mid = message.mid;
         params = message.params;
         np = len(params);
-        message.callback_result = callback.CALLBACK_RESULT_SUCCESS;
-        n = 0;
-        for i in range(0, len(client_obj.callbacks)):
-            cb = client_obj.callbacks[n];
-            if (cb.mid == message.mid):
-                cb.func(message);
-                if (cb.remove_after_call):
-                    del client_obj.callbacks[n];
-                    n -= 1;
-                else:
-                    cb.reset_timeout();
-            n += 1;
+        callback.process_message(message);
 
         msg.log(message);
         return;

@@ -43,21 +43,7 @@ def socket_loop(listen_ip, listen_port):
             client_dc = False;
             sockerr = None;
 
-            n = 0;
-            for i in range(0, len(client_obj.callbacks)):
-                cb = client_obj.callbacks[n];
-                if (cb.timeout_len != callback.TIMEOUT_NONE and (time.time() - cb.creation_time) >= cb.timeout_len):
-                    debug.log("callback timeout for %s" % cb.mid.name, debug.P_INFO);
-                    m = msg.Message();
-                    m.mid = _MID.UNKNOWN;
-                    m.callback_result = callback.CALLBACK_RESULT_TIMEOUT;
-                    client_obj.callbacks[n].func(m);
-                    if (cb.remove_after_call):
-                        del client_obj.callbacks[n];
-                        n -= 1;
-                    else:
-                        cb.reset_timeout();
-                n += 1;
+            callback.process_callbacks();
 
             try:
                 byte_data = client_obj.tcp_sock.recv(1024);

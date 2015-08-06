@@ -32,3 +32,34 @@ class MessageCallback:
 def make_MID_callback(mid, callback_func, timeout_len = TIMEOUT_NONE, remove_after_call = False):
     cb = MessageCallback(mid, callback_func, timeout_len, remove_after_call);
     return cb;
+
+def process_message(message):
+    message.callback_result = CALLBACK_RESULT_SUCCESS;
+    n = 0;
+    for i in range(0, len(message.client_obj.callbacks)):
+        cb = message.client_obj.callbacks[n];
+        if (cb.mid == message.mid or cb.mid == _MID.ALL):
+            cb.func(message);
+            if (cb.remove_after_call):
+                del message.client_obj.callbacks[n];
+                n -= 1;
+            else:
+                cb.reset_timeout();
+        n += 1;
+
+def process_callbacks(client_obj):
+    n = 0;
+    for i in range(0, len(client_obj.callbacks)):
+        cb = client_obj.callbacks[n];
+        if (cb.timeout_len != TIMEOUT_NONE and (time.time() - cb.creation_time) >= cb.timeout_len):
+            debug.log("callback timeout for %s" % cb.mid.name, debug.P_INFO);
+            m = msg.Message();
+            m.mid = _MID.UNKNOWN;
+            m.callback_result = CALLBACK_RESULT_TIMEOUT;
+            client_obj.callbacks[n].func(m);
+            if (cb.remove_after_call):
+                del client_obj.callbacks[n];
+                n -= 1;
+            else:
+                cb.reset_timeout();
+        n += 1;

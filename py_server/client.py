@@ -64,7 +64,7 @@ def handle_udp_pong(message):
 
 def send_udp_ping(client_obj):
     c.add_message_handler(_MID.UDP_PONG, handle_udp_pong, callback.TIMEOUT_SHORT, True);
-    msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING));
+    #msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING));
 
 def handle_setup_messages(message):
     if (message.mid == _MID.RECV_CLIENT_BINDED_UDP_PORT):
