@@ -51,7 +51,7 @@ void tcp_connect() {
             connection_finished = true;
             connection_error = -1;
         }
-    }, msg::TIMEOUT_MODERATE, true);
+    }, msg::TIMEOUT_SHORT, false);
 
     /*tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
         udp_serv_sock.add_callback(msg::make_MID_callback([]() {

@@ -34,8 +34,12 @@ void recv_msgs() {
                     m.mid = msg::get_MID(msg::MID_UNKNOWN);
                     m.callback_result = msg::CALLBACK_RESULT_TIMEOUT;
                     cb->func(&m);
-                    sock->callbacks.erase(sock->callbacks.begin() + n);
-                    --n;
+                    if (cb->remove_after_call) {
+                        sock->callbacks.erase(sock->callbacks.begin() + n);
+                        --n;
+                    }else {
+                        cb->reset_timeout();
+                    }
                 }
             }
         }
@@ -63,6 +67,12 @@ void recv_msgs() {
                             for (int n = 0; n < sock->callbacks.size(); ++n) {
                                 if (sock->callbacks[n]->mid == message->mid) {
                                     sock->callbacks[n]->func(message.get());
+                                    if (sock->callbacks[n]->remove_after_call) {
+                                        sock->callbacks.erase(sock->callbacks.begin() + n);
+                                        --n;
+                                    }else {
+                                        sock->callbacks[n]->reset_timeout();
+                                    }
                                 }
                             }
 

@@ -2,3 +2,6 @@ attempt connect...
 attempt connect on thread...
 (tcp_serv_sock): connection successful
 callback timeout for MID_REQUEST_CLIENT_TO_BIND_UDP_PORT
+callback timeout for MID_REQUEST_CLIENT_TO_BIND_UDP_PORT
+callback timeout for MID_REQUEST_CLIENT_TO_BIND_UDP_PORT
+callback timeout for MID_REQUEST_CLIENT_TO_BIND_UDP_PORT

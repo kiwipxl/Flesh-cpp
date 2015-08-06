@@ -47,7 +47,7 @@ class Socket {
 
         std::vector<msg::CallbackPtr> callbacks;
         void add_callback(msg::CallbackPtr& msg_callback);
-        void add_message_handler(msg::MID_enum mid, msg::CallbackFunc func, float timeout_len = msg::TIMEOUT_NONE);
+        void add_message_handler(msg::MID_enum mid, msg::CallbackFunc func, float timeout_len = msg::TIMEOUT_NONE, bool remove_after_call = false);
 
 		uintptr_t get_sock() { return sock; }
 		char* get_binded_ip() { return binded_ip; }
