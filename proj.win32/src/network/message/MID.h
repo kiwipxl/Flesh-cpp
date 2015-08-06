@@ -37,7 +37,7 @@ namespace msg {
 	extern CFTYPE FT_UNSIGNED_LONG_LONG;
 	extern CFTYPE FT_FLOAT;
 	extern CFTYPE FT_DOUBLE;
-	extern CFTYPE FT_CHAR_ARRAY;
+    extern CFTYPE FT_STRING;
     extern CFTYPE FT_VOID_POINTER;
 
     //================== MID begin ==================

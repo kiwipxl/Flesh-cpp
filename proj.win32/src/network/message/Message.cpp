@@ -57,7 +57,7 @@ namespace msg {
             for (int n = 0; n < message->mid->param_types.size(); ++n) {
 			    int len = 0;
 			    char* pointer;
-			    if (message->mid->param_types[n] == FT_CHAR_ARRAY) {
+			    if (message->mid->param_types[n] == FT_STRING) {
                     for (int c = offset; c < buffer_len; ++c) {
                         ++len;
 					    if (buffer[c] == '\0') break;

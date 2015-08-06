@@ -29,6 +29,6 @@ LONG_LONG               = FormatType('q', 'lli', 8, "llong");
 UNSIGNED_LONG_LONG      = FormatType('Q', 'llu', 8, "ullong");
 FLOAT                   = FormatType('f', 'f', 4, "float");
 DOUBLE                  = FormatType('d', 'f', 8, "double");
-CHAR_ARRAY              = FormatType('s', 's', 1, "char*");
+STRING                  = FormatType('s', 's', 1, "string");
 VOID_POINTER            = FormatType('p', 'lu', 4, "void*");
 RESPONSE                = FormatType('H', 'd', 2, "response code");

@@ -52,45 +52,13 @@ void tcp_connect() {
     });
 
     udp_serv_sock.add_message_handler(msg::MID_RECV_UDP_PING, [](msg::Message* message) {
-        //msg::send(udp_serv_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
+        msg::send(udp_serv_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
     });
-
-    /*tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
-        udp_serv_sock.add_callback(msg::make_MID_callback([]() {
-            msg::CallbackFunc cb00;
-            cb00 = [&]() {
-                msg::ResponseCode rc = msg::last_param_list[0]->get<msg::ResponseCode>();
-                if (rc == msg::RESPONSE_SUCCESS) {
-                    sock::udp_ping_pong = false;
-                    sock::connection_finished = true;
-                    sock::connection_error = NO_ERROR;
-                }else {
-                    sock::udp_ping_pong = false;
-                    sock::connection_finished = true;
-                    sock::connection_error = NO_ERROR;
-                    msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
-                }
-                return msg::RESPONSE_NONE;
-            };
-
-            msg::send(udp_serv_sock, msg::MsgStream() << _MID->UDP_PONG, msg::make_response_callback(cb00));
-
-            return msg::RESPONSE_NONE;
-        }, _MID->UDP_PING));
-
-        msg::print_extracted_params();
-
-        if (setup_udp_sock(msg::last_param_list[0]->get<u_short>())) {
-            msg::game::server_poll.add_sock(sock::udp_serv_sock);
-            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
-        }else {
-            msg::send(tcp_serv_sock, msg::MsgStream() << _MID->SEND_CLIENT_BINDED_UDP_PORT << -1);
-
-            connection_finished = true;
-            connection_error = -1;
-        }
-        return msg::RESPONSE_NONE;
-    }, _MID->RECV_SERVER_BINDED_UDP_PORT));*/
+    
+    tcp_serv_sock.add_message_handler(msg::MID_RECV_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY, [](msg::Message* message) {
+        sock::connection_finished = true;
+        sock::connection_error = NO_ERROR;
+    });
 
     log_info << "(tcp_serv_sock): connection successful";
 

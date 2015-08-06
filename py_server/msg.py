@@ -72,7 +72,7 @@ def extract_params(mid, byte_data):
         byte_offset = MSG_HEADER_SIZE;
         for n in range(0, len(mid.ft_params)):
             t = mid.ft_params[n];
-            if (t.struct_char == 's'):
+            if (t == _FT.STRING):
                 s = "";
                 l = 0;
                 for c in byte_data[byte_offset:]:

@@ -33,24 +33,22 @@ class MID():
 #RECV_XXX - a message to receive from a client
 #XXX - a message that can be both sent and received to and from clients
 
-UNKNOWN                                     = MID();
-ALL                                         = MID();
+UNKNOWN                                                     = MID();
+ALL                                                         = MID();
 
 #sends a client id of a specified client
-SEND_CLIENT_ID                              = MID(_FT.INT);
+SEND_CLIENT_ID                                              = MID(_FT.INT);
 #receives a request to register a username and password from a client
-RECV_CLIENT_LOGIN_USER_PASS                 = MID(_FT.CHAR_ARRAY, _FT.CHAR_ARRAY);
+RECV_CLIENT_LOGIN_USER_PASS                                 = MID(_FT.CHAR_ARRAY, _FT.CHAR_ARRAY);
 #receives a request to register a username and password from a client
-RECV_CLIENT_REGISTER_USER_PASS              = MID(_FT.CHAR_ARRAY, _FT.CHAR_ARRAY);
+RECV_CLIENT_REGISTER_USER_PASS                              = MID(_FT.CHAR_ARRAY, _FT.CHAR_ARRAY);
 
 #begins sending a relay test which ping pongs for infinite time
-BEGIN_RELAY_TEST                            = MID();
-#ping pong relay test messages
-RELAY_TEST                                  = MID(_FT.INT, _FT.CHAR_ARRAY, _FT.UNSIGNED_SHORT, _FT.UNSIGNED_SHORT);
+SEND_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY             = MID();
 #init ping pong udp message to test udp communication
-SEND_UDP_PING                               = MID();
+SEND_UDP_PING                                               = MID();
 #init ping pong udp message to test udp communication
-RECV_UDP_PONG                               = MID();
+RECV_UDP_PONG                                               = MID();
 
 #requests a client to bind to a random port to allow peers to send messages to
 SEND_UDP_PEER_BIND_REQUEST                  = MID(_FT.INT, _FT.CHAR_ARRAY);

@@ -25,7 +25,7 @@ CFTYPE msg::FT_LONG_LONG						= new FormatType("%lli", 8, "llong");
 CFTYPE msg::FT_UNSIGNED_LONG_LONG				= new FormatType("%llu", 8, "ullong");
 CFTYPE msg::FT_FLOAT							= new FormatType("%f", 4, "float");
 CFTYPE msg::FT_DOUBLE							= new FormatType("%f", 8, "double");
-CFTYPE msg::FT_CHAR_ARRAY						= new FormatType("%s", 1, "char*");
+CFTYPE msg::FT_STRING						    = new FormatType("%s", 1, "string");
 CFTYPE msg::FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
 
 int MID_id = 0;

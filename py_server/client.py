@@ -71,7 +71,9 @@ def handle_udp_pong(message):
     else:
         print("udp ping pong success");
         message.client_obj.udp_timeout_tries = 0;
-        #game.join_game(client_obj);
+        msg.send(message.client_obj.tcp_sock, message.client_obj,
+                 msg.build(_MID.SEND_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY));
+        #lobby.join_game(client_obj);
 
 def send_udp_ping(client_obj):
     client_obj.add_message_handler(_MID.RECV_UDP_PONG, handle_udp_pong, callback.TIMEOUT_SHORT, True);
