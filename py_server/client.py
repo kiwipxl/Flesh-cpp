@@ -52,20 +52,27 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     num_clients += 1;
     client_id_inc += 1;
 
-    def cb02(message):
+    c.add_message_handler(_MID.ALL, handle_setup_messages);
+    msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
+
+def handle_udp_pong(message):
+    if (message.callback_result == callback.CALLBACK_RESULT_TIMEOUT):
+        send_udp_ping(message.client_obj);
+    else:
+        print("udp ping pong success");
         game.join_game(client_obj);
 
-    c.add_message_handler(_MID.UDP_PONG, cb02);
+def send_udp_ping(client_obj):
+    c.add_message_handler(_MID.UDP_PONG, handle_udp_pong, callback.TIMEOUT_SHORT, True);
+    msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING));
 
-    def cb00(message):
-        if (message.callback_result == callback.CALLBACK_RESULT_TIMEOUT): return;
-
+def handle_setup_messages(message):
+    if (message.mid == _MID.RECV_CLIENT_BINDED_UDP_PORT):
         message.client_obj.c_udp_port = message.params[0];
-        msg.send(message.client_obj.udp_sock, message.client_obj, msg.build(_MID.UDP_PING));
+        send_udp_ping(message.client_obj);
 
-    c.add_message_handler(_MID.RECV_CLIENT_BINDED_UDP_PORT, cb00, callback.TIMEOUT_SHORT, True);
-
-    msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
+    elif (message.mid == _MID.UDP_PONG):
+        pass;
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients;
