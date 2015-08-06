@@ -8,8 +8,8 @@ TIMEOUT_LONG = 15.0;
 
 class MessageCallback:
 
+    mid = None;
     func = None;
-    id = 0;
     creation_time = 0;
     timeout_len = TIMEOUT_NORMAL;
 

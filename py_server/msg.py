@@ -108,18 +108,20 @@ def broadcast(sock_list, client_obj, built_msg):
     for sock in sock_list:
         send(sock, client_obj, built_msg);
 
-def log(client_obj, sock_type, mid, callback_id, params = None):
-    if (params == None or (mid.num_params >= 0 and mid.num_params == len(params))):
+def log(message):
+    if (message.mid.num_params >= 0 and message.mid.num_params == len(message.params)):
         debug.log("", debug.P_MID, "");
-        print(_MID.names[mid.id] + " (id: %d, %s, cb_id: %d)" % (client_obj.id, "tcp" if sock_type == socket.SOCK_STREAM else "udp", callback_id), end='');
-        if (mid.num_params >= 1 and params != None):
+        print(_MID.names[message.mid.id] + " (client_id: %d, %s)" % (message.client_obj.id,
+                                                                 "tcp" if message.sock.type == socket.SOCK_STREAM
+                                                                 else "udp"), end='');
+        if (message.mid.num_params >= 1 and message.params != None):
             print(": ", end='');
             i = 0;
-            for param in params:
-                print(("(%s): %" + mid.ft_params[i].printf_char) % (mid.ft_params[i].type_name, param), end='');
+            for param in message.params:
+                print(("(%s): %" + message.mid.ft_params[i].printf_char) % (message.mid.ft_params[i].type_name, param), end='');
                 i += 1;
-                print("") if i >= len(params) else print(", ", end='');
+                print("") if i >= len(message.params) else print(", ", end='');
         else:
             print("");
     else:
-        debug.log("could not print params, required %d params, but %d params given" % (len(params), mid.num_params), debug.P_WARNING);
+        debug.log("could not print params, required %d params, but %d params given" % (len(message.params), message.mid.num_params), debug.P_WARNING);

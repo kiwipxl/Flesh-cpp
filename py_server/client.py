@@ -22,7 +22,7 @@ class Client:
             self.callbacks.append(callback_obj);
 
     def add_message_handler(self, mid, func):
-        self.callbacks.append(callback.make_MID_callback(func, mid));
+        self.callbacks.append(callback.make_MID_callback(mid, func));
 
 clients = [];
 num_clients = 0;
@@ -53,15 +53,15 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     client_id_inc += 1;
 
     def cb02(message):
-            game.join_game(client_obj);
+        game.join_game(client_obj);
 
     c.add_message_handler(_MID.UDP_PONG, cb02);
 
     def cb00(message):
-        message.client_obj.c_udp_port = params[0];
+        message.client_obj.c_udp_port = message.params[0];
         msg.send(message.client_obj.udp_sock, message.client_obj, msg.build(_MID.UDP_PING));
 
-    c.add_message_handler(_MID.SEND_CLIENT_BINDED_UDP_PORT, cb00);
+    c.add_message_handler(_MID.RECV_CLIENT_BINDED_UDP_PORT, cb00);
 
     msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 

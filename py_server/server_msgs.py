@@ -17,13 +17,13 @@ def got_msg(sock, client_obj, byte_data):
         mid = message.mid;
         params = message.params;
         np = len(params);
-        n = 0;
         for i in range(0, len(client_obj.callbacks)):
-            cb = client_obj.callbacks[n];
-            if (cb.id == message.mid):
-                cb.func(m);
+            cb = client_obj.callbacks[i];
+            if (cb.mid == message.mid):
+                cb.func(message);
 
         msg.log(message);
+        return;
 
         if (verify_params(mid, _MID.RECV_CLIENT_REGISTER_USER_PASS, np)):
             print("username: %s, password: %s" % (params[0], params[1]));
