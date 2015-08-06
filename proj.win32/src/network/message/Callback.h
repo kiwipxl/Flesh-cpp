@@ -9,12 +9,12 @@
 
 struct Socket;
 struct SocketPoll;
-namespace msg {
-    struct Message;
-}
 
 namespace msg {
-    
+
+    struct Message;
+    typedef std::shared_ptr<Message> MessagePtr;
+
     const float TIMEOUT_NONE = 0.0f;
     const float TIMEOUT_SHORT = 2.5f;
     const float TIMEOUT_MODERATE = 5.0f;

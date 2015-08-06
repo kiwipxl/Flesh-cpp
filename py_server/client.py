@@ -16,6 +16,12 @@ class Client:
     joined_game = None;
     game_client = None;
     callbacks = [];
+    left = False;
+
+    udp_timeout_tries = 0;
+
+    def __init__(self):
+        self.udp_timeout_tries = 0;
 
     def add_callback(self, callback_obj):
         if (callback_obj):
@@ -57,26 +63,33 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
 def handle_udp_pong(message):
     if (message.callback_result == callback.CALLBACK_RESULT_TIMEOUT):
-        send_udp_ping(message.client_obj);
+        message.client_obj.udp_timeout_tries += 1;
+        if (message.client_obj.udp_timeout_tries >= 3):
+            handle_leave(message.client_obj, "UDP ping pong timed out 3 times");
+        else:
+            send_udp_ping(message.client_obj);
     else:
         print("udp ping pong success");
-        game.join_game(client_obj);
+        message.client_obj.udp_timeout_tries = 0;
+        #game.join_game(client_obj);
 
 def send_udp_ping(client_obj):
-    c.add_message_handler(_MID.UDP_PONG, handle_udp_pong, callback.TIMEOUT_SHORT, True);
-    #msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING));
+    client_obj.add_message_handler(_MID.RECV_UDP_PONG, handle_udp_pong, callback.TIMEOUT_SHORT, True);
+    msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.SEND_UDP_PING));
 
 def handle_setup_messages(message):
     if (message.mid == _MID.RECV_CLIENT_BINDED_UDP_PORT):
         message.client_obj.c_udp_port = message.params[0];
         send_udp_ping(message.client_obj);
 
-    elif (message.mid == _MID.UDP_PONG):
+    elif (message.mid == _MID.RECV_UDP_PONG):
         pass;
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients;
     global num_clients;
+
+    client_obj.left = True;
 
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();
@@ -88,6 +101,7 @@ def handle_leave(client_obj, leave_msg, remove_from_list = True):
           (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_msg), debug.P_INFO);
 
     if (remove_from_list): clients.remove(client_obj);
+    client_obj = None;
     num_clients -= 1;
 
 def find_by_sock(sock, addr):

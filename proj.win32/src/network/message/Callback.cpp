@@ -37,6 +37,7 @@ namespace msg {
                     log_info << "callback timeout for " << cb->mid->name;
                     msg::Message m;
                     m.callback_result = msg::CALLBACK_RESULT_TIMEOUT;
+                    m.sock = sock;
                     cb->func(&m);
                     if (cb->remove_after_call) {
                         sock->callbacks.erase(sock->callbacks.begin() + n);

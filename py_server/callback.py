@@ -1,6 +1,7 @@
 import debug;
 import _MID;
 import time;
+import msg;
 
 TIMEOUT_NONE = 0.0;
 TIMEOUT_SHORT = 2.0;
@@ -55,11 +56,15 @@ def process_callbacks(client_obj):
             debug.log("callback timeout for %s" % cb.mid.name, debug.P_INFO);
             m = msg.Message();
             m.mid = _MID.UNKNOWN;
+            m.client_obj = client_obj;
             m.callback_result = CALLBACK_RESULT_TIMEOUT;
             client_obj.callbacks[n].func(m);
-            if (cb.remove_after_call):
-                del client_obj.callbacks[n];
-                n -= 1;
+            if (client_obj and not client_obj.left):
+                if (cb.remove_after_call):
+                    del client_obj.callbacks[n];
+                    n -= 1;
+                else:
+                    cb.reset_timeout();
             else:
-                cb.reset_timeout();
+                return;
         n += 1;

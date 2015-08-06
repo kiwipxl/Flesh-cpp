@@ -40,8 +40,6 @@ void tcp_connect() {
     }
 
     tcp_serv_sock.add_message_handler(msg::MID_REQUEST_CLIENT_TO_BIND_UDP_PORT, [](msg::Message* message) {
-        if (message->callback_result == msg::CALLBACK_RESULT_TIMEOUT) return;
-
         if (setup_udp_sock(message->get<u_short>(0))) {
             msg::game::server_poll.add_sock(sock::udp_serv_sock);
             msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
@@ -51,6 +49,10 @@ void tcp_connect() {
             connection_finished = true;
             connection_error = -1;
         }
+    });
+
+    udp_serv_sock.add_message_handler(msg::MID_RECV_UDP_PING, [](msg::Message* message) {
+        //msg::send(udp_serv_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
     });
 
     /*tcp_serv_sock.add_callback(msg::make_MID_once_callback([]() {
