@@ -50,10 +50,6 @@ namespace msg {
 		    if (id >= 0 && id < MID_list.size()) message->mid = MID_list[id];
 	    }
     }
-    
-    void extract_param_types(MessagePtr message, char* buffer, int buffer_len) {
-
-    }
 
     void extract_params(MessagePtr message, char* buffer, int buffer_len) {
 	    if (message->mid->id != MID_UNKNOWN && buffer_len - MSG_HEADER_SIZE >= message->mid->param_total_bytes) {

@@ -28,7 +28,8 @@ namespace msg {
         std::vector<Param*> params;
 
         template <typename ParamType> ParamType& get(int index) {
-            return (index >= 0 && index < params.size()) ? *(ParamType*)params[index]->data : assert("index is out of bounds of message parameters");
+            if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");
+            return *(ParamType*)params[index]->data;
         }
     };
     
@@ -43,7 +44,6 @@ namespace msg {
     
     MessagePtr extract_message(char* buffer, int buffer_len);
     void extract_mid(MessagePtr message, char* buffer, int buffer_len);
-    void extract_param_types(MessagePtr message, char* buffer, int buffer_len);
     void extract_params(MessagePtr message, char* buffer, int buffer_len);
 
     void print_extracted_params(bool print_output = true, bool write_to_file = false);

@@ -12,6 +12,21 @@ byte_buffer = bytearray(1024);
 byte_offset = 0;
 MSG_HEADER_SIZE = 6;
 
+class Message:
+
+    sock = None;
+    client_obj = None;
+    mid = None;
+    params = [];
+    raw_data = "";
+
+    def __init__(self, sock, client_obj, mid, params):
+        self.sock = sock;
+        self.client_obj = client_obj;
+        self.mid = mid;
+        self.params = params;
+        self.raw_data = "";
+
 def build(mid, *params):
     callback_id = callback.get_unique_id();
     if (isinstance(mid, (list, tuple)) and len(mid) >= 2):
@@ -36,6 +51,14 @@ def build(mid, *params):
             params = [];
     return byte_buffer;
 
+def extract_message(sock, client_obj, byte_data):
+    mid = extract_mid(byte_data);
+    params, err = extract_params(mid, byte_data);
+    m = None;
+    if (err >= 0):
+        m = Message(sock, client_obj, mid, params);
+    return m;
+
 def extract_mid(byte_data):
     mid = _MID.UNKNOWN;
     if (len(byte_data) >= MSG_HEADER_SIZE):
@@ -45,12 +68,6 @@ def extract_mid(byte_data):
         else:
             debug.log("MID id %d is unknown" % id, debug.P_WARNING);
     return mid;
-
-def extract_callback(byte_data):
-    callback_id = 0;
-    if (len(byte_data) >= MSG_HEADER_SIZE):
-        callback_id = struct.unpack(_FT.UNSIGNED_SHORT.struct_char, byte_data[4:6])[0];
-    return callback_id;
 
 def extract_params(mid, byte_data):
     params = [];
@@ -76,11 +93,10 @@ def extract_params(mid, byte_data):
                   (_MID.names[mid.id], len(byte_data), mid.total_param_bytes + MSG_HEADER_SIZE), debug.P_WARNING);
         return (params, -1);
 
-def send(sock, client_obj, built_msg, callback_obj = None):
+def send(sock, client_obj, built_msg):
     if (len(built_msg) < MSG_HEADER_SIZE):
         debug.log("built message does not contain a full header", debug.P_WARNING);
 
-    client_obj.add_callback(callback_obj);
     if (sock.type == socket.SOCK_STREAM):
         send_tcp(sock, built_msg);
     else:

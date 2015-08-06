@@ -13,7 +13,7 @@ namespace msg {
 
 		const char* printf_format;
 		const short len;
-		const char* type_name;
+        const char* type_name;
 
 		FormatType(const char* c, const short l, const char* name);
 	};
