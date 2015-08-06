@@ -45,12 +45,12 @@ def socket_loop(listen_ip, listen_port):
             n = 0;
             for i in range(0, len(client_obj.callbacks)):
                 cb = client_obj.callbacks[n];
-                if (cb.type == callback.UNIQUE_ID or cb.type == callback.MID):
-                    if ((time.time() - cb.creation_time) >= cb.timeout_len):
-                        debug.log("callback timeout (id: %d)" % cb.id, debug.P_INFO);
-                        client_obj.callbacks[n].func(None, None, _MID.UNKNOWN, cb.id, [], callback.RESPONSE_TIMEOUT);
-                        del client_obj.callbacks[n];
-                        --n;
+                if ((time.time() - cb.creation_time) >= cb.timeout_len):
+                    pass;
+                    #debug.log("callback timeout (id: %d)" % cb.id, debug.P_INFO);
+                    #client_obj.callbacks[n].func(None, None, _MID.UNKNOWN, cb.id, [], callback.RESPONSE_TIMEOUT);
+                    #del client_obj.callbacks[n];
+                    #--n;
 
             try:
                 byte_data = client_obj.tcp_sock.recv(1024);

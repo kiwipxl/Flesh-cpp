@@ -10,7 +10,7 @@ import callback;
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
-MSG_HEADER_SIZE = 6;
+MSG_HEADER_SIZE = 4;
 
 class Message:
 
@@ -28,12 +28,7 @@ class Message:
         self.raw_data = "";
 
 def build(mid, *params):
-    callback_id = callback.get_unique_id();
-    if (isinstance(mid, (list, tuple)) and len(mid) >= 2):
-        callback_id = mid[1];
-        mid = mid[0];
     byte_buffer[0:4] = struct.pack(_FT.INT.struct_char, mid.id);
-    byte_buffer[4:6] = struct.pack(_FT.INT.struct_char, callback_id);
     byte_offset = MSG_HEADER_SIZE;
     i = 0;
     if (params):

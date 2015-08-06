@@ -14,14 +14,16 @@ def verify_params(recv_mid, mid, np):
 def got_msg(sock, client_obj, byte_data):
     message = msg.extract_message(sock, client_obj, byte_data);
     if (message != None):
+        mid = message.mid;
+        params = message.params;
+        np = len(params);
         n = 0;
         for i in range(0, len(client_obj.callbacks)):
             cb = client_obj.callbacks[n];
-            if (cb.id == mid):
+            if (cb.id == message.mid):
                 cb.func(m);
 
-        np = len(params);
-        msg.log(client_obj, sock.type, mid, callback_id, params);
+        msg.log(message);
 
         if (verify_params(mid, _MID.RECV_CLIENT_REGISTER_USER_PASS, np)):
             print("username: %s, password: %s" % (params[0], params[1]));

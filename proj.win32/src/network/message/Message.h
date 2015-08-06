@@ -34,6 +34,7 @@ namespace msg {
     };
     
     typedef std::shared_ptr<Message> MessagePtr;
+    #define MSG_HEADER_SIZE 4
 
 	extern const int MAX_NUM_PARAMS;
 	extern const int MAX_PRINT_BUF;

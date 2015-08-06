@@ -21,6 +21,9 @@ class Client:
         if (callback_obj):
             self.callbacks.append(callback_obj);
 
+    def add_message_handler(self, mid, func):
+        self.callbacks.append(callback.make_MID_callback(func, mid));
+
 clients = [];
 num_clients = 0;
 client_id_inc = 0;
@@ -49,21 +52,18 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     num_clients += 1;
     client_id_inc += 1;
 
-    def cb02(sock, client_obj, mid, callback_id, params, response):
-        if (response == callback.RESPONSE_SUCCESS):
-            a = 4;
-            #game.join_game(client_obj);
-            return callback.RESPONSE_SUCCESS;
-        return callback.RESPONSE_FAIL;
+    def cb02(message):
+            game.join_game(client_obj);
 
-    def cb00(sock, client_obj, mid, callback_id, params, response):
-        if (response == callback.RESPONSE_SUCCESS):
-            client_obj.c_udp_port = params[0];
-            msg.send(client_obj.udp_sock, client_obj, msg.build(_MID.UDP_PING), callback.make_MID_callback(cb02, _MID.UDP_PONG));
-        return callback.RESPONSE_NONE;
+    c.add_message_handler(_MID.UDP_PONG, cb02);
 
-    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_BINDED_UDP_PORT, new_udp_sock.getsockname()[1]),
-             callback.make_MID_callback_once(cb00, _MID.RECV_CLIENT_BINDED_UDP_PORT));
+    def cb00(message):
+        message.client_obj.c_udp_port = params[0];
+        msg.send(message.client_obj.udp_sock, message.client_obj, msg.build(_MID.UDP_PING));
+
+    c.add_message_handler(_MID.SEND_CLIENT_BINDED_UDP_PORT, cb00);
+
+    msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients;

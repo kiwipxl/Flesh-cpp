@@ -10,8 +10,6 @@ namespace msg {
     extern char byte_buffer[1024];
     extern int byte_offset;
 
-    #define MSG_HEADER_SIZE 6 //(MID id (int) + callback_id (u_short))
-
     struct Param;
     class Stream {
 

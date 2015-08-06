@@ -36,7 +36,6 @@ namespace msg {
         MessagePtr message = MessagePtr(new Message());
         extract_mid(message, buffer, buffer_len);
         if (message->mid->id != MID_UNKNOWN && buffer_len >= MSG_HEADER_SIZE) {
-            extract_param_types(message, buffer, buffer_len);
             extract_params(message, buffer, buffer_len);
         }
         return message;

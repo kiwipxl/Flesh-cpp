@@ -18,7 +18,7 @@ namespace msg {
 
     struct MIDCallback {
 
-        MIDCallback(CallbackFunc& f, CMID m) : func(f), mid(m) {
+        MIDCallback(CMID m, CallbackFunc& f) : func(f), mid(m) {
             creation_time = time(&creation_time);
         }
 
@@ -30,7 +30,7 @@ namespace msg {
 
     typedef std::shared_ptr<MIDCallback> CallbackPtr;
 
-    extern CallbackPtr make_MID_callback(CallbackFunc callback, CMID mid);
+    extern CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback);
 };
 
 #endif

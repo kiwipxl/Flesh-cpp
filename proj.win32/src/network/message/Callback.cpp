@@ -5,7 +5,7 @@
 
 namespace msg {
 
-    CallbackPtr make_MID_callback(CallbackFunc callback, CMID mid) {
-        return CallbackPtr(new MIDCallback(callback, mid));
+    CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback) {
+        return CallbackPtr(new MIDCallback(mid, callback));
     }
 };

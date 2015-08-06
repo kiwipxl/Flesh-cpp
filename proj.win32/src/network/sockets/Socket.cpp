@@ -141,5 +141,5 @@ void Socket::add_callback(msg::CallbackPtr& msg_callback) {
 }
 
 void Socket::add_message_handler(msg::MID_enum mid, msg::CallbackFunc func) {
-    msg::make_MID_callback(func, msg::get_MID(mid));
+    callbacks.push_back(msg::make_MID_callback(msg::get_MID(mid), func));
 }
