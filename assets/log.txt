@@ -1,5 +1,4 @@
 attempt connect...
 attempt connect on thread...
 (tcp_serv_sock): connection successful
-(udp_serv_sock): creation / binding successful
-
+callback timeout for MID_REQUEST_CLIENT_TO_BIND_UDP_PORT

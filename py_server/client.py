@@ -63,7 +63,7 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
 
     c.add_message_handler(_MID.RECV_CLIENT_BINDED_UDP_PORT, cb00);
 
-    msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
+    #msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 
 def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global clients;

@@ -13,19 +13,16 @@ namespace msg {
 }
 
 namespace msg {
-
-    enum DefaultTimeoutLength {
-
-        TIMEOUT_NONE = 0, 
-        TIMEOUT_SHORT = 2000,
-        TIMEOUT_MODERATE = 5000,
-        TIMEOUT_LONG = 10000
-    };
+    
+    const float TIMEOUT_NONE = 0.0f;
+    const float TIMEOUT_SHORT = 2.5f;
+    const float TIMEOUT_MODERATE = 5.0f;
+    const float TIMEOUT_LONG = 10.0f;
 
     enum CallbackResult {
 
-        CALLBACK_SUCCESS, 
-        CALLBACK_TIMEOUT
+        CALLBACK_RESULT_SUCCESS, 
+        CALLBACK_RESULT_TIMEOUT
     };
 
     typedef std::function<void(Message*)> CallbackFunc;
