@@ -17,7 +17,8 @@ int sock::udp_ping_pong_tries = 0;
 Socket* sock::udp_ping_pong_sock = NULL;
 
 bool sock::connection_finished = false;
-int sock::connection_error = -1;
+int sock::connection_err = -1;
+std::string sock::connection_err_msg = "";
 
 char* serv_ip = "127.0.0.1";
 u_short serv_port = 4222;
@@ -26,7 +27,7 @@ void tcp_connect() {
     using namespace sock;
 
     connection_finished = false;
-    connection_error = NO_ERROR;
+    connection_err = NO_ERROR;
     
     log_info << "attempt connect on thread...";
     if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
@@ -39,24 +40,10 @@ void tcp_connect() {
         socket_setup_failed(fresult); return;
     }
 
-    tcp_serv_sock.add_message_handler(msg::MID_REQUEST_CLIENT_TO_BIND_UDP_PORT, [](msg::Message* message) {
-        if (setup_udp_sock(message->get<u_short>(0))) {
-            msg::game::server_poll.add_sock(sock::udp_serv_sock);
-            //msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
-            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
-        }else {
-            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
-        }
-    });
+    log_info << "(tcp_serv_sock): connection successful";
 
-    udp_serv_sock.add_message_handler(msg::MID_RECV_UDP_PING, [](msg::Message* message) {
-        msg::send(udp_serv_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
-    });
-    
-    tcp_serv_sock.add_message_handler(msg::MID_RECV_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY, [](msg::Message* message) {
-        sock::connection_finished = true;
-        sock::connection_error = NO_ERROR;
-    });
+    sock::connection_finished = true;
+    sock::connection_err = NO_ERROR;
 
     tcp_serv_sock.add_leave_handler([](msg::Message* message) {
         char* leave_msg = message->get<char*>(0);
@@ -65,9 +52,28 @@ void tcp_connect() {
         sock::connection_err_msg = leave_msg;
     });
 
-    log_info << "(tcp_serv_sock): connection successful";
-
     msg::game::start_recv_thread();
+
+    //below is code to setup a udp socket for the server, needs to be moved once the user login system is done
+    tcp_serv_sock.add_message_handler(msg::MID_REQUEST_CLIENT_TO_BIND_UDP_PORT, [](msg::Message* message) {
+        if (setup_udp_sock(message->get<u_short>(0))) {
+            msg::game::server_poll.add_sock(sock::udp_serv_sock);
+            //msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
+            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
+        }
+        else {
+            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
+        }
+    });
+
+    udp_serv_sock.add_message_handler(msg::MID_RECV_UDP_PING, [](msg::Message* message) {
+        msg::send(udp_serv_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
+    });
+
+    tcp_serv_sock.add_message_handler(msg::MID_RECV_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY, [](msg::Message* message) {
+        sock::connection_finished = true;
+        sock::connection_err = NO_ERROR;
+    });
 }
 
 bool sock::setup_udp_sock(u_short udp_serv_port) {
@@ -89,7 +95,7 @@ bool sock::setup_udp_sock(u_short udp_serv_port) {
 
 void sock::socket_setup_failed(int err) {
     connection_finished = true;
-    connection_error = err;
+    connection_err = err;
 }
 
 void sock::update() {

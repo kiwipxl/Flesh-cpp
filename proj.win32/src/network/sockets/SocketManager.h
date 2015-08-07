@@ -22,7 +22,8 @@ namespace sock {
     #define UDP_PING_PONG_TIMEOUT 2.5f
 
     extern bool connection_finished;
-    extern int connection_error;
+    extern int connection_err;
+    extern std::string connection_err_msg;
 
     extern void init();
     extern void update();

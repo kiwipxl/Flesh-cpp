@@ -17,9 +17,11 @@ def got_msg(sock, client_obj, byte_data):
         mid = message.mid;
         params = message.params;
         np = len(params);
-        callback.process_message(message);
 
         msg.log(message);
+        
+        callback.process_message(message);
+
         return;
 
         if (verify_params(mid, _MID.RECV_CLIENT_REGISTER_USER_PASS, np)):

@@ -58,8 +58,8 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     num_clients += 1;
     client_id_inc += 1;
 
-    c.add_message_handler(_MID.ALL, handle_setup_messages);
-    msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
+    #c.add_message_handler(_MID.ALL, handle_setup_messages);
+    #msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 
 def handle_udp_pong(message):
     if (message.callback_result == callback.CALLBACK_RESULT_TIMEOUT):

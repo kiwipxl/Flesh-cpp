@@ -1,6 +1,8 @@
 #include "StateManager.h"
 
 #include <stdio.h>
+#include <cocostudio/CocoStudio.h>
+#include <ui/CocosGUI.h>
 
 #include "network/sockets/SocketManager.h"
 #include "network/Peers.h"
@@ -36,9 +38,33 @@ void create_state(State c_state) {
 
             scene->scheduleUpdate();
 
+            {
+                Vector<SpriteFrame*> spinner_frames;
+                Rect spinner_rect(0, 0, 34, 34);
+                Texture2D* spinner_texture = TextureCache::sharedTextureCache()->addImage("spinner_sheet.png");
+                while (true) {
+                    if (spinner_rect.origin.x >= spinner_texture->getPixelsWide()) break;
+
+                    spinner_frames.pushBack(SpriteFrame::createWithTexture(spinner_texture, spinner_rect));
+                    spinner_rect.origin.x += spinner_rect.size.width;
+                }
+                auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(spinner_frames, .05f, UINT32_MAX));
+
+                auto sprite = Sprite::create();
+                sprite->runAction(spinner_animation);
+                sprite->setPosition(200, 400);
+                scene->addChild(sprite, 1);
+            }
+
             sock::setup_tcp_sock();
             break;
         case STATE_LOGIN_REGISTER_SCREEN:
+            {
+                Node* login_page = CSLoader::createNode("login_page.csb");
+                scene->addChild(login_page);
+                auto k = (cc::ui::Text*)login_page->getChildByName("username_label");
+                k->setString("ayy");
+            }
             break;
         case STATE_GAME:
             entity::test_player = new entity::Unit();
@@ -87,10 +113,13 @@ void state::update(float dt) {
             info_label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
 
             if (sock::connection_finished) {
-                if (sock::connection_error == NO_ERROR) {
-                    switch_state(STATE_GAME);
+                if (sock::connection_err == NO_ERROR) {
+                    switch_state(STATE_LOGIN_REGISTER_SCREEN);
                 }else {
-                    info_label->setString("an error occurred while trying to connect: " + SSTR(sock::connection_error));
+                    info_label->setString("an error occurred while trying to connect: " + 
+                                            ((sock::connection_err_msg == "") 
+                                            ? SSTR(sock::connection_err) 
+                                            : sock::connection_err_msg + "(" + SSTR(sock::connection_err) + ")"));
                 }
             }else {
                 info_label->setString("connecting to server...");
