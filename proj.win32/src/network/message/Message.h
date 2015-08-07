@@ -29,9 +29,14 @@ namespace msg {
         CallbackResult callback_result = CALLBACK_RESULT_UNKNOWN;
         Socket* sock = NULL;
 
-        template <typename ParamType> ParamType& get(int index) {
+        template <typename T> T get(int index) {
             if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");
-            return *(ParamType*)params[index]->data;
+            return *(T*)params[index]->data;
+        }
+        
+        template <> char* get<char*>(int index) {
+            if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");
+            return params[index]->data;
         }
     };
     

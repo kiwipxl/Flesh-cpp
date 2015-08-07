@@ -81,8 +81,11 @@ def send_udp_ping(client_obj):
 
 def handle_setup_messages(message):
     if (message.mid == _MID.RECV_CLIENT_BINDED_UDP_PORT):
-        message.client_obj.c_udp_port = message.params[0];
-        send_udp_ping(message.client_obj);
+        if (message.params[0] == 0):
+            handle_leave(message.client_obj, "client didn't bind udp port successfully");
+        else:
+            message.client_obj.c_udp_port = message.params[0];
+            send_udp_ping(message.client_obj);
 
     elif (message.mid == _MID.RECV_UDP_PONG):
         pass;
@@ -92,12 +95,13 @@ def handle_leave(client_obj, leave_msg, remove_from_list = True):
     global num_clients;
 
     client_obj.left = True;
+    msg.send(client_obj.tcp_sock, client_obj, msg.build(_MID.SEND_CLIENT_LEAVE, leave_msg));
+
+    game.client_leave(client_obj);
 
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();
     client_obj.callbacks = [];
-
-    game.client_leave(client_obj);
 
     debug.log("client disconnected (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d, msg: %s)" %
           (client_obj.id, client_obj.ip, client_obj.c_tcp_port, client_obj.c_udp_port, client_obj.s_tcp_port, client_obj.s_udp_port, leave_msg), debug.P_INFO);

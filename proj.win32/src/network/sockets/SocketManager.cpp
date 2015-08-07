@@ -42,12 +42,10 @@ void tcp_connect() {
     tcp_serv_sock.add_message_handler(msg::MID_REQUEST_CLIENT_TO_BIND_UDP_PORT, [](msg::Message* message) {
         if (setup_udp_sock(message->get<u_short>(0))) {
             msg::game::server_poll.add_sock(sock::udp_serv_sock);
-            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
+            //msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
+            msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
         }else {
             msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
-
-            connection_finished = true;
-            connection_error = -1;
         }
     });
 
@@ -58,6 +56,13 @@ void tcp_connect() {
     tcp_serv_sock.add_message_handler(msg::MID_RECV_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY, [](msg::Message* message) {
         sock::connection_finished = true;
         sock::connection_error = NO_ERROR;
+    });
+
+    tcp_serv_sock.add_leave_handler([](msg::Message* message) {
+        char* leave_msg = message->get<char*>(0);
+        sock::connection_finished = true;
+        sock::connection_err = ERR_SERVER_LEAVE_CODE;
+        sock::connection_err_msg = leave_msg;
     });
 
     log_info << "(tcp_serv_sock): connection successful";
