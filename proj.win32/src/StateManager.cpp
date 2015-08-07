@@ -13,6 +13,7 @@
 #include "debug/Errors.h"
 #include "debug/Logger.h"
 #include "network/message/Message.h"
+#include "assets/Assets.h"
 
 using state::State;
 
@@ -39,17 +40,7 @@ void create_state(State c_state) {
             scene->scheduleUpdate();
 
             {
-                Vector<SpriteFrame*> spinner_frames;
-                Rect spinner_rect(0, 0, 34, 34);
-                Texture2D* spinner_texture = TextureCache::sharedTextureCache()->addImage("spinner_sheet.png");
-                while (true) {
-                    if (spinner_rect.origin.x >= spinner_texture->getPixelsWide()) break;
-
-                    spinner_frames.pushBack(SpriteFrame::createWithTexture(spinner_texture, spinner_rect));
-                    spinner_rect.origin.x += spinner_rect.size.width;
-                }
-                auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(spinner_frames, .05f, UINT32_MAX));
-
+                auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::spinner_frames, .05f, UINT32_MAX));
                 auto sprite = Sprite::create();
                 sprite->runAction(spinner_animation);
                 sprite->setPosition(200, 400);
@@ -95,10 +86,11 @@ void state::init(SceneManager* scene_ref) {
     scene = scene_ref;
     scene->setGLProgram(cc::ShaderCache::getInstance()->getGLProgram(cc::GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
+    debug::init_logger();
+    assets::init();
     sock::init();
     msg::init();
     input::init();
-    debug::init_logger();
     create_state(s);
 }
 
