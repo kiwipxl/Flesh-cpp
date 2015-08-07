@@ -7,6 +7,7 @@ import time;
 import _MID;
 import _FT;
 import callback;
+import socket_manage;
 
 byte_buffer = bytearray(1024);
 byte_offset = 0;
@@ -100,11 +101,19 @@ def send(sock, client_obj, built_msg):
         send_udp(sock, client_obj.ip, client_obj.c_udp_port, built_msg);
 
 def send_tcp(tcp_sock, built_msg):
-    tcp_sock.send(built_msg);
+    try:
+        tcp_sock.send(built_msg);
+    except socket.error as serr:
+        if (serr.errno != socket.errno.EWOULDBLOCK):
+            socket_manage.handle_sock_err(serr);
 
 def send_udp(udp_sock, ip, port, built_msg):
     if (port <= 0): debug.log("port is less than zero when trying to send_udp message", debug.P_WARNING); return;
-    udp_sock.sendto(built_msg, (ip, port));
+    try:
+        udp_sock.sendto(built_msg, (ip, port));
+    except socket.error as serr:
+        if (serr.errno != socket.errno.EWOULDBLOCK):
+            socket_manage.handle_sock_err(serr);
 
 def broadcast(sock_list, client_obj, built_msg):
     for sock in sock_list:

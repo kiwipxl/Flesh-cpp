@@ -27,7 +27,7 @@ extern void __cdecl _assert(const char *_Message, const char *_File, unsigned _L
 #ifndef NDEBUG
 #   define cf_assert(condition, message) \
     do { \
-        if (!(condition)) { \
+        if (condition) { \
             log_file << "Assertion '" #condition "' failed in " << __FILE__ << " line " << __LINE__ << ": " << sstream_cstr((message)); \
             _assert(sstream_cstr((message)), __FILE__, __LINE__); \
         } \

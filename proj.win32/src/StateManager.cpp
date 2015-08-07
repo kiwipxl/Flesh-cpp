@@ -20,9 +20,11 @@ using state::State;
 SceneManager* state::scene;
 
 State state::s = state::STATE_SERVER_CONNECT_SCREEN;
-cc::LabelBMFont* state::info_label;
+Label* state::info_label;
 float state::time_since_startup = 0;
-cc::TextFieldDelegate username_input;
+Sprite* spinner_sprite;
+Node* login_page;
+Node* message_box;
 
 ferr2d::Terrain* terrain;
 map::Camera* camera;
@@ -33,29 +35,29 @@ void create_state(State c_state) {
     s = c_state;
     switch (s) {
         case STATE_SERVER_CONNECT_SCREEN:
-            info_label = cc::LabelBMFont::create("", "fonts/lucida.fnt");
-            info_label->setString("connecting...");
+            info_label = Label::createWithBMFont("fonts/lucida.fnt", "connecting...");
+            info_label->setDimensions(scene->screen_size.width - 40, 400);
+            info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
             scene->addChild(info_label, 1);
 
             scene->scheduleUpdate();
 
             {
                 auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::spinner_frames, .05f, UINT32_MAX));
-                auto sprite = Sprite::create();
-                sprite->runAction(spinner_animation);
-                sprite->setPosition(200, 400);
-                scene->addChild(sprite, 1);
+                spinner_sprite = Sprite::create();
+                spinner_sprite->runAction(spinner_animation);
+                spinner_sprite->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 45);
+                scene->addChild(spinner_sprite, 1);
             }
 
             sock::setup_tcp_sock();
             break;
         case STATE_LOGIN_REGISTER_SCREEN:
-            {
-                Node* login_page = CSLoader::createNode("login_page.csb");
-                scene->addChild(login_page);
-                auto k = (cc::ui::Text*)login_page->getChildByName("username_label");
-                k->setString("ayy");
-            }
+            login_page = CSLoader::createNode("Scene.csb");
+            scene->addChild(login_page);
+            
+            message_box = CSLoader::createNode("message_box.csb");
+            scene->addChild(message_box);
             break;
         case STATE_GAME:
             entity::test_player = new entity::Unit();
@@ -73,6 +75,10 @@ void remove_state(State r_state) {
     switch (s) {
         case STATE_SERVER_CONNECT_SCREEN:
             scene->removeChild(info_label);
+            scene->removeChild(spinner_sprite);
+            break;
+        case STATE_LOGIN_REGISTER_SCREEN:
+            login_page->removeAllChildren();
             break;
     }
 }
@@ -95,6 +101,8 @@ void state::init(SceneManager* scene_ref) {
 }
 
 void state::update(float dt) {
+    time_since_startup += dt;
+
     if (input::key_down(cc::EventKeyboard::KeyCode::KEY_T)) {
         switch_state(state::STATE_GAME);
     }
@@ -102,12 +110,13 @@ void state::update(float dt) {
     sock::update();
     switch (s) {
         case STATE_SERVER_CONNECT_SCREEN:
-            info_label->setPosition(cc::Vec2((cos(time_since_startup) * 40.0f) + 400, 200));
+            info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
 
             if (sock::connection_finished) {
                 if (sock::connection_err == NO_ERROR) {
                     switch_state(STATE_LOGIN_REGISTER_SCREEN);
                 }else {
+                    scene->removeChild(spinner_sprite);
                     info_label->setString("an error occurred while trying to connect: " + 
                                             ((sock::connection_err_msg == "") 
                                             ? SSTR(sock::connection_err) 

@@ -11,6 +11,8 @@ import msg;
 
 #used to listen to a port for incoming connections and accepting them
 tcp_sock = None;
+#client loop index
+c_index = 0;
 
 def init():
     global tcp_sock;
@@ -20,6 +22,7 @@ def init():
 
 def socket_loop(listen_ip, listen_port):
     global tcp_sock;
+    global c_index;
 
     tcp_sock.bind((listen_ip, listen_port));
     tcp_sock.listen(1);
@@ -37,7 +40,7 @@ def socket_loop(listen_ip, listen_port):
             if (serr.errno != socket.errno.EWOULDBLOCK):
                 debug.log("error occurred while accepting client: %s" % serr.strerror, debug.P_ERROR);
 
-        c = 0;
+        c_index = 0;
         for i in range(0, len(client.clients)):
             client_obj = client.clients[c];
             client_dc = False;
@@ -69,26 +72,32 @@ def socket_loop(listen_ip, listen_port):
                     if (serr.errno != socket.errno.EWOULDBLOCK):
                         sockerr = serr;
 
-            #dec c by the amount of clients dropped in the got_msg call (usually 0)
+            #check if the amount of clients has changed while receiving a message
+            #if it has, then the client leave has already been handled for, so continue
+            #todo: this may have to be reworked in multi thread environment
             c_dropped = (prev_c_len - len(client.clients));
-            c -= c_dropped;
+            c_index -= c_dropped;
             if (c_dropped > 0):
                 continue;
 
             if (client_dc):
-                del client.clients[c];
-                c -= 1;
+                del client.clients[c_index];
+                c_index -= 1;
 
+            handle_sock_err(sockerr, client_obj);
             if (sockerr):
-                del client.clients[c];
-                c -= 1;
-                if (sockerr.errno == socket.errno.ECONNRESET):
-                    client.handle_leave(client_obj, "HOST_FORCE_QUIT", False);
-                else:
-                    errno = sockerr.errno;
-                    debug.log("socket error occurred (or not handled for). err: %s" % sockerr.strerror, debug.P_ERROR);
-                    client.handle_leave(client_obj, sockerr.strerror, False);
-            else:
-                c += 1;
+                c_index -= 1;
+            c_index += 1;
 
     s.close();
+
+def handle_sock_err(sockerr):
+    global c_index;
+    if (sockerr):
+        del client.clients[c_index];
+        if (sockerr.errno == socket.errno.ECONNRESET):
+            client.handle_leave(client_obj, "HOST_FORCE_QUIT", False);
+        else:
+            errno = sockerr.errno;
+            debug.log("socket error occurred (or not handled for). err: %s" % sockerr.strerror, debug.P_ERROR);
+            client.handle_leave(client_obj, sockerr.strerror, False);

@@ -4,10 +4,7 @@ FILE* debug::lfile;
 
 void debug::init_logger() {
     lfile = fopen("log.txt", "w");
-
-    if (lfile != NULL) {
-
-    }
+    cf_assert(lfile == NULL, sstream << "log.txt could not be written");
 }
 
 void __cdecl _assert(const char *_Message, const char *_File, unsigned _Line) {

@@ -16,7 +16,7 @@ namespace state {
     extern SceneManager* scene;
 
     extern State s;
-    extern cc::LabelBMFont* info_label;
+    extern cc::Label* info_label;
     extern float time_since_startup;
 
     extern void init(SceneManager* scene_ref);
