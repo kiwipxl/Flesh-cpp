@@ -31,7 +31,9 @@
     <ClCompile Include="src\network\message\Message.cpp" />
     <ClCompile Include="src\network\message\Callback.cpp" />
     <ClCompile Include="src\network\message\Stream.cpp" />
-    <ClCompile Include="src\assets\Assets.cpp" />
+    <ClCompile Include="src\gui\MessageBox.cpp" />
+    <ClCompile Include="src\gui\Button.cpp" />
+    <ClCompile Include="src\assets\Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -54,7 +56,9 @@
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\Callback.h" />
     <ClInclude Include="src\network\message\Stream.h" />
-    <ClInclude Include="src\assets\Assets.h" />
+    <ClInclude Include="src\gui\MessageBox.h" />
+    <ClInclude Include="src\gui\Button.h" />
+    <ClInclude Include="src\assets\Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

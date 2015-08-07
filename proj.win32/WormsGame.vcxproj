@@ -158,10 +158,12 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AppDelegate.cpp" />
-    <ClCompile Include="src\assets\Assets.cpp" />
+    <ClCompile Include="src\assets\Animation.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\entities\Unit.cpp" />
+    <ClCompile Include="src\gui\Button.cpp" />
+    <ClCompile Include="src\gui\MessageBox.cpp" />
     <ClCompile Include="src\input\SimpleInput.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\map\Camera.cpp" />
@@ -181,11 +183,13 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\AppDelegate.h" />
-    <ClInclude Include="src\assets\Assets.h" />
+    <ClInclude Include="src\assets\Animation.h" />
     <ClInclude Include="src\debug\Errors.h" />
     <ClInclude Include="src\debug\Logger.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
     <ClInclude Include="src\entities\Unit.h" />
+    <ClInclude Include="src\gui\Button.h" />
+    <ClInclude Include="src\gui\MessageBox.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
     <ClInclude Include="src\map\Camera.h" />
     <ClInclude Include="src\network\message\Callback.h" />

@@ -13,7 +13,7 @@
 #include "debug/Errors.h"
 #include "debug/Logger.h"
 #include "network/message/Message.h"
-#include "assets/Assets.h"
+#include "assets/Animations.h"
 
 using state::State;
 
@@ -43,7 +43,7 @@ void create_state(State c_state) {
             scene->scheduleUpdate();
 
             {
-                auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::spinner_frames, .05f, UINT32_MAX));
+                auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::animations::spinner_frames, .05f, UINT32_MAX));
                 spinner_sprite = Sprite::create();
                 spinner_sprite->runAction(spinner_animation);
                 spinner_sprite->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 45);
@@ -105,7 +105,7 @@ void state::init(SceneManager* scene_ref) {
     scene->setGLProgram(cc::ShaderCache::getInstance()->getGLProgram(cc::GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     debug::init_logger();
-    assets::init();
+    assets::animations::init();
     sock::init();
     msg::init();
     input::init();
