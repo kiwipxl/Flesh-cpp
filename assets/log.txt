@@ -1,1 +1,1 @@
-could not load texture (spinner_sheet2.png)
+Assertion in e:\development\c++projects\wormsgame\proj.win32\src\assets\assets.cpp line 18: could not load texture (spinner_sheet2.png)

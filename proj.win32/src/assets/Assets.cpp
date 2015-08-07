@@ -15,8 +15,7 @@ namespace assets {
     void load_ani_frames(std::string file_name, Vector<SpriteFrame*>& frames, Rect rect) {
         Texture2D* texture = TextureCache::sharedTextureCache()->addImage(file_name);
         if (texture == NULL) {
-            log_print_file << "could not load texture (" << file_name << ")";
-            assert(!(sstream << "could not load texture (" << file_name << ")").c_str());
+            f_assert(sstream << "could not load texture (" << file_name << ")");
         }
         while (true) {
             if (rect.origin.x >= texture->getPixelsWide()) break;

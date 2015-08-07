@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <stdio.h>
+#include <iostream>
 
 #include "../SceneManager.h"
 
@@ -17,6 +18,33 @@
 #define log_mid debug::Logger(debug::ACTION_MID | debug::ACTION_SAVE_TO_FILE)
 
 #define sstream debug::StrStream()
+#define sstream_str(s) s.stream.str()
+#define sstream_cstr(s) s.stream.str().c_str()
+
+//taken from mingw wassert.c
+extern void __cdecl _assert(const char *_Message, const char *_File, unsigned _Line);
+
+#ifndef NDEBUG
+#   define cf_assert(condition, message) \
+    do { \
+        if (!(condition)) { \
+            log_file << "Assertion '" #condition "' failed in " << __FILE__ << " line " << __LINE__ << ": " << sstream_cstr((message)); \
+            _assert(sstream_cstr((message)), __FILE__, __LINE__); \
+        } \
+    } while (false)
+#else
+#   define cf_assert(condition, message) do { } while (false)
+#endif
+
+#ifndef NDEBUG
+#   define f_assert(message) \
+    do { \
+        log_file << "Assertion in " << __FILE__ << " line " << __LINE__ << ": " << sstream_cstr((message)); \
+        _assert(sstream_cstr((message)), __FILE__, __LINE__); \
+    } while (false)
+#else
+#   define f_assert(message) do { } while (false)
+#endif
 
 namespace debug {
 
@@ -90,14 +118,6 @@ namespace debug {
             template<class T> StrStream& operator<<(const T& v) {
                 stream << v;
                 return *this;
-            }
-
-            std::string str() {
-                return stream.str();
-            }
-            
-            const char* c_str() {
-                return stream.str().c_str();
             }
     };
 };
