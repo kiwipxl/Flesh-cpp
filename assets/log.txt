@@ -1,5 +1,8 @@
 loaded 11 frames (spinner_sheet.png)
-finished asset loading
+animation assets loaded
+csb assets loaded
+texture assets loaded
+asset loading completed
 attempt connect...
 attempt connect on thread...
 (tcp_serv_sock): connection successful

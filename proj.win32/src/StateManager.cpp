@@ -13,7 +13,7 @@
 #include "debug/Errors.h"
 #include "debug/Logger.h"
 #include "network/message/Message.h"
-#include "assets/Animations.h"
+#include "assets/Assets.h"
 
 using state::State;
 
@@ -105,7 +105,7 @@ void state::init(SceneManager* scene_ref) {
     scene->setGLProgram(cc::ShaderCache::getInstance()->getGLProgram(cc::GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     debug::init_logger();
-    assets::animations::init();
+    assets::init();
     sock::init();
     msg::init();
     input::init();

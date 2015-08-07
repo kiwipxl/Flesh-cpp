@@ -33,7 +33,10 @@
     <ClCompile Include="src\network\message\Stream.cpp" />
     <ClCompile Include="src\gui\MessageBox.cpp" />
     <ClCompile Include="src\gui\Button.cpp" />
-    <ClCompile Include="src\assets\Animation.cpp" />
+    <ClCompile Include="src\assets\Textures.cpp" />
+    <ClCompile Include="src\assets\Animations.cpp" />
+    <ClCompile Include="src\assets\CSB.cpp" />
+    <ClCompile Include="src\assets\Assets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -58,7 +61,10 @@
     <ClInclude Include="src\network\message\Stream.h" />
     <ClInclude Include="src\gui\MessageBox.h" />
     <ClInclude Include="src\gui\Button.h" />
-    <ClInclude Include="src\assets\Animation.h" />
+    <ClInclude Include="src\assets\Textures.h" />
+    <ClInclude Include="src\assets\Animations.h" />
+    <ClInclude Include="src\assets\CSB.h" />
+    <ClInclude Include="src\assets\Assets.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
