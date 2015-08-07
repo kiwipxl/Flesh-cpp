@@ -52,8 +52,6 @@ void tcp_connect() {
         sock::connection_err_msg = leave_msg;
     });
 
-    msg::game::start_recv_thread();
-
     //below is code to setup a udp socket for the server, needs to be moved once the user login system is done
     tcp_serv_sock.add_message_handler(msg::MID_REQUEST_CLIENT_TO_BIND_UDP_PORT, [](msg::Message* message) {
         if (setup_udp_sock(message->get<u_short>(0))) {
@@ -74,6 +72,8 @@ void tcp_connect() {
         sock::connection_finished = true;
         sock::connection_err = NO_ERROR;
     });
+
+    msg::game::start_recv_thread();
 }
 
 bool sock::setup_udp_sock(u_short udp_serv_port) {

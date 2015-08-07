@@ -56,11 +56,18 @@ void create_state(State c_state) {
             login_page = CSLoader::createNode("Scene.csb");
             scene->addChild(login_page);
             
-            message_box = CSLoader::createNode("message_box2.csb");
+            message_box = CSLoader::createNode("message_box.csb");
             {
-                Image* frame = (Image*)message_box->getChildByName("frame_image");
-                Label* t = (Label*)message_box->getChildByName("message_text");
-                t->setDimensions(frame->getWidth() - 40, frame->getHeight() / 2.0f);
+                ui::ImageView* frame = (ui::ImageView*)message_box->getChildByName("frame_image");
+
+                ui::Text* message_text = (ui::Text*)message_box->getChildByName("message_text");
+                message_text->ignoreContentAdaptWithSize(false);
+                message_text->setTextAreaSize(Size(frame->getContentSize().width - 40, 120));
+                message_text->setPositionY(message_text->getPositionY() - 90);
+
+                ui::Text* message_title = (ui::Text*)message_box->getChildByName("title_text");
+                message_title->ignoreContentAdaptWithSize(false);
+                message_title->setTextAreaSize(Size(frame->getContentSize().width - 40, message_title->getContentSize().height));
             }
             scene->addChild(message_box);
             break;

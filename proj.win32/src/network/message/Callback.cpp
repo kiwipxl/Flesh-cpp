@@ -31,8 +31,8 @@ namespace msg {
         for (int i = 0; i < poll.get_size(); ++i) {
             Socket* sock = poll.get_sock_at(i);
             if (!sock) continue;
-            for (int n = 0; n < poll.get_sock_at(i)->callbacks.size(); ++n) {
-                msg::CallbackPtr& cb = poll.get_sock_at(i)->callbacks[n];
+            for (int n = 0; n < sock->callbacks.size(); ++n) {
+                msg::CallbackPtr& cb = sock->callbacks[n];
                 if (cb->timeout_len != msg::TIMEOUT_NONE && (time(&t) - cb->creation_time) >= cb->timeout_len) {
                     log_info << "callback timeout for " << cb->mid->name;
                     msg::Message m;
