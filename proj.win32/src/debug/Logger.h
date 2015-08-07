@@ -16,6 +16,8 @@
 
 #define log_mid debug::Logger(debug::ACTION_MID | debug::ACTION_SAVE_TO_FILE)
 
+#define sstream debug::StrStream()
+
 namespace debug {
 
     extern FILE* lfile;
@@ -77,6 +79,25 @@ namespace debug {
                         cc::log(stream.str().c_str());
                     }
                 }
+            }
+    };
+
+    class StrStream {
+
+        public:
+            std::stringstream stream;
+
+            template<class T> StrStream& operator<<(const T& v) {
+                stream << v;
+                return *this;
+            }
+
+            std::string str() {
+                return stream.str();
+            }
+            
+            const char* c_str() {
+                return stream.str().c_str();
             }
     };
 };
