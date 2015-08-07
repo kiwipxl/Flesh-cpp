@@ -104,16 +104,16 @@ def send_tcp(tcp_sock, built_msg):
     try:
         tcp_sock.send(built_msg);
     except socket.error as serr:
-        if (serr.errno != socket.errno.EWOULDBLOCK):
-            socket_manage.handle_sock_err(serr);
+        #socket_manage will handle this now
+        pass;
 
 def send_udp(udp_sock, ip, port, built_msg):
     if (port <= 0): debug.log("port is less than zero when trying to send_udp message", debug.P_WARNING); return;
     try:
         udp_sock.sendto(built_msg, (ip, port));
     except socket.error as serr:
-        if (serr.errno != socket.errno.EWOULDBLOCK):
-            socket_manage.handle_sock_err(serr);
+        #socket_manage will handle this now
+        pass;
 
 def broadcast(sock_list, client_obj, built_msg):
     for sock in sock_list:

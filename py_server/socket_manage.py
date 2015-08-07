@@ -42,7 +42,7 @@ def socket_loop(listen_ip, listen_port):
 
         c_index = 0;
         for i in range(0, len(client.clients)):
-            client_obj = client.clients[c];
+            client_obj = client.clients[c_index];
             client_dc = False;
             sockerr = None;
             prev_c_len = len(client.clients);
@@ -91,7 +91,7 @@ def socket_loop(listen_ip, listen_port):
 
     s.close();
 
-def handle_sock_err(sockerr):
+def handle_sock_err(sockerr, client_obj):
     global c_index;
     if (sockerr):
         del client.clients[c_index];

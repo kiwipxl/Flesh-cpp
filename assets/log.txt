@@ -2,5 +2,4 @@ loaded 11 frames (spinner_sheet.png)
 finished asset loading
 attempt connect...
 attempt connect on thread...
-10061: connect error
-(tcp_serv_sock): error 10061 occurred while trying to connect to (ip: 127.0.0.1, port: 4222)
+(tcp_serv_sock): connection successful

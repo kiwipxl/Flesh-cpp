@@ -56,7 +56,12 @@ void create_state(State c_state) {
             login_page = CSLoader::createNode("Scene.csb");
             scene->addChild(login_page);
             
-            message_box = CSLoader::createNode("message_box.csb");
+            message_box = CSLoader::createNode("message_box2.csb");
+            {
+                Image* frame = (Image*)message_box->getChildByName("frame_image");
+                Label* t = (Label*)message_box->getChildByName("message_text");
+                t->setDimensions(frame->getWidth() - 40, frame->getHeight() / 2.0f);
+            }
             scene->addChild(message_box);
             break;
         case STATE_GAME:
