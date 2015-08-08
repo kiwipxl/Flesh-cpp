@@ -15,7 +15,7 @@ namespace gui {
     //-- begin MessageBox definition --
 
     MessageBox::MessageBox(std::string title, std::string message) {
-        container = assets::csb::message_box;
+        assets::csb::load_csb(container, assets::csb::message_box_name);
 
         root::scene->addChild(container);
 
@@ -36,6 +36,7 @@ namespace gui {
 
     MessageBox::~MessageBox() {
         root::scene->removeChild(container);
+        container->cleanup();
     }
 
     void MessageBox::add_button(Button& button) {

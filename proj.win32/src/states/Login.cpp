@@ -14,16 +14,23 @@ namespace login {
     using namespace root;
     using namespace cocos2d;
 
+    //private
+    Node* login_page;
+
+    //public externs
+
     void create_state(State state) {
         switch (state) {
             case STATE_LOGIN_REGISTER_SCREEN:
                 {
-                    scene->addChild(assets::csb::login_page);
+                    assets::csb::load_csb(login_page, assets::csb::login_page_name);
+                    scene->addChild(login_page);
 
-                    auto login_button = assets::csb::get_child<ui::Button>(assets::csb::login_page, "login_button");
-                    login_button->setTitleText("ayy");
-                    auto mb = gui::show_message_box("please wait...", "logging in...", "cancel");
-                    mb->add_spinner();
+                    auto login_button = assets::csb::get_child<ui::Button>(login_page, "login_button");
+                    login_button->addClickEventListener([](Ref* r) {
+                        auto mb = gui::show_message_box("please wait...", "logging in...", "cancel");
+                        mb->add_spinner();
+                    });
                 }
                 break;
         }
@@ -32,7 +39,8 @@ namespace login {
     void remove_state(State state) {
         switch (state) {
             case STATE_LOGIN_REGISTER_SCREEN:
-                assets::csb::login_page->removeAllChildren();
+                login_page->removeAllChildren();
+                login_page->cleanup();
                 break;
         }
     }

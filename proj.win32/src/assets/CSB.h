@@ -11,10 +11,12 @@ namespace assets {
 
         namespace cc = cocos2d;
 
-        extern cc::Node* login_page;
-        extern cc::Node* message_box;
+        extern std::string login_page_name;
+        extern std::string message_box_name;
 
         extern void init();
+
+        extern void load_csb(cc::Node*& cs_node, std::string file_name);
 
         //gets a child from a csb node and logs an error if it doesn't exist
         //example usage: assets::csb::get_child<ui::Button>(node, name)
