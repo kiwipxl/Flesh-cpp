@@ -1,7 +1,7 @@
-#include "Stream.h"
+#include "network/message/Stream.h"
 
-#include "Message.h"
-#include "Callback.h"
+#include "network/message/Callback.h"
+#include "network/message/Message.h"
 
 using msg::Stream;
 

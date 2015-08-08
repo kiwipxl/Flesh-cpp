@@ -1,9 +1,9 @@
-#include "SocketManager.h"
+#include "network/sockets/SocketManager.h"
 
-#include "../../StateManager.h"
-#include "../../debug/Logger.h"
-#include "../message/Message.h"
-#include "../GameMessages.h"
+#include "debug/Logger.h"
+#include "network/message/Message.h"
+#include "network/GameMessages.h"
+#include "StateManager.h"
 
 using debug::fresult;
 

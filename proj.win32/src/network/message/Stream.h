@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-#include "MID.h"
+#include "network/message/MID.h"
 
 namespace msg {
 

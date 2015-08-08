@@ -4,9 +4,9 @@
 #include <string>
 #include <sstream>
 
-#include "MID.h"
-#include "Stream.h"
-#include "Callback.h"
+#include "network/message/Callback.h"
+#include "network/message/MID.h"
+#include "network/message/Stream.h"
 
 class Socket;
 

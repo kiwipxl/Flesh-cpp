@@ -1,9 +1,9 @@
 #ifndef _ASSETS_H_
 #define _ASSETS_H_
 
-#include "Animations.h"
-#include "CSB.h"
-#include "Textures.h"
+#include "assets/Animations.h"
+#include "assets/CSB.h"
+#include "assets/Textures.h"
 
 namespace assets {
 

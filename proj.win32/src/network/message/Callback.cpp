@@ -1,9 +1,9 @@
-#include "Callback.h"
+#include "network/message/Callback.h"
 
-#include "../sockets/Socket.h"
-#include "../sockets/SocketPoll.h"
-#include "Message.h"
-#include "../../debug/Logger.h"
+#include "debug/Logger.h"
+#include "network/message/Message.h"
+#include "network/sockets/Socket.h"
+#include "network/sockets/SocketPoll.h"
 
 namespace msg {
 

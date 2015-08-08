@@ -1,8 +1,8 @@
-#include "Message.h"
+#include "network/message/Message.h"
 
-#include "../../debug/Logger.h"
-#include "../sockets/Socket.h"
-#include "Callback.h"
+#include "debug/Logger.h"
+#include "network/message/Callback.h"
+#include "network/sockets/Socket.h"
 
 template <typename T> inline int sprintf_buf(int offset, CFTYPE t, int n) {
     return sprintf(msg::print_buf + offset, t->printf_format, *(T*)msg::last_param_list[n]->data);

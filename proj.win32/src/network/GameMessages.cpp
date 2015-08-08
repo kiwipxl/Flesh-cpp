@@ -1,11 +1,11 @@
-#include "GameMessages.h"
+#include "network/GameMessages.h"
 
-#include "../StateManager.h"
-#include "sockets/SocketManager.h"
-#include "Peers.h"
-#include "../entities/Unit.h"
-#include "../debug/Logger.h"
+#include "entities/Unit.h"
+#include "debug/Logger.h"
 #include "message/Message.h"
+#include "network/Peers.h"
+#include "StateManager.h"
+#include "sockets/SocketManager.h"
 
 using debug::fresult;
 

@@ -1,9 +1,10 @@
 #ifndef _MID_H_
 #define _MID_H_
 
-#include <vector>
-#include <string>
 #include <stdarg.h>
+
+#include <string>
+#include <vector>
 
 namespace msg {
 

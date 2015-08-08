@@ -6,7 +6,7 @@ class to add/remove sockets and determine when each one is ready to be read (has
 */
 
 #include <vector>
-#include "Socket.h"
+#include "network/sockets/Socket.h"
 
 class SocketPoll {
     

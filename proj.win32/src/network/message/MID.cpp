@@ -1,7 +1,7 @@
-#include "MID.h"
+#include "network/message/MID.h"
 
-#include <sstream>
 #include <cassert>
+#include <sstream>
 
 using msg::MID;
 using msg::FormatType;

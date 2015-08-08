@@ -1,7 +1,7 @@
-#include "Peers.h"
+#include "network/Peers.h"
 
-#include "../debug/Errors.h"
-#include "../debug/Logger.h"
+#include "debug/Errors.h"
+#include "debug/Logger.h"
 
 using peers::Peer;
 using debug::fresult;

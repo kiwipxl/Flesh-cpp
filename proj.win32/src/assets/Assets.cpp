@@ -1,6 +1,6 @@
 #include "Assets.h"
 
-#include "../debug/Logger.h"
+#include "debug/Logger.h"
 
 namespace assets {
 

@@ -8,7 +8,7 @@ simple cross-platform berkeley socket class used to encapsulate simpler function
 #include <base/CCConsole.h>
 
 #include "debug/PlatformConfig.h"
-#include "../message/Callback.h"
+#include "network/message/Callback.h"
 
 #if defined(PLATFORM_WIN32)
 #include <WinSock2.h>

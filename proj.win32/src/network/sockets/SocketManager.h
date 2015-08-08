@@ -5,8 +5,8 @@
 handles the tcp and udp socket connection between the server and udp sockets between peers
 */
 
-#include "Socket.h"
-#include "../../debug/Errors.h"
+#include "network/sockets/Socket.h"
+#include "debug/Errors.h"
 
 namespace sock {
 
