@@ -2,8 +2,8 @@ loaded 11 frames (spinner_sheet.png)
 animation assets loaded
 csb assets loaded
 texture assets loaded
+map assets loaded
 asset loading completed
 attempt connect...
 attempt connect on thread...
 (tcp_serv_sock): connection successful
-Assertion in e:\development\c++projects\wormsgame\proj.win32\src\map\ferr2dsystem.cpp line 91: ferr2d load error occurred: file could not be found (terrain.t2d)

@@ -161,6 +161,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\assets\Animations.cpp" />
     <ClCompile Include="src\assets\Assets.cpp" />
     <ClCompile Include="src\assets\CSB.cpp" />
+    <ClCompile Include="src\assets\Maps.cpp" />
     <ClCompile Include="src\assets\Textures.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
@@ -189,6 +190,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\assets\Animations.h" />
     <ClInclude Include="src\assets\Assets.h" />
     <ClInclude Include="src\assets\CSB.h" />
+    <ClInclude Include="src\assets\Maps.h" />
     <ClInclude Include="src\assets\Textures.h" />
     <ClInclude Include="src\debug\Errors.h" />
     <ClInclude Include="src\debug\Logger.h" />

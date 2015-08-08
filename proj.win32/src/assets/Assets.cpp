@@ -8,6 +8,7 @@ namespace assets {
         animations::init();
         csb::init();
         textures::init();
+        maps::init();
 
         log_print_file << "asset loading completed";
     }

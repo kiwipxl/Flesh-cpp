@@ -89,7 +89,7 @@ namespace root {
                 entities::test_player = new entities::Unit();
                 entities::test_player->player_input = true;
                 camera = new map::MapCamera();
-                terrain = new map::ferr2d::Terrain(*map::ferr2d::load("terrain.t2d"));
+                terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
                 break;
         }
     }

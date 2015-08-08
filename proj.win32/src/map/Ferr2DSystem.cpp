@@ -35,8 +35,6 @@ namespace map {
         Terrain::Terrain(TerrainData& t_data) {
             terrain_data = &t_data;
 
-            t_data.debug_draw_node->retain();
-
             node = Node::create();
 
             pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
@@ -112,8 +110,8 @@ namespace map {
         return NULL;
 
         TerrainData* load(std::string file_name) {
-	        TerrainData* ter = new TerrainData();
-	
+            TerrainData* ter = new TerrainData();
+
             FILE* f = fopen(file_name.c_str(), "r");
             char* temp = NULL;
 
@@ -127,6 +125,7 @@ namespace map {
                 fread(temp, 1, file_len, f);
 
                 ter->debug_draw_node = DrawNode::create();
+                ter->debug_draw_node->retain();
 
                 std::string data = temp;
                 std::vector<std::string> tokens;

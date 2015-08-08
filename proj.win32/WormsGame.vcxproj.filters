@@ -37,6 +37,7 @@
     <ClCompile Include="src\assets\CSB.cpp" />
     <ClCompile Include="src\assets\Assets.cpp" />
     <ClCompile Include="src\map\MapCamera.cpp" />
+    <ClCompile Include="src\assets\Maps.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="src\assets\CSB.h" />
     <ClInclude Include="src\assets\Assets.h" />
     <ClInclude Include="src\map\MapCamera.h" />
+    <ClInclude Include="src\assets\Maps.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -4,6 +4,7 @@
 #include "assets/Animations.h"
 #include "assets/CSB.h"
 #include "assets/Textures.h"
+#include "assets/Maps.h"
 
 namespace assets {
 
