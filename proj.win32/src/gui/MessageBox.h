@@ -20,22 +20,22 @@ namespace gui {
     class MessageBox {
 
         public:
-            MessageBox(std::string& title, std::string& message);
+            MessageBox(std::string title, std::string message);
 
             cc::ui::ImageView* frame;
             cc::ui::Text* message_text;
             cc::ui::Text* message_title;
 
             void add_button(Button& button);
-            void add_button(std::string& button_text, int x, int y);
-            void stack_button(std::string& button_text);
+            void add_button(std::string button_text, int x, int y);
+            void stack_button(std::string button_text);
     };
 
     typedef std::shared_ptr<MessageBox> MessageBoxPtr;
 
     extern MessageBoxPtr current_message_box;
 
-    extern MessageBoxPtr& show_message_box(std::string& title, std::string& message);
+    extern MessageBoxPtr& show_message_box(std::string title, std::string message);
     extern void hide_message_box();
 };
 

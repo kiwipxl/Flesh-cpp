@@ -11,11 +11,11 @@ namespace gui {
 
         public:
             Button() { }
-            Button(std::string& text, int x, int y);
+            Button(std::string text, int x, int y);
 
             cc::ui::Button* button;
 
-            void create(std::string& text, int x, int y);
+            void create(std::string text, int x, int y);
     };
 };
 

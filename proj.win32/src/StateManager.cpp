@@ -9,6 +9,7 @@
 #include "debug/Errors.h"
 #include "debug/Logger.h"
 #include "entities/Unit.h"
+#include "gui/MessageBox.h"
 #include "input/SimpleInput.h"
 #include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
@@ -71,6 +72,7 @@ namespace root {
                 scene->addChild(assets::csb::login_page);
 
                 {
+                    gui::show_message_box("title text here", "message here");
                 }
                 break;
             case STATE_GAME:

@@ -12,19 +12,19 @@ namespace assets {
 
         using namespace cocos2d;
 
-        void load_csb(Node*, std::string);
+        void load_csb(Node*&, std::string);
 
         Node* login_page;
         Node* message_box;
 
         void init() {
             load_csb(login_page, "Scene.csb");
-            load_csb(message_box, "message_box2.csb");
+            load_csb(message_box, "message_box.csb");
 
             log_print_file << "csb assets loaded";
         }
         
-        void load_csb(Node* cs_node, std::string file_name) {
+        void load_csb(Node*& cs_node, std::string file_name) {
             try {
                 cs_node = CSLoader::createNode(file_name);
             }catch (const std::exception& e) {

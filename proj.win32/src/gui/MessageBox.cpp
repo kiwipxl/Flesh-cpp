@@ -11,7 +11,7 @@ namespace gui {
 
     //-- begin MessageBox definition --
 
-    MessageBox::MessageBox(std::string& title, std::string& message) {
+    MessageBox::MessageBox(std::string title, std::string message) {
         root::scene->addChild(assets::csb::message_box);
 
         frame = (ui::ImageView*)assets::csb::message_box->getChildByName("frame_image");
@@ -30,17 +30,17 @@ namespace gui {
 
     }
 
-    void MessageBox::add_button(std::string& button_text, int x, int y) {
+    void MessageBox::add_button(std::string button_text, int x, int y) {
 
     }
 
-    void stack_button(std::string& button_text) {
+    void stack_button(std::string button_text) {
 
     }
 
     //-- end MessageBox definition --
 
-    MessageBoxPtr& show_message_box(std::string& title, std::string& message) {
+    MessageBoxPtr& show_message_box(std::string title, std::string message) {
         hide_message_box();
 
         MessageBoxPtr ptr(new MessageBox(title, message));
