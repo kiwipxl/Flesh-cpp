@@ -19,14 +19,14 @@ namespace gui {
 
         root::scene->addChild(container);
 
-        frame = (ui::ImageView*)container->getChildByName("frame_image");
+        frame = assets::csb::get_child<ui::ImageView>(container, "frame_image");
 
-        message_title = (ui::Text*)container->getChildByName("title_text");
+        message_title = assets::csb::get_child<ui::Text>(container, "title_text");
         message_title->ignoreContentAdaptWithSize(false);
         message_title->setTextAreaSize(Size(frame->getContentSize().width - 40, message_title->getContentSize().height));
         message_title->setString(title);
 
-        message_text = (ui::Text*)container->getChildByName("message_text");
+        message_text = assets::csb::get_child<ui::Text>(container, "message_text");
         message_text->ignoreContentAdaptWithSize(false);
         message_text->setTextHorizontalAlignment(TextHAlignment::CENTER);
         message_text->setTextAreaSize(Size(frame->getContentSize().width - 40, 120));
