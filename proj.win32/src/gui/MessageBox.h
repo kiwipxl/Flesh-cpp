@@ -21,7 +21,9 @@ namespace gui {
 
         public:
             MessageBox(std::string title, std::string message);
+            ~MessageBox();
 
+            cc::Node* container;
             cc::ui::ImageView* frame;
             cc::ui::Text* message_text;
             cc::ui::Text* message_title;
@@ -35,7 +37,7 @@ namespace gui {
 
     extern MessageBoxPtr current_message_box;
 
-    extern MessageBoxPtr& show_message_box(std::string title, std::string message);
+    extern MessageBoxPtr show_message_box(std::string title, std::string message);
     extern void hide_message_box();
 };
 
