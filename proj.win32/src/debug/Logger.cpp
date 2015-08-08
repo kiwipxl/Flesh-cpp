@@ -1,4 +1,4 @@
-#include "Logger.h"
+#include "debug/Logger.h"
 
 FILE* debug::lfile;
 
@@ -7,6 +7,7 @@ void debug::init_logger() {
     cf_assert(lfile == NULL, sstream << "log.txt could not be written");
 }
 
+//taken from mingw wassert.c
 void __cdecl _assert(const char *_Message, const char *_File, unsigned _Line) {
     wchar_t *m, *f;
     int i;

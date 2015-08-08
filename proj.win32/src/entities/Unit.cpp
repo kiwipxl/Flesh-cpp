@@ -1,6 +1,6 @@
-#include "Unit.h"
+#include "entities/Unit.h"
 
-#include "../StateManager.h"
+#include "StateManager.h"
 #include "input/SimpleInput.h"
 
 using entity::Unit;

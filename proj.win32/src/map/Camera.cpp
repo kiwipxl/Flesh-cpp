@@ -1,7 +1,7 @@
-#include "Camera.h"
+#include "map/Camera.h"
 
-#include "../StateManager.h"
-#include "../entities/Unit.h"
+#include "StateManager.h"
+#include "entities/Unit.h"
 
 using map::Camera;
 

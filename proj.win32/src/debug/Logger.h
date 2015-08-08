@@ -1,25 +1,26 @@
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
 
-#include <sstream>
 #include <stdio.h>
+
 #include <iostream>
+#include <sstream>
 
-#include "../SceneManager.h"
+#include "SceneManager.h"
 
-#define log_file debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE)
-#define log_print debug::Logger(debug::ACTION_INFO | debug::ACTION_PRINT)
-#define log_print_file debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+#define log_file            debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE)
+#define log_print           debug::Logger(debug::ACTION_INFO | debug::ACTION_PRINT)
+#define log_print_file      debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 
-#define log_info debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
-#define log_warning debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
-#define log_error debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+#define log_info            debug::Logger(debug::ACTION_INFO | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+#define log_warning         debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
+#define log_error           debug::Logger(debug::ACTION_WARNING | debug::ACTION_SAVE_TO_FILE | debug::ACTION_PRINT)
 
-#define log_mid debug::Logger(debug::ACTION_MID | debug::ACTION_SAVE_TO_FILE)
+#define log_mid             debug::Logger(debug::ACTION_MID | debug::ACTION_SAVE_TO_FILE)
 
-#define sstream debug::StrStream()
-#define sstream_str(s) s.stream.str()
-#define sstream_cstr(s) s.stream.str().c_str()
+#define sstream             debug::StrStream()
+#define sstream_str(s)      s.stream.str()
+#define sstream_cstr(s)     s.stream.str().c_str()
 
 //taken from mingw wassert.c
 extern void __cdecl _assert(const char *_Message, const char *_File, unsigned _Line);

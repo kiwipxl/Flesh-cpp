@@ -1,7 +1,7 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include "../SceneManager.h"
+#include "SceneManager.h"
 
 namespace map {
 

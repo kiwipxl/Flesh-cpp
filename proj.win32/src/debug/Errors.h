@@ -2,7 +2,8 @@
 #define _ERRORS_H_
 
 #include <sstream>
-#include "PlatformConfig.h"
+
+#include "debug/PlatformConfig.h"
 
 #define ERR_NONE 0
 #define ERR_UDP_PING_PONG_FAILED 9000

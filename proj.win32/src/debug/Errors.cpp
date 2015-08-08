@@ -1,4 +1,5 @@
-#include "Errors.h"
+#include "debug/Errors.h"
+
 #include "network/sockets/Socket.h"
 
 int debug::fresult;
