@@ -22,7 +22,7 @@ namespace root {
     extern float time_since_startup;
 
     extern void init_root(SceneManager* scene_ref);
-    extern void update(float dt);
+    extern void update_state(float dt);
 
     extern void switch_state(State new_state);
     extern void on_draw();

@@ -112,7 +112,7 @@ namespace root {
         create_state(new_state);
     }
 
-    void update(float dt) {
+    void update_state(float dt) {
         time_since_startup += dt;
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_T)) {

@@ -11,9 +11,6 @@ namespace root {
     class SceneManager : public Layer {
 
         public:
-            //auto-cleanup cocos macro
-            CREATE_FUNC(SceneManager);
-
             static Scene* create_scene();
 
             virtual bool init();

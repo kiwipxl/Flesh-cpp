@@ -7,11 +7,11 @@
 namespace root {
 
     Scene* SceneManager::create_scene() {
-        //auto release objects
         auto scene = Scene::createWithPhysics();
-        scene->retain();
-        auto layer = SceneManager::create();
+        auto layer = new SceneManager();
         scene->addChild(layer);
+        layer->init();
+        layer->autorelease();
 
         return scene;
     }
@@ -19,7 +19,6 @@ namespace root {
     bool SceneManager::init() {
         if (!Layer::init()) return false;
 
-        Scene* s = getScene();
         p_world = getScene()->getPhysicsWorld();
         screen_size = Director::getInstance()->getVisibleSize();
         screen_origin = Director::getInstance()->getVisibleOrigin();
@@ -31,7 +30,7 @@ namespace root {
 
     void SceneManager::update(float dt) {
         time_since_startup += dt;
-        update(dt);
+        update_state(dt);
     }
 
     void SceneManager::menu_close(Ref* r) {
