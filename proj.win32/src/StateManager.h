@@ -1,7 +1,9 @@
 #ifndef _STATE_MANAGER_H_
 #define _STATE_MANAGER_H_
 
+#include <2d/CCLabel.h>
 #include <cstdint>
+
 #include "SceneManager.h"
 
 namespace state {

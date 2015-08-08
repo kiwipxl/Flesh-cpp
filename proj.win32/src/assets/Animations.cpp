@@ -1,5 +1,7 @@
 #include "Animations.h"
 
+#include <renderer/CCTextureCache.h>
+
 #include "debug/Logger.h"
 
 namespace assets {

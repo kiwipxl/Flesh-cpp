@@ -1,16 +1,20 @@
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
-#include "SceneManager.h"
+#include <vector>
+#include <2d/CCSprite.h>
+
 #include "network/Peers.h"
 
-namespace entity {
+namespace entities {
+
+    using namespace cocos2d;
 
     class Unit {
 
         public:
-            cc::Sprite* base;
-            cc::PhysicsBody* pbody;
+            Sprite* base;
+            PhysicsBody* pbody;
             bool player_input = false;
             peers::Peer* peer;
 

@@ -1,5 +1,10 @@
 #include "SceneManager.h"
+
+#include <base/CCDirector.h>
+
 #include "StateManager.h"
+
+using namespace cc;
 
 cc::PhysicsWorld* SceneManager::p_world;
 

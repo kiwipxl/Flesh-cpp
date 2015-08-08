@@ -4,16 +4,16 @@
 #include <cocostudio/CocoStudio.h>
 #include <ui/CocosGUI.h>
 
-#include "network/sockets/SocketManager.h"
-#include "network/Peers.h"
-#include "input/SimpleInput.h"
-#include "map/Ferr2DSystem.h"
-#include "map/Camera.h"
-#include "entities/Unit.h"
+#include "assets/Assets.h"
 #include "debug/Errors.h"
 #include "debug/Logger.h"
+#include "entities/Unit.h"
+#include "input/SimpleInput.h"
+#include "map/Ferr2DSystem.h"
+#include "map/MapCamera.h"
 #include "network/message/Message.h"
-#include "assets/Assets.h"
+#include "network/sockets/SocketManager.h"
+#include "network/Peers.h"
 
 using state::State;
 
@@ -26,8 +26,8 @@ Sprite* spinner_sprite;
 Node* login_page;
 Node* message_box;
 
-ferr2d::Terrain* terrain;
-map::Camera* camera;
+map::ferr2d::Terrain* terrain;
+map::MapCamera* camera;
 
 void create_state(State c_state) {
     using namespace state;
@@ -72,10 +72,10 @@ void create_state(State c_state) {
             scene->addChild(message_box);
             break;
         case STATE_GAME:
-            entity::test_player = new entity::Unit();
-            entity::test_player->player_input = true;
-            camera = new map::Camera();
-            terrain = new ferr2d::Terrain(*ferr2d::load("terrain.t2d"));
+            entities::test_player = new entities::Unit();
+            entities::test_player->player_input = true;
+            camera = new map::MapCamera();
+            terrain = new map::ferr2d::Terrain(*map::ferr2d::load("terrain.t2d"));
             break;
     }
 }
@@ -139,15 +139,15 @@ void state::update(float dt) {
             }
             break;
         case STATE_GAME:
-            entity::update_units();
-            entity::test_player->update();
+            entities::update_units();
+            entities::test_player->update();
             camera->update();
             terrain->draw();
 
             /*for (int n = 0; n < peers::peer_list.size(); ++n) {
                 msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<
-                    (int)entity::test_player->base->getPositionX() << (int)entity::test_player->base->getPositionY() << 
-                    (float)entity::test_player->base->getRotation());
+                    (int)entities::test_player->base->getPositionX() << (int)entities::test_player->base->getPositionY() << 
+                    (float)entities::test_player->base->getRotation());
             }*/
             break;
     }

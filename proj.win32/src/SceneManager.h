@@ -1,12 +1,12 @@
 #ifndef _SCENE_MANAGER_H_
 #define _SCENE_MANAGER_H_
 
-#include "cocos2d.h"
-#include "math/CCVertex.h"
+#include <2d/CCLayer.h>
+#include <2d/CCScene.h>
 
 namespace cc = cocos2d;
 
-class SceneManager : public cocos2d::Layer {
+class SceneManager : public cc::Layer {
 
 	public:
 		//auto-cleanup cocos macro

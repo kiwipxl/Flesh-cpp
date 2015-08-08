@@ -1,5 +1,8 @@
 #include "input/SimpleInput.h"
 
+#include <base/CCEventListenerKeyboard.h>
+#include <base/CCEventDispatcher.h>
+
 #include "StateManager.h"
 
 namespace input {
