@@ -67,6 +67,7 @@
     <ClInclude Include="src\assets\Assets.h" />
     <ClInclude Include="src\map\MapCamera.h" />
     <ClInclude Include="src\assets\Maps.h" />
+    <ClInclude Include="src\network\Defines.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

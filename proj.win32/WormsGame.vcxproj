@@ -77,7 +77,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(COCOS2DX_ROOT)\cocos\audio\include;$(COCOS2DX_ROOT)\external;$(COCOS2DX_ROOT)\external\chipmunk\include\chipmunk;$(COCOS2DX_ROOT)\cocos\editor-support;$(COCOS2DX_ROOT)\cocos;$(COCOS2DX_ROOT)\extensions;src\network;src\map;src\input;src\gui;src\entities;src\assets;src\debug;src;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(COCOS2DX_ROOT)\cocos\audio\include;$(COCOS2DX_ROOT)\external;$(COCOS2DX_ROOT)\external\chipmunk\include\chipmunk;$(COCOS2DX_ROOT)\cocos\editor-support;$(COCOS2DX_ROOT)\cocos;$(COCOS2DX_ROOT)\extensions;src\gui;src\network;src\map;src\input;src\entities;src\assets;src\debug;src;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
