@@ -38,10 +38,14 @@ ALL                                                                 = MID();
 
 #sends a client id of a specified client
 SEND_CLIENT_ID                                                      = MID(_FT.INT);
+
 #receives a request to register a username and password from a client
-RECV_CLIENT_LOGIN_USER_PASS                                         = MID(_FT.STRING, _FT.STRING);
+RECV_CLIENT_ATTEMPT_LOGIN                                           = MID(_FT.STRING, _FT.STRING);
+SEND_CLIENT_ATTEMPT_LOGIN_RESULT                                    = MID(_FT.INT);
+
 #receives a request to register a username and password from a client
-RECV_CLIENT_REGISTER_USER_PASS                                      = MID(_FT.STRING, _FT.STRING);
+RECV_CLIENT_ATTEMPT_REGISTER                                        = MID(_FT.STRING, _FT.STRING);
+SEND_CLIENT_ATTEMPT_REGISTER_RESULT                                 = MID(_FT.INT);
 
 #begins sending a relay test which ping pongs for infinite time
 SEND_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY                     = MID();

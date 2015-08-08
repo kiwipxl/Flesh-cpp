@@ -3,6 +3,7 @@ import debug;
 import game;
 import _MID;
 import callback;
+import accounts;
 
 class Client:
     id = 0;
@@ -50,14 +51,15 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     c.callbacks = [];
 
     if (add_to_list): clients.append(c);
-    
-    #only accept client when all sockets are verified
+
     debug.log("accepted client (client-id: %d, ip: %s, c_tcp_port: %d, c_udp_port: %d, s_tcp_port: %d, s_udp_port: %d)" %
           (c.id, c.ip, c.c_tcp_port, c.c_udp_port, c.s_tcp_port, c.s_udp_port), debug.P_INFO);
 
     num_clients += 1;
     client_id_inc += 1;
 
+    accounts.init_client_account(c);
+    
     #c.add_message_handler(_MID.ALL, handle_setup_messages);
     #msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 

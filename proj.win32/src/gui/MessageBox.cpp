@@ -16,6 +16,7 @@ namespace gui {
 
     MessageBox::MessageBox(std::string title, std::string message) {
         assets::csb::load_csb(container, assets::csb::message_box_name);
+        //container = assets::csb::message_box;
 
         root::scene->addChild(container);
 
@@ -35,8 +36,7 @@ namespace gui {
     }
 
     MessageBox::~MessageBox() {
-        root::scene->removeChild(container);
-        container->cleanup();
+        close();
     }
 
     void MessageBox::add_button(Button& button) {
@@ -68,7 +68,11 @@ namespace gui {
     }
 
     void MessageBox::close() {
-        close_message_box();
+        if (!closed) {
+            root::scene->removeChild(container);
+            closed = true;
+            //container->cleanup();
+        }
     }
 
     //-- end MessageBox definition --
@@ -103,8 +107,7 @@ namespace gui {
     }
 
     void close_message_box() {
-        //set smart ptr to nullptr which will call the deconstructor of the message box and delete the pointer reference
-        if (current_message_box != nullptr) current_message_box = nullptr;
+        if (current_message_box != nullptr) current_message_box.reset();
     }
     
     void close_message_box_callback(Ref* r) {

@@ -33,6 +33,7 @@ namespace gui {
             cc::ui::Text* message_title;
 
             std::vector<Button*> buttons;
+            bool closed = false;
 
             void add_button(Button& button);
             void add_button(std::string button_text, int x, int y, int font_size = DEFAULT_BUTTON_FONT_SIZE, 

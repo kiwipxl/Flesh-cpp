@@ -14,8 +14,11 @@ namespace assets {
 
         std::string login_page_name = "Scene.csb";
         std::string message_box_name = "message_box.csb";
+        Node* message_box;
 
         void init() {
+            load_csb(message_box, message_box_name);
+
             log_print_file << "csb assets loaded";
         }
         

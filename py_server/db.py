@@ -5,6 +5,7 @@ import debug;
 db_con = None;
 cur = None;
 MAX_USERNAME_LEN = 16;
+MAX_PASSWORD_LEN = 16;
 
 def init():
     global db_con;
@@ -20,9 +21,12 @@ def init():
 def add_user_account(username, password):
     global db_con;
     if (username.__len__() > MAX_USERNAME_LEN): username = username[0:MAX_USERNAME_LEN];
-    query("insert or ignore into accounts(user, pass) values('" + username + "', '" + hashlib.sha256(password).hexdigest() + "')");
+    if (password.__len__() > MAX_PASSWORD_LEN): password = password[0:MAX_PASSWORD_LEN];
+    pass_hash = hashlib.sha256(password).hexdigest();
+    result = query("insert or ignore into accounts(user, pass) values('" + username + "', '" + pass_hash + "')");
     db_con.commit();
-    debug.log(db_con);
+
+    return result;
 
 def fetch_accounts():
     global db_con;
@@ -37,8 +41,10 @@ def query(q):
     global db_con;
     try:
         db_con.execute(q);
+        return True;
     except lite.Error as e:
         debug.log("database error occurred: %s" % e.args[0], debug.P_ERROR);
+        return False;
 
 if __name__ == "__main__":
     init();

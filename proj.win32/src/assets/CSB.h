@@ -13,6 +13,7 @@ namespace assets {
 
         extern std::string login_page_name;
         extern std::string message_box_name;
+        extern cc::Node* message_box;
 
         extern void init();
 
