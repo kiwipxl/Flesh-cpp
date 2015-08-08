@@ -100,7 +100,7 @@ void sock::socket_setup_failed(int err) {
 
 void sock::update() {
     if (udp_ping_pong) {
-        if (state::time_since_startup - udp_ping_pong_time >= UDP_PING_PONG_TIMEOUT) {
+        if (root::time_since_startup - udp_ping_pong_time >= UDP_PING_PONG_TIMEOUT) {
             ++udp_ping_pong_tries;
             if (udp_ping_pong_sock == NULL) { log_info << "udp ping pong sock is null"; return; }
             send_udp_ping_pong(*udp_ping_pong_sock);
@@ -121,7 +121,7 @@ void sock::send_udp_ping_pong(Socket& sock) {
             udp_ping_pong_tries = 0;
             udp_ping_pong = true;
         }
-        udp_ping_pong_time = state::time_since_startup;
+        udp_ping_pong_time = root::time_since_startup;
         udp_ping_pong_sock = &sock;
     }else {
         log_warning << "udp ping pong tries timed out?!?!?1";

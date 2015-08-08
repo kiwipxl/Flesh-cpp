@@ -50,7 +50,7 @@ namespace map {
             node->setPosition(0, 0);
             //node->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
             //node->setScale(1.1f, 1.1f);
-            state::scene->addChild(node, 1);
+            root::scene->addChild(node, 1);
 
             edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
             edge_tris.indexCount = t_data.edge_indices_end;
@@ -65,7 +65,7 @@ namespace map {
             blend_func.src = GL_SRC_ALPHA;
             blend_func.dst = GL_ONE_MINUS_SRC_ALPHA;
 
-            edge_tris_cmd.init(0.0f, edge_t->getName(), state::scene->getGLProgramState(), blend_func, edge_tris, node->getNodeToWorldTransform(), 1);
+            edge_tris_cmd.init(0.0f, edge_t->getName(), root::scene->getGLProgramState(), blend_func, edge_tris, node->getNodeToWorldTransform(), 1);
 
             fill_tris.indices = &t_data.indices[t_data.fill_indices_start];
             fill_tris.indexCount = t_data.fill_indices_end;
@@ -76,7 +76,7 @@ namespace map {
             fill_t->retain();
             fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
-            fill_tris_cmd.init(0.0f, fill_t->getName(), state::scene->getGLProgramState(), blend_func, fill_tris, node->getNodeToWorldTransform(), 1);
+            fill_tris_cmd.init(0.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, node->getNodeToWorldTransform(), 1);
         }
 
         void Terrain::draw() {

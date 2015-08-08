@@ -18,7 +18,7 @@ namespace entities {
         base->setCameraMask((u_short)CameraFlag::USER1);
         base->setScale(.25f);
         base->retain();
-        state::scene->addChild(base, 1);
+        root::scene->addChild(base, 1);
 
         pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
             base->getContentSize().height * base->getScaleY()));

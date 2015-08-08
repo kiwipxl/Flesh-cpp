@@ -25,8 +25,8 @@ namespace input {
                 keys[(int)key_code] = false;
             }
         };
-
-        state::scene->getEventDispatcher()->addEventListenerWithFixedPriority(kb_event, 10);
+        
+        root::scene->getEventDispatcher()->addEventListenerWithFixedPriority(kb_event, 10);
     }
 
     bool key_down(EventKeyboard::KeyCode key_code) {

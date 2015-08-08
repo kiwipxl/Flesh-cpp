@@ -99,13 +99,13 @@ namespace debug {
                 }
                 if (action & ACTION_PRINT) {
                     if (action & ACTION_INFO) {
-                        cc::log(stream.str().c_str());
+                        cocos2d::log(stream.str().c_str());
                     }else if (action & ACTION_WARNING) {
-                        cc::log(stream.str().c_str());
+                        cocos2d::log(stream.str().c_str());
                     }else if (action & ACTION_ERROR) {
-                        cc::log(stream.str().c_str());
+                        cocos2d::log(stream.str().c_str());
                     }else if (action & ACTION_MID) {
-                        cc::log(stream.str().c_str());
+                        cocos2d::log(stream.str().c_str());
                     }
                 }
             }

@@ -4,26 +4,29 @@
 #include <2d/CCLayer.h>
 #include <2d/CCScene.h>
 
-namespace cc = cocos2d;
+namespace root {
 
-class SceneManager : public cc::Layer {
+    using namespace cocos2d;
 
-	public:
-		//auto-cleanup cocos macro
-		CREATE_FUNC(SceneManager);
+    class SceneManager : public Layer {
 
-        static cc::Scene* create_scene();
+        public:
+            //auto-cleanup cocos macro
+            CREATE_FUNC(SceneManager);
 
-        virtual bool init();
-        
-        virtual void menu_close(cc::Ref* r);
-		virtual void update(float dt);
+            static Scene* create_scene();
 
-        static cc::PhysicsWorld* p_world;
-        
-        float time_since_startup = 0;
-        cc::Size screen_size;
-        cc::Vec2 screen_origin;
+            virtual bool init();
+
+            virtual void menu_close(Ref* r);
+            virtual void update(float dt);
+
+            PhysicsWorld* p_world;
+
+            float time_since_startup = 0;
+            Size screen_size;
+            Vec2 screen_origin;
+    };
 };
 
 #endif

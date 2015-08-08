@@ -10,11 +10,11 @@ namespace map {
     using namespace cocos2d;
 
     MapCamera::MapCamera() {
-        state::scene->setCameraMask((u_short)CameraFlag::USER1, true);
+        root::scene->setCameraMask((u_short)CameraFlag::USER1, true);
 
-        cam_node = Camera::createPerspective(60, (float)state::scene->screen_size.width / state::scene->screen_size.height, 1.0, 1000);
+        cam_node = Camera::createPerspective(60, (float)root::scene->screen_size.width / root::scene->screen_size.height, 1.0, 1000);
         cam_node->setCameraFlag(CameraFlag::USER1);
-        state::scene->addChild(cam_node);
+        root::scene->addChild(cam_node);
     }
 
     void MapCamera::update() {
