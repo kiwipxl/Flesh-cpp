@@ -38,6 +38,9 @@
     <ClCompile Include="src\assets\Assets.cpp" />
     <ClCompile Include="src\map\MapCamera.cpp" />
     <ClCompile Include="src\assets\Maps.cpp" />
+    <ClCompile Include="src\states\Startup.cpp" />
+    <ClCompile Include="src\states\Login.cpp" />
+    <ClCompile Include="src\states\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -68,6 +71,10 @@
     <ClInclude Include="src\map\MapCamera.h" />
     <ClInclude Include="src\assets\Maps.h" />
     <ClInclude Include="src\network\Defines.h" />
+    <ClInclude Include="src\states\Startup.h" />
+    <ClInclude Include="src\states\Login.h" />
+    <ClInclude Include="src\states\Game.h" />
+    <ClInclude Include="src\states\Defines.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -77,7 +77,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(COCOS2DX_ROOT)\cocos\audio\include;$(COCOS2DX_ROOT)\external;$(COCOS2DX_ROOT)\external\chipmunk\include\chipmunk;$(COCOS2DX_ROOT)\cocos\editor-support;$(COCOS2DX_ROOT)\cocos;$(COCOS2DX_ROOT)\extensions;src\gui;src\network;src\map;src\input;src\entities;src\assets;src\debug;src;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(COCOS2DX_ROOT)\cocos\audio\include;$(COCOS2DX_ROOT)\external;$(COCOS2DX_ROOT)\external\chipmunk\include\chipmunk;$(COCOS2DX_ROOT)\cocos\editor-support;$(COCOS2DX_ROOT)\cocos;$(COCOS2DX_ROOT)\extensions;src\states;src\gui;src\network;src\map;src\input;src\entities;src\assets;src\debug;src;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -183,6 +183,9 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
     <ClCompile Include="src\map\Ferr2DSystem.cpp" />
+    <ClCompile Include="src\states\Game.cpp" />
+    <ClCompile Include="src\states\Login.cpp" />
+    <ClCompile Include="src\states\Startup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -213,6 +216,10 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\StateManager.h" />
     <ClInclude Include="src\map\Ferr2DSystem.h" />
+    <ClInclude Include="src\states\Defines.h" />
+    <ClInclude Include="src\states\Game.h" />
+    <ClInclude Include="src\states\Login.h" />
+    <ClInclude Include="src\states\Startup.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

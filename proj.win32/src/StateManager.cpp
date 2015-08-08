@@ -1,21 +1,16 @@
 #include "StateManager.h"
 
-#include <stdio.h>
-#include <2d/CCActionInterval.h>
 #include <renderer/CCGLProgram.h>
 #include <renderer/CCGLProgramCache.h>
 
 #include "assets/Assets.h"
 #include "debug/Errors.h"
 #include "debug/Logger.h"
-#include "entities/Unit.h"
-#include "gui/MessageBox.h"
 #include "input/SimpleInput.h"
 #include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
 #include "network/message/Message.h"
 #include "network/sockets/SocketManager.h"
-#include "network/Peers.h"
 
 #include "states/Game.h"
 #include "states/Login.h"
@@ -30,10 +25,6 @@ namespace root {
     State s = STATE_SERVER_CONNECT_SCREEN;
     Label* info_label;
     float time_since_startup = 0;
-    Sprite* spinner_sprite;
-
-    map::ferr2d::Terrain* terrain;
-    map::MapCamera* camera;
 
     void create_state(State);
     void remove_state(State);

@@ -1,5 +1,10 @@
 #include "states/Game.h"
 
+#include "assets/Assets.h"
+#include "entities/Unit.h"
+#include "map/Ferr2DSystem.h"
+#include "map/MapCamera.h"
+
 #include "StateManager.h"
 
 BEGIN_STATES_NS
@@ -7,6 +12,12 @@ BEGIN_STATES_NS
 namespace game {
 
     using namespace root;
+
+    //private
+    map::ferr2d::Terrain* terrain;
+    map::MapCamera* camera;
+
+    //public externs
 
     void create_state(State state) {
         switch (state) {

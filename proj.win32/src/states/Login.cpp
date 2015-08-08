@@ -1,5 +1,8 @@
 #include "states/Login.h"
 
+#include "assets/Assets.h"
+#include "gui/MessageBox.h"
+
 #include "StateManager.h"
 
 BEGIN_STATES_NS

@@ -1,5 +1,13 @@
 #include "states/Startup.h"
 
+#include <2d/CCSprite.h>
+#include <2d/CCActionInterval.h>
+#include <renderer/CCGLProgram.h>
+#include <renderer/CCGLProgramCache.h>
+
+#include "assets/Assets.h"
+#include "network/sockets/SocketManager.h"
+
 #include "StateManager.h"
 
 BEGIN_STATES_NS
@@ -7,6 +15,12 @@ BEGIN_STATES_NS
 namespace startup {
 
     using namespace root;
+    using namespace cocos2d;
+
+    //private
+    Sprite* spinner_sprite;
+
+    //public externs
 
     void create_state(State state) {
         switch (state) {
