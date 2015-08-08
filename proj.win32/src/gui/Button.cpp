@@ -7,16 +7,17 @@ namespace gui {
 
     using namespace cocos2d;
 
-    Button::Button(std::string text, int x, int y, int width, int height) {
-        create(text, x, y, width, height);
+    Button::Button(std::string text, int x, int y, int width, int height, ButtonClickCallback on_click) {
+        create(text, x, y, width, height, on_click);
     }
 
-    void Button::create(std::string text, int x, int y, int width, int height) {
+    void Button::create(std::string text, int x, int y, int width, int height, ButtonClickCallback on_click) {
         button = ui::Button::create("Button_Disable.png");
         button->setTitleText(text);
         button->setPosition(Vec2(x, y));
         button->setContentSize(Size(width, height));
         button->ignoreContentAdaptWithSize(false);
+        if (on_click != nullptr) button->addClickEventListener(on_click);
     }
 
     void Button::add_to_scene() {

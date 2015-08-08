@@ -7,6 +7,7 @@ note: only one message box can be opened at a time, however a class is used in c
 */
 
 #include <memory>
+#include <functional>
 
 #include <ui/UIText.h>
 #include <ui/UIImageView.h>
@@ -31,8 +32,8 @@ namespace gui {
             std::vector<Button*> buttons;
 
             void add_button(Button& button);
-            void add_button(std::string button_text, int x, int y);
-            void stack_button(std::string button_text);
+            void add_button(std::string button_text, int x, int y, ButtonClickCallback on_click = nullptr);
+            void stack_button(std::string button_text, ButtonClickCallback on_click = nullptr);
     };
 
     typedef std::shared_ptr<MessageBox> MessageBoxPtr;

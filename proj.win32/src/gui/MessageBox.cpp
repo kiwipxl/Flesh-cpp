@@ -39,16 +39,16 @@ namespace gui {
         buttons.push_back(&button);
     }
 
-    void MessageBox::add_button(std::string button_text, int x, int y) {
-        Button* button = new Button(button_text, x, y);
+    void MessageBox::add_button(std::string button_text, int x, int y, ButtonClickCallback on_click) {
+        Button* button = new Button(button_text, x, y, 34, 34, on_click);
         container->addChild(button->button);
         buttons.push_back(button);
     }
 
-    void MessageBox::stack_button(std::string button_text) {
+    void MessageBox::stack_button(std::string button_text, ButtonClickCallback on_click) {
         int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 55) - (buttons.size() * 85);
         int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
-        Button* button = new Button(button_text, x, y, 70, 34);
+        Button* button = new Button(button_text, x, y, 70, 34, on_click);
         container->addChild(button->button);
         buttons.push_back(button);
     }
