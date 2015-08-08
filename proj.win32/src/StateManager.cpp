@@ -106,7 +106,7 @@ namespace root {
     void update_state(float dt) {
         time_since_startup += dt;
 
-        if (input::key_down(EventKeyboard::KeyCode::KEY_T)) {
+        if (input::key_pressed(EventKeyboard::KeyCode::KEY_T)) {
             switch_state(STATE_GAME);
         }
         
@@ -142,5 +142,6 @@ namespace root {
                 }*/
                 break;
         }
+        input::update_keyboard();
     }
 };
