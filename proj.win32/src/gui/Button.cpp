@@ -11,6 +11,10 @@ namespace gui {
         create(text, x, y, width, height, on_click);
     }
 
+    Button::Button(std::string text, int x, int y, ButtonClickCallback on_click) {
+        create(text, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, on_click);
+    }
+
     void Button::create(std::string text, int x, int y, int width, int height, ButtonClickCallback on_click) {
         button = ui::Button::create("Button_Disable.png");
         button->setTitleText(text);

@@ -53,10 +53,14 @@ namespace gui {
         buttons.push_back(button);
     }
 
+    void MessageBox::close() {
+        close_message_box();
+    }
+
     //-- end MessageBox definition --
 
     MessageBoxPtr show_message_box(std::string title, std::string message) {
-        hide_message_box();
+        close_message_box();
 
         MessageBoxPtr ptr(new MessageBox(title, message));
         current_message_box = ptr;
@@ -64,7 +68,22 @@ namespace gui {
         return ptr;
     }
 
-    void hide_message_box() {
+    MessageBoxPtr show_message_box(std::string title, std::string message, std::string button_title, ButtonClickCallback on_click) {
+        close_message_box();
+
+        MessageBoxPtr ptr(new MessageBox(title, message));
+        current_message_box = ptr;
+
+        ptr->stack_button(button_title, on_click);
+
+        return ptr;
+    }
+
+    void close_message_box() {
         if (current_message_box != nullptr) current_message_box = nullptr;
+    }
+    
+    void close_message_box_callback(Ref* r) {
+        close_message_box();
     }
 };

@@ -10,6 +10,9 @@ class to create gui buttons more easier with extra functionality
 
 #include <ui/UIButton.h>
 
+#define DEFAULT_BUTTON_WIDTH 50
+#define DEFAULT_BUTTON_HEIGHT 34
+
 namespace gui {
 
     namespace cc = cocos2d;
@@ -20,12 +23,13 @@ namespace gui {
 
         public:
             ~Button();
-            Button(std::string text, int x, int y, int width = 34, int height = 34, 
+            Button(std::string text, int x, int y, int width = DEFAULT_BUTTON_WIDTH, int height = DEFAULT_BUTTON_HEIGHT, 
                    ButtonClickCallback on_click = nullptr);
+            Button(std::string text, int x, int y, ButtonClickCallback on_click = nullptr);
 
             cc::ui::Button* button;
 
-            void create(std::string text, int x, int y, int width = 34, int height = 34, 
+            void create(std::string text, int x, int y, int width, int height, 
                         ButtonClickCallback on_click = nullptr);
             void add_to_scene();
     };

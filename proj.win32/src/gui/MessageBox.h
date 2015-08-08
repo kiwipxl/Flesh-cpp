@@ -18,6 +18,8 @@ namespace gui {
 
     namespace cc = cocos2d;
 
+    extern void close_message_box_callback(cc::Ref* r);
+
     class MessageBox {
 
         public:
@@ -32,8 +34,10 @@ namespace gui {
             std::vector<Button*> buttons;
 
             void add_button(Button& button);
-            void add_button(std::string button_text, int x, int y, ButtonClickCallback on_click = nullptr);
-            void stack_button(std::string button_text, ButtonClickCallback on_click = nullptr);
+            void add_button(std::string button_text, int x, int y, ButtonClickCallback on_click = close_message_box_callback);
+            void stack_button(std::string button_text, ButtonClickCallback on_click = close_message_box_callback);
+
+            void close();
     };
 
     typedef std::shared_ptr<MessageBox> MessageBoxPtr;
@@ -41,7 +45,10 @@ namespace gui {
     extern MessageBoxPtr current_message_box;
 
     extern MessageBoxPtr show_message_box(std::string title, std::string message);
-    extern void hide_message_box();
+    extern MessageBoxPtr show_message_box(std::string title, std::string message, std::string button_title, 
+                                          ButtonClickCallback on_click = close_message_box_callback);
+
+    extern void close_message_box();
 };
 
 #endif
