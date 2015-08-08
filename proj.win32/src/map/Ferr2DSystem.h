@@ -10,15 +10,6 @@
 #include <renderer/CCTrianglesCommand.h>
 #include <2d/CCDrawNode.h>
 
-#define FERR2D_LOAD_ERROR_UNKNOWN_FILE 20000
-#define FERR2D_LOAD_ERROR_VERTEX_DATA_MISSING 20001
-#define FERR2D_LOAD_ERROR_INDICES_MISSING 20002
-#define FERR2D_LOAD_ERROR_UV_DATA_MISSING 20003
-#define FERR2D_LOAD_ERROR_COLLIDER_POINTS_MISSING 20004
-#define FERR2D_LOAD_ERROR_ATTRIB_EDGE_INDICES_MISSING 20005
-#define FERR2D_LOAD_ERROR_ATTRIB_FILL_INDICES_MISSING 20006
-#define FERR2D_LOAD_ERROR_FILE_LEN_LZERO 20007
-
 namespace map {
 
     namespace ferr2d {
@@ -72,8 +63,7 @@ namespace map {
         };
 
 	    extern TerrainData* load(std::string file_name);
-	    extern void print_load_error(int err);
-
+        extern void print_load_error(std::string err_message, std::string file_name);
     };
 };
 

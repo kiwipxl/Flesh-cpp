@@ -87,8 +87,22 @@ namespace map {
 
         //-- end terrain class --
 
-        void print_load_error(int err) {
-            log_error << "ferr2d load error occurred: " << err;
+        void print_load_error(std::string err_message, std::string file_name) {
+            f_assert(sstream << "ferr2d load error occurred: " << err_message << " (" << file_name << ")");
+        }
+
+        bool split_tokens(std::string& data, std::vector<std::string>& tokens, std::string attrib_name) {
+            int index = -1;
+            int nl_index = -1;
+            int co_index = -1;
+            if ((index = data.find(attrib_name)) != -1 && 
+                (nl_index = data.substr(index).find('\n')) != -1 && 
+                (co_index = (data.substr(index).find(':') + 1)) != -1) {
+                tokens = split(data.substr(index + co_index, nl_index - co_index), ',');
+                return true;
+            }
+            tokens.clear();
+            return false;
         }
 
         TerrainData* load(std::string file_name) {
@@ -101,23 +115,19 @@ namespace map {
                 int file_len = ftell(f);
                 rewind(f);
 
-                if (file_len <= 0) { print_load_error(FERR2D_LOAD_ERROR_FILE_LEN_LZERO); return NULL; }
+                if (file_len <= 0) { print_load_error("file length cannot be less than 0", file_name); return NULL; }
                 char* temp = new char[file_len];
                 fread(temp, 1, file_len, f);
 
                 ter->debug_draw_node = DrawNode::create();
 
                 std::string data = temp;
-                int index = -1;
-                int nl_index = -1;
-                int co_index = -1;
-		        if ((index = data.find("vertex_data:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
-			        std::vector<std::string> v_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
-
-			        for (int n = 0; n < v_strs.size(); n += 2) {
+                std::vector<std::string> tokens;
+		        if (split_tokens(data, tokens, "vertex_data2:")) {
+			        for (int n = 0; n < tokens.size(); n += 2) {
                         V3F_C4B_T2F v;
-				        v.vertices.x = std::stof(v_strs[n]) * 40.0f;
-				        v.vertices.y = std::stof(v_strs[n + 1]) * 40.0f;
+				        v.vertices.x = std::stof(tokens[n]) * 40.0f;
+				        v.vertices.y = std::stof(tokens[n + 1]) * 40.0f;
 				        v.colors = Color4B(255, 255, 255, 255);
 				        ter->points.push_back(v);
 
@@ -128,14 +138,12 @@ namespace map {
 			        }
 		        }else {
 			        delete[] temp;
-			        print_load_error(FERR2D_LOAD_ERROR_VERTEX_DATA_MISSING);
+			        print_load_error("vertex_data attribute missing", file_name);
 			        return NULL;
                 }
-                if ((index = data.find("indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
-                    std::vector<std::string> i_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
-
-                    for (int n = 0; n < i_strs.size(); ++n) {
-                        ter->indices.push_back(std::stof(i_strs[n]));
+                if (split_tokens(data, tokens, "indices:")) {
+                    for (int n = 0; n < tokens.size(); ++n) {
+                        ter->indices.push_back(std::stof(tokens[n]));
 
                         if (n >= 1) {
                             if (n % 3 == 0) {
@@ -147,29 +155,25 @@ namespace map {
                     }
 		        }else {
 			        delete[] temp;
-			        print_load_error(FERR2D_LOAD_ERROR_INDICES_MISSING);
+			        print_load_error("indices attribute missing", file_name);
 			        return NULL;
                 }
-                if ((index = data.find("uvs:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
-                    std::vector<std::string> uv_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
-
-                    for (int n = 0; n < uv_strs.size(); n += 2) {
+                if (split_tokens(data, tokens, "uvs:")) {
+                    for (int n = 0; n < tokens.size(); n += 2) {
 				        V3F_C4B_T2F& v = ter->points[n / 2];
-                        v.texCoords.u = std::stof(uv_strs[n]);
-                        v.texCoords.v = 1 - std::stof(uv_strs[n + 1]);
+                        v.texCoords.u = std::stof(tokens[n]);
+                        v.texCoords.v = 1 - std::stof(tokens[n + 1]);
                     }
 		        }else {
 			        delete[] temp;
-			        print_load_error(FERR2D_LOAD_ERROR_UV_DATA_MISSING);
+			        print_load_error("uvs attribute missing", file_name);
 			        return NULL;
                 }
-                if ((index = data.find("collider_points:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
-                    std::vector<std::string> c_strs = split(data.substr(index + co_index, nl_index - co_index), ',');
-
-                    for (int n = 0; n < c_strs.size(); n += 2) {
+                if (split_tokens(data, tokens, "collider_points:")) {
+                    for (int n = 0; n < tokens.size(); n += 2) {
                         Vec2 v;
-                        v.x = std::stof(c_strs[n]) * 40.0f;
-                        v.y = std::stof(c_strs[n + 1]) * 40.0f;
+                        v.x = std::stof(tokens[n]) * 40.0f;
+                        v.y = std::stof(tokens[n + 1]) * 40.0f;
 				        ter->collider_points.push_back(v);
 
                         if (n >= 1) {
@@ -178,31 +182,29 @@ namespace map {
                     }
 		        }else {
 			        delete[] temp;
-			        print_load_error(FERR2D_LOAD_ERROR_COLLIDER_POINTS_MISSING);
+			        print_load_error("colider_points attribute missing", file_name);
 			        return NULL;
                 }
-                if ((index = data.find("edge_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
-                    std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
-                    if (attribs.size() >= 2) {
-				        ter->set_edge_index_attrib(std::stof(attribs[0]), std::stof(attribs[1]));
+                if (split_tokens(data, tokens, "edge_indices:")) {
+                    if (tokens.size() >= 2) {
+				        ter->set_edge_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
                     }
 		        }else {
-			        print_load_error(FERR2D_LOAD_ERROR_ATTRIB_EDGE_INDICES_MISSING);
+			        print_load_error("edge_indices attribute missing", file_name);
 			        return NULL;
                 }
-                if ((index = data.find("fill_indices:")) != -1 && (nl_index = data.substr(index).find('\n')) != -1 && (co_index = (data.substr(index).find(':') + 1)) != -1) {
-                    std::vector<std::string> attribs = split(data.substr(index + co_index, nl_index - co_index), '-');
-                    if (attribs.size() >= 2) {
-				        ter->set_fill_index_attrib(std::stof(attribs[0]), std::stof(attribs[1]));
+                if (split_tokens(data, tokens, "fill_indices:")) {
+                    if (tokens.size() >= 2) {
+				        ter->set_fill_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
                     }
 		        }else {
 			        delete[] temp;
-			        print_load_error(FERR2D_LOAD_ERROR_ATTRIB_FILL_INDICES_MISSING);
+			        print_load_error("fill_indices attribute missing", file_name);
 			        return NULL;
                 }
 		        delete[] temp;
 	        }else {
-		        print_load_error(FERR2D_LOAD_ERROR_UNKNOWN_FILE);
+		        print_load_error("file could not be found", file_name);
             }
 
             fclose(f);
