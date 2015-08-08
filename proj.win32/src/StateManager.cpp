@@ -53,22 +53,16 @@ namespace root {
 
     void create_state(State c_state) {
         s = c_state;
-        states::startup::create_state(c_state);
-        states::login::create_state(c_state);
-        states::game::create_state(c_state);
+        states::startup::create_state(s);
+        states::login::create_state(s);
+        states::game::create_state(s);
     }
 
     void remove_state(State r_state) {
         s = r_state;
-        switch (s) {
-            case STATE_SERVER_CONNECT_SCREEN:
-                scene->removeChild(info_label);
-                scene->removeChild(spinner_sprite);
-                break;
-            case STATE_LOGIN_REGISTER_SCREEN:
-                assets::csb::login_page->removeAllChildren();
-                break;
-        }
+        states::startup::remove_state(s);
+        states::login::remove_state(s);
+        states::game::remove_state(s);
     }
 
     void switch_state(State new_state) {
@@ -82,39 +76,12 @@ namespace root {
         if (input::key_pressed(EventKeyboard::KeyCode::KEY_T)) {
             switch_state(STATE_GAME);
         }
-        
+
+        states::startup::update_state(s);
+        states::login::update_state(s);
+        states::game::update_state(s);
+
         network::sock::update();
-        switch (s) {
-            case STATE_SERVER_CONNECT_SCREEN:
-                info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
-
-                if (network::sock::connection_finished) {
-                    if (network::sock::connection_err == NO_ERROR) {
-                        switch_state(STATE_LOGIN_REGISTER_SCREEN);
-                    }else {
-                        scene->removeChild(spinner_sprite);
-                        info_label->setString("an error occurred while trying to connect: " + 
-                                                ((network::sock::connection_err_msg == "")
-                                                ? SSTR(network::sock::connection_err)
-                                                : network::sock::connection_err_msg + "(" + SSTR(network::sock::connection_err) + ")"));
-                    }
-                }else {
-                    info_label->setString("connecting to server...");
-                }
-                break;
-            case STATE_GAME:
-                entities::update_units();
-                entities::test_player->update();
-                camera->update();
-                terrain->draw();
-
-                /*for (int n = 0; n < peers::peer_list.size(); ++n) {
-                    msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<
-                        (int)entities::test_player->base->getPositionX() << (int)entities::test_player->base->getPositionY() << 
-                        (float)entities::test_player->base->getRotation());
-                }*/
-                break;
-        }
         input::update_keyboard();
     }
 };

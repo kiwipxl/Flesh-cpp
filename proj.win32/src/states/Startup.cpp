@@ -6,49 +6,61 @@ BEGIN_STATES_NS
 
 namespace startup {
 
-    void create_state(State c_state) {
-        switch (s) {
-        case STATE_SERVER_CONNECT_SCREEN:
-            info_label = Label::createWithBMFont("fonts/lucida.fnt", "connecting...");
-            info_label->setDimensions(scene->screen_size.width - 40, 400);
-            info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
-            scene->addChild(info_label, 1);
+    using namespace root;
 
-            scene->scheduleUpdate();
+    void create_state(State state) {
+        switch (state) {
+            case STATE_SERVER_CONNECT_SCREEN:
+                info_label = Label::createWithBMFont("fonts/lucida.fnt", "connecting...");
+                info_label->setDimensions(scene->screen_size.width - 40, 400);
+                info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
+                scene->addChild(info_label, 1);
 
-            {
-                auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::animations::spinner_frames, .05f, UINT32_MAX));
-                spinner_sprite = Sprite::create();
-                spinner_sprite->runAction(spinner_animation);
-                spinner_sprite->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 45);
-                scene->addChild(spinner_sprite, 1);
-            }
+                scene->scheduleUpdate();
 
-            network::sock::setup_tcp_sock();
-            break;
-        case STATE_LOGIN_REGISTER_SCREEN:
-            scene->addChild(assets::csb::login_page);
+                {
+                    auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::animations::spinner_frames, .05f, UINT32_MAX));
+                    spinner_sprite = Sprite::create();
+                    spinner_sprite->runAction(spinner_animation);
+                    spinner_sprite->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 45);
+                    scene->addChild(spinner_sprite, 1);
+                }
 
-            {
-                auto mb = gui::show_message_box("please wait...", "logging in...", "cancel");
-                mb->add_spinner();
-            }
-            break;
-        case STATE_GAME:
-            entities::test_player = new entities::Unit();
-            entities::test_player->player_input = true;
-            camera = new map::MapCamera();
-            terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
-            break;
+                network::sock::setup_tcp_sock();
+                break;
         }
     }
 
-    void remove_state(State c_state) {
-
+    void remove_state(State state) {
+        switch (state) {
+            case STATE_SERVER_CONNECT_SCREEN:
+                scene->removeChild(info_label);
+                scene->removeChild(spinner_sprite);
+                break;
+        }
     }
 
-    void update_state(State c_state) {
+    void update_state(State state) {
+        network::sock::update();
+        switch (state) {
+            case STATE_SERVER_CONNECT_SCREEN:
+                info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
 
+                if (network::sock::connection_finished) {
+                    if (network::sock::connection_err == NO_ERROR) {
+                        switch_state(STATE_LOGIN_REGISTER_SCREEN);
+                    }else {
+                        scene->removeChild(spinner_sprite);
+                        info_label->setString("an error occurred while trying to connect: " + 
+                                                ((network::sock::connection_err_msg == "")
+                                                ? SSTR(network::sock::connection_err)
+                                                : network::sock::connection_err_msg + "(" + SSTR(network::sock::connection_err) + ")"));
+                    }
+                }else {
+                    info_label->setString("connecting to server...");
+                }
+                break;
+        }
     }
 };
 

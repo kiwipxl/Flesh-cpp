@@ -3,15 +3,18 @@
 
 #include "states/Defines.h"
 
-BEGIN_STATES_NS
+namespace root {
 
-enum State;
+    enum State;
+};
+
+BEGIN_STATES_NS
 
 namespace startup {
 
-    extern void create_state(State c_state);
-    extern void remove_state(State c_state);
-    extern void update_state(State c_state);
+    extern void create_state(root::State);
+    extern void remove_state(root::State);
+    extern void update_state(root::State);
 };
 
 END_STATES_NS
