@@ -1,7 +1,6 @@
 #include "StateManager.h"
 
 #include <stdio.h>
-#include <ui/CocosGUI.h>
 #include <2d/CCActionInterval.h>
 #include <renderer/CCGLProgram.h>
 #include <renderer/CCGLProgramCache.h>
@@ -72,18 +71,7 @@ namespace root {
                 scene->addChild(assets::csb::login_page);
 
                 {
-                    ui::ImageView* frame = (ui::ImageView*)assets::csb::message_box->getChildByName("frame_image");
-
-                    ui::Text* message_text = (ui::Text*)assets::csb::message_box->getChildByName("message_text");
-                    message_text->ignoreContentAdaptWithSize(false);
-                    message_text->setTextAreaSize(Size(frame->getContentSize().width - 40, 120));
-                    message_text->setPositionY(message_text->getPositionY() - 90);
-
-                    ui::Text* message_title = (ui::Text*)assets::csb::message_box->getChildByName("title_text");
-                    message_title->ignoreContentAdaptWithSize(false);
-                    message_title->setTextAreaSize(Size(frame->getContentSize().width - 40, message_title->getContentSize().height));
                 }
-                scene->addChild(assets::csb::message_box);
                 break;
             case STATE_GAME:
                 entities::test_player = new entities::Unit();

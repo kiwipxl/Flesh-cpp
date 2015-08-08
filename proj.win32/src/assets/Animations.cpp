@@ -10,6 +10,8 @@ namespace assets {
 
         using namespace cocos2d;
 
+        void load_ani_frames(std::string, Vector<SpriteFrame*>&, Rect);
+
         Vector<SpriteFrame*> spinner_frames;
 
         void init() {
