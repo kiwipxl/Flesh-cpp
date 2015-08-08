@@ -1,8 +1,10 @@
 #include "StateManager.h"
 
 #include <stdio.h>
-#include <cocostudio/CocoStudio.h>
 #include <ui/CocosGUI.h>
+#include <2d/CCActionInterval.h>
+#include <renderer/CCGLProgram.h>
+#include <renderer/CCGLProgramCache.h>
 
 #include "assets/Assets.h"
 #include "debug/Errors.h"
@@ -23,8 +25,6 @@ namespace root {
     Label* info_label;
     float time_since_startup = 0;
     Sprite* spinner_sprite;
-    Node* login_page;
-    Node* message_box;
 
     map::ferr2d::Terrain* terrain;
     map::MapCamera* camera;
@@ -35,7 +35,7 @@ namespace root {
 
     void init_root(SceneManager* scene_ref) {
         scene = scene_ref;
-        scene->setGLProgram(ShaderCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        scene->setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         debug::init_logger();
         assets::init();
@@ -67,23 +67,21 @@ namespace root {
                 sock::setup_tcp_sock();
                 break;
             case STATE_LOGIN_REGISTER_SCREEN:
-                login_page = CSLoader::createNode("Scene.csb");
-                scene->addChild(login_page);
-            
-                message_box = CSLoader::createNode("message_box.csb");
-                {
-                    ui::ImageView* frame = (ui::ImageView*)message_box->getChildByName("frame_image");
+                scene->addChild(assets::csb::login_page);
 
-                    ui::Text* message_text = (ui::Text*)message_box->getChildByName("message_text");
+                {
+                    ui::ImageView* frame = (ui::ImageView*)assets::csb::message_box->getChildByName("frame_image");
+
+                    ui::Text* message_text = (ui::Text*)assets::csb::message_box->getChildByName("message_text");
                     message_text->ignoreContentAdaptWithSize(false);
                     message_text->setTextAreaSize(Size(frame->getContentSize().width - 40, 120));
                     message_text->setPositionY(message_text->getPositionY() - 90);
 
-                    ui::Text* message_title = (ui::Text*)message_box->getChildByName("title_text");
+                    ui::Text* message_title = (ui::Text*)assets::csb::message_box->getChildByName("title_text");
                     message_title->ignoreContentAdaptWithSize(false);
                     message_title->setTextAreaSize(Size(frame->getContentSize().width - 40, message_title->getContentSize().height));
                 }
-                scene->addChild(message_box);
+                scene->addChild(assets::csb::message_box);
                 break;
             case STATE_GAME:
                 entities::test_player = new entities::Unit();
@@ -102,7 +100,7 @@ namespace root {
                 scene->removeChild(spinner_sprite);
                 break;
             case STATE_LOGIN_REGISTER_SCREEN:
-                login_page->removeAllChildren();
+                assets::csb::login_page->removeAllChildren();
                 break;
         }
     }
