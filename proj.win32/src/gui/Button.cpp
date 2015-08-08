@@ -12,7 +12,7 @@ namespace gui {
     }
 
     void Button::create(std::string text, int x, int y) {
-        button = ui::Button::create();
+        button = ui::Button::create("Button_Disable.png");
         button->setTitleText(text);
         button->setPosition(Vec2(x, y));
     }

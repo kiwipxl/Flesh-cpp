@@ -7,7 +7,7 @@ namespace gui {
 
     using namespace cocos2d;
 
-    MessageBoxPtr current_message_box;
+    MessageBoxPtr current_message_box = nullptr;
 
     //-- begin MessageBox definition --
 
@@ -35,16 +35,22 @@ namespace gui {
     }
 
     void MessageBox::add_button(Button& button) {
-
+        container->addChild(button.button);
+        buttons.push_back(&button);
     }
 
     void MessageBox::add_button(std::string button_text, int x, int y) {
-        ButtonPtr button(new Button(button_text, x, y));
+        Button* button = new Button(button_text, x, y);
         container->addChild(button->button);
+        buttons.push_back(button);
     }
 
-    void stack_button(std::string button_text) {
-
+    void MessageBox::stack_button(std::string button_text) {
+        int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 40) - (buttons.size() * 70);
+        int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
+        Button* button = new Button(button_text, x, y, 100, 40);
+        container->addChild(button->button);
+        buttons.push_back(button);
     }
 
     //-- end MessageBox definition --
@@ -59,6 +65,6 @@ namespace gui {
     }
 
     void hide_message_box() {
-        if (current_message_box) current_message_box = NULL;
+        if (current_message_box != nullptr) current_message_box = nullptr;
     }
 };

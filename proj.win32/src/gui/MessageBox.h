@@ -28,6 +28,8 @@ namespace gui {
             cc::ui::Text* message_text;
             cc::ui::Text* message_title;
 
+            std::vector<Button*> buttons;
+
             void add_button(Button& button);
             void add_button(std::string button_text, int x, int y);
             void stack_button(std::string button_text);
