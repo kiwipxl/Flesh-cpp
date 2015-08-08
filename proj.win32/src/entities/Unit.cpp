@@ -8,6 +8,8 @@
 
 namespace entities {
 
+    using namespace cocos2d;
+
     Unit* test_player;
 
     std::vector<Unit*> units;

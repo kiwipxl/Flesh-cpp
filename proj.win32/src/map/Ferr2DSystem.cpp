@@ -30,6 +30,8 @@ namespace map {
 
     namespace ferr2d {
 
+        using namespace cocos2d;
+
         //-- begin terrain class --
 
         Terrain::Terrain(TerrainData& t_data) {

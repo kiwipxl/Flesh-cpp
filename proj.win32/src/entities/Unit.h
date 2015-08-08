@@ -8,13 +8,13 @@
 
 namespace entities {
 
-    using namespace cocos2d;
+    namespace cc = cocos2d;
 
     class Unit {
 
         public:
-            Sprite* base;
-            PhysicsBody* pbody;
+            cc::Sprite* base;
+            cc::PhysicsBody* pbody;
             bool player_input = false;
             network::peers::Peer* peer;
 

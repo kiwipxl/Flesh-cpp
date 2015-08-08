@@ -7,12 +7,12 @@ namespace assets {
 
     namespace animations {
 
-        using namespace cocos2d;
+        namespace cc = cocos2d;
 
-        extern Vector<SpriteFrame*> spinner_frames;
+        extern cc::Vector<cc::SpriteFrame*> spinner_frames;
 
         extern void init();
-        void load_ani_frames(std::string file_name, Vector<SpriteFrame*>& frames, Rect rect);
+        void load_ani_frames(std::string file_name, cc::Vector<cc::SpriteFrame*>& frames, cc::Rect rect);
     };
 };
 

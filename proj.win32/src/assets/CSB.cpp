@@ -8,6 +8,8 @@ namespace assets {
 
     namespace csb {
 
+        using namespace cocos2d;
+
         Node* login_page;
         Node* message_box;
 

@@ -8,6 +8,8 @@
 
 namespace root {
 
+    namespace cc = cocos2d;
+
     enum State {
         
         STATE_SERVER_CONNECT_SCREEN,  
@@ -18,7 +20,7 @@ namespace root {
     extern SceneManager* scene;
 
     extern State s;
-    extern Label* info_label;
+    extern cc::Label* info_label;
     extern float time_since_startup;
 
     extern void init_root(SceneManager* scene_ref);

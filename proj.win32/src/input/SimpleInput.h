@@ -5,14 +5,14 @@
 
 namespace input {
 
-    using namespace cocos2d;
+    namespace cc = cocos2d;
 
     extern const int last_key_code;
     extern bool keys[];
-    extern EventListenerKeyboard* kb_event;
+    extern cc::EventListenerKeyboard* kb_event;
 
     extern void init();
-    extern bool key_down(EventKeyboard::KeyCode key_code);
+    extern bool key_down(cc::EventKeyboard::KeyCode key_code);
 }
 
 #endif

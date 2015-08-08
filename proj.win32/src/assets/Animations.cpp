@@ -8,6 +8,8 @@ namespace assets {
 
     namespace animations {
 
+        using namespace cocos2d;
+
         Vector<SpriteFrame*> spinner_frames;
 
         void init() {

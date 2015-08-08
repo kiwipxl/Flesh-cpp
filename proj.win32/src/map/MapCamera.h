@@ -5,14 +5,14 @@
 
 namespace map {
 
-    using namespace cocos2d;
+    namespace cc = cocos2d;
 
     class MapCamera {
 
         public:
             MapCamera();
 
-            Camera* cam_node;
+            cc::Camera* cam_node;
 
             void update();
     };

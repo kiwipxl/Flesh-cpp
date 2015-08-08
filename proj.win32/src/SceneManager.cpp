@@ -6,6 +6,8 @@
 
 namespace root {
 
+    using namespace cocos2d;
+
     Scene* SceneManager::create_scene() {
         auto scene = Scene::createWithPhysics();
         auto layer = new SceneManager();

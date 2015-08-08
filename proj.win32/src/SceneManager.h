@@ -6,23 +6,23 @@
 
 namespace root {
 
-    using namespace cocos2d;
+    namespace cc = cocos2d;
 
-    class SceneManager : public Layer {
+    class SceneManager : public cc::Layer {
 
         public:
-            static Scene* create_scene();
+            static cc::Scene* create_scene();
 
             virtual bool init();
 
             virtual void menu_close(Ref* r);
             virtual void update(float dt);
 
-            PhysicsWorld* p_world;
+            cc::PhysicsWorld* p_world;
 
             float time_since_startup = 0;
-            Size screen_size;
-            Vec2 screen_origin;
+            cc::Size screen_size;
+            cc::Vec2 screen_origin;
     };
 };
 

@@ -7,6 +7,8 @@
 
 namespace input {
 
+    using namespace cocos2d;
+
     const int last_key_code = (int)EventKeyboard::KeyCode::KEY_ENTER;
     bool keys[last_key_code];
     EventListenerKeyboard* kb_event;

@@ -7,10 +7,10 @@ namespace assets {
 
     namespace csb {
 
-        using namespace cocos2d;
+        namespace cc = cocos2d;
 
-        extern Node* login_page;
-        extern Node* message_box;
+        extern cc::Node* login_page;
+        extern cc::Node* message_box;
 
         extern void init();
     };

@@ -10,23 +10,23 @@
 #include <renderer/CCTrianglesCommand.h>
 #include <2d/CCDrawNode.h>
 
+namespace cc = cocos2d;
+
 namespace map {
 
     namespace ferr2d {
-
-        using namespace cocos2d;
 
         class TerrainData {
 
 		    public:
                 //geometry
-			    std::vector<V3F_C4B_T2F> points;
-			    std::vector<Vec2> collider_points;
+			    std::vector<cc::V3F_C4B_T2F> points;
+			    std::vector<cc::Vec2> collider_points;
                 std::vector<u_short> indices;
 
                 //debug
-                DrawNode* debug_draw_node;
-			    std::vector<Vec2> debug_points;
+                cc::DrawNode* debug_draw_node;
+			    std::vector<cc::Vec2> debug_points;
 
 			    int edge_indices_start;
 			    int edge_indices_end;
@@ -49,17 +49,17 @@ namespace map {
 		    public:
                 Terrain(TerrainData& t_data);
 
-                Node* node;
-                PhysicsBody* pbody;
+                cc::Node* node;
+                cc::PhysicsBody* pbody;
                 TerrainData* terrain_data;
 
                 void draw();
 
             private:
-                TrianglesCommand edge_tris_cmd;
-                TrianglesCommand::Triangles edge_tris;
-                TrianglesCommand fill_tris_cmd;
-                TrianglesCommand::Triangles fill_tris;
+                cc::TrianglesCommand edge_tris_cmd;
+                cc::TrianglesCommand::Triangles edge_tris;
+                cc::TrianglesCommand fill_tris_cmd;
+                cc::TrianglesCommand::Triangles fill_tris;
         };
 
 	    extern TerrainData* load(std::string file_name);

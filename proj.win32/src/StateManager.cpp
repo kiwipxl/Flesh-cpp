@@ -19,6 +19,8 @@
 
 namespace root {
 
+    using namespace cocos2d;
+
     SceneManager* scene;
 
     State s = STATE_SERVER_CONNECT_SCREEN;
