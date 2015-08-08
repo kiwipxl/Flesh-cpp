@@ -74,6 +74,8 @@ namespace root {
                 {
                     auto mb = gui::show_message_box("title text here", "message here");
                     mb->stack_button("test");
+                    mb->stack_button("test2");
+                    mb->stack_button("ayy");
                 }
                 break;
             case STATE_GAME:

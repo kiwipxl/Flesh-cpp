@@ -46,9 +46,9 @@ namespace gui {
     }
 
     void MessageBox::stack_button(std::string button_text) {
-        int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 40) - (buttons.size() * 70);
+        int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 55) - (buttons.size() * 85);
         int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
-        Button* button = new Button(button_text, x, y, 100, 40);
+        Button* button = new Button(button_text, x, y, 70, 34);
         container->addChild(button->button);
         buttons.push_back(button);
     }

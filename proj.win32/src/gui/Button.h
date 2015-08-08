@@ -12,13 +12,12 @@ namespace gui {
     class Button {
 
         public:
-            Button() { }
             ~Button();
-            Button(std::string text, int x, int y);
+            Button(std::string text, int x, int y, int width = 34, int height = 34);
 
             cc::ui::Button* button;
 
-            void create(std::string text, int x, int y);
+            void create(std::string text, int x, int y, int width = 34, int height = 34);
             void add_to_scene();
     };
 
