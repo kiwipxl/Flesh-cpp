@@ -12,6 +12,7 @@ class to create gui buttons more easier with extra functionality
 
 #define DEFAULT_BUTTON_WIDTH 50
 #define DEFAULT_BUTTON_HEIGHT 34
+#define DEFAULT_BUTTON_FONT_SIZE 18
 
 namespace gui {
 
@@ -24,13 +25,13 @@ namespace gui {
         public:
             ~Button();
             Button(std::string text, int x, int y, int width = DEFAULT_BUTTON_WIDTH, int height = DEFAULT_BUTTON_HEIGHT, 
-                   ButtonClickCallback on_click = nullptr);
-            Button(std::string text, int x, int y, ButtonClickCallback on_click = nullptr);
+                   int font_size = DEFAULT_BUTTON_FONT_SIZE, ButtonClickCallback on_click = nullptr);
+            Button(std::string text, int x, int y, 
+                   int font_size = DEFAULT_BUTTON_FONT_SIZE, ButtonClickCallback on_click = nullptr);
 
             cc::ui::Button* button;
 
-            void create(std::string text, int x, int y, int width, int height, 
-                        ButtonClickCallback on_click = nullptr);
+            void create(std::string text, int x, int y, int width, int height, int font_size, ButtonClickCallback on_click);
             void add_to_scene();
     };
 

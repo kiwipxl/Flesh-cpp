@@ -35,8 +35,10 @@ namespace gui {
             std::vector<Button*> buttons;
 
             void add_button(Button& button);
-            void add_button(std::string button_text, int x, int y, ButtonClickCallback on_click = close_message_box_callback);
-            void stack_button(std::string button_text, ButtonClickCallback on_click = close_message_box_callback);
+            void add_button(std::string button_text, int x, int y, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
+                            ButtonClickCallback on_click = close_message_box_callback);
+            void stack_button(std::string button_text, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
+                              ButtonClickCallback on_click = close_message_box_callback);
             
             cc::Sprite* add_spinner();
 

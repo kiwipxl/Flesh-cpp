@@ -21,17 +21,17 @@ namespace gui {
 
         frame = (ui::ImageView*)container->getChildByName("frame_image");
 
+        message_title = (ui::Text*)container->getChildByName("title_text");
+        message_title->ignoreContentAdaptWithSize(false);
+        message_title->setTextAreaSize(Size(frame->getContentSize().width - 40, message_title->getContentSize().height));
+        message_title->setString(title);
+
         message_text = (ui::Text*)container->getChildByName("message_text");
         message_text->ignoreContentAdaptWithSize(false);
         message_text->setTextHorizontalAlignment(TextHAlignment::CENTER);
         message_text->setTextAreaSize(Size(frame->getContentSize().width - 40, 120));
         message_text->setPositionY(message_text->getPositionY() - 95);
-        message_text->setString(title);
-
-        message_title = (ui::Text*)container->getChildByName("title_text");
-        message_title->ignoreContentAdaptWithSize(false);
-        message_title->setTextAreaSize(Size(frame->getContentSize().width - 40, message_title->getContentSize().height));
-        message_title->setString(message);
+        message_text->setString(message);
     }
 
     MessageBox::~MessageBox() {
@@ -43,16 +43,16 @@ namespace gui {
         buttons.push_back(&button);
     }
 
-    void MessageBox::add_button(std::string button_text, int x, int y, ButtonClickCallback on_click) {
-        Button* button = new Button(button_text, x, y, 34, 34, on_click);
+    void MessageBox::add_button(std::string button_text, int x, int y, int font_size, ButtonClickCallback on_click) {
+        Button* button = new Button(button_text, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, font_size, on_click);
         container->addChild(button->button);
         buttons.push_back(button);
     }
 
-    void MessageBox::stack_button(std::string button_text, ButtonClickCallback on_click) {
+    void MessageBox::stack_button(std::string button_text, int font_size, ButtonClickCallback on_click) {
         int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 55) - (buttons.size() * 85);
         int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
-        Button* button = new Button(button_text, x, y, 70, 34, on_click);
+        Button* button = new Button(button_text, x, y, 70, 34, font_size, on_click);
         container->addChild(button->button);
         buttons.push_back(button);
     }
@@ -89,7 +89,7 @@ namespace gui {
 
     MessageBoxPtr show_message_box(std::string title, std::string message, std::string button_title, ButtonClickCallback on_click) {
         auto ptr = show_mb(title, message);
-        ptr->stack_button(button_title, on_click);
+        ptr->stack_button(button_title, DEFAULT_BUTTON_FONT_SIZE, on_click);
 
         return ptr;
     }

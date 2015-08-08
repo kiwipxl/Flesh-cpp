@@ -7,16 +7,18 @@ namespace gui {
 
     using namespace cocos2d;
 
-    Button::Button(std::string text, int x, int y, int width, int height, ButtonClickCallback on_click) {
-        create(text, x, y, width, height, on_click);
+    Button::Button(std::string text, int x, int y, int width, int height, int font_size, ButtonClickCallback on_click) {
+        create(text, x, y, width, height, font_size, on_click);
     }
 
-    Button::Button(std::string text, int x, int y, ButtonClickCallback on_click) {
-        create(text, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, on_click);
+    Button::Button(std::string text, int x, int y, int font_size, ButtonClickCallback on_click) {
+        create(text, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, font_size, on_click);
     }
 
-    void Button::create(std::string text, int x, int y, int width, int height, ButtonClickCallback on_click) {
+    void Button::create(std::string text, int x, int y, int width, int height, int font_size, ButtonClickCallback on_click) {
         button = ui::Button::create("Button_Disable.png");
+        button->setTitleFontName("fonts/CaviarDreams.ttf");
+        button->setTitleFontSize(font_size);
         button->setTitleText(text);
         button->setPosition(Vec2(x, y));
         button->setContentSize(Size(width, height));
