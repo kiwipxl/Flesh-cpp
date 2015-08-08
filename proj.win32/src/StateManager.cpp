@@ -72,7 +72,7 @@ namespace root {
                 scene->addChild(assets::csb::login_page);
 
                 {
-                    auto mb = gui::show_message_box("title text here", "message here", "OK");
+                    auto mb = gui::show_loading_message_box("title text here", "message here");
                 }
                 break;
             case STATE_GAME:

@@ -1,6 +1,10 @@
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
 
+/*
+handles all debug/release logging to console and to file
+*/
+
 #include <stdio.h>
 
 #include <iostream>

@@ -9,6 +9,7 @@ note: only one message box can be opened at a time, however a class is used in c
 #include <memory>
 #include <functional>
 
+#include <2d/CCSprite.h>
 #include <ui/UIText.h>
 #include <ui/UIImageView.h>
 
@@ -36,6 +37,8 @@ namespace gui {
             void add_button(Button& button);
             void add_button(std::string button_text, int x, int y, ButtonClickCallback on_click = close_message_box_callback);
             void stack_button(std::string button_text, ButtonClickCallback on_click = close_message_box_callback);
+            
+            cc::Sprite* add_spinner();
 
             void close();
     };
@@ -47,6 +50,7 @@ namespace gui {
     extern MessageBoxPtr show_message_box(std::string title, std::string message);
     extern MessageBoxPtr show_message_box(std::string title, std::string message, std::string button_title, 
                                           ButtonClickCallback on_click = close_message_box_callback);
+    extern MessageBoxPtr show_loading_message_box(std::string title, std::string message);
 
     extern void close_message_box();
 };
