@@ -17,6 +17,10 @@
 #include "network/sockets/SocketManager.h"
 #include "network/Peers.h"
 
+#include "states/Game.h"
+#include "states/Login.h"
+#include "states/Startup.h"
+
 namespace root {
 
     using namespace cocos2d;
@@ -49,40 +53,9 @@ namespace root {
 
     void create_state(State c_state) {
         s = c_state;
-        switch (s) {
-            case STATE_SERVER_CONNECT_SCREEN:
-                info_label = Label::createWithBMFont("fonts/lucida.fnt", "connecting...");
-                info_label->setDimensions(scene->screen_size.width - 40, 400);
-                info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
-                scene->addChild(info_label, 1);
-
-                scene->scheduleUpdate();
-
-                {
-                    auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::animations::spinner_frames, .05f, UINT32_MAX));
-                    spinner_sprite = Sprite::create();
-                    spinner_sprite->runAction(spinner_animation);
-                    spinner_sprite->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 45);
-                    scene->addChild(spinner_sprite, 1);
-                }
-
-                network::sock::setup_tcp_sock();
-                break;
-            case STATE_LOGIN_REGISTER_SCREEN:
-                scene->addChild(assets::csb::login_page);
-
-                {
-                    auto mb = gui::show_message_box("please wait...", "logging in...", "cancel");
-                    mb->add_spinner();
-                }
-                break;
-            case STATE_GAME:
-                entities::test_player = new entities::Unit();
-                entities::test_player->player_input = true;
-                camera = new map::MapCamera();
-                terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
-                break;
-        }
+        states::startup::create_state(c_state);
+        states::login::create_state(c_state);
+        states::game::create_state(c_state);
     }
 
     void remove_state(State r_state) {
