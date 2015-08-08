@@ -205,6 +205,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\MID.h" />
     <ClInclude Include="src\network\message\Stream.h" />
+    <ClInclude Include="src\network\Defines.h" />
     <ClInclude Include="src\network\Peers.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
     <ClInclude Include="src\network\sockets\Socket.h" />

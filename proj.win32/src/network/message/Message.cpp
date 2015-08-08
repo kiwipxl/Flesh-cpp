@@ -4,6 +4,8 @@
 #include "network/message/Callback.h"
 #include "network/sockets/Socket.h"
 
+BEGIN_NETWORK_NS
+
 template <typename T> inline int sprintf_buf(int offset, CFTYPE t, int n) {
     return sprintf(msg::print_buf + offset, t->printf_format, *(T*)msg::last_param_list[n]->data);
 }
@@ -17,7 +19,7 @@ namespace msg {
         MID_init();
     }
 
-    void send(Socket& sock, Stream& stream) {
+    void send(sock::Socket& sock, Stream& stream) {
         //not thread safe, will crash if params are used in another thread
         //todo: param lists can be moved innto MID class to fix
         /*if (print_output || write_to_file) {
@@ -32,7 +34,7 @@ namespace msg {
         sock.s_send(byte_buffer, byte_offset);
     }
     
-    MessagePtr extract_message(Socket& sock, char* buffer, int buffer_len) {
+    MessagePtr extract_message(sock::Socket& sock, char* buffer, int buffer_len) {
         MessagePtr message = MessagePtr(new Message());
         message->sock = &sock;
         extract_mid(message, buffer, buffer_len);
@@ -145,3 +147,5 @@ namespace msg {
 	    return (MID_list.size() > 0 && mid->id > 0 && mid->id < MID_list.size()) ? MID_list[mid->id]->name : "undefined";
     }
 };
+
+END_NETWORK_NS

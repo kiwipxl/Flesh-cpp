@@ -5,6 +5,8 @@
 #include "network/sockets/Socket.h"
 #include "network/sockets/SocketPoll.h"
 
+BEGIN_NETWORK_NS
+
 namespace msg {
 
     CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback, float timeout_len, bool remove_after_call) {
@@ -26,10 +28,10 @@ namespace msg {
         }
     }
 
-    void process_all_callbacks(SocketPoll& poll) {
+    void process_all_callbacks(sock::SocketPoll& poll) {
         time_t t;
         for (int i = 0; i < poll.get_size(); ++i) {
-            Socket* sock = poll.get_sock_at(i);
+            sock::Socket* sock = poll.get_sock_at(i);
             if (!sock) continue;
             for (int n = 0; n < sock->callbacks.size(); ++n) {
                 msg::CallbackPtr& cb = sock->callbacks[n];
@@ -50,3 +52,5 @@ namespace msg {
         }
     }
 };
+
+END_NETWORK_NS

@@ -16,7 +16,7 @@ namespace entities {
             Sprite* base;
             PhysicsBody* pbody;
             bool player_input = false;
-            peers::Peer* peer;
+            network::peers::Peer* peer;
 
             int dest_x;
             int dest_y;
@@ -30,8 +30,8 @@ namespace entities {
     extern Unit* test_player;
     extern std::vector<Unit*> units;
 
-    extern void test_peer_join(peers::Peer* peer);
-    extern void test_peer_movement(peers::Peer* peer, int x, int y, float rota);
+    extern void test_peer_join(network::peers::Peer* peer);
+    extern void test_peer_movement(network::peers::Peer* peer, int x, int y, float rota);
 
     extern void update_units();
 };

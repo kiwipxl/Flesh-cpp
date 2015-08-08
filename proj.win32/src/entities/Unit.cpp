@@ -58,14 +58,14 @@ namespace entities {
         }
     }
 
-    void test_peer_join(peers::Peer* peer) {
+    void test_peer_join(network::peers::Peer* peer) {
         test_player->base->setPosition(0, 0);
         Unit* unit = new Unit();
         unit->peer = peer;
         units.push_back(unit);
     }
 
-    void test_peer_movement(peers::Peer* peer, int x, int y, float rota) {
+    void test_peer_movement(network::peers::Peer* peer, int x, int y, float rota) {
         for (int n = 0; n < units.size(); ++n) {
             if (units[n]->peer == peer) {
                 units[n]->dest_x = x;

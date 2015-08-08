@@ -6,9 +6,15 @@
 #include <memory>
 
 #include "network/message/MID.h"
+#include "network/Defines.h"
 
-struct Socket;
-struct SocketPoll;
+BEGIN_NETWORK_NS
+
+namespace sock {
+
+    struct Socket;
+    struct SocketPoll;
+};
 
 namespace msg {
 
@@ -50,7 +56,9 @@ namespace msg {
 
     extern CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback, float timeout_len = TIMEOUT_NONE, bool remove_after_call = false);
     extern void process_message_callback(MessagePtr message);
-    extern void process_all_callbacks(SocketPoll& poll);
+    extern void process_all_callbacks(sock::SocketPoll& poll);
 };
+
+END_NETWORK_NS
 
 #endif

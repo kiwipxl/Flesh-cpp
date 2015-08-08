@@ -6,10 +6,16 @@ class to add/remove sockets and determine when each one is ready to be read (has
 */
 
 #include <vector>
+
+#include "network/Defines.h"
 #include "network/sockets/Socket.h"
 
-class SocketPoll {
-    
+BEGIN_NETWORK_NS
+
+namespace sock {
+
+    class SocketPoll {
+
     public:
         /* poll is a blocking operation */
         int poll();
@@ -24,6 +30,9 @@ class SocketPoll {
     private:
         std::vector<pollfd> fds;
         std::vector<Socket*> sockets;
+    };
 };
+
+END_NETWORK_NS
 
 #endif

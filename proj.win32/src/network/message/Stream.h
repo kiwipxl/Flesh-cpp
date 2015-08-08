@@ -4,6 +4,9 @@
 #include <cassert>
 
 #include "network/message/MID.h"
+#include "network/Defines.h"
+
+BEGIN_NETWORK_NS
 
 namespace msg {
 
@@ -51,5 +54,7 @@ namespace msg {
             }
     };
 };
+
+END_NETWORK_NS
 
 #endif

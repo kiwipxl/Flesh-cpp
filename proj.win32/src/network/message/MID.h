@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>
 
+#include "network/Defines.h"
+
+BEGIN_NETWORK_NS
+
 namespace msg {
 
     //================== Format types begin ==================
@@ -73,5 +77,7 @@ namespace msg {
     extern void MID_init();
     extern CMID get_MID(MID_enum mid_enum);
 };
+
+END_NETWORK_NS
 
 #endif

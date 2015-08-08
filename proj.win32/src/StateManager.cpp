@@ -39,8 +39,8 @@ namespace root {
 
         debug::init_logger();
         assets::init();
-        sock::init();
-        msg::init();
+        network::sock::init();
+        network::msg::init();
         input::init();
         create_state(s);
     }
@@ -64,7 +64,7 @@ namespace root {
                     scene->addChild(spinner_sprite, 1);
                 }
 
-                sock::setup_tcp_sock();
+                network::sock::setup_tcp_sock();
                 break;
             case STATE_LOGIN_REGISTER_SCREEN:
                 scene->addChild(assets::csb::login_page);
@@ -116,21 +116,21 @@ namespace root {
         if (input::key_down(EventKeyboard::KeyCode::KEY_T)) {
             switch_state(STATE_GAME);
         }
-
-        sock::update();
+        
+        network::sock::update();
         switch (s) {
             case STATE_SERVER_CONNECT_SCREEN:
                 info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
 
-                if (sock::connection_finished) {
-                    if (sock::connection_err == NO_ERROR) {
+                if (network::sock::connection_finished) {
+                    if (network::sock::connection_err == NO_ERROR) {
                         switch_state(STATE_LOGIN_REGISTER_SCREEN);
                     }else {
                         scene->removeChild(spinner_sprite);
                         info_label->setString("an error occurred while trying to connect: " + 
-                                                ((sock::connection_err_msg == "") 
-                                                ? SSTR(sock::connection_err) 
-                                                : sock::connection_err_msg + "(" + SSTR(sock::connection_err) + ")"));
+                                                ((network::sock::connection_err_msg == "")
+                                                ? SSTR(network::sock::connection_err)
+                                                : network::sock::connection_err_msg + "(" + SSTR(network::sock::connection_err) + ")"));
                     }
                 }else {
                     info_label->setString("connecting to server...");

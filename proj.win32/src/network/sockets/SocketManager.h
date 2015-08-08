@@ -5,8 +5,11 @@
 handles the tcp and udp socket connection between the server and udp sockets between peers
 */
 
+#include "network/Defines.h"
 #include "network/sockets/Socket.h"
 #include "debug/Errors.h"
+
+BEGIN_NETWORK_NS
 
 namespace sock {
 
@@ -34,5 +37,7 @@ namespace sock {
     extern void begin_relay_test(Socket& sock);
     extern void close_all_threads();
 };
+
+END_NETWORK_NS
 
 #endif
