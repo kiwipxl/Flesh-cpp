@@ -6,4 +6,22 @@ map assets loaded
 asset loading completed
 attempt connect...
 attempt connect on thread...
+created state 0
 (tcp_serv_sock): connection successful
+switching to state 1 from state 0
+removed state 0
+created state 1
+switched to state 1 from state 1
+switching to state 2 from state 1
+removed state 1
+created state 2
+switched to state 2 from state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2
+cannot switch to state 2 when on state 2

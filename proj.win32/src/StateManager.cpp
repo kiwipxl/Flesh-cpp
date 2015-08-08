@@ -26,9 +26,8 @@ namespace root {
     Label* info_label;
     float time_since_startup = 0;
 
-    void create_state(State);
-    void remove_state(State);
-    void switch_state(State);
+    void create_state(State, bool = false);
+    void remove_state(State, bool = false);
 
     void init_root(SceneManager* scene_ref) {
         scene = scene_ref;
@@ -39,26 +38,41 @@ namespace root {
         network::sock::init();
         network::msg::init();
         input::init();
-        create_state(s);
+
+        create_state(s, true);
     }
 
-    void create_state(State c_state) {
+    void create_state(State c_state, bool force) {
+        if (!force && s == c_state) { log_info << "cannot create state " << c_state << " when on same state " << s; return; }
+
         s = c_state;
         states::startup::create_state(s);
         states::login::create_state(s);
         states::game::create_state(s);
+
+        log_info << "created state " << c_state;
     }
 
-    void remove_state(State r_state) {
+    void remove_state(State r_state, bool force) {
+        if (!force && s == r_state) { log_info << "cannot remove state " << r_state << " when on same state " << s; return; }
+
         s = r_state;
         states::startup::remove_state(s);
         states::login::remove_state(s);
         states::game::remove_state(s);
+
+        log_info << "removed state " << r_state;
     }
 
-    void switch_state(State new_state) {
-        remove_state(s);
-        create_state(new_state);
+    void switch_state(State new_state, bool force) {
+        if (!force && s == new_state) { log_info << "cannot switch to state " << new_state << " when on state " << s; return; }
+
+        log_info << "switching to state " << new_state << " from state " << s;
+
+        remove_state(s, true);
+        create_state(new_state, true);
+
+        log_info << "switched to state " << new_state << " from state " << s;
     }
 
     void update_state(float dt) {
