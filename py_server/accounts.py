@@ -3,6 +3,15 @@ import client;
 import _MID;
 import db;
 
+class Enum(set):
+    def __getattr__(self, name):
+        if name in self:
+            return name;
+        raise AttributeError;
+
+LoginResult = Enum(["SUCCESS", "INCORRECT_USER_OR_PASS", "INVALID_FORMAT", "UNKNOWN_ERROR"]);
+RegisterResult = Enum(["SUCCESS", "USER_ALREADY_EXISTS", "INVALID_FORMAT", "UNKNOWN_ERROR"]);
+
 def init_client_account(client_obj):
     client_obj.add_message_handler(_MID.ALL, handle_all_messages);
 

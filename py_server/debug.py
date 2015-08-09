@@ -19,3 +19,6 @@ start_time = time.time();
 def log(log_msg, priority, new_line = '\n'):
     if (priority >= 0 and priority <= P_FATAL):
         print("[%s (%.2f)]: %s" % (titles[priority], (time.time() - start_time), log_msg), end=new_line);
+
+def log_db(log_msg, new_line = '\n'):
+    print("[DB (%.2f)]: %s" % ((time.time() - start_time), log_msg), end=new_line);

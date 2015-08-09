@@ -1,6 +1,7 @@
 import sqlite3 as lite;
 import hashlib;
 import debug;
+import accounts;
 
 db_con = None;
 cur = None;
@@ -12,38 +13,58 @@ def init():
     global cur;
     db_con = lite.connect("acc.db");
 
-    db_con.row_factory = lite.Row;     #fetches use dictionary over tuple
+    #db_con.row_factory = lite.Row;     #fetches use dictionary over tuple
     cur = db_con.cursor();
     query("create table if not exists accounts(id integer primary key, user character, pass character, unique(user))");
     db_con.commit();
+
     debug.log("accounts db initiated", debug.P_INFO);
 
-def add_user_account(username, password):
-    global db_con;
+def account_strings_to_db(username, password):
     if (username.__len__() > MAX_USERNAME_LEN): username = username[0:MAX_USERNAME_LEN];
     if (password.__len__() > MAX_PASSWORD_LEN): password = password[0:MAX_PASSWORD_LEN];
-    pass_hash = hashlib.sha256(password).hexdigest();
-    result = query("insert or ignore into accounts(user, pass) values('" + username + "', '" + pass_hash + "')");
-    db_con.commit();
+    password = hashlib.sha256(password).hexdigest();
 
-    return result;
+    err = 0;
+    return username, password, err;
 
-def fetch_accounts():
-    global db_con;
-    global cur;
-    query("select * from accounts");
-    rows = cur.fetchall();
+#attempts to add a username and password to the database and returns a RegisterResult enum
+def add_user_account(username, password):
+    global con;
 
-    for row in rows:
-        debug.log("id: %i, name: %s" % (row["user"], row["pass"]), debug.P_INFO);
+    username, password, err = account_strings_to_db(username, password);
+    if (err == -1): return accounts.RegisterResult.INVALID_FORMAT;
+
+    query("select * from accounts where user='%s'" % (username));
+    if (con.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
+
+    result = query("insert or ignore into accounts(user, pass) values('%s', '%s')" % (username, password));
+    if not (result): return accounts.RegisterResult.UNKNOWN_ERROR;
+    con.commit();
+
+    return accounts.RegisterResult.SUCCESS;
+
+#returns a LoginResult enum on whether or not the username and password was found in the db
+def find_user_account(username, password):
+    global con;
+
+    username, password, err = account_strings_to_db(username, password);
+    if (err == -1): return accounts.LoginResult.INVALID_FORMAT;
+
+    result = query("select * from accounts where user='%s' and pass='%s'" % (username, password));
+    if not (result): return accounts.LoginResult.UNKNOWN_ERROR;
+    if (con.fetchone() != None): return accounts.LoginResult.INCORRECT_USER_OR_PASS;
+
+    return accounts.LoginResult.SUCCESS;
 
 def query(q):
-    global db_con;
+    global cur;
     try:
-        db_con.execute(q);
+        cur.execute(q);
+        debug.log_db("query: %s" % q);
         return True;
     except lite.Error as e:
-        debug.log("database error occurred: %s" % e.args[0], debug.P_ERROR);
+        debug.log_db("database error occurred: %s" % e.args[0]);
         return False;
 
 if __name__ == "__main__":
