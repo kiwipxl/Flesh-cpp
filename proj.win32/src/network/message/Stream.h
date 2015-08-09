@@ -52,6 +52,11 @@ namespace msg {
                 cpy_to_buf(str, strlen(str) + 1); return *this;
             }
 
+            Stream& operator<<(std::string str) {
+                check_MID_add();
+                cpy_to_buf(str.c_str(), str.length() + 1); return *this;
+            }
+
             Stream& operator<<(Param* p);
 
             Stream& operator>>(int i) { byte_offset -= i; return *this; }

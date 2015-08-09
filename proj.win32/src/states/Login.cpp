@@ -51,7 +51,6 @@ namespace login {
 
                         auto username_input = assets::csb::get_child<ui::TextField>(login_page, "username_input");
                         auto password_input = assets::csb::get_child<ui::TextField>(login_page, "password_input");
-                        std::string str1 = username_input->getString();
 
                         msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_LOGIN << username_input->getString() << password_input->getString());
                     });
