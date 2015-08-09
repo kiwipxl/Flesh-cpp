@@ -46,13 +46,19 @@ namespace login {
                     });
 
                     login_button->addClickEventListener([](Ref* r) {
+                        auto username_str = assets::csb::get_child<ui::TextField>(login_page, "username_input")->getString();
+                        auto password_str = assets::csb::get_child<ui::TextField>(login_page, "password_input")->getString();
+
+                        if (username_str.length() < 2) { gui::show_message_box("account details error", 
+                                                                               "username must be greater than or equal to 3 characters", "OK"); return; }
+
+                        if (password_str.length() < 2) { gui::show_message_box("account details error", 
+                                                                               "password must be greater than or equal to 3 characters", "OK"); return; }
+
                         auto mb = gui::show_message_box("please wait...", "logging in...", "cancel");
                         mb->add_spinner();
 
-                        auto username_input = assets::csb::get_child<ui::TextField>(login_page, "username_input");
-                        auto password_input = assets::csb::get_child<ui::TextField>(login_page, "password_input");
-
-                        msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_LOGIN << username_input->getString() << password_input->getString());
+                        msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_LOGIN << username_str << password_str);
                     });
                 }
                 break;
