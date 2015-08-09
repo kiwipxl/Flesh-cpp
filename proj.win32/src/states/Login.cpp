@@ -14,6 +14,10 @@
 
 BEGIN_STATES_NS
 
+#define SEP ,
+#define INVOKE_MAIN_THREAD(capture)     scene->getScheduler()->performFunctionInCocosThread([capture]() {
+#define INVOKE_MAIN_THREAD_END          });
+
 namespace login {
 
     using namespace root;
@@ -36,13 +40,13 @@ namespace login {
                     sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
                         int result = m->get<int>(0);
 
-                        scene->getScheduler()->performFunctionInCocosThread([result]() {
-                            if (result == 1) {
-                                gui::show_message_box("successful", "login successful", "OK");
-                            }else {
-                                gui::show_message_box("login error", "an unknown error occurred while trying to login. please try again.", "OK");
-                            }
-                        });
+                        INVOKE_MAIN_THREAD(result)
+                        if (result == 1) {
+                            gui::show_message_box("successful", "login successful", "OK");
+                        }else {
+                            gui::show_message_box("login error", "an unknown error occurred while trying to login. please try again.", "OK");
+                        }
+                        INVOKE_MAIN_THREAD_END
                     });
 
                     login_button->addClickEventListener([](Ref* r) {
