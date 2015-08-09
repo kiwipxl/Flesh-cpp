@@ -3,20 +3,20 @@ import hashlib;
 import debug;
 import accounts;
 
-db_con = None;
+con = None;
 cur = None;
 MAX_USERNAME_LEN = 16;
 MAX_PASSWORD_LEN = 16;
 
 def init():
-    global db_con;
+    global con;
     global cur;
-    db_con = lite.connect("acc.db");
+    con = lite.connect("acc.db");
 
-    #db_con.row_factory = lite.Row;     #fetches use dictionary over tuple
-    cur = db_con.cursor();
+    #con.row_factory = lite.Row;     #fetches use dictionary over tuple
+    cur = con.cursor();
     query("create table if not exists accounts(id integer primary key, user character, pass character, unique(user))");
-    db_con.commit();
+    con.commit();
 
     debug.log("accounts db initiated", debug.P_INFO);
 
@@ -31,12 +31,13 @@ def account_strings_to_db(username, password):
 #attempts to add a username and password to the database and returns a RegisterResult enum
 def add_user_account(username, password):
     global con;
+    global cur;
 
     username, password, err = account_strings_to_db(username, password);
     if (err == -1): return accounts.RegisterResult.INVALID_FORMAT;
 
     query("select * from accounts where user='%s'" % (username));
-    if (con.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
+    if (cur.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
 
     result = query("insert or ignore into accounts(user, pass) values('%s', '%s')" % (username, password));
     if not (result): return accounts.RegisterResult.UNKNOWN_ERROR;
@@ -46,14 +47,14 @@ def add_user_account(username, password):
 
 #returns a LoginResult enum on whether or not the username and password was found in the db
 def find_user_account(username, password):
-    global con;
+    global cur;
 
     username, password, err = account_strings_to_db(username, password);
     if (err == -1): return accounts.LoginResult.INVALID_FORMAT;
 
     result = query("select * from accounts where user='%s' and pass='%s'" % (username, password));
     if not (result): return accounts.LoginResult.UNKNOWN_ERROR;
-    if (con.fetchone() != None): return accounts.LoginResult.INCORRECT_USER_OR_PASS;
+    if (cur.fetchone() == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS;
 
     return accounts.LoginResult.SUCCESS;
 

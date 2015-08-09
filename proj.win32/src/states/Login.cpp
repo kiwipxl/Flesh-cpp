@@ -25,6 +25,20 @@ namespace login {
     std::string username_str;
     std::string password_str;
 
+    enum LoginResult {
+        LOGIN_RESULT_SUCCESS,
+        LOGIN_RESULT_INCORRECT_USER_OR_PASS,
+        LOGIN_RESULT_INVALID_FORMAT,
+        LOGIN_RESULT_UNKNOWN_ERROR
+    };
+
+    enum RegisterResult {
+        REGISTER_RESULT_SUCCESS,
+        REGISTER_RESULT_USER_ALREADY_EXISTS,
+        REGISTER_RESULT_INVALID_FORMAT,
+        REGISTER_RESULT_UNKNOWN_ERROR
+    };
+
     //public externs
     
     bool verify_account_details() {
@@ -54,26 +68,44 @@ namespace login {
                     auto register_button = assets::csb::get_child<ui::Button>(login_page, "register_button");
 
                     sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
-                        int result = m->get<int>(0);
+                        LoginResult result = (LoginResult)m->get<int>(0);
 
                         INVOKE_MAIN_THREAD(result)
-                        if (result == 1) {
-                            gui::show_message_box("successful", "login successful", "OK");
-                        }else {
-                            gui::show_message_box("login error", "an unknown error occurred while trying to login. please try again.", "OK");
-                        }
+                            switch (result) {
+                                case LOGIN_RESULT_SUCCESS:
+                                    gui::show_message_box("successful", "logged in successfully", "OK");
+                                    break;
+                                case LOGIN_RESULT_INCORRECT_USER_OR_PASS:
+                                    gui::show_message_box("login error", "incorrect username or password. please try again.", "OK");
+                                    break;
+                                case LOGIN_RESULT_INVALID_FORMAT:
+                                    gui::show_message_box("login error", "invalid format error occurred. please try again.", "OK");
+                                    break;
+                                default:
+                                    gui::show_message_box("login error", "an unknown error occurred while trying to login. please try again.", "OK");
+                                    break;
+                            }
                         INVOKE_MAIN_THREAD_END
                     });
 
                     sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_REGISTER_RESULT, [](msg::Message* m) {
-                        int result = m->get<int>(0);
+                        RegisterResult result = (RegisterResult)m->get<int>(0);
 
                         INVOKE_MAIN_THREAD(result)
-                        if (result == 1) {
-                            gui::show_message_box("successful", "registered successfully", "OK");
-                        }else {
-                            gui::show_message_box("login error", "an unknown error occurred while trying to register. please try again.", "OK");
-                        }
+                            switch (result) {
+                                case REGISTER_RESULT_SUCCESS:
+                                    gui::show_message_box("successful", "registered successfully", "OK");
+                                    break;
+                                case REGISTER_RESULT_USER_ALREADY_EXISTS:
+                                    gui::show_message_box("register error", "username already exists. please try another name.", "OK");
+                                    break;
+                                case REGISTER_RESULT_INVALID_FORMAT:
+                                    gui::show_message_box("register error", "invalid format error occurred. please try again.", "OK");
+                                    break;
+                                default:
+                                    gui::show_message_box("register error", "an unknown error occurred while trying to register. please try again.", "OK");
+                                    break;
+                            }
                         INVOKE_MAIN_THREAD_END
                     });
 
