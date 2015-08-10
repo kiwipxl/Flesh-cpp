@@ -5,8 +5,6 @@ import accounts;
 
 con = None;
 cur = None;
-MAX_USERNAME_LEN = 16;
-MAX_PASSWORD_LEN = 16;
 
 def init():
     global con;
@@ -23,11 +21,17 @@ def init():
 #checks the formatting of both the username annd password to make sure it can be put in the db
 #returns (formatted username, formatted password, error code (true = success, false = format_error))
 def format_user_pass(username, password):
-    if (username.__len__() > MAX_USERNAME_LEN):
-        debug.log_db("could not format username (%s...) - it is too long" % (username[0:MAX_USERNAME_LEN]));
+    if (username.__len__() < accounts.MIN_USERNAME_LEN):
+        debug.log_db("could not format username (%s) - it is too short" % (username));
         return "", "", False;
-    if (password.__len__() > MAX_PASSWORD_LEN):
-        debug.log_db("could not format password (%s...) - it is too long" % (password[0:MAX_USERNAME_LEN]));
+    if (password.__len__() < accounts.MIN_PASSWORD_LEN):
+        debug.log_db("could not format password (%s) - it is too short" % (password));
+        return "", "", False;
+    if (username.__len__() > accounts.MAX_USERNAME_LEN):
+        debug.log_db("could not format username (%s...) - it is too long" % (username[0:accounts.MAX_USERNAME_LEN]));
+        return "", "", False;
+    if (password.__len__() > accounts.MAX_PASSWORD_LEN):
+        debug.log_db("could not format password (%s...) - it is too long" % (password[0:accounts.MAX_USERNAME_LEN]));
         return "", "", False;
     password = hashlib.sha256(password).hexdigest();
 

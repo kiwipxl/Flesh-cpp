@@ -22,7 +22,9 @@ namespace login {
 
     //private
     Node* login_page;
+    ui::TextField* username_input;
     std::string username_str;
+    ui::TextField* password_input;
     std::string password_str;
 
     enum LoginResult {
@@ -41,21 +43,23 @@ namespace login {
 
     #define MIN_USERNAME_LEN 3
     #define MAX_USERNAME_LEN 16
+    #define MIN_PASSWORD_LEN 3
+    #define MAX_PASSWORD_LEN 16
 
     //public externs
     
     bool verify_account_details() {
-        username_str = assets::csb::get_child<ui::TextField>(login_page, "username_input")->getString();
-        password_str = assets::csb::get_child<ui::TextField>(login_page, "password_input")->getString();
+        username_str = username_input->getString();
+        password_str = password_input->getString();
 
         if (username_str.length() < MIN_USERNAME_LEN) {
             gui::show_message_box("account details error",
                 sstream_cstr("username must be greater than or equal to " << MIN_USERNAME_LEN << " characters"), "OK"); return false;
         }
 
-        if (password_str.length() < MIN_USERNAME_LEN) {
+        if (password_str.length() < MIN_PASSWORD_LEN) {
             gui::show_message_box("account details error",
-                "password must be greater than or equal to 3 characters", "OK"); return false;
+                sstream_cstr("password must be greater than or equal to " << MIN_PASSWORD_LEN << " characters"), "OK"); return false;
         }
 
         return true;
@@ -69,6 +73,11 @@ namespace login {
                     scene->addChild(login_page);
                     auto login_button = assets::csb::get_child<ui::Button>(login_page, "login_button");
                     auto register_button = assets::csb::get_child<ui::Button>(login_page, "register_button");
+
+                    username_input = assets::csb::get_child<ui::TextField>(login_page, "username_input");
+                    username_input->setMaxLength(MAX_USERNAME_LEN);
+                    password_input = assets::csb::get_child<ui::TextField>(login_page, "password_input");
+                    password_input->setMaxLength(MAX_PASSWORD_LEN);
 
                     sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
                         LoginResult result = (LoginResult)m->get<int>(0);

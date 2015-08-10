@@ -15,6 +15,11 @@ class LoginResult:
 class RegisterResult:
     SUCCESS, USER_ALREADY_EXISTS, INVALID_FORMAT, UNKNOWN_ERROR = range(4);
 
+MIN_USERNAME_LEN = 3;
+MAX_USERNAME_LEN = 16;
+MIN_PASSWORD_LEN = 3;
+MAX_PASSWORD_LEN = 16;
+
 def init_client_account(client_obj):
     client_obj.add_message_handler(_MID.ALL, handle_all_messages);
 
