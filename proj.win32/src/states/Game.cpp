@@ -26,6 +26,7 @@ namespace game {
                 entities::test_player->player_input = true;
                 camera = new map::MapCamera();
                 terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
+                terrain->create_debug_geometry();
                 break;
         }
     }

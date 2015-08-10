@@ -6,6 +6,7 @@
 #include <renderer/CCTextureCache.h>
 #include <renderer/CCTrianglesCommand.h>
 #include <renderer/CCRenderer.h>
+#include <2d/CCCamera.h>
 
 #include "StateManager.h"
 #include "entities/Unit.h"
@@ -51,27 +52,6 @@ namespace map {
             //base->setScale(1.1f, 1.1f);
             root::scene->addChild(base, 1);
 
-            debug_draw_node = DrawNode::create();
-            debug_draw_node->retain();
-
-            for (int n = 1; n < t_data.indices.size(); ++n) {
-                if (n % 3 == 0) {
-                    debug_draw_node->drawLine(t_data.debug_points[t_data.indices[n - 1]],
-                                              t_data.debug_points[t_data.indices[n - 3]],
-                                              Color4F(1.0f, 1.0f, 1.0f, .4f));
-                }else {
-                    debug_draw_node->drawLine(t_data.debug_points[t_data.indices[n - 1]],
-                                              t_data.debug_points[t_data.indices[n]],
-                                              Color4F(1.0f, 1.0f, 1.0f, .4f));
-                }
-            }
-
-            for (int n = 1; n < t_data.collider_points.size(); ++n) {
-                debug_draw_node->drawLine(t_data.collider_points[n - 1],
-                                          t_data.collider_points[n],
-                                          Color4F(0.0f, 0.0f, 1.0f, .8f));
-            }
-
             edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
             edge_tris.indexCount = t_data.edge_indices_end;
             edge_tris.verts = &t_data.points[0];
@@ -98,11 +78,35 @@ namespace map {
 
             fill_tris_cmd.init(0.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, base->getNodeToWorldTransform(), 1);
         }
+        
+        void Terrain::create_debug_geometry(bool show_triangles, bool show_collider_points) {
+            debug_draw_node = DrawNode::create();
+            debug_draw_node->retain();
+            base->addChild(debug_draw_node);
+
+            for (int n = 1; n < terrain_data->indices.size(); ++n) {
+                if (n % 3 == 0) {
+                    debug_draw_node->drawLine(terrain_data->debug_points[terrain_data->indices[n - 1]],
+                                              terrain_data->debug_points[terrain_data->indices[n - 3]],
+                                              Color4F(1.0f, 1.0f, 1.0f, .4f));
+                }else {
+                    debug_draw_node->drawLine(terrain_data->debug_points[terrain_data->indices[n - 1]],
+                                              terrain_data->debug_points[terrain_data->indices[n]],
+                                              Color4F(1.0f, 1.0f, 1.0f, .4f));
+                }
+            }
+
+            for (int n = 1; n < terrain_data->collider_points.size(); ++n) {
+                debug_draw_node->drawLine(terrain_data->collider_points[n - 1],
+                                          terrain_data->collider_points[n],
+                                          Color4F(0.0f, 0.0f, 1.0f, .8f));
+            }
+        }
 
         void Terrain::draw() {
             Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
             Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
-            debug_draw_node->draw(Director::getInstance()->getRenderer(), base->getNodeToWorldTransform(), 0);
+            //debug_draw_node->draw(Director::getInstance()->getRenderer(), base->getNodeToWorldTransform(), 0);
         }
 
         //-- end terrain class --

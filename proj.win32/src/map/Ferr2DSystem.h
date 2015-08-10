@@ -51,8 +51,9 @@ namespace map {
                 cc::Node* base;
                 cc::PhysicsBody* pbody;
                 TerrainData* terrain_data;
-                cc::DrawNode* debug_draw_node;
+                cc::DrawNode* debug_draw_node = NULL;
 
+                void create_debug_geometry(bool show_triangles = true, bool show_collider_points = true);
                 void draw();
 
             private:

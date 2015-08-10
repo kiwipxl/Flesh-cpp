@@ -20,8 +20,7 @@ namespace entities {
 
     Unit::Unit() {
         base = Sprite::create("duck.png");
-        base->setPosition(base->getContentSize().width, base->getContentSize().height);
-        base->setCameraMask((u_short)CameraFlag::USER1);
+        base->setPosition(0, 0);
         base->retain();
         root::scene->addChild(base, 1);
 
@@ -35,7 +34,7 @@ namespace entities {
         root::scene->p_world->setGravity(Vec2(0, -800.0f));
         base->setPhysicsBody(pbody);
 
-        //state::scene->p_world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+        root::scene->p_world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
         auto contact_listener = EventListenerPhysicsContact::create();
         contact_listener->onContactPreSolve = CC_CALLBACK_1(Unit::physics_contact, this);
