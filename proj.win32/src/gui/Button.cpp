@@ -27,7 +27,7 @@ namespace gui {
     }
 
     void Button::add_to_scene() {
-        cf_assert(!button, sstream << "cannot add NULL button to scene");
+        cf_assert(!button, sstream_cstr("cannot add NULL button to scene"));
         root::scene->addChild(button);
     }
 

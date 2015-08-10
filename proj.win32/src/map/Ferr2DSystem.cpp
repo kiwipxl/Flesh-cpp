@@ -88,7 +88,7 @@ namespace map {
         //-- end terrain class --
 
         void print_load_error(std::string err_message, std::string file_name) {
-            f_assert(sstream << "ferr2d load error occurred: " << err_message << " (" << file_name << ")");
+            f_assert(sstream_cstr("ferr2d load error occurred: " << err_message << " (" << file_name << ")"));
         }
 
         bool split_tokens(std::string& data, std::vector<std::string>& tokens, std::string attrib_name, char delimiter = ',') {

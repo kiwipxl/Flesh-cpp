@@ -22,9 +22,8 @@ handles all debug/release logging to console and to file
 
 #define log_mid             debug::Logger(debug::ACTION_MID | debug::ACTION_SAVE_TO_FILE)
 
-#define sstream             debug::StrStream()
-#define sstream_str(s)      s.stream.str()
-#define sstream_cstr(s)     s.stream.str().c_str()
+#define sstream_str(x)      (debug::glb_stream.clear() << x << '\0').stream.str()
+#define sstream_cstr(x)     (debug::glb_stream.clear() << x << '\0').stream.str().c_str()
 
 //taken from mingw wassert.c
 extern void __cdecl _assert(const char *_Message, const char *_File, unsigned _Line);
@@ -34,7 +33,7 @@ extern void __cdecl _assert(const char *_Message, const char *_File, unsigned _L
     do { \
         if (condition) { \
             log_file << "Assertion '" #condition "' failed in " << __FILE__ << " line " << __LINE__ << ": " << sstream_cstr((message)); \
-            _assert(sstream_cstr((message)), __FILE__, __LINE__); \
+            _assert(message, __FILE__, __LINE__); \
         } \
     } while (false)
 #else
@@ -45,7 +44,7 @@ extern void __cdecl _assert(const char *_Message, const char *_File, unsigned _L
 #   define f_assert(message) \
     do { \
         log_file << "Assertion in " << __FILE__ << " line " << __LINE__ << ": " << sstream_cstr((message)); \
-        _assert(sstream_cstr((message)), __FILE__, __LINE__); \
+        _assert(message, __FILE__, __LINE__); \
     } while (false)
 #else
 #   define f_assert(message) do { } while (false)
@@ -120,11 +119,18 @@ namespace debug {
         public:
             std::stringstream stream;
 
+            StrStream& clear() {
+                stream.clear();
+                return *this;
+            }
+
             template<class T> StrStream& operator<<(const T& v) {
                 stream << v;
                 return *this;
             }
     };
+
+    extern StrStream glb_stream;
 };
 
 #endif

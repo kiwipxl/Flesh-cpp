@@ -24,7 +24,7 @@ namespace assets {
         template <typename T> T* get_child(cc::Node* csb_node, std::string name) {
             T* t;
             if ((t = csb_node->getChildByName<T*>(name)) == NULL) {
-                f_assert(sstream << "(" << name << ") could not be found in csb node. halting...");
+                f_assert(sstream_cstr("(" << name << ") could not be found in csb node. halting..."));
             }else {
                 return t;
             }

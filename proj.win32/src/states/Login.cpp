@@ -39,18 +39,21 @@ namespace login {
         REGISTER_RESULT_UNKNOWN_ERROR
     };
 
+    #define MIN_USERNAME_LEN 3
+    #define MAX_USERNAME_LEN 16
+
     //public externs
     
     bool verify_account_details() {
         username_str = assets::csb::get_child<ui::TextField>(login_page, "username_input")->getString();
         password_str = assets::csb::get_child<ui::TextField>(login_page, "password_input")->getString();
 
-        if (username_str.length() < 2) {
+        if (username_str.length() < MIN_USERNAME_LEN) {
             gui::show_message_box("account details error",
-                "username must be greater than or equal to 3 characters", "OK"); return false;
+                sstream_cstr("username must be greater than or equal to " << MIN_USERNAME_LEN << " characters"), "OK"); return false;
         }
 
-        if (password_str.length() < 2) {
+        if (password_str.length() < MIN_USERNAME_LEN) {
             gui::show_message_box("account details error",
                 "password must be greater than or equal to 3 characters", "OK"); return false;
         }

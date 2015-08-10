@@ -1,11 +1,15 @@
 #include "debug/Logger.h"
 
-FILE* debug::lfile;
+namespace debug {
 
-void debug::init_logger() {
-    lfile = fopen("log.txt", "w");
-    cf_assert(lfile == NULL, sstream << "log.txt could not be written");
-}
+    FILE* lfile;
+    StrStream glb_stream;
+
+    void init_logger() {
+        lfile = fopen("log.txt", "w");
+        cf_assert(lfile == NULL, sstream_cstr("log.txt could not be written"));
+    }
+};
 
 //taken from mingw wassert.c
 void __cdecl _assert(const char *_Message, const char *_File, unsigned _Line) {

@@ -20,12 +20,18 @@ def init():
 
     debug.log("accounts db initiated", debug.P_INFO);
 
-def account_strings_to_db(username, password):
-    if (username.__len__() > MAX_USERNAME_LEN): username = username[0:MAX_USERNAME_LEN];
-    if (password.__len__() > MAX_PASSWORD_LEN): password = password[0:MAX_PASSWORD_LEN];
+#checks the formatting of both the username annd password to make sure it can be put in the db
+#returns (formatted username, formatted password, error code (true = success, false = format_error))
+def format_user_pass(username, password):
+    if (username.__len__() > MAX_USERNAME_LEN):
+        debug.log_db("could not format username (%s...) - it is too long" % (username[0:MAX_USERNAME_LEN]));
+        return "", "", False;
+    if (password.__len__() > MAX_PASSWORD_LEN):
+        debug.log_db("could not format password (%s...) - it is too long" % (password[0:MAX_USERNAME_LEN]));
+        return "", "", False;
     password = hashlib.sha256(password).hexdigest();
 
-    err = 0;
+    err = True;
     return username, password, err;
 
 #attempts to add a username and password to the database and returns a RegisterResult enum
@@ -33,8 +39,8 @@ def add_user_account(username, password):
     global con;
     global cur;
 
-    username, password, err = account_strings_to_db(username, password);
-    if (err == -1): return accounts.RegisterResult.INVALID_FORMAT;
+    username, password, err = format_user_pass(username, password);
+    if (err == False): return accounts.RegisterResult.INVALID_FORMAT;
 
     query("select * from accounts where user='%s'" % (username));
     if (cur.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
@@ -49,8 +55,8 @@ def add_user_account(username, password):
 def find_user_account(username, password):
     global cur;
 
-    username, password, err = account_strings_to_db(username, password);
-    if (err == -1): return accounts.LoginResult.INVALID_FORMAT;
+    username, password, err = format_user_pass(username, password);
+    if (err == False): return accounts.LoginResult.INVALID_FORMAT;
 
     result = query("select * from accounts where user='%s' and pass='%s'" % (username, password));
     if not (result): return accounts.LoginResult.UNKNOWN_ERROR;

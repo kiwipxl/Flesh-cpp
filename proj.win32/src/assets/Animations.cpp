@@ -25,22 +25,22 @@ namespace assets {
 
             //conditional asserts
             cf_assert(texture == NULL,
-                sstream << "could not load texture (" << file_name << ")");
+                sstream_cstr("could not load texture (" << file_name << ")"));
 
             cf_assert(texture->getPixelsWide() == 0 || texture->getPixelsHigh() == 0,
-                sstream << "texture width/height must be greater than 0 (" << file_name << ")");
+                sstream_cstr("texture width/height must be greater than 0 (" << file_name << ")"));
 
             cf_assert(rect.origin.x < 0 || rect.origin.y < 0,
-                sstream << "rect x/y cannot be less than 0 (" << file_name << ")");
+                sstream_cstr("rect x/y cannot be less than 0 (" << file_name << ")"));
 
             cf_assert(rect.size.width < 0 || rect.size.height < 0,
-                sstream << "rect width/height cannot be less than 0 (" << file_name << ")");
+                sstream_cstr("rect width/height cannot be less than 0 (" << file_name << ")"));
 
             cf_assert(rect.origin.x > texture->getPixelsWide() || rect.origin.y > texture->getPixelsHigh(),
-                sstream << "rect x/y cannot be greater than texture width/height (" << file_name << ")");
+                sstream_cstr("rect x/y cannot be greater than texture width/height (" << file_name << ")"));
 
             cf_assert(rect.size.width > texture->getPixelsWide() || rect.size.height > texture->getPixelsHigh(),
-                sstream << "rect width/height cannot be greater than texture width/height (" << file_name << ")");
+                sstream_cstr("rect width/height cannot be greater than texture width/height (" << file_name << ")"));
 
             while (true) {
                 if (rect.origin.x >= texture->getPixelsWide()) break;

@@ -26,9 +26,9 @@ namespace assets {
             try {
                 cs_node = CSLoader::createNode(file_name);
             }catch (const std::exception& e) {
-                f_assert(sstream << "CSB could not be loaded (" << file_name << "): " << e.what());
+                f_assert(sstream_cstr("CSB could not be loaded (" << file_name << "): " << e.what()));
             }catch (...) {
-                f_assert(sstream << "unknown error occurred while loading CSB (" << file_name << ")");
+                f_assert(sstream_cstr("unknown error occurred while loading CSB (" << file_name << ")"));
             }
 
             cs_node->retain();
