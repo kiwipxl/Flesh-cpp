@@ -16,12 +16,12 @@ namespace entities {
     Unit* test_player;
 
     std::vector<Unit*> units;
+    float max_vel_x = 400.0f;
 
     Unit::Unit() {
-        base = Sprite::create("HelloWorld.png");
+        base = Sprite::create("duck.png");
         base->setPosition(base->getContentSize().width, base->getContentSize().height);
         base->setCameraMask((u_short)CameraFlag::USER1);
-        base->setScale(.25f);
         base->retain();
         root::scene->addChild(base, 1);
 
@@ -31,7 +31,8 @@ namespace entities {
         pbody->setContactTestBitmask(true);
         pbody->setRotationEnable(false);
         pbody->setPositionOffset(Vec2(0, -10));
-        root::scene->p_world->setGravity(Vec2(0, -1000));
+        pbody->setAngularDamping(10000.0f);
+        root::scene->p_world->setGravity(Vec2(0, -800.0f));
         base->setPhysicsBody(pbody);
 
         //state::scene->p_world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -39,6 +40,7 @@ namespace entities {
         auto contact_listener = EventListenerPhysicsContact::create();
         contact_listener->onContactBegin = CC_CALLBACK_1(Unit::physics_contact, this);
         root::scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contact_listener, base);
+        root::scene->p_world->setUpdateRate(0.0f);
 
         dest_x = base->getPositionX();
         dest_y = base->getPositionY();
@@ -50,6 +52,8 @@ namespace entities {
         auto b = contact.getShapeB()->getBody()->getNode();
         if (a && b) {
             can_jump = true;
+            auto data = contact.getContactData();
+            auto pos = b->getPosition();
             if (a == base) {
                 int s = 0;
             }
@@ -59,27 +63,27 @@ namespace entities {
     }
 
     void Unit::update() {
-        log_info << pbody->getLinearDamping();
-        //pbody->applyImpulse(Vec2(0, -20000.0f));
-        //pbody->setVelocityLimit(5000.0f);
+        pbody->setLinearDamping(1.0f);
+        if (pbody->getVelocity().x > max_vel_x) pbody->setVelocity(Vec2(max_vel_x, pbody->getVelocity().y));
+        else if (pbody->getVelocity().x < -max_vel_x) pbody->setVelocity(Vec2(-max_vel_x, pbody->getVelocity().y));
+
         if (player_input) {
             if (input::key_down(EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
                 pbody->applyImpulse(Vec2(10000.0f, 0));
                 facing_right = true;
+                base->setFlippedX(true);
             }
             if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
                 pbody->applyImpulse(Vec2(-10000.0f, 0));
                 facing_right = false;
+                base->setFlippedX(false);
             }
             if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_UP_ARROW)) {
-                pbody->setVelocity(Vec2(pbody->getVelocity().x, 500.0f));
-                if (facing_right) pbody->applyImpulse(Vec2(200000.0f, 0));
-                else pbody->applyImpulse(Vec2(-200000.0f, 0));
+                pbody->setVelocity(Vec2(pbody->getVelocity().x, 700.0f));
+                if (facing_right) pbody->applyImpulse(Vec2(250000.0f, 0));
+                else pbody->applyImpulse(Vec2(-250000.0f, 0));
 
                 can_jump = false;
-            }
-            if (input::key_down(EventKeyboard::KeyCode::KEY_DOWN_ARROW)) {
-                pbody->applyImpulse(Vec2(0, -40000.0f));
             }
         }else {
             pbody->setGravityEnable(false);

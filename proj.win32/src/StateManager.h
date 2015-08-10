@@ -23,6 +23,7 @@ namespace root {
     extern State s;
     extern cc::Label* info_label;
     extern float time_since_startup;
+    extern float delta_time;
 
     extern void init_root(SceneManager* scene_ref);
     extern void update_state(float dt);

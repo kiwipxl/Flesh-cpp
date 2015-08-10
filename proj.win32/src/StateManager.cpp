@@ -25,6 +25,7 @@ namespace root {
     State s = STATE_EMPTY;
     Label* info_label;
     float time_since_startup = 0;
+    float delta_time = 0;
 
     void create_state(State, bool = false);
     void remove_state(State, bool = false);
@@ -78,6 +79,7 @@ namespace root {
 
     void update_state(float dt) {
         time_since_startup += dt;
+        delta_time = dt;
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_T)) {
             switch_state(STATE_GAME);

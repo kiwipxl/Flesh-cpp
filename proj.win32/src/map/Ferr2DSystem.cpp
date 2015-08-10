@@ -152,9 +152,13 @@ namespace map {
 
                         if (n >= 1) {
                             if (n % 3 == 0) {
-						        ter->debug_draw_node->drawLine(ter->debug_points[ter->indices[ter->indices.size() - 2]], ter->debug_points[ter->indices[ter->indices.size() - 4]], Color4F(1.0f, 1.0f, 1.0f, .4f));
+						        ter->debug_draw_node->drawLine(ter->debug_points[ter->indices[ter->indices.size() - 2]], 
+                                                               ter->debug_points[ter->indices[ter->indices.size() - 4]], 
+                                                               Color4F(1.0f, 1.0f, 1.0f, .4f));
                             }else {
-						        ter->debug_draw_node->drawLine(ter->debug_points[ter->indices[ter->indices.size() - 2]], ter->debug_points[ter->indices[ter->indices.size() - 1]], Color4F(1.0f, 1.0f, 1.0f, .4f));
+						        ter->debug_draw_node->drawLine(ter->debug_points[ter->indices[ter->indices.size() - 2]], 
+                                                               ter->debug_points[ter->indices[ter->indices.size() - 1]], 
+                                                               Color4F(1.0f, 1.0f, 1.0f, .4f));
                             }
                         }
                     }
@@ -178,7 +182,9 @@ namespace map {
 				        ter->collider_points.push_back(v);
 
                         if (n >= 1) {
-					        ter->debug_draw_node->drawLine(ter->collider_points[ter->collider_points.size() - 2], ter->collider_points[ter->collider_points.size() - 1], Color4F(0.0f, 0.0f, 1.0f, .8f));
+					        ter->debug_draw_node->drawLine(ter->collider_points[ter->collider_points.size() - 2], 
+                                                           ter->collider_points[ter->collider_points.size() - 1], 
+                                                           Color4F(0.0f, 0.0f, 1.0f, .8f));
                         }
                     }
 		        }else {
