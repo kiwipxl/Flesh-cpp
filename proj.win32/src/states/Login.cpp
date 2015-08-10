@@ -1,5 +1,7 @@
 #include "states/Login.h"
 
+#include <regex>
+
 #include <base/CCScheduler.h>
 #include <ui/UIButton.h>
 #include <ui/UITextField.h>
@@ -26,6 +28,7 @@ namespace login {
     std::string username_str;
     ui::TextField* password_input;
     std::string password_str;
+    const std::regex input_regex("^[a-zA-Z0-9]+$");
 
     enum LoginResult {
         LOGIN_RESULT_SUCCESS,
@@ -54,12 +57,31 @@ namespace login {
 
         if (username_str.length() < MIN_USERNAME_LEN) {
             gui::show_message_box("account details error",
-                sstream_cstr("username must be greater than or equal to " << MIN_USERNAME_LEN << " characters"), "OK"); return false;
+                                   sstream_cstr("username must be greater than or equal to " << MIN_USERNAME_LEN << " characters"), "OK"); return false;
         }
-
         if (password_str.length() < MIN_PASSWORD_LEN) {
             gui::show_message_box("account details error",
-                sstream_cstr("password must be greater than or equal to " << MIN_PASSWORD_LEN << " characters"), "OK"); return false;
+                                   sstream_cstr("password must be greater than or equal to " << MIN_PASSWORD_LEN << " characters"), "OK"); return false;
+        }
+        if (username_str.length() > MAX_USERNAME_LEN) {
+            gui::show_message_box("account details error",
+                                   sstream_cstr("username must be less than or equal to " << MAX_USERNAME_LEN << " characters"), "OK"); return false;
+        }
+        if (password_str.length() > MAX_PASSWORD_LEN) {
+            gui::show_message_box("account details error",
+                                   sstream_cstr("password must be less than or equal to " << MAX_PASSWORD_LEN << " characters"), "OK"); return false;
+        }
+
+        if (!std::regex_search(username_str, input_regex)) {
+            gui::show_message_box("account details error", 
+                                  "username cannot contain any special characters, only alphabetical and numerical", "OK");
+            return false;
+        }
+
+        if (!std::regex_search(password_str, input_regex)) {
+            gui::show_message_box("account details error",
+                                  "password cannot contain any special characters, only alphabetical and numerical", "OK");
+            return false;
         }
 
         return true;

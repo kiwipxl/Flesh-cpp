@@ -22,3 +22,6 @@ def log(log_msg, priority, new_line = '\n'):
 
 def log_db(log_msg, new_line = '\n'):
     print("[DB (%.2f)]: %s" % ((time.time() - start_time), log_msg), end=new_line);
+
+def log_accounts(log_msg, new_line = '\n'):
+    print("[Accounts (%.2f)]: %s" % ((time.time() - start_time), log_msg), end=new_line);
