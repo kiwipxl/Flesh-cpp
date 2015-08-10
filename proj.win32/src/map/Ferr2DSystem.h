@@ -25,7 +25,6 @@ namespace map {
                 std::vector<u_short> indices;
 
                 //debug
-                cc::DrawNode* debug_draw_node;
 			    std::vector<cc::Vec2> debug_points;
 
 			    int edge_indices_start;
@@ -49,9 +48,10 @@ namespace map {
 		    public:
                 Terrain(TerrainData& t_data);
 
-                cc::Node* node;
+                cc::Node* base;
                 cc::PhysicsBody* pbody;
                 TerrainData* terrain_data;
+                cc::DrawNode* debug_draw_node;
 
                 void draw();
 

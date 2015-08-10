@@ -16,4 +16,3 @@ switching to state 3 from state 2
 removed state 2
 created state 3
 switched to state 3 from state 3
-removed state 3

@@ -38,7 +38,7 @@ namespace entities {
         //state::scene->p_world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
         auto contact_listener = EventListenerPhysicsContact::create();
-        contact_listener->onContactBegin = CC_CALLBACK_1(Unit::physics_contact, this);
+        contact_listener->onContactPreSolve = CC_CALLBACK_1(Unit::physics_contact, this);
         root::scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contact_listener, base);
         root::scene->p_world->setUpdateRate(0.0f);
 
@@ -52,11 +52,6 @@ namespace entities {
         auto b = contact.getShapeB()->getBody()->getNode();
         if (a && b) {
             can_jump = true;
-            auto data = contact.getContactData();
-            auto pos = b->getPosition();
-            if (a == base) {
-                int s = 0;
-            }
         }
 
         return true;
@@ -90,6 +85,8 @@ namespace entities {
             base->setPosition(base->getPositionX() + ((dest_x - base->getPositionX()) / 2.0f), (base->getPositionY() + (dest_y - base->getPositionY()) / 2.0f));
             base->setRotation(base->getRotation() + ((dest_rota - base->getRotation()) / 2.0f));
         }
+
+        can_jump = false;
     }
 
     void test_peer_join(network::peers::Peer* peer) {

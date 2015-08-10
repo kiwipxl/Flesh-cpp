@@ -37,7 +37,7 @@ namespace map {
         Terrain::Terrain(TerrainData& t_data) {
             terrain_data = &t_data;
 
-            node = Node::create();
+            base = Node::create();
 
             pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
             pbody->setGravityEnable(false);
@@ -45,11 +45,32 @@ namespace map {
             pbody->setCollisionBitmask(1);
             pbody->setContactTestBitmask(true);
 
-            node->setPhysicsBody(pbody);
-            node->setPosition(0, 0);
-            //node->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
-            //node->setScale(1.1f, 1.1f);
-            root::scene->addChild(node, 1);
+            base->setPhysicsBody(pbody);
+            base->setPosition(0, 0);
+            //base->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+            //base->setScale(1.1f, 1.1f);
+            root::scene->addChild(base, 1);
+
+            debug_draw_node = DrawNode::create();
+            debug_draw_node->retain();
+
+            for (int n = 1; n < t_data.indices.size(); ++n) {
+                if (n % 3 == 0) {
+                    debug_draw_node->drawLine(t_data.debug_points[t_data.indices[n - 1]],
+                                              t_data.debug_points[t_data.indices[n - 3]],
+                                              Color4F(1.0f, 1.0f, 1.0f, .4f));
+                }else {
+                    debug_draw_node->drawLine(t_data.debug_points[t_data.indices[n - 1]],
+                                              t_data.debug_points[t_data.indices[n]],
+                                              Color4F(1.0f, 1.0f, 1.0f, .4f));
+                }
+            }
+
+            for (int n = 1; n < t_data.collider_points.size(); ++n) {
+                debug_draw_node->drawLine(t_data.collider_points[n - 1],
+                                          t_data.collider_points[n],
+                                          Color4F(0.0f, 0.0f, 1.0f, .8f));
+            }
 
             edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
             edge_tris.indexCount = t_data.edge_indices_end;
@@ -64,7 +85,7 @@ namespace map {
             blend_func.src = GL_SRC_ALPHA;
             blend_func.dst = GL_ONE_MINUS_SRC_ALPHA;
 
-            edge_tris_cmd.init(0.0f, edge_t->getName(), root::scene->getGLProgramState(), blend_func, edge_tris, node->getNodeToWorldTransform(), 1);
+            edge_tris_cmd.init(0.0f, edge_t->getName(), root::scene->getGLProgramState(), blend_func, edge_tris, base->getNodeToWorldTransform(), 1);
 
             fill_tris.indices = &t_data.indices[t_data.fill_indices_start];
             fill_tris.indexCount = t_data.fill_indices_end;
@@ -75,13 +96,13 @@ namespace map {
             fill_t->retain();
             fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
-            fill_tris_cmd.init(0.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, node->getNodeToWorldTransform(), 1);
+            fill_tris_cmd.init(0.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, base->getNodeToWorldTransform(), 1);
         }
 
         void Terrain::draw() {
             Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
             Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
-            terrain_data->debug_draw_node->draw(Director::getInstance()->getRenderer(), node->getNodeToWorldTransform(), 0);
+            debug_draw_node->draw(Director::getInstance()->getRenderer(), base->getNodeToWorldTransform(), 0);
         }
 
         //-- end terrain class --
@@ -125,9 +146,6 @@ namespace map {
                 temp = new char[file_len];
                 fread(temp, 1, file_len, f);
 
-                ter->debug_draw_node = DrawNode::create();
-                ter->debug_draw_node->retain();
-
                 std::string data = temp;
                 std::vector<std::string> tokens;
 		        if (split_tokens(data, tokens, "vertex_data:")) {
@@ -149,18 +167,6 @@ namespace map {
                 if (split_tokens(data, tokens, "indices:")) {
                     for (int n = 0; n < tokens.size(); ++n) {
                         ter->indices.push_back(std::stof(tokens[n]));
-
-                        if (n >= 1) {
-                            if (n % 3 == 0) {
-						        ter->debug_draw_node->drawLine(ter->debug_points[ter->indices[ter->indices.size() - 2]], 
-                                                               ter->debug_points[ter->indices[ter->indices.size() - 4]], 
-                                                               Color4F(1.0f, 1.0f, 1.0f, .4f));
-                            }else {
-						        ter->debug_draw_node->drawLine(ter->debug_points[ter->indices[ter->indices.size() - 2]], 
-                                                               ter->debug_points[ter->indices[ter->indices.size() - 1]], 
-                                                               Color4F(1.0f, 1.0f, 1.0f, .4f));
-                            }
-                        }
                     }
 		        }else {
                     RETURN_LOAD_ERR("indices attribute missing", file_name);
@@ -180,12 +186,6 @@ namespace map {
                         v.x = std::stof(tokens[n]) * 40.0f;
                         v.y = std::stof(tokens[n + 1]) * 40.0f;
 				        ter->collider_points.push_back(v);
-
-                        if (n >= 1) {
-					        ter->debug_draw_node->drawLine(ter->collider_points[ter->collider_points.size() - 2], 
-                                                           ter->collider_points[ter->collider_points.size() - 1], 
-                                                           Color4F(0.0f, 0.0f, 1.0f, .8f));
-                        }
                     }
 		        }else {
                     RETURN_LOAD_ERR("colider_points attribute missing", file_name);
