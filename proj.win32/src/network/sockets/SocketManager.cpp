@@ -138,6 +138,7 @@ namespace sock {
 
     void close_all_threads() {
         tcp_connect_thread.detach();
+        msg::msgs_thread.detach();
     }
 
     void init() {

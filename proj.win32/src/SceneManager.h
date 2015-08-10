@@ -14,9 +14,8 @@ namespace root {
             static cc::Scene* create_scene();
 
             virtual bool init();
-
-            virtual void menu_close(Ref* r);
             virtual void update(float dt);
+            virtual void onExit();
 
             cc::PhysicsWorld* p_world;
 

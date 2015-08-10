@@ -35,7 +35,9 @@ namespace root {
         update_state(dt);
     }
 
-    void SceneManager::menu_close(Ref* r) {
+    void SceneManager::onExit() {
+        exit_root();
         Director::getInstance()->end();
+        exit(0);
     }
 };

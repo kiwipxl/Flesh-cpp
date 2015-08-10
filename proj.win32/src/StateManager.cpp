@@ -22,7 +22,7 @@ namespace root {
 
     SceneManager* scene;
 
-    State s = STATE_SERVER_CONNECT_SCREEN;
+    State s = STATE_EMPTY;
     Label* info_label;
     float time_since_startup = 0;
 
@@ -39,6 +39,7 @@ namespace root {
         network::msg::init();
         input::init();
 
+        s = STATE_SERVER_CONNECT_SCREEN;
         create_state(s, true);
     }
 
@@ -88,5 +89,10 @@ namespace root {
 
         network::sock::update();
         input::update_keyboard();
+    }
+
+    void exit_root() {
+        remove_state(s, true);
+        network::sock::close_all_threads();
     }
 };
