@@ -28,13 +28,9 @@ namespace entities {
             base->getContentSize().height * base->getScaleY()));
         pbody->setCollisionBitmask(1);
         pbody->setContactTestBitmask(true);
-        pbody->setRotationEnable(false);
-        pbody->setPositionOffset(Vec2(0, -10));
-        pbody->setAngularDamping(10000.0f);
+        //pbody->setRotationEnable(false);
         root::scene->p_world->setGravity(Vec2(0, -800.0f));
         base->setPhysicsBody(pbody);
-
-        root::scene->p_world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
         auto contact_listener = EventListenerPhysicsContact::create();
         contact_listener->onContactPreSolve = CC_CALLBACK_1(Unit::physics_contact, this);

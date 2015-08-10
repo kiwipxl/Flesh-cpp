@@ -24,11 +24,6 @@ namespace map {
         pos.x = entities::test_player->base->getPositionX();
         pos.y = entities::test_player->base->getPositionY();
         pos.z = 600;
-        Vec3 rot;
-        static float z = 0;
-        rot.y = z;
-        z += .1f;
-        cam_node->setRotation3D(rot);
         cam_node->setPosition3D(pos);
     }
 };

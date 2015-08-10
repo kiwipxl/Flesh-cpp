@@ -53,14 +53,23 @@ namespace map {
                 TerrainData* terrain_data;
                 cc::DrawNode* debug_draw_node = NULL;
 
-                void create_debug_geometry(bool show_triangles = true, bool show_collider_points = true);
+                void show_debug_geometry(bool show_triangles = true, bool show_collider_points = true);
+                void hide_debug_geometry();
+                void toggle_debug_geometry();
                 void draw();
+
+                bool is_debug_draw_on() { return debug_draw_on; }
 
             private:
                 cc::TrianglesCommand edge_tris_cmd;
                 cc::TrianglesCommand::Triangles edge_tris;
                 cc::TrianglesCommand fill_tris_cmd;
                 cc::TrianglesCommand::Triangles fill_tris;
+
+                bool debug_draw_on = false;
+
+                void create_debug_geometry(bool show_triangles = true, bool show_collider_points = true);
+                void remove_debug_geometry();
         };
 
 	    extern TerrainData* load(std::string file_name);

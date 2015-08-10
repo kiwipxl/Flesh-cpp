@@ -1,7 +1,10 @@
 #include "states/Game.h"
 
+#include <physics/CCPhysicsWorld.h>
+
 #include "assets/Assets.h"
 #include "entities/Unit.h"
+#include "input/SimpleInput.h"
 #include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
 
@@ -12,6 +15,7 @@ BEGIN_STATES_NS
 namespace game {
 
     using namespace root;
+    using namespace cocos2d;
 
     //private
     map::ferr2d::Terrain* terrain;
@@ -26,7 +30,7 @@ namespace game {
                 entities::test_player->player_input = true;
                 camera = new map::MapCamera();
                 terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
-                terrain->create_debug_geometry();
+
                 break;
         }
     }
@@ -42,6 +46,12 @@ namespace game {
                 entities::test_player->update();
                 camera->update();
                 terrain->draw();
+
+                if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_D)) {
+                    terrain->toggle_debug_geometry();
+
+                    root::scene->p_world->setDebugDrawMask(terrain->is_debug_draw_on() ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
+                }
 
                 /*for (int n = 0; n < peers::peer_list.size(); ++n) {
                     msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<
