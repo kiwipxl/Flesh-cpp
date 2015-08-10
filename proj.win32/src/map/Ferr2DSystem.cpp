@@ -42,9 +42,8 @@ namespace map {
             pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
             pbody->setGravityEnable(false);
             pbody->setDynamic(false);
-            //pbody->setCategoryBitmask(0x02);
-            //pbody->setCollisionBitmask(0x04);
-            //pbody->setContactTestBitmask(0x04);
+            pbody->setCollisionBitmask(1);
+            pbody->setContactTestBitmask(true);
 
             node->setPhysicsBody(pbody);
             node->setPosition(0, 0);

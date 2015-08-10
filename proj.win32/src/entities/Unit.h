@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <2d/CCSprite.h>
+#include <physics/CCPhysicsContact.h>
 
 #include "network/Peers.h"
 
@@ -13,6 +14,8 @@ namespace entities {
     class Unit {
 
         public:
+            Unit();
+
             cc::Sprite* base;
             cc::PhysicsBody* pbody;
             bool player_input = false;
@@ -22,9 +25,13 @@ namespace entities {
             int dest_y;
             float dest_rota;
 
-            Unit();
-
             void update();
+
+        private:
+            bool can_jump = false;
+            bool facing_right = false;
+
+            bool physics_contact(cc::PhysicsContact& contact);
     };
 
     extern Unit* test_player;

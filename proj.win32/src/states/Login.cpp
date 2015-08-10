@@ -104,7 +104,7 @@ namespace login {
                     sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
                         LoginResult result = (LoginResult)m->get<int>(0);
 
-                        INVOKE_MAIN_THREAD(result)
+                        INVOKE_MAIN_THREAD(result) {
                             switch (result) {
                                 case LOGIN_RESULT_SUCCESS:
                                     gui::show_message_box("successful", "logged in successfully", "OK");
@@ -119,13 +119,13 @@ namespace login {
                                     gui::show_message_box("login error", "an unknown error occurred while trying to login. please try again.", "OK");
                                     break;
                             }
-                        INVOKE_MAIN_THREAD_END
+                        });
                     });
 
                     sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_REGISTER_RESULT, [](msg::Message* m) {
                         RegisterResult result = (RegisterResult)m->get<int>(0);
 
-                        INVOKE_MAIN_THREAD(result)
+                        INVOKE_MAIN_THREAD(result) {
                             switch (result) {
                                 case REGISTER_RESULT_SUCCESS:
                                     gui::show_message_box("successful", "registered successfully", "OK");
@@ -140,7 +140,7 @@ namespace login {
                                     gui::show_message_box("register error", "an unknown error occurred while trying to register. please try again.", "OK");
                                     break;
                             }
-                        INVOKE_MAIN_THREAD_END
+                        });
                     });
 
                     register_button->addClickEventListener([](Ref* r) {

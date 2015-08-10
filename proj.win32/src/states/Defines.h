@@ -5,7 +5,6 @@
 #define END_STATES_NS       }
 
 #define SEP ,
-#define INVOKE_MAIN_THREAD(capture)     root::scene->getScheduler()->performFunctionInCocosThread([capture]() {
-#define INVOKE_MAIN_THREAD_END          });
+#define INVOKE_MAIN_THREAD(capture)     root::scene->getScheduler()->performFunctionInCocosThread([capture]()
 
 #endif
