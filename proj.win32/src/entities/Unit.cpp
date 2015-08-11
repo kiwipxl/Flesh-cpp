@@ -17,11 +17,13 @@ namespace entities {
     Unit* test_player;
 
     std::vector<Unit*> units;
-    float max_vel_x;
     float move_vel_x = 200.0f;
     float jump_vel_x = 400.0f;
     const float LARGE_VEL_X = 100000.0f;
     bool jumping = false;
+    bool colliding = false;
+    int collide_timer = 0;
+    bool moving = false;
 
     Unit::Unit() {
         base = Sprite::create("duck.png");
@@ -32,22 +34,20 @@ namespace entities {
         PhysicsMaterial mat;
         mat.density = .1f;
         mat.friction = 4;
-        mat.restitution = 0;
+        mat.restitution = 0.0f;
         pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
             base->getContentSize().height * base->getScaleY()), mat);
         pbody->setCollisionBitmask(1);
         pbody->setContactTestBitmask(true);
         pbody->setRotationEnable(false);
         pbody->setPositionOffset(Vec2(0, -10));
+        //pbody->setGravityEnable(false);
         root::scene->p_world->setGravity(Vec2(0, -1200.0f));
         base->setPhysicsBody(pbody);
-
-        max_vel_x = move_vel_x;
 
         auto contact_listener = EventListenerPhysicsContact::create();
         contact_listener->onContactPreSolve = CC_CALLBACK_1(Unit::physics_contact, this);
         root::scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contact_listener, base);
-        root::scene->p_world->setUpdateRate(0.0f);
 
         dest_x = base->getPositionX();
         dest_y = base->getPositionY();
@@ -57,31 +57,42 @@ namespace entities {
     bool Unit::physics_contact(PhysicsContact& contact) {
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
+
         if (a && b) {
             can_jump = true;
+            colliding = true;
+            collide_timer = 0;
         }
 
         return true;
     }
 
     void Unit::update() {
+        if (colliding && moving) {
+            base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
+        }else {
+            base->setRotation(0.0f);
+        }
+
         if (player_input) {
+            moving = false;
             if (!jumping) {
                 if (input::key_down(EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
-                    pbody->applyImpulse(Vec2(LARGE_VEL_X, 0));
+                    pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
                     facing_right = true;
                     base->setFlippedX(true);
+                    moving = true;
                 }
                 if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
-                    pbody->applyImpulse(Vec2(-LARGE_VEL_X, 0));
+                    pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
                     facing_right = false;
                     base->setFlippedX(false);
+                    moving = true;
                 }
                 if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_UP_ARROW)) {
                     pbody->setVelocity(Vec2(pbody->getVelocity().x, 700.0f));
-                    if (facing_right) pbody->applyImpulse(Vec2(LARGE_VEL_X, 0));
-                    else pbody->applyImpulse(Vec2(-LARGE_VEL_X, 0));
-                    max_vel_x = jump_vel_x;
+                    if (facing_right) pbody->setVelocity(Vec2(jump_vel_x, pbody->getVelocity().y));
+                    else pbody->setVelocity(Vec2(-jump_vel_x, pbody->getVelocity().y));
 
                     can_jump = false;
                     jumping = true;
@@ -93,15 +104,15 @@ namespace entities {
             base->setRotation(base->getRotation() + ((dest_rota - base->getRotation()) / 2.0f));
         }
 
-        if (pbody->getVelocity().x > max_vel_x) pbody->setVelocity(Vec2(max_vel_x, pbody->getVelocity().y));
-        else if (pbody->getVelocity().x < -max_vel_x) pbody->setVelocity(Vec2(-max_vel_x, pbody->getVelocity().y));
-
         if (pbody->getVelocity().x <= 2 && pbody->getVelocity().x > -2) {
             jumping = false;
-            max_vel_x = move_vel_x;
         }
 
-        can_jump = false;
+        if (++collide_timer >= 6) {
+            collide_timer = 0;
+            colliding = false;
+            can_jump = false;
+        }
     }
 
     void test_peer_join(network::peers::Peer* peer) {
