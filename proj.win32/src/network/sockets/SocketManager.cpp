@@ -137,8 +137,8 @@ namespace sock {
     }
 
     void close_all_threads() {
-        tcp_connect_thread.detach();
-        msg::msgs_thread.detach();
+        if (tcp_connect_thread.native_handle() != NULL) tcp_connect_thread.detach();
+        if (msg::msgs_thread.native_handle() != NULL) msg::msgs_thread.detach();
     }
 
     void init() {
