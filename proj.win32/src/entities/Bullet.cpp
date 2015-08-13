@@ -10,10 +10,11 @@ BEGIN_BULLET_NS
 //public
 
 //private
-extern std::vector<BulletPtr> bullets;
-    
+std::vector<BulletPtr> bullets;
+
 BulletPtr create_bullet(BulletType type, int x, int y) {
     BulletPtr b(new Bullet(type, x, y));
+    return b;
 }
 
 void update() {
@@ -25,8 +26,7 @@ void update() {
 //-- begin Bullet class --
 
 Bullet::Bullet(BulletType type, int x, int y) {
-    base = Sprite::create();
-    base->setTexture(assets::textures::test_bullet);
+    base = Sprite::createWithTexture(assets::textures::test_bullet);
 }
 
 Bullet::~Bullet() {

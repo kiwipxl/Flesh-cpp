@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\assets\Textures.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
+    <ClCompile Include="src\entities\Bullet.cpp" />
     <ClCompile Include="src\entities\Unit.cpp" />
     <ClCompile Include="src\gui\Button.cpp" />
     <ClCompile Include="src\gui\MessageBox.cpp" />
@@ -193,12 +194,15 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\AppDelegate.h" />
     <ClInclude Include="src\assets\Animations.h" />
     <ClInclude Include="src\assets\Assets.h" />
+    <ClInclude Include="src\assets\AssetsDefines.h" />
     <ClInclude Include="src\assets\CSB.h" />
     <ClInclude Include="src\assets\Maps.h" />
     <ClInclude Include="src\assets\Textures.h" />
     <ClInclude Include="src\debug\Errors.h" />
     <ClInclude Include="src\debug\Logger.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
+    <ClInclude Include="src\entities\Bullet.h" />
+    <ClInclude Include="src\entities\EntityDefines.h" />
     <ClInclude Include="src\entities\Unit.h" />
     <ClInclude Include="src\gui\Button.h" />
     <ClInclude Include="src\gui\MessageBox.h" />

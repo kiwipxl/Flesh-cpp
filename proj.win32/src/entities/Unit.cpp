@@ -28,8 +28,7 @@ int collide_timer = 0;
 bool moving = false;
 
 Unit::Unit() {
-    base = Sprite::create();
-    base->setTexture(assets::textures::duck);
+    base = Sprite::createWithTexture(assets::textures::duck);
     base->setPosition(0, 0);
     base->retain();
     root::scene->addChild(base, 1);
@@ -74,7 +73,7 @@ void Unit::update() {
     if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
         facing_right = !facing_right;
         base->setFlippedX(facing_right);
-        create_bullet();
+        create_bullet(bullet::TEST_BULLET, 0, 0);
     }
 
     if (colliding && moving) {

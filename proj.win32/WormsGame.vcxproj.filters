@@ -42,6 +42,7 @@
     <ClCompile Include="src\states\Game.cpp" />
     <ClCompile Include="src\input\KeyboardInput.cpp" />
     <ClCompile Include="src\input\MouseInput.cpp" />
+    <ClCompile Include="src\entities\Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -77,6 +78,9 @@
     <ClInclude Include="src\states\Defines.h" />
     <ClInclude Include="src\input\KeyboardInput.h" />
     <ClInclude Include="src\input\MouseInput.h" />
+    <ClInclude Include="src\entities\Bullet.h" />
+    <ClInclude Include="src\entities\EntityDefines.h" />
+    <ClInclude Include="src\assets\AssetsDefines.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
