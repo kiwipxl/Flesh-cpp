@@ -2,6 +2,7 @@
 
 #include <physics/CCPhysicsBody.h>
 #include <base/CCEventDispatcher.h>
+#include "cocos2d.h"
 
 #include "assets/Textures.h"
 #include "debug/Logger.h"
@@ -95,6 +96,11 @@ bool Bullet::physics_contact(PhysicsContact& contact) {
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b && (a == states::game::terrain->base || b == states::game::terrain->base)) {
+        auto bullet_explosion = ParticleSystemQuad::create("fireballpls.plist");
+        bullet_explosion->setPosition(base->getPosition());
+        bullet_explosion->setScale(.325f);
+        root::scene->addChild(bullet_explosion, 1);
+
         schedule_removal();
     }
 
@@ -111,24 +117,19 @@ void Bullet::add_btype_test(float angle, float power) {
     float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
     pbody->applyImpulse(Vec2(force_x, force_y));
 
-    int* timer = new int();
-    bool* gen_explosion = new bool();
-    *gen_explosion = false;
-    static bool init = false;
-    type_callback = [timer, gen_explosion, this]() {
-        if (!init) {
-            init = !init;
-            *timer = 0;
-        }
-
-        if (*gen_explosion) return;
-        if (++*timer >= 40) {
-            *gen_explosion = true;
+    type_callback = [this]() {
+        if (gen_explosion) return;
+        if (++timer >= 40) {
+            gen_explosion = true;
             for (int n = 0; n < 8; ++n) {
                 auto b = create_bullet(base->getPositionX(), base->getPositionY());
                 float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
                 b->add_btype_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
             }
+            auto bullet_explosion = ParticleSystemQuad::create("Ring.plist");
+            bullet_explosion->setPosition(base->getPosition());
+            bullet_explosion->setScale(.8f);
+            root::scene->addChild(bullet_explosion, 1);
         }
     };
 }

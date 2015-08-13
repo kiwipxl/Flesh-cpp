@@ -51,6 +51,9 @@ class Bullet {
         bool to_be_removed = false;
         BulletType type;
         std::function<void()> type_callback = nullptr;
+
+        int timer = 0;
+        bool gen_explosion = false;
 };
 
 typedef std::shared_ptr<Bullet> BulletPtr;
