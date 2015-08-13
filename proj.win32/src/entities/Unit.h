@@ -10,41 +10,43 @@ this class temporarily handles all player movement and other things, will be mod
 #include <physics/CCPhysicsContact.h>
 
 #include "network/Peers.h"
+#include "entities/EntityDefines.h"
 
-namespace entities {
+BEGIN_ENTITIES_NS
 
-    namespace cc = cocos2d;
+namespace cc = cocos2d;
 
-    class Unit {
+class Unit {
 
-        public:
-            Unit();
+    public:
+        Unit();
 
-            cc::Sprite* base;
-            cc::PhysicsBody* pbody;
-            bool player_input = false;
-            network::peers::Peer* peer;
+        cc::Sprite* base;
+        cc::PhysicsBody* pbody;
+        bool player_input = false;
+        network::peers::Peer* peer;
 
-            int dest_x;
-            int dest_y;
-            float dest_rota;
+        int dest_x;
+        int dest_y;
+        float dest_rota;
 
-            void update();
+        void update();
 
-        private:
-            bool can_jump = false;
-            bool facing_right = false;
+    private:
+        bool can_jump = false;
+        bool facing_right = false;
 
-            bool physics_contact(cc::PhysicsContact& contact);
-    };
-
-    extern Unit* test_player;
-    extern std::vector<Unit*> units;
-
-    extern void test_peer_join(network::peers::Peer* peer);
-    extern void test_peer_movement(network::peers::Peer* peer, int x, int y, float rota);
-
-    extern void update_units();
+        bool physics_contact(cc::PhysicsContact& contact);
 };
+
+extern Unit* test_player;
+extern std::vector<Unit*> units;
+
+extern void test_peer_join(network::peers::Peer* peer);
+extern void test_peer_movement(network::peers::Peer* peer, int x, int y, float rota);
+
+extern void update_units();
+
+END_ENTITIES_NS
 
 #endif
