@@ -21,7 +21,7 @@ namespace textures {
 
     void init() {
         load_image(duck, "duck.png");
-        load_image(test_bullet, "duck.png");
+        load_image(test_bullet, "bullet.png");
 
         log_print_file << "texture assets loaded";
     }

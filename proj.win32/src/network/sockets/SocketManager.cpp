@@ -26,7 +26,7 @@ namespace sock {
 
     char* SERVER_IP = "104.236.253.123";
     char* LOCAL_SERVER_IP = "127.0.0.1";
-    char* serv_ip = SERVER_IP;
+    char* serv_ip = LOCAL_SERVER_IP;
     u_short serv_port = 4222;
 
     void tcp_connect() {

@@ -5,12 +5,12 @@
 #include <memory>
 
 #include <2d/CCSprite.h>
+#include <physics/CCPhysicsContact.h>
 
 #include "entities/EntityDefines.h"
 
 #define BEGIN_BULLET_NS     namespace bullet {
 #define END_BULLET_NS       };
-
 
 BEGIN_ENTITIES_NS
 BEGIN_BULLET_NS
@@ -29,11 +29,22 @@ class Bullet {
         ~Bullet();
 
         cc::Sprite* base;
+        cc::PhysicsBody* pbody;
 
         void update();
+        void cleanup();
+        bool physics_contact(cc::PhysicsContact& contact);
+
+        bool is_removal_scheduled() { return to_be_removed; }
+
+    private:
+        cc::EventListenerPhysicsContact* pcontact_listener;
+        bool to_be_removed = false;
+
+        void schedule_removal();
 };
 
-typedef std::unique_ptr<Bullet> BulletPtr;
+typedef std::shared_ptr<Bullet> BulletPtr;
 
 extern BulletPtr create_bullet(BulletType type, int x, int y);
 extern void update();

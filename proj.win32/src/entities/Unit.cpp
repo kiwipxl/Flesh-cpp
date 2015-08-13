@@ -70,10 +70,10 @@ bool Unit::physics_contact(PhysicsContact& contact) {
 }
 
 void Unit::update() {
-    if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
+    if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
         facing_right = !facing_right;
         base->setFlippedX(facing_right);
-        create_bullet(bullet::TEST_BULLET, 0, 0);
+        create_bullet(bullet::TEST_BULLET, base->getPositionX(), base->getPositionY());
     }
 
     if (colliding && moving) {

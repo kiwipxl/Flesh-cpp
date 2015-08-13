@@ -51,7 +51,7 @@ namespace root {
 
         scene->scheduleUpdate();
 
-        s = STATE_GAME;
+        s = STATE_SERVER_CONNECT_SCREEN;
     }
 
     void create_state(State c_state, bool force) {
