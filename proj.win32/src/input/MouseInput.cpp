@@ -17,6 +17,8 @@ namespace input {
 
         bool down = false;
         bool pressed = false;
+        Vec2 pos;
+        Vec2 scroll;
     };
     MouseResult mouse_left;
     MouseResult mouse_right;
@@ -52,25 +54,33 @@ namespace input {
 
         mouse_listener->onMouseMove = [](Event* e) {
             EventMouse* em = (EventMouse*)e;
-            get_mouse_result(em->getMouseButton()).down = false;
-            get_mouse_result(em->getMouseButton()).pressed = false;
+            get_mouse_result(em->getMouseButton()).pos.x = em->getCursorX();
+            get_mouse_result(em->getMouseButton()).pos.y = em->getCursorY();
         };
 
         mouse_listener->onMouseScroll = [](Event* e) {
             EventMouse* em = (EventMouse*)e;
-            get_mouse_result(em->getMouseButton()).down = false;
-            get_mouse_result(em->getMouseButton()).pressed = false;
+            get_mouse_result(em->getMouseButton()).scroll.x = em->getScrollX();
+            get_mouse_result(em->getMouseButton()).scroll.y = em->getScrollY();
         };
 
         root::scene->getEventDispatcher()->addEventListenerWithFixedPriority(mouse_listener, 10);
     }
 
     bool get_mouse_pressed(int mouse_button) {
-        return true;
+        return get_mouse_result(mouse_button).pressed;
     }
 
     bool get_mouse_down(int mouse_button) {
-        return true;
+        return get_mouse_result(mouse_button).down;
+    }
+    
+    Vec2 get_mouse_pos(int mouse_button) {
+        return get_mouse_result(mouse_button).pos;
+    }
+    
+    Vec2 get_mouse_scroll(int mouse_button) {
+        return get_mouse_result(mouse_button).scroll;
     }
 
     void update_mouse() {
