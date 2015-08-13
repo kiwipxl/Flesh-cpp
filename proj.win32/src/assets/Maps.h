@@ -2,15 +2,17 @@
 #define _MAPS_H_
 
 #include "map/Ferr2DSystem.h"
+#include "assets/AssetsDefines.h"
 
-namespace assets {
+BEGIN_ASSETS_NS
 
-    namespace maps {
+namespace maps {
 
-        extern map::ferr2d::TerrainData* test_terrain;
+    extern map::ferr2d::TerrainData* test_terrain;
 
-        extern void init();
-    };
+    extern void init();
 };
+
+END_ASSETS_NS
 
 #endif

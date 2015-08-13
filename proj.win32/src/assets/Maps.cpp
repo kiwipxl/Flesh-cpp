@@ -2,16 +2,17 @@
 
 #include "debug/Logger.h"
 
-namespace assets {
+BEGIN_ASSETS_NS
 
-    namespace maps {
+namespace maps {
         
-        map::ferr2d::TerrainData* test_terrain;
+    map::ferr2d::TerrainData* test_terrain;
 
-        void init() {
-            test_terrain = map::ferr2d::load("terrain.t2d");
+    void init() {
+        test_terrain = map::ferr2d::load("terrain.t2d");
 
-            log_print_file << "map assets loaded";
-        }
-    };
+        log_print_file << "map assets loaded";
+    }
 };
+
+END_ASSETS_NS

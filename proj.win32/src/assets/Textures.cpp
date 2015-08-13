@@ -2,12 +2,13 @@
 
 #include "debug/Logger.h"
 
-namespace assets {
+BEGIN_ASSETS_NS
 
-    namespace textures {
+namespace textures {
 
-        void init() {
-            log_print_file << "texture assets loaded";
-        }
-    };
+    void init() {
+        log_print_file << "texture assets loaded";
+    }
 };
+
+END_ASSETS_NS

@@ -5,10 +5,12 @@
 #include "assets/CSB.h"
 #include "assets/Textures.h"
 #include "assets/Maps.h"
+#include "assets/AssetsDefines.h"
 
-namespace assets {
+BEGIN_ASSETS_NS
 
-    extern void init();
-};
+extern void init();
+
+END_ASSETS_NS
 
 #endif

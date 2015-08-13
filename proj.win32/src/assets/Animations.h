@@ -2,17 +2,19 @@
 #define _ANIMATIONS_H_
 
 #include <2d/CCAnimation.h>
+#include "assets/AssetsDefines.h"
 
-namespace assets {
+BEGIN_ASSETS_NS
 
-    namespace animations {
+namespace animations {
 
-        namespace cc = cocos2d;
+    namespace cc = cocos2d;
 
-        extern cc::Vector<cc::SpriteFrame*> spinner_frames;
+    extern cc::Vector<cc::SpriteFrame*> spinner_frames;
 
-        extern void init();
-    };
+    extern void init();
 };
+
+END_ASSETS_NS
 
 #endif

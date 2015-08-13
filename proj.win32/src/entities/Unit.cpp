@@ -4,8 +4,8 @@
 #include <physics/CCPhysicsBody.h>
 #include <base/CCEventDispatcher.h>
 #include <physics/CCPhysicsWorld.h>
-#include <chipmunk.h>
 
+#include "assets/Textures.h"
 #include "debug/Logger.h"
 #include "entities/Bullet.h"
 #include "input/KeyboardInput.h"
@@ -28,7 +28,8 @@ int collide_timer = 0;
 bool moving = false;
 
 Unit::Unit() {
-    base = Sprite::create("duck.png");
+    base = Sprite::create();
+    base->setTexture(assets::textures::duck);
     base->setPosition(0, 0);
     base->retain();
     root::scene->addChild(base, 1);

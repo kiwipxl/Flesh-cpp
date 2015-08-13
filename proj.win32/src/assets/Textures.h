@@ -3,12 +3,15 @@
 
 #include <2d/CCAnimation.h>
 
-namespace assets {
+#include "assets/AssetsDefines.h"
 
-    namespace textures {
+BEGIN_ASSETS_NS
 
-        extern void init();
-    };
+namespace textures {
+
+    extern void init();
 };
+
+END_ASSETS_NS
 
 #endif

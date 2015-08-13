@@ -6,6 +6,7 @@
 #include "assets/Assets.h"
 #include "debug/Errors.h"
 #include "debug/Logger.h"
+#include "entities/Bullet.h"
 #include "gui/MessageBox.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
@@ -116,6 +117,7 @@ namespace root {
         states::game::update_state(s);
 
         network::sock::update();
+        entities::bullet::update();
         input::update_keyboard();
         input::update_mouse();
     }
