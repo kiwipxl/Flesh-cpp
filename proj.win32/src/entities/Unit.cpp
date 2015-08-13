@@ -10,6 +10,7 @@
 #include "entities/Bullet.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
+#include "states/Game.h"
 #include "StateManager.h"
 
 BEGIN_ENTITIES_NS
@@ -29,6 +30,9 @@ bool moving = false;
 bool aiming = false;
 
 Sprite* cone;
+const float MIN_POWER = .5f;
+const float MAX_POWER = 1;
+float power = MIN_POWER;
 
 Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
@@ -81,19 +85,25 @@ void Unit::update() {
     cone->setPosition(Vec2(base->getPositionX(), base->getPositionY()));
 
     if (aiming) {
-        if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
-            cone->setRotation(cone->getRotation() + 4);
-        }else if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
-            cone->setRotation(cone->getRotation() - 4);
+        float x = (root::scene->screen_size.width) / 2.0f;
+        float y = (base->getContentSize().height + root::scene->screen_size.height) / 2.0f;
+        cone->setRotation(atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI) + 90);
+
+        if (input::key_down(EventKeyboard::KeyCode::KEY_W)) {
+            power += .05f;
+            power = clampf(power, MIN_POWER, MAX_POWER);
+        }else if (input::key_down(EventKeyboard::KeyCode::KEY_S)) {
+            power -= .05f;
+            power = clampf(power, MIN_POWER, MAX_POWER);
         }
 
-        if (input::key_pressed(EventKeyboard::KeyCode::KEY_SPACE)) {
+        if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
             auto b = bullet::create_bullet(base->getPositionX(), base->getPositionY());
-            b->add_btype_test(-cone->getRotation() + 90, 4);
+            b->add_btype_test(-cone->getRotation() + 90, power);
         }
     }
 
-    if (input::key_pressed(EventKeyboard::KeyCode::KEY_B)) {
+    if (input::get_mouse_button_pressed(MOUSE_BUTTON_RIGHT)) {
         aiming = !aiming;
         cone->setVisible(aiming);
     }

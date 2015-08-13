@@ -12,7 +12,7 @@ namespace map {
         public:
             MapCamera();
 
-            cc::Camera* cam_node;
+            cc::Camera* cam;
 
             void update();
     };

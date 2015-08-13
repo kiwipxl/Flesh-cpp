@@ -23,7 +23,8 @@ namespace cc = cocos2d;
 
 enum BulletType {
 
-    BULLET_TYPE_TEST
+    BULLET_TYPE_TEST, 
+    BULLET_TYPE_TEST2
 };
 
 class Bullet {
@@ -40,23 +41,25 @@ class Bullet {
         bool physics_contact(cc::PhysicsContact& contact);
 
         void add_btype_test(float angle, float power);
+        void add_btype_test2(float angle, float power);
 
+        void schedule_removal();
         bool is_removal_scheduled() { return to_be_removed; }
         BulletType get_type() { return type; }
 
     private:
-        cc::EventListenerPhysicsContact* pcontact_listener;
         bool to_be_removed = false;
         BulletType type;
         std::function<void()> type_callback = nullptr;
-
-        void schedule_removal();
 };
 
 typedef std::shared_ptr<Bullet> BulletPtr;
 
+extern void init();
+extern void deinit();
 extern BulletPtr create_bullet(int x, int y);
 extern void update();
+extern bool physics_contact(cc::PhysicsContact& contact);
 
 END_BULLET_NS
 END_ENTITIES_NS

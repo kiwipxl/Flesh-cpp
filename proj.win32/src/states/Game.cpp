@@ -29,13 +29,19 @@ namespace game {
                 entities::test_player->player_input = true;
                 camera = new map::MapCamera();
                 terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
+                entities::bullet::init();
 
                 break;
         }
     }
 
     void remove_state(State state) {
+        switch (state) {
+            case STATE_GAME:
+                entities::bullet::deinit();
 
+                break;
+        }
     }
 
     void update_state(State state) {
@@ -43,8 +49,8 @@ namespace game {
             case STATE_GAME:
                 entities::update_units();
                 entities::bullet::update();
-                entities::test_player->update();
                 camera->update();
+                entities::test_player->update();
                 terrain->draw();
 
                 if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_D)) {
@@ -58,6 +64,7 @@ namespace game {
                         (int)entities::test_player->base->getPositionX() << (int)entities::test_player->base->getPositionY() << 
                         (float)entities::test_player->base->getRotation());
                 }*/
+
                 break;
         }
     }
