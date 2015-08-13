@@ -4,9 +4,8 @@
 
 #include "assets/Assets.h"
 #include "entities/Unit.h"
+#include "entities/Bullet.h"
 #include "input/KeyboardInput.h"
-#include "map/Ferr2DSystem.h"
-#include "map/MapCamera.h"
 
 #include "StateManager.h"
 
@@ -17,11 +16,11 @@ namespace game {
     using namespace root;
     using namespace cocos2d;
 
-    //private
+    //public externs
     map::ferr2d::Terrain* terrain;
     map::MapCamera* camera;
 
-    //public externs
+    //private
 
     void create_state(State state) {
         switch (state) {
@@ -43,6 +42,7 @@ namespace game {
         switch (state) {
             case STATE_GAME:
                 entities::update_units();
+                entities::bullet::update();
                 entities::test_player->update();
                 camera->update();
                 terrain->draw();

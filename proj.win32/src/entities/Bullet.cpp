@@ -6,6 +6,7 @@
 #include "assets/Textures.h"
 #include "SceneManager.h"
 #include "StateManager.h"
+#include "states/Game.h"
 
 using namespace cocos2d;
 
@@ -16,6 +17,12 @@ BEGIN_BULLET_NS
 
 //private
 std::vector<BulletPtr> bullets;
+
+void init() {
+    pcontact_listener = EventListenerPhysicsContact::create();
+    pcontact_listener->onContactBegin = CC_CALLBACK_1(Bullet::physics_contact, this);
+    root::scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(pcontact_listener, base);
+}
 
 BulletPtr create_bullet(int x, int y) {
     BulletPtr b(new Bullet(x, y));
@@ -46,10 +53,6 @@ Bullet::Bullet(int x, int y) {
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
     base->setPhysicsBody(pbody);
-
-    pcontact_listener = EventListenerPhysicsContact::create();
-    pcontact_listener->onContactBegin = CC_CALLBACK_1(Bullet::physics_contact, this);
-    root::scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(pcontact_listener, base);
 }
 
 Bullet::~Bullet() {
@@ -72,8 +75,8 @@ bool Bullet::physics_contact(PhysicsContact& contact) {
     auto a = contact.getShapeA()->getBody()->getNode();
     auto b = contact.getShapeB()->getBody()->getNode();
 
-    if (a && b) {
-        //schedule_removal();
+    if (a && b && (a == states::game::terrain->base || b == states::game::terrain->base)) {
+        schedule_removal();
     }
 
     return true;

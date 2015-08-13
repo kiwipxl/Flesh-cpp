@@ -26,12 +26,20 @@ bool jumping = false;
 bool colliding = false;
 int collide_timer = 0;
 bool moving = false;
+bool aiming = false;
+
+Sprite* cone;
 
 Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
     base->setPosition(0, 0);
     base->retain();
     root::scene->addChild(base, 1);
+    
+    cone = Sprite::create("cone.png");
+    cone->setAnchorPoint(Vec2(.5f, -.25f));
+    cone->setVisible(false);
+    root::scene->addChild(cone, 1);
 
     PhysicsMaterial mat;
     mat.density = .1f;
@@ -70,11 +78,24 @@ bool Unit::physics_contact(PhysicsContact& contact) {
 }
 
 void Unit::update() {
-    if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
-        facing_right = !facing_right;
-        base->setFlippedX(facing_right);
-        auto b = bullet::create_bullet(base->getPositionX(), base->getPositionY());
-        b->add_btype_test(45, 4);
+    cone->setPosition(Vec2(base->getPositionX(), base->getPositionY()));
+
+    if (aiming) {
+        if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
+            cone->setRotation(cone->getRotation() + 4);
+        }else if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
+            cone->setRotation(cone->getRotation() - 4);
+        }
+
+        if (input::key_pressed(EventKeyboard::KeyCode::KEY_SPACE)) {
+            auto b = bullet::create_bullet(base->getPositionX(), base->getPositionY());
+            b->add_btype_test(-cone->getRotation() + 90, 4);
+        }
+    }
+
+    if (input::key_pressed(EventKeyboard::KeyCode::KEY_B)) {
+        aiming = !aiming;
+        cone->setVisible(aiming);
     }
 
     if (colliding && moving) {
@@ -85,7 +106,7 @@ void Unit::update() {
 
     if (player_input) {
         moving = false;
-        if (!jumping) {
+        if (!jumping && !aiming) {
             if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
                 pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
                 facing_right = true;
