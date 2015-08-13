@@ -16,7 +16,7 @@ namespace input {
     //public
     Key keys[last_key_code];
 
-    void init() {
+    void init_keyboard() {
         kb_listener = EventListenerKeyboard::create();
 
         kb_listener->onKeyPressed = [](EventKeyboard::KeyCode key_code, Event* event) {

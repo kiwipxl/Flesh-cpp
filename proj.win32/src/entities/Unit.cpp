@@ -69,7 +69,11 @@ namespace entities {
     }
 
     void Unit::update() {
-        EventMouse::getMouseButton(MOUSE_BUTTON_LEFT);
+        if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
+            facing_right = !facing_right;
+            base->setFlippedX(facing_right);
+        }
+
         if (colliding && moving) {
             base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
         }else {
@@ -82,13 +86,13 @@ namespace entities {
                 if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
                     pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
                     facing_right = true;
-                    base->setFlippedX(true);
+                    base->setFlippedX(facing_right);
                     moving = true;
                 }
                 if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
                     pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
                     facing_right = false;
-                    base->setFlippedX(false);
+                    base->setFlippedX(facing_right);
                     moving = true;
                 }
                 if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_W)) {

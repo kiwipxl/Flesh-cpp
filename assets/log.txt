@@ -5,4 +5,3 @@ texture assets loaded
 map assets loaded
 asset loading completed
 created state 3
-removed state 3

@@ -8,6 +8,7 @@
 #include "debug/Logger.h"
 #include "gui/MessageBox.h"
 #include "input/KeyboardInput.h"
+#include "input/MouseInput.h"
 #include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
 #include "network/message/Message.h"
@@ -44,7 +45,8 @@ namespace root {
         assets::init();
         network::sock::init();
         network::msg::init();
-        input::init();
+        input::init_keyboard();
+        input::init_mouse();
 
         scene->scheduleUpdate();
 
@@ -115,6 +117,7 @@ namespace root {
 
         network::sock::update();
         input::update_keyboard();
+        input::update_mouse();
     }
 
     void exit_root() {

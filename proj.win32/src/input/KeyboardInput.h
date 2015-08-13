@@ -15,7 +15,7 @@ namespace input {
 
     extern Key keys[];
 
-    extern void init();
+    extern void init_keyboard();
     extern bool key_down(cc::EventKeyboard::KeyCode key_code);
     extern bool key_pressed(cc::EventKeyboard::KeyCode key_code);
     extern void update_keyboard();
