@@ -151,6 +151,12 @@ namespace sock {
     void Socket::add_leave_handler(msg::CallbackFunc func, float timeout_len, bool remove_after_call) {
         callbacks.push_back(msg::make_MID_callback(msg::get_MID(msg::MID_RECV_CLIENT_LEAVE), func, timeout_len, remove_after_call));
     }
+
+    void Socket::cleanup() {
+        if (sock) closesocket(sock);
+        sock = NULL;
+        callbacks.clear();
+    }
 };
 
 END_NETWORK_NS

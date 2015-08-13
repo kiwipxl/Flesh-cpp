@@ -30,8 +30,6 @@ namespace startup {
                 info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
                 scene->addChild(info_label, 1);
 
-                scene->scheduleUpdate();
-
                 {
                     auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::animations::spinner_frames, .05f, UINT32_MAX));
                     spinner_sprite = Sprite::create();

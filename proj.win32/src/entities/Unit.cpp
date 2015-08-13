@@ -7,7 +7,8 @@
 #include <chipmunk.h>
 
 #include "debug/Logger.h"
-#include "input/SimpleInput.h"
+#include "input/KeyboardInput.h"
+#include "input/MouseInput.h"
 #include "StateManager.h"
 
 namespace entities {
@@ -68,6 +69,7 @@ namespace entities {
     }
 
     void Unit::update() {
+        EventMouse::getMouseButton(MOUSE_BUTTON_LEFT);
         if (colliding && moving) {
             base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
         }else {
@@ -77,19 +79,19 @@ namespace entities {
         if (player_input) {
             moving = false;
             if (!jumping) {
-                if (input::key_down(EventKeyboard::KeyCode::KEY_RIGHT_ARROW)) {
+                if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
                     pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
                     facing_right = true;
                     base->setFlippedX(true);
                     moving = true;
                 }
-                if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_ARROW)) {
+                if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
                     pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
                     facing_right = false;
                     base->setFlippedX(false);
                     moving = true;
                 }
-                if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_UP_ARROW)) {
+                if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_W)) {
                     pbody->setVelocity(Vec2(pbody->getVelocity().x, 700.0f));
                     if (facing_right) pbody->setVelocity(Vec2(jump_vel_x, pbody->getVelocity().y));
                     else pbody->setVelocity(Vec2(-jump_vel_x, pbody->getVelocity().y));

@@ -15,21 +15,26 @@ namespace msg {
 
     std::thread msgs_thread;
     sock::SocketPoll server_poll;
+    bool end_thread = false;
 
     #define VALID_PARAMS(a, b) a == b && last_param_list_size >= b->num_params
 
     void recv_msgs() {
+        server_poll.clear();
         server_poll.add_sock(sock::tcp_serv_sock);
 
 	    char buffer[1024];
 	    int msg_len;
 	    while (true) {
+            if (end_thread) break;
+
             process_all_callbacks(server_poll);
 
 		    int total = 0;
 		    if ((total = server_poll.poll()) > 0) {
                 int size = server_poll.get_size();
                 for (int i = 0; i < size; ++i) {
+                    if (server_poll.get_size() != size) break;
                     int revents = server_poll.get_fd_at(i)->revents;
 				    if (revents & POLLERR) {
                         log_warning << "poll error occurred";
@@ -38,6 +43,7 @@ namespace msg {
 				    }else if (revents & POLLNVAL) {
                         log_warning << "poll invalid request occurred";
 				    }else if (revents & POLLRDNORM || revents & POLLRDBAND || revents & POLLIN || revents & POLLPRI) {
+                        if (server_poll.get_size() != size) break;
                         sock::Socket* sock = server_poll.get_sock_at(i);
                         if (!sock) continue;
                         peers::Peer* peer;
@@ -103,17 +109,22 @@ namespace msg {
 				    }
 			    }
 		    }else if (total == -1) {
+                if (end_thread) break;
                 log_error << "polling error occurred: " << debug::get_last_error();
 		    }
 	    }
     }
 
     void close_all_threads() {
-        msgs_thread.detach();
+        end_thread = true;
+        if (msgs_thread.native_handle() != NULL) msgs_thread.detach();
+        server_poll.clear();
     }
 
     void start_recv_thread() {
+        end_thread = false;
         msgs_thread = std::thread(recv_msgs);
+        msgs_thread.detach();
     }
 };
 

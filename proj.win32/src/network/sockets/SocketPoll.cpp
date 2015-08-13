@@ -10,10 +10,10 @@ namespace sock {
     }
 
     void SocketPoll::add_sock(Socket& sock) {
-        pollfd* fd = new pollfd();
+        std::unique_ptr<pollfd> fd(new pollfd());
         fd->fd = sock.get_sock();
         fd->events = POLLRDNORM | POLLRDBAND;
-        fds.push_back(*fd);
+        fds.push_back(*fd.get());
         sockets.push_back(&sock);
     }
 
@@ -33,6 +33,11 @@ namespace sock {
                 fds.erase(fds.begin() + n, fds.end() + n + 1);
             }
         }
+    }
+
+    void SocketPoll::clear() {
+        fds.clear();
+        sockets.clear();
     }
 };
 

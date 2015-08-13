@@ -6,7 +6,8 @@
 #include "assets/Assets.h"
 #include "debug/Errors.h"
 #include "debug/Logger.h"
-#include "input/SimpleInput.h"
+#include "gui/MessageBox.h"
+#include "input/KeyboardInput.h"
 #include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
 #include "network/message/Message.h"
@@ -20,12 +21,17 @@ namespace root {
 
     using namespace cocos2d;
 
+    //public
     SceneManager* scene;
-
     State s = STATE_EMPTY;
+
     Label* info_label;
+
     float time_since_startup = 0;
     float delta_time = 0;
+    
+    //private
+    bool created_init_state = false;
 
     void create_state(State, bool = false);
     void remove_state(State, bool = false);
@@ -40,8 +46,9 @@ namespace root {
         network::msg::init();
         input::init();
 
-        s = STATE_SERVER_CONNECT_SCREEN;
-        create_state(s, true);
+        scene->scheduleUpdate();
+
+        s = STATE_GAME;
     }
 
     void create_state(State c_state, bool force) {
@@ -78,11 +85,28 @@ namespace root {
     }
 
     void update_state(float dt) {
+        if (!created_init_state) { created_init_state = true; create_state(s, true); }
+
         time_since_startup += dt;
         delta_time = dt;
 
-        if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_T)) {
-            switch_state(STATE_GAME);
+        if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_N)) {
+            switch_state((State)((int)s + 1));
+        }else if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_L)) {
+            static bool local_ip = false;
+            if (local_ip = !local_ip) {
+                log_info << "switched to local server ip";
+                network::sock::serv_ip = network::sock::LOCAL_SERVER_IP;
+                network::sock::cleanup_all();
+                switch_state(STATE_SERVER_CONNECT_SCREEN, true);
+                gui::show_message_box("", "switched to local server ip", "OK");
+            }else {
+                log_info << "switched to server ip";
+                network::sock::serv_ip = network::sock::SERVER_IP;
+                network::sock::cleanup_all();
+                switch_state(STATE_SERVER_CONNECT_SCREEN, true);
+                gui::show_message_box("", "switched to server ip", "OK");
+            }
         }
 
         states::startup::update_state(s);

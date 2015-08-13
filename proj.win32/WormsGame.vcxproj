@@ -168,6 +168,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\entities\Unit.cpp" />
     <ClCompile Include="src\gui\Button.cpp" />
     <ClCompile Include="src\gui\MessageBox.cpp" />
+    <ClCompile Include="src\input\KeyboardInput.cpp" />
+    <ClCompile Include="src\input\MouseInput.cpp" />
     <ClCompile Include="src\input\SimpleInput.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\map\MapCamera.cpp" />
@@ -201,6 +203,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\entities\Unit.h" />
     <ClInclude Include="src\gui\Button.h" />
     <ClInclude Include="src\gui\MessageBox.h" />
+    <ClInclude Include="src\input\KeyboardInput.h" />
+    <ClInclude Include="src\input\MouseInput.h" />
     <ClInclude Include="src\input\SimpleInput.h" />
     <ClInclude Include="src\map\MapCamera.h" />
     <ClInclude Include="src\network\message\Callback.h" />

@@ -18,7 +18,7 @@ namespace gui {
         assets::csb::load_csb(container, assets::csb::message_box_name);
         //container = assets::csb::message_box;
 
-        root::scene->addChild(container);
+        root::scene->addChild(container, 10);
 
         frame = assets::csb::get_child<ui::ImageView>(container, "frame_image");
 

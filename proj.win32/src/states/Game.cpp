@@ -4,7 +4,7 @@
 
 #include "assets/Assets.h"
 #include "entities/Unit.h"
-#include "input/SimpleInput.h"
+#include "input/KeyboardInput.h"
 #include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
 

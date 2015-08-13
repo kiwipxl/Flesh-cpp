@@ -24,15 +24,14 @@ namespace sock {
     int connection_err = -1;
     std::string connection_err_msg = "";
 
-    char* serv_ip = "127.0.0.1";
+    char* SERVER_IP = "104.236.253.123";
+    char* LOCAL_SERVER_IP = "127.0.0.1";
+    char* serv_ip = SERVER_IP;
     u_short serv_port = 4222;
 
     void tcp_connect() {
         using namespace sock;
 
-        connection_finished = false;
-        connection_err = NO_ERROR;
-    
         log_info << "attempt connect on thread...";
         if ((fresult = tcp_serv_sock.s_create()) != NO_ERROR) {
             log_error << "(tcp_serv_sock): error " << fresult << " occurred while creating tcp socket";
@@ -62,8 +61,7 @@ namespace sock {
                 msg::server_poll.add_sock(udp_serv_sock);
                 //msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
                 msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
-            }
-            else {
+            }else {
                 msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
             }
         });
@@ -132,13 +130,10 @@ namespace sock {
         }
     }
 
-    void begin_relay_test(Socket& sock) {
-        //msg::send(sock, msg::Stream() << _MID->BEGIN_RELAY_TEST);
-    }
-
     void close_all_threads() {
-        if (tcp_connect_thread.native_handle() != NULL) tcp_connect_thread.detach();
-        if (msg::msgs_thread.native_handle() != NULL) msg::msgs_thread.detach();
+        //todo: close threads properly!
+        //if (tcp_connect_thread.native_handle() != NULL) tcp_connect_thread.detach();
+        //msg::close_all_threads();
     }
 
     void init() {
@@ -147,9 +142,18 @@ namespace sock {
         Socket::init_sockets();
     }
 
+    void cleanup_all() {
+        close_all_threads();
+        tcp_serv_sock.cleanup();
+        udp_serv_sock.cleanup();
+    }
+
     void setup_tcp_sock() {
-        log_info << "attempt connect...";
+        connection_finished = false;
+        connection_err = NO_ERROR;
+
         tcp_connect_thread = std::thread(tcp_connect);
+        tcp_connect_thread.detach();
     }
 };
 

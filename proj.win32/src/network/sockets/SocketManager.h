@@ -24,6 +24,11 @@ namespace sock {
     #define MAX_UDP_PING_PONG_TRIES 3
     #define UDP_PING_PONG_TIMEOUT 2.5f
 
+    extern char* SERVER_IP;
+    extern char* LOCAL_SERVER_IP;
+    extern char* serv_ip;
+    extern u_short serv_port;
+
     extern bool connection_finished;
     extern int connection_err;
     extern std::string connection_err_msg;
@@ -36,6 +41,7 @@ namespace sock {
     extern void send_udp_ping_pong(Socket& sock);
     extern void begin_relay_test(Socket& sock);
     extern void close_all_threads();
+    extern void cleanup_all();
 };
 
 END_NETWORK_NS

@@ -55,6 +55,8 @@ namespace sock {
             void add_message_handler(msg::MID_enum mid, msg::CallbackFunc func, float timeout_len = msg::TIMEOUT_NONE, bool remove_after_call = false);
             void add_leave_handler(msg::CallbackFunc func, float timeout_len = msg::TIMEOUT_NONE, bool remove_after_call = false);
 
+            void cleanup();
+
 		    uintptr_t get_sock() { return sock; }
 		    char* get_binded_ip() { return binded_ip; }
             u_short get_binded_port() { return binded_port; }
@@ -72,7 +74,7 @@ namespace sock {
             u_short binded_port;
             char* send_ip;
             u_short send_port;
-		    uintptr_t sock;
+            uintptr_t sock = NULL;
             struct sockaddr_in binded_addr_info;
             struct sockaddr_in send_addr_info;
             struct addrinfo sock_info;

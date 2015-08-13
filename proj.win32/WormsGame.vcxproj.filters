@@ -41,6 +41,8 @@
     <ClCompile Include="src\states\Startup.cpp" />
     <ClCompile Include="src\states\Login.cpp" />
     <ClCompile Include="src\states\Game.cpp" />
+    <ClCompile Include="src\input\KeyboardInput.cpp" />
+    <ClCompile Include="src\input\MouseInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -75,6 +77,8 @@
     <ClInclude Include="src\states\Login.h" />
     <ClInclude Include="src\states\Game.h" />
     <ClInclude Include="src\states\Defines.h" />
+    <ClInclude Include="src\input\KeyboardInput.h" />
+    <ClInclude Include="src\input\MouseInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

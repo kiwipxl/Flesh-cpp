@@ -1,6 +1,10 @@
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
+/*
+this class temporarily handles all player movement and other things, will be modified in future
+*/
+
 #include <vector>
 #include <2d/CCSprite.h>
 #include <physics/CCPhysicsContact.h>
