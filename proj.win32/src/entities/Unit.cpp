@@ -73,7 +73,8 @@ void Unit::update() {
     if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
         facing_right = !facing_right;
         base->setFlippedX(facing_right);
-        create_bullet(bullet::TEST_BULLET, base->getPositionX(), base->getPositionY());
+        auto b = bullet::create_bullet(base->getPositionX(), base->getPositionY());
+        b->add_btype_test(45, 4);
     }
 
     if (colliding && moving) {

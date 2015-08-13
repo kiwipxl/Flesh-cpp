@@ -1,6 +1,10 @@
 #ifndef _BULLET_H_
 #define _BULLET_H_
 
+/*
+handles management and logic of bullets
+*/
+
 #include <vector>
 #include <memory>
 
@@ -19,13 +23,13 @@ namespace cc = cocos2d;
 
 enum BulletType {
 
-    TEST_BULLET
+    BULLET_TYPE_TEST
 };
 
 class Bullet {
 
     public:
-        Bullet(BulletType type, int x, int y);
+        Bullet(int x, int y);
         ~Bullet();
 
         cc::Sprite* base;
@@ -35,18 +39,23 @@ class Bullet {
         void cleanup();
         bool physics_contact(cc::PhysicsContact& contact);
 
+        void add_btype_test(float angle, float power);
+
         bool is_removal_scheduled() { return to_be_removed; }
+        BulletType get_type() { return type; }
 
     private:
         cc::EventListenerPhysicsContact* pcontact_listener;
         bool to_be_removed = false;
+        BulletType type;
+        std::function<void()> type_callback = nullptr;
 
         void schedule_removal();
 };
 
 typedef std::shared_ptr<Bullet> BulletPtr;
 
-extern BulletPtr create_bullet(BulletType type, int x, int y);
+extern BulletPtr create_bullet(int x, int y);
 extern void update();
 
 END_BULLET_NS

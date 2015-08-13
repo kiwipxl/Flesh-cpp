@@ -17,8 +17,8 @@ BEGIN_BULLET_NS
 //private
 std::vector<BulletPtr> bullets;
 
-BulletPtr create_bullet(BulletType type, int x, int y) {
-    BulletPtr b(new Bullet(type, x, y));
+BulletPtr create_bullet(int x, int y) {
+    BulletPtr b(new Bullet(x, y));
     bullets.push_back(b);
     return b;
 }
@@ -35,8 +35,9 @@ void update() {
 
 //-- begin Bullet class --
 
-Bullet::Bullet(BulletType type, int x, int y) {
+Bullet::Bullet(int x, int y) {
     base = Sprite::createWithTexture(assets::textures::test_bullet);
+    base->setPosition(x, y);
     root::scene->addChild(base, 1);
 
     pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
@@ -44,9 +45,6 @@ Bullet::Bullet(BulletType type, int x, int y) {
     pbody->setCollisionBitmask(1);
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
-    pbody->setGravityEnable(false);
-    pbody->setMass(FLT_MAX);
-    pbody->setMoment(FLT_MAX);
     base->setPhysicsBody(pbody);
 
     pcontact_listener = EventListenerPhysicsContact::create();
@@ -82,8 +80,17 @@ bool Bullet::physics_contact(PhysicsContact& contact) {
 }
 
 void Bullet::update() {
-    pbody->setVelocity(Vec2(0, 0));
-    pbody->setAngularVelocity(0);
+    if (type_callback != nullptr) type_callback();
+}
+
+void Bullet::add_btype_test(float angle, float power) {
+    type = BULLET_TYPE_TEST;
+    float force_x = cos(angle / (180 / 3.145f)) * 20000.0f * power;
+    float force_y = sin(angle / (180 / 3.145f)) * 20000.0f * power;
+    pbody->applyImpulse(Vec2(force_x, force_y));
+    type_callback = [&]() {
+
+    };
 }
 
 //-- end Bullet class --
