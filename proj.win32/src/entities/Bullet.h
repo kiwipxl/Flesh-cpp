@@ -50,7 +50,7 @@ class Bullet {
         bool is_removal_scheduled() { return to_be_removed; }
         BulletType get_type() { return type; }
 
-    private:
+    protected:
         bool to_be_removed = false;
         BulletType type;
 };

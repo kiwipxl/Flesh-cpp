@@ -23,13 +23,58 @@ struct BulletDataBase {
     virtual ~BulletDataBase() {
 
     }
+
+    virtual void update() = 0;
 };
 
-struct BulletDataTest : public BulletDataBase {
+struct BulletDataTest : public BulletDataBase, public Bullet {
 
     bool gen_explosion = false;
 
+    BulletDataTest(float angle, float power, const Bullet* bullet_ref) : Bullet(*bullet_ref) {
+        type = BULLET_TYPE_TEST;
+        float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
+        float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
+        pbody->applyImpulse(Vec2(force_x, force_y));
+    }
+
     virtual ~BulletDataTest() {
+
+    }
+
+    virtual void update() {
+        if (gen_explosion) return;
+        if (++timer >= 40) {
+            gen_explosion = true;
+            for (int n = 0; n < 8; ++n) {
+                auto b = create_bullet(base->getPositionX(), base->getPositionY());
+                float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
+                b->add_btype_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
+            }
+            auto bullet_explosion = ParticleSystemQuad::create("Ring.plist");
+            bullet_explosion->setPosition(base->getPosition());
+            bullet_explosion->setScale(.8f);
+            root::scene->addChild(bullet_explosion, 1);
+        }
+    }
+};
+
+struct BulletDataTest2 : public BulletDataBase, public Bullet {
+
+    bool gen_explosion = false;
+
+    BulletDataTest2(float angle, float power, const Bullet* bullet_ref) : Bullet(*bullet_ref) {
+        type = BULLET_TYPE_TEST;
+        float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
+        float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
+        pbody->applyImpulse(Vec2(force_x, force_y));
+    }
+
+    virtual ~BulletDataTest2() {
+
+    }
+
+    virtual void update() {
 
     }
 };
@@ -127,40 +172,16 @@ bool Bullet::on_contact_run(PhysicsContact& contact) {
 
 void Bullet::update() {
     for (int n = 0; n < data_types.size(); ++n) {
-        if (data_types[n]->update_callback != nullptr) data_types[n]->update_callback();
+        data_types[n]->update();
     }
 }
 
 void Bullet::add_btype_test(float angle, float power) {
-    type = BULLET_TYPE_TEST;
-    float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
-    float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-    pbody->applyImpulse(Vec2(force_x, force_y));
-
-    BulletDataTest* data = new BulletDataTest();
-    data_types.push_back(data);
-    data->update_callback = [data, this]() {
-        if (data->gen_explosion) return;
-        if (++data->timer >= 40) {
-            data->gen_explosion = true;
-            for (int n = 0; n < 8; ++n) {
-                auto b = create_bullet(base->getPositionX(), base->getPositionY());
-                float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
-                b->add_btype_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
-            }
-            auto bullet_explosion = ParticleSystemQuad::create("Ring.plist");
-            bullet_explosion->setPosition(base->getPosition());
-            bullet_explosion->setScale(.8f);
-            root::scene->addChild(bullet_explosion, 1);
-        }
-    };
+    data_types.push_back(new BulletDataTest(angle, power, this));
 }
 
 void Bullet::add_btype_test2(float angle, float power) {
-    type = BULLET_TYPE_TEST2;
-    float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
-    float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-    pbody->applyImpulse(Vec2(force_x, force_y));
+    data_types.push_back(new BulletDataTest2(angle, power, this));
 }
 
 //-- end Bullet class --
