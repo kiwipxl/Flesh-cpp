@@ -40,21 +40,21 @@ bool on_contact_run(PhysicsContact& contact) {
 
     if (a && b) {
         for (int n = 0; n < bullets.size(); ++n) {
-            if ((a == bullets[n]->base && b == states::game::terrain->base) ||
-                (b == bullets[n]->base && a == states::game::terrain->base)) {
-                bullets[n]->on_contact_run(contact);
-                return false;
+            if (a == bullets[n]->base || b == bullets[n]->base) {
+                if (b == states::game::terrain->base || a == states::game::terrain->base) {
+                    bullets[n]->on_contact_run(contact);
+                }
             }
         }
     }
 
-    return true;
+    return false;
 }
 
 //public
 
 void init() {
-    physics::add_on_contact_run(on_contact_run);
+    physics::add_on_contact_run(on_contact_run, NULL);
 }
 
 void deinit() {
@@ -102,6 +102,7 @@ void Bullet::cleanup() {
         delete data_types[n];
     }
     data_types.clear();
+    physics::remove_on_contact_run(this);
 }
 
 void Bullet::schedule_removal() {

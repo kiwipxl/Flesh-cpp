@@ -60,7 +60,7 @@ Unit::Unit() {
     root::scene->p_world->setGravity(Vec2(0, -1200.0f));
     base->setPhysicsBody(pbody);
 
-    physics::add_on_contact_run(CC_CALLBACK_1(Unit::physics_contact, this));
+    physics::add_on_contact_run(CC_CALLBACK_1(Unit::physics_contact, this), this);
 
     dest_x = base->getPositionX();
     dest_y = base->getPositionY();
@@ -72,12 +72,17 @@ bool Unit::physics_contact(PhysicsContact& contact) {
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b) {
-        can_jump = true;
-        colliding = true;
-        collide_timer = 0;
+        if (a == base || b == base) {
+            if (b == states::game::terrain->base || a == states::game::terrain->base) {
+                can_jump = true;
+                colliding = true;
+                collide_timer = 0;
+                return true;
+            }
+        }
     }
 
-    return true;
+    return false;
 }
 
 void Unit::update() {
