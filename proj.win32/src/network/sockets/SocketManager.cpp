@@ -28,6 +28,7 @@ namespace sock {
     char* LOCAL_SERVER_IP = "127.0.0.1";
     char* serv_ip = LOCAL_SERVER_IP;
     u_short serv_port = 4222;
+	std::mutex thread_lock;
 
     void tcp_connect() {
         using namespace sock;

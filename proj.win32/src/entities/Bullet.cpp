@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 
 #include "assets/Textures.h"
+#include "assets/Particles.h"
 #include "debug/Logger.h"
 #include "SceneManager.h"
 #include "StateManager.h"
@@ -20,6 +21,25 @@ BEGIN_BULLET_NS
 //private
 std::vector<BulletPtr> bullets;
 EventListenerPhysicsContact* contact_listener;
+
+struct BulletDataBase {
+
+	int timer = 0;
+	std::function<void()> update_callback = nullptr;
+
+	virtual ~BulletDataBase() {
+
+	}
+};
+
+struct BulletDataTest : public BulletDataBase {
+
+	bool gen_explosion = false;
+
+	virtual ~BulletDataTest() {
+
+	}
+};
 
 void init() {
     contact_listener = EventListenerPhysicsContact::create();
@@ -85,6 +105,10 @@ Bullet::~Bullet() {
 
 void Bullet::cleanup() {
     root::scene->removeChild(base, 1);
+    for (int n = 0; n < data_types.size(); ++n) {
+        delete data_types[n];
+    }
+    data_types.clear();
 }
 
 void Bullet::schedule_removal() {
@@ -96,7 +120,7 @@ bool Bullet::physics_contact(PhysicsContact& contact) {
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b && (a == states::game::terrain->base || b == states::game::terrain->base)) {
-        auto bullet_explosion = ParticleSystemQuad::create("fireballpls.plist");
+		auto bullet_explosion = ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
         bullet_explosion->setPosition(base->getPosition());
         bullet_explosion->setScale(.325f);
         root::scene->addChild(bullet_explosion, 1);
@@ -108,7 +132,9 @@ bool Bullet::physics_contact(PhysicsContact& contact) {
 }
 
 void Bullet::update() {
-    if (type_callback != nullptr) type_callback();
+    for (int n = 0; n < data_types.size(); ++n) {
+        if (data_types[n]->update_callback != nullptr) data_types[n]->update_callback();
+    }
 }
 
 void Bullet::add_btype_test(float angle, float power) {
@@ -116,11 +142,13 @@ void Bullet::add_btype_test(float angle, float power) {
     float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
     float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
     pbody->applyImpulse(Vec2(force_x, force_y));
-
-    type_callback = [this]() {
-        if (gen_explosion) return;
-        if (++timer >= 40) {
-            gen_explosion = true;
+    
+    BulletDataTest* data = new BulletDataTest();
+    data_types.push_back(data);
+    data->update_callback = [data, this]() {
+        if (data->gen_explosion) return;
+		if (++data->timer >= 40) {
+			data->gen_explosion = true;
             for (int n = 0; n < 8; ++n) {
                 auto b = create_bullet(base->getPositionX(), base->getPositionY());
                 float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
@@ -138,10 +166,7 @@ void Bullet::add_btype_test2(float angle, float power) {
     type = BULLET_TYPE_TEST2;
     float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
     float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-    pbody->applyImpulse(Vec2(force_x, force_y));
-    type_callback = [&]() {
-
-    };
+	pbody->applyImpulse(Vec2(force_x, force_y));
 }
 
 //-- end Bullet class --

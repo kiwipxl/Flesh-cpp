@@ -8,7 +8,8 @@ void init() {
     animations::init();
     csb::init();
     textures::init();
-    maps::init();
+	maps::init();
+	particles::init();
 
     log_print_file << "asset loading completed";
 }

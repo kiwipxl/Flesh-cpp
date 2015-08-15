@@ -5,6 +5,7 @@
 #include "assets/CSB.h"
 #include "assets/Textures.h"
 #include "assets/Maps.h"
+#include "assets/Particles.h"
 #include "assets/AssetsDefines.h"
 
 BEGIN_ASSETS_NS

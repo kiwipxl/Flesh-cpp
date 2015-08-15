@@ -21,6 +21,8 @@ BEGIN_BULLET_NS
 
 namespace cc = cocos2d;
 
+struct BulletDataBase;
+
 enum BulletType {
 
     BULLET_TYPE_TEST, 
@@ -34,7 +36,8 @@ class Bullet {
         ~Bullet();
 
         cc::Sprite* base;
-        cc::PhysicsBody* pbody;
+		cc::PhysicsBody* pbody;
+        std::vector<BulletDataBase*> data_types;
 
         void update();
         void cleanup();
@@ -50,10 +53,6 @@ class Bullet {
     private:
         bool to_be_removed = false;
         BulletType type;
-        std::function<void()> type_callback = nullptr;
-
-        int timer = 0;
-        bool gen_explosion = false;
 };
 
 typedef std::shared_ptr<Bullet> BulletPtr;
