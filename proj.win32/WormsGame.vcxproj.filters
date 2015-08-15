@@ -44,6 +44,7 @@
     <ClCompile Include="src\input\MouseInput.cpp" />
     <ClCompile Include="src\entities\Bullet.cpp" />
     <ClCompile Include="src\assets\Particles.cpp" />
+    <ClCompile Include="src\physics\Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -83,6 +84,8 @@
     <ClInclude Include="src\entities\EntityDefines.h" />
     <ClInclude Include="src\assets\AssetsDefines.h" />
     <ClInclude Include="src\assets\Particles.h" />
+    <ClInclude Include="src\physics\Physics.h" />
+    <ClInclude Include="src\physics\PhysicsDefines.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

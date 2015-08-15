@@ -10,6 +10,7 @@
 #include "entities/Bullet.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
+#include "physics/Physics.h"
 #include "states/Game.h"
 #include "StateManager.h"
 
@@ -59,9 +60,7 @@ Unit::Unit() {
     root::scene->p_world->setGravity(Vec2(0, -1200.0f));
     base->setPhysicsBody(pbody);
 
-    auto contact_listener = EventListenerPhysicsContact::create();
-    contact_listener->onContactPreSolve = CC_CALLBACK_1(Unit::physics_contact, this);
-    root::scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contact_listener, base);
+    physics::add_on_contact_run(CC_CALLBACK_1(Unit::physics_contact, this));
 
     dest_x = base->getPositionX();
     dest_y = base->getPositionY();

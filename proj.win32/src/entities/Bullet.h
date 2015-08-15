@@ -9,9 +9,9 @@ handles management and logic of bullets
 #include <memory>
 
 #include <2d/CCSprite.h>
-#include <physics/CCPhysicsContact.h>
 
 #include "entities/EntityDefines.h"
+#include "physics/Physics.h"
 
 #define BEGIN_BULLET_NS     namespace bullet {
 #define END_BULLET_NS       };
@@ -41,7 +41,7 @@ class Bullet {
 
         void update();
         void cleanup();
-        bool physics_contact(cc::PhysicsContact& contact);
+        bool on_contact_run(cc::PhysicsContact& contact);
 
         void add_btype_test(float angle, float power);
         void add_btype_test2(float angle, float power);
@@ -61,7 +61,6 @@ extern void init();
 extern void deinit();
 extern BulletPtr create_bullet(int x, int y);
 extern void update();
-extern bool physics_contact(cc::PhysicsContact& contact);
 
 END_BULLET_NS
 END_ENTITIES_NS

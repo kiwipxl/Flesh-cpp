@@ -2,6 +2,7 @@
 #define _PARTICLES_H_
 
 #include <2d/CCParticleSystem.h>
+#include <2d/CCParticleSystemQuad.h>
 
 #include "assets/AssetsDefines.h"
 

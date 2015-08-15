@@ -13,6 +13,7 @@
 #include "map/MapCamera.h"
 #include "network/message/Message.h"
 #include "network/sockets/SocketManager.h"
+#include "physics/Physics.h"
 
 #include "states/Game.h"
 #include "states/Login.h"
@@ -47,6 +48,7 @@ namespace root {
         network::msg::init();
         input::init_keyboard();
         input::init_mouse();
+        physics::init();
 
         scene->scheduleUpdate();
 

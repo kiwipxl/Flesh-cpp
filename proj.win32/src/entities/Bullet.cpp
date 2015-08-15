@@ -1,9 +1,5 @@
 #include "entities/Bullet.h"
 
-#include <physics/CCPhysicsBody.h>
-#include <base/CCEventDispatcher.h>
-#include "cocos2d.h"
-
 #include "assets/Textures.h"
 #include "assets/Particles.h"
 #include "debug/Logger.h"
@@ -16,39 +12,53 @@ using namespace cocos2d;
 BEGIN_ENTITIES_NS
 BEGIN_BULLET_NS
 
-//public
-
 //private
 std::vector<BulletPtr> bullets;
-EventListenerPhysicsContact* contact_listener;
 
 struct BulletDataBase {
 
-	int timer = 0;
-	std::function<void()> update_callback = nullptr;
+    int timer = 0;
+    std::function<void()> update_callback = nullptr;
 
-	virtual ~BulletDataBase() {
+    virtual ~BulletDataBase() {
 
-	}
+    }
 };
 
 struct BulletDataTest : public BulletDataBase {
 
-	bool gen_explosion = false;
+    bool gen_explosion = false;
 
-	virtual ~BulletDataTest() {
+    virtual ~BulletDataTest() {
 
-	}
+    }
 };
 
+bool on_contact_run(PhysicsContact& contact) {
+    auto a = contact.getShapeA()->getBody()->getNode();
+    auto b = contact.getShapeB()->getBody()->getNode();
+
+    if (a && b) {
+        for (int n = 0; n < bullets.size(); ++n) {
+            if ((a == bullets[n]->base && b == states::game::terrain->base) ||
+                (b == bullets[n]->base && a == states::game::terrain->base)) {
+                bullets[n]->on_contact_run(contact);
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+//public
+
 void init() {
-    contact_listener = EventListenerPhysicsContact::create();
-    contact_listener->onContactBegin = physics_contact;
-    root::scene->getEventDispatcher()->addEventListenerWithFixedPriority(contact_listener, 10);
+    physics::add_on_contact_run(on_contact_run);
 }
 
 void deinit() {
-    root::scene->getEventDispatcher()->removeEventListener(contact_listener);
+    physics::remove_on_contact_run(on_contact_run);
 }
 
 BulletPtr create_bullet(int x, int y) {
@@ -67,23 +77,6 @@ void update() {
     }
 }
 
-bool physics_contact(PhysicsContact& contact) {
-    auto a = contact.getShapeA()->getBody()->getNode();
-    auto b = contact.getShapeB()->getBody()->getNode();
-
-    if (a && b) {
-        for (int n = 0; n < bullets.size(); ++n) {
-            if ((a == bullets[n]->base && b == states::game::terrain->base) || 
-                (b == bullets[n]->base && a == states::game::terrain->base)) {
-                bullets[n]->physics_contact(contact);
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
 //-- begin Bullet class --
 
 Bullet::Bullet(int x, int y) {
@@ -92,7 +85,7 @@ Bullet::Bullet(int x, int y) {
     root::scene->addChild(base, 1);
 
     pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
-                                        base->getContentSize().height * base->getScaleY()));
+        base->getContentSize().height * base->getScaleY()));
     pbody->setCollisionBitmask(1);
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
@@ -115,12 +108,12 @@ void Bullet::schedule_removal() {
     to_be_removed = true;
 }
 
-bool Bullet::physics_contact(PhysicsContact& contact) {
+bool Bullet::on_contact_run(PhysicsContact& contact) {
     auto a = contact.getShapeA()->getBody()->getNode();
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b && (a == states::game::terrain->base || b == states::game::terrain->base)) {
-		auto bullet_explosion = ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
+        auto bullet_explosion = ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
         bullet_explosion->setPosition(base->getPosition());
         bullet_explosion->setScale(.325f);
         root::scene->addChild(bullet_explosion, 1);
@@ -147,8 +140,8 @@ void Bullet::add_btype_test(float angle, float power) {
     data_types.push_back(data);
     data->update_callback = [data, this]() {
         if (data->gen_explosion) return;
-		if (++data->timer >= 40) {
-			data->gen_explosion = true;
+        if (++data->timer >= 40) {
+            data->gen_explosion = true;
             for (int n = 0; n < 8; ++n) {
                 auto b = create_bullet(base->getPositionX(), base->getPositionY());
                 float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
@@ -166,7 +159,7 @@ void Bullet::add_btype_test2(float angle, float power) {
     type = BULLET_TYPE_TEST2;
     float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
     float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-	pbody->applyImpulse(Vec2(force_x, force_y));
+    pbody->applyImpulse(Vec2(force_x, force_y));
 }
 
 //-- end Bullet class --
