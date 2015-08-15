@@ -103,7 +103,7 @@ void Unit::update() {
 
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
             auto b = bullet::create_bullet(base->getPositionX(), base->getPositionY());
-            b->add_btype_test(-cone->getRotation() + 90, power);
+            b->add_logic_test(-cone->getRotation() + 90, power);
         }
     }
 

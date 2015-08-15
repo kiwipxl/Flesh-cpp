@@ -205,6 +205,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\debug\Logger.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
     <ClInclude Include="src\entities\Bullet.h" />
+    <ClInclude Include="src\entities\BulletLogic.h" />
     <ClInclude Include="src\entities\EntityDefines.h" />
     <ClInclude Include="src\entities\Unit.h" />
     <ClInclude Include="src\gui\Button.h" />

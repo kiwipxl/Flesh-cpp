@@ -86,6 +86,7 @@
     <ClInclude Include="src\assets\Particles.h" />
     <ClInclude Include="src\physics\Physics.h" />
     <ClInclude Include="src\physics\PhysicsDefines.h" />
+    <ClInclude Include="src\entities\BulletLogic.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

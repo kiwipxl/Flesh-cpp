@@ -21,7 +21,7 @@ BEGIN_BULLET_NS
 
 namespace cc = cocos2d;
 
-struct BulletDataBase;
+struct BulletLogicBase;
 
 enum BulletType {
 
@@ -36,15 +36,14 @@ class Bullet {
         ~Bullet();
 
         cc::Sprite* base;
-		cc::PhysicsBody* pbody;
-        std::vector<BulletDataBase*> data_types;
+        cc::PhysicsBody* pbody;
 
         void update();
         void cleanup();
         bool on_contact_run(cc::PhysicsContact& contact);
 
-        void add_btype_test(float angle, float power);
-        void add_btype_test2(float angle, float power);
+        void add_logic_test(float angle, float power);
+        void add_logic_test2(float angle, float power);
 
         void schedule_removal();
         bool is_removal_scheduled() { return to_be_removed; }
@@ -53,6 +52,7 @@ class Bullet {
     protected:
         bool to_be_removed = false;
         BulletType type;
+        std::vector<BulletLogicBase*> logic_list;
 };
 
 typedef std::shared_ptr<Bullet> BulletPtr;

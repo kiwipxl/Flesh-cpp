@@ -1,7 +1,7 @@
 #include "entities/Bullet.h"
 
 #include "assets/Textures.h"
-#include "assets/Particles.h"
+#include "entities/BulletLogic.h"
 #include "debug/Logger.h"
 #include "SceneManager.h"
 #include "StateManager.h"
@@ -14,70 +14,6 @@ BEGIN_BULLET_NS
 
 //private
 std::vector<BulletPtr> bullets;
-
-struct BulletDataBase {
-
-    int timer = 0;
-    std::function<void()> update_callback = nullptr;
-
-    virtual ~BulletDataBase() {
-
-    }
-
-    virtual void update() = 0;
-};
-
-struct BulletDataTest : public BulletDataBase, public Bullet {
-
-    bool gen_explosion = false;
-
-    BulletDataTest(float angle, float power, const Bullet* bullet_ref) : Bullet(*bullet_ref) {
-        type = BULLET_TYPE_TEST;
-        float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
-        float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-        pbody->applyImpulse(Vec2(force_x, force_y));
-    }
-
-    virtual ~BulletDataTest() {
-
-    }
-
-    virtual void update() {
-        if (gen_explosion) return;
-        if (++timer >= 40) {
-            gen_explosion = true;
-            for (int n = 0; n < 8; ++n) {
-                auto b = create_bullet(base->getPositionX(), base->getPositionY());
-                float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
-                b->add_btype_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
-            }
-            auto bullet_explosion = ParticleSystemQuad::create("Ring.plist");
-            bullet_explosion->setPosition(base->getPosition());
-            bullet_explosion->setScale(.8f);
-            root::scene->addChild(bullet_explosion, 1);
-        }
-    }
-};
-
-struct BulletDataTest2 : public BulletDataBase, public Bullet {
-
-    bool gen_explosion = false;
-
-    BulletDataTest2(float angle, float power, const Bullet* bullet_ref) : Bullet(*bullet_ref) {
-        type = BULLET_TYPE_TEST;
-        float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
-        float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-        pbody->applyImpulse(Vec2(force_x, force_y));
-    }
-
-    virtual ~BulletDataTest2() {
-
-    }
-
-    virtual void update() {
-
-    }
-};
 
 bool on_contact_run(PhysicsContact& contact) {
     auto a = contact.getShapeA()->getBody()->getNode();
@@ -143,10 +79,10 @@ Bullet::~Bullet() {
 
 void Bullet::cleanup() {
     root::scene->removeChild(base, 1);
-    for (int n = 0; n < data_types.size(); ++n) {
-        delete data_types[n];
+    for (int n = 0; n < logic_list.size(); ++n) {
+        delete logic_list[n];
     }
-    data_types.clear();
+    logic_list.clear();
     physics::remove_on_contact_run(this);
 }
 
@@ -171,17 +107,17 @@ bool Bullet::on_contact_run(PhysicsContact& contact) {
 }
 
 void Bullet::update() {
-    for (int n = 0; n < data_types.size(); ++n) {
-        data_types[n]->update();
+    for (int n = 0; n < logic_list.size(); ++n) {
+        logic_list[n]->update();
     }
 }
 
-void Bullet::add_btype_test(float angle, float power) {
-    data_types.push_back(new BulletDataTest(angle, power, this));
+void Bullet::add_logic_test(float angle, float power) {
+    logic_list.push_back(new BulletLogicTest(angle, power, this));
 }
 
-void Bullet::add_btype_test2(float angle, float power) {
-    data_types.push_back(new BulletDataTest2(angle, power, this));
+void Bullet::add_logic_test2(float angle, float power) {
+    logic_list.push_back(new BulletLogicTest2(angle, power, this));
 }
 
 //-- end Bullet class --
