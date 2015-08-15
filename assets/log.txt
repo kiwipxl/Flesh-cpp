@@ -14,3 +14,14 @@ created state 3
 switched to state 3 from state 3
 contact pre_solve callbacks: 2
 contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2
+contact pre_solve callbacks: 2

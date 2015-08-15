@@ -5,7 +5,6 @@
 #include "debug/Logger.h"
 #include "SceneManager.h"
 #include "StateManager.h"
-#include "states/Game.h"
 
 using namespace cocos2d;
 
@@ -22,9 +21,7 @@ bool on_contact_run(PhysicsContact& contact) {
     if (a && b) {
         for (int n = 0; n < bullets.size(); ++n) {
             if (a == bullets[n]->base || b == bullets[n]->base) {
-                if (b == states::game::terrain->base || a == states::game::terrain->base) {
-                    bullets[n]->on_contact_run(contact);
-                }
+                bullets[n]->on_contact_run(contact);
             }
         }
     }
@@ -92,16 +89,8 @@ void Bullet::schedule_removal() {
 }
 
 bool Bullet::on_contact_run(PhysicsContact& contact) {
-    auto a = contact.getShapeA()->getBody()->getNode();
-    auto b = contact.getShapeB()->getBody()->getNode();
-
-    if (a && b && (a == states::game::terrain->base || b == states::game::terrain->base)) {
-        auto bullet_explosion = ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
-        bullet_explosion->setPosition(base->getPosition());
-        bullet_explosion->setScale(.325f);
-        root::scene->addChild(bullet_explosion, 1);
-
-        schedule_removal();
+    for (int n = 0; n < logic_list.size(); ++n) {
+        logic_list[n]->on_contact_run(contact);
     }
 
     return true;
@@ -114,18 +103,19 @@ void Bullet::update() {
 }
 
 void Bullet::add_logic_decay(float decay_after_seconds) {
-    type = BULLET_TYPE_DECAY;
-    logic_list.push_back(new BulletLogicDecay(this, decay_after_seconds));
+    logic_list.push_back(new BulletLogicDecay(*this, decay_after_seconds));
+}
+
+void Bullet::add_logic_terrain_destroy() {
+    logic_list.push_back(new BulletLogicTerrainDestroy(*this));
 }
 
 void Bullet::add_logic_test(float angle, float power) {
-    type = BULLET_TYPE_TEST;
-    logic_list.push_back(new BulletLogicTest(this, angle, power));
+    logic_list.push_back(new BulletLogicTest(*this, angle, power));
 }
 
 void Bullet::add_logic_test2(float angle, float power) {
-    type = BULLET_TYPE_TEST2;
-    logic_list.push_back(new BulletLogicTest2(this, angle, power));
+    logic_list.push_back(new BulletLogicTest2(*this, angle, power));
 }
 
 //-- end Bullet class --

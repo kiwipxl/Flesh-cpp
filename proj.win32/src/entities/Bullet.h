@@ -23,12 +23,7 @@ namespace cc = cocos2d;
 
 struct BulletLogicBase;
 
-enum BulletType {
-
-    BULLET_TYPE_DECAY, 
-    BULLET_TYPE_TEST, 
-    BULLET_TYPE_TEST2
-};
+enum BulletLogicType;
 
 class Bullet {
 
@@ -44,16 +39,15 @@ class Bullet {
         bool on_contact_run(cc::PhysicsContact& contact);
 
         void add_logic_decay(float decay_after_seconds);
+        void add_logic_terrain_destroy();
         void add_logic_test(float angle, float power);
         void add_logic_test2(float angle, float power);
 
         void schedule_removal();
         bool is_removal_scheduled() { return to_be_removed; }
-        BulletType get_type() { return type; }
 
     protected:
         bool to_be_removed = false;
-        BulletType type;
         std::vector<BulletLogicBase*> logic_list;
 };
 
