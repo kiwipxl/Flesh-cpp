@@ -25,6 +25,7 @@ struct BulletLogicBase;
 
 enum BulletType {
 
+    BULLET_TYPE_DECAY, 
     BULLET_TYPE_TEST, 
     BULLET_TYPE_TEST2
 };
@@ -42,6 +43,7 @@ class Bullet {
         void cleanup();
         bool on_contact_run(cc::PhysicsContact& contact);
 
+        void add_logic_decay(float decay_after_seconds);
         void add_logic_test(float angle, float power);
         void add_logic_test2(float angle, float power);
 

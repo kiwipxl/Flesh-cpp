@@ -71,6 +71,8 @@ Bullet::Bullet(int x, int y) {
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
     base->setPhysicsBody(pbody);
+
+    add_logic_decay(2.0f);
 }
 
 Bullet::~Bullet() {
@@ -78,12 +80,11 @@ Bullet::~Bullet() {
 }
 
 void Bullet::cleanup() {
-    root::scene->removeChild(base, 1);
     for (int n = 0; n < logic_list.size(); ++n) {
         delete logic_list[n];
     }
     logic_list.clear();
-    physics::remove_on_contact_run(this);
+    root::scene->removeChild(base, 1);
 }
 
 void Bullet::schedule_removal() {
@@ -112,12 +113,19 @@ void Bullet::update() {
     }
 }
 
+void Bullet::add_logic_decay(float decay_after_seconds) {
+    type = BULLET_TYPE_DECAY;
+    logic_list.push_back(new BulletLogicDecay(this, decay_after_seconds));
+}
+
 void Bullet::add_logic_test(float angle, float power) {
-    logic_list.push_back(new BulletLogicTest(angle, power, this));
+    type = BULLET_TYPE_TEST;
+    logic_list.push_back(new BulletLogicTest(this, angle, power));
 }
 
 void Bullet::add_logic_test2(float angle, float power) {
-    logic_list.push_back(new BulletLogicTest2(angle, power, this));
+    type = BULLET_TYPE_TEST2;
+    logic_list.push_back(new BulletLogicTest2(this, angle, power));
 }
 
 //-- end Bullet class --
