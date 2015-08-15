@@ -142,7 +142,7 @@ void Bullet::add_btype_test(float angle, float power) {
     float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
     float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
     pbody->applyImpulse(Vec2(force_x, force_y));
-    
+
     BulletDataTest* data = new BulletDataTest();
     data_types.push_back(data);
     data->update_callback = [data, this]() {
