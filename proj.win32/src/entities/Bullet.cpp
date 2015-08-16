@@ -69,7 +69,7 @@ Bullet::Bullet(int x, int y) {
     pbody->setRotationEnable(false);
     base->setPhysicsBody(pbody);
 
-    add_logic_decay(2.0f);
+    add_logic_decay(4.0f + ((rand() / (float)RAND_MAX) * 4.0f));
 }
 
 Bullet::~Bullet() {

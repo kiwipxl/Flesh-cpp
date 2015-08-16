@@ -1,0 +1,28 @@
+#ifndef _PHYSICS_H_
+#define _PHYSICS_H_
+
+#include <functional>
+
+#include <physics/CCPhysicsContact.h>
+#include <physics/CCPhysicsBody.h>
+
+#include "physics/PhysicsDefines.h"
+
+BEGIN_PHYSICS_NS
+
+namespace cc = cocos2d;
+
+extern cc::EventListenerPhysicsContact* contact_listener;
+
+typedef std::function<bool(cc::PhysicsContact&)> RunContactCallback;
+
+extern void init();
+extern void add_on_contact_run(RunContactCallback callback, void* ref);
+//extern void add_on_contact_once(RunContactCallback callback);
+
+extern void remove_on_contact_run(RunContactCallback callback);
+extern void remove_on_contact_run(void* ref);
+
+END_PHYSICS_NS
+
+#endif
