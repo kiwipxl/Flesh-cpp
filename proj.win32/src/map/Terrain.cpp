@@ -7,6 +7,8 @@
 #include <renderer/CCTrianglesCommand.h>
 #include <renderer/CCRenderer.h>
 #include <2d/CCCamera.h>
+#include <renderer/CCGLProgram.h>
+#include <renderer/CCGLProgramCache.h>
 
 #include "assets/Textures.h"
 #include "debug/Logger.h"
@@ -84,12 +86,12 @@ void Terrain::create_debug_geometry(bool show_triangles, bool show_collider_poin
         for (int n = 1; n < terrain_data->indices.size(); ++n) {
             if (n % 3 == 0) {
                 debug_draw_node->drawLine(terrain_data->debug_points[terrain_data->indices[n - 1]],
-                                            terrain_data->debug_points[terrain_data->indices[n - 3]],
-                                            Color4F(1.0f, 1.0f, 1.0f, .4f));
+                                          terrain_data->debug_points[terrain_data->indices[n - 3]],
+                                          Color4F(1.0f, 1.0f, 1.0f, .4f));
             }else {
                 debug_draw_node->drawLine(terrain_data->debug_points[terrain_data->indices[n - 1]],
-                                            terrain_data->debug_points[terrain_data->indices[n]],
-                                            Color4F(1.0f, 1.0f, 1.0f, .4f));
+                                          terrain_data->debug_points[terrain_data->indices[n]],
+                                          Color4F(1.0f, 1.0f, 1.0f, .4f));
             }
         }
     }
@@ -97,8 +99,8 @@ void Terrain::create_debug_geometry(bool show_triangles, bool show_collider_poin
     if (show_collider_points) {
         for (int n = 1; n < terrain_data->collider_points.size(); ++n) {
             debug_draw_node->drawLine(terrain_data->collider_points[n - 1],
-                                        terrain_data->collider_points[n],
-                                        Color4F(0.0f, 0.0f, 1.0f, .8f));
+                                      terrain_data->collider_points[n],
+                                      Color4F(0.0f, 0.0f, 1.0f, .8f));
         }
     }
 }

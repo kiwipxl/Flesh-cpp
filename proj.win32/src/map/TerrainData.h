@@ -42,6 +42,7 @@ public:
     int fill_indices_end;
     cc::Vec2 min{ INT_MAX, INT_MAX };
     cc::Vec2 max{ -INT_MAX, -INT_MAX };
+    cc::Color4B vertex_colour = { 255, 255, 255, 255 };
 
     void set_edge_index_attrib(int start, int end) {
         edge_indices_start = start;

@@ -84,12 +84,20 @@ TerrainDataGroupPtr load(std::string file_name) {
             tgroup->data_vec.push_back(ter);
             ter->parent = tgroup.get();
 
+            if (split_tokens(data, tokens, "vertex_colour:", ',')) {
+                if (tokens.size() == 4) {
+                    ter->vertex_colour = { (u_char)(std::stof(tokens[0]) * 255.0f), (u_char)(std::stof(tokens[1]) * 255.0f),
+                                           (u_char)(std::stof(tokens[2]) * 255.0f), (u_char)(std::stof(tokens[3]) * 255.0f) };
+                }else {
+                    RETURN_LOAD_ERR("vertex_colour attribute expected exactly 4 tokens", file_name);
+                }
+            }
 		    if (split_tokens(data, tokens, "vertex_data:")) {
 			    for (int n = 0; n < tokens.size(); n += 2) {
                     V3F_C4B_T2F v;
 				    v.vertices.x = std::stof(tokens[n]) * 40.0f;
-				    v.vertices.y = std::stof(tokens[n + 1]) * 40.0f;
-				    v.colors = Color4B(255, 255, 255, 255);
+                    v.vertices.y = std::stof(tokens[n + 1]) * 40.0f;
+                    v.colors = ter->vertex_colour;
 				    ter->points.push_back(v);
 
 				    Vec2 dv;
