@@ -81,6 +81,7 @@ TerrainDataGroupPtr load(std::string file_name) {
 
             TerrainDataPtr ter(new TerrainData());
             tgroup->data_vec.push_back(ter);
+            ter->parent = tgroup.get();
 
             std::vector<std::string> tokens;
 		    if (split_tokens(data, tokens, "vertex_data:")) {
@@ -94,7 +95,14 @@ TerrainDataGroupPtr load(std::string file_name) {
 				    Vec2 dv;
 				    dv.x = v.vertices.x;
 				    dv.y = v.vertices.y;
-				    ter->debug_points.push_back(dv);
+                    ter->debug_points.push_back(dv);
+
+                    //calculate min/max x/y positions for the terrain
+                    ter->min.x = MIN(v.vertices.x, ter->min.x);
+                    ter->min.y = MIN(v.vertices.y, ter->min.y);
+
+                    ter->max.x = MAX(v.vertices.x, ter->max.x);
+                    ter->max.y = MAX(v.vertices.y, ter->max.y);
 			    }
 		    }else {
                 RETURN_LOAD_ERR("vertex_data attribute missing", file_name);
@@ -123,7 +131,22 @@ TerrainDataGroupPtr load(std::string file_name) {
 				    ter->collider_points.push_back(v);
                 }
             }
-            if (split_tokens(data, tokens, "edge_indices:", '-')) {
+            if (split_tokens(data, tokens, "name:", ' ')) {
+                if (tokens.size() >= 1) {
+                    ter->name = tokens[0];
+                }else {
+                    RETURN_LOAD_ERR("name attribute expects more than 1 token", file_name);
+                }
+            }
+            if (split_tokens(data, tokens, "pos:", ',')) {
+                if (tokens.size() >= 2) {
+                    ter->pos.x = std::stof(tokens[0]);
+                    ter->pos.y = std::stof(tokens[1]);
+                }else {
+                    RETURN_LOAD_ERR("pos attribute expects more than 2 tokens", file_name);
+                }
+            }
+            if (split_tokens(data, tokens, "edge_indices:", ',')) {
                 if (tokens.size() >= 2) {
                     ter->set_edge_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
                 }else {
@@ -132,7 +155,7 @@ TerrainDataGroupPtr load(std::string file_name) {
 		    }else {
                 RETURN_LOAD_ERR("edge_indices attribute missing", file_name);
             }
-            if (split_tokens(data, tokens, "fill_indices:", '-')) {
+            if (split_tokens(data, tokens, "fill_indices:", ',')) {
                 if (tokens.size() >= 2) {
 				    ter->set_fill_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
                 }else {
@@ -148,6 +171,20 @@ TerrainDataGroupPtr load(std::string file_name) {
     }
 
     fclose(f);
+
+    //calculate min, max, max_width and max_height of all terrain in tgroup
+    for (int n = 0; n < tgroup->data_vec.size(); ++n) {
+        auto t = tgroup->data_vec[n];
+
+        tgroup->min.x = MIN(t->min.x, tgroup->min.x);
+        tgroup->min.y = MIN(t->min.y, tgroup->min.y);
+
+        tgroup->max.x = MAX(t->max.x, tgroup->max.x);
+        tgroup->max.y = MAX(t->max.y, tgroup->max.y);
+
+        tgroup->max_width = MAX(tgroup->max.x - tgroup->min.x, tgroup->max_width);
+        tgroup->max_height = MAX(tgroup->max.y - tgroup->min.y, tgroup->max_height);
+    }
 
     return tgroup;
 }

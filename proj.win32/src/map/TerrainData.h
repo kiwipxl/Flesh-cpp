@@ -17,9 +17,14 @@ BEGIN_TERRAIN_NS
 
 namespace cc = cocos2d;
 
+class TerrainDataGroup;
+
 class TerrainData {
 
 public:
+    //base
+    TerrainDataGroup* parent;
+
     //geometry
     std::vector<cc::V3F_C4B_T2F> points;
     std::vector<cc::Vec2> collider_points;
@@ -28,10 +33,15 @@ public:
     //debug
     std::vector<cc::Vec2> debug_points;
 
+    //attribs
+    std::string name;
+    cc::Vec2 pos;
     int edge_indices_start;
     int edge_indices_end;
     int fill_indices_start;
     int fill_indices_end;
+    cc::Vec2 min{ INT_MAX, INT_MAX };
+    cc::Vec2 max{ -INT_MAX, -INT_MAX };
 
     void set_edge_index_attrib(int start, int end) {
         edge_indices_start = start;
@@ -50,6 +60,10 @@ class TerrainDataGroup {
 
 public:
     std::vector<TerrainDataPtr> data_vec;
+    cc::Vec2 min;
+    cc::Vec2 max;
+    int max_width;
+    int max_height;
 };
 
 typedef std::shared_ptr<TerrainDataGroup> TerrainDataGroupPtr;

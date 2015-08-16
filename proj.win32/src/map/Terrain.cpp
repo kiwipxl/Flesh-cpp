@@ -36,11 +36,11 @@ Terrain::Terrain(TerrainData& t_data) {
         pbody->setPositionOffset(Vec2(0, -400.0f));
 
         base->setPhysicsBody(pbody);
-        base->setPosition(0.0f, -200.0f);
         //base->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
         //base->setScale(1.1f, 1.1f);
         has_collider = true;
     }
+    base->setPosition(t_data.pos * 20.0f);
     root::scene->addChild(base, 1);
 
     edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
@@ -134,7 +134,9 @@ void Terrain::draw() {
 //-- begin TerrainGroup class --
 
 TerrainGroup::TerrainGroup(TerrainDataGroup* data_group) {
-
+    for (int n = 0; n < data_group->data_vec.size(); ++n) {
+        terrain_list.push_back(new Terrain(*data_group->data_vec[n].get()));
+    }
 }
 
 void TerrainGroup::show_debug_geometry(bool show_triangles, bool show_collider_points) {

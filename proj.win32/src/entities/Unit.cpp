@@ -55,7 +55,7 @@ Unit::Unit() {
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
     pbody->setPositionOffset(Vec2(0, -10));
-    pbody->setGravityEnable(false);
+    //pbody->setGravityEnable(false);
     root::scene->p_world->setAutoStep(false);
     root::scene->p_world->setGravity(Vec2(0, -980.0f));
     base->setPhysicsBody(pbody);
