@@ -74,7 +74,7 @@ public:
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && (a == states::game::terrain->base || b == states::game::terrain->base)) {
+        if (a && b && states::game::terrain->is_terrain(a, b)) {
             auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
             bullet_explosion->setPosition(bref->base->getPosition());
             bullet_explosion->setScale(.325f);

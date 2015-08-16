@@ -18,3 +18,13 @@ removed state 2
 created state 3
 switched to state 3 from state 3
 contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3

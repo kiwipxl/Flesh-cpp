@@ -23,7 +23,7 @@ using namespace cocos2d;
 //public
 //-- begin terrain class --
 
-Terrain::Terrain(TerrainData& t_data) {
+Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     terrain_data = &t_data;
 
     base = Node::create();
@@ -41,7 +41,8 @@ Terrain::Terrain(TerrainData& t_data) {
         has_collider = true;
     }
     base->setPosition(t_data.pos * 20.0f);
-    root::scene->addChild(base, 1);
+    base->retain();
+    t_group.base->addChild(base, 1);
 
     edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
     edge_tris.indexCount = t_data.edge_indices_end;
@@ -134,8 +135,11 @@ void Terrain::draw() {
 //-- begin TerrainGroup class --
 
 TerrainGroup::TerrainGroup(TerrainDataGroup* data_group) {
+    base = Node::create();
+    root::scene->addChild(base);
     for (int n = 0; n < data_group->data_vec.size(); ++n) {
-        terrain_list.push_back(new Terrain(*data_group->data_vec[n].get()));
+        auto t = new Terrain(*data_group->data_vec[n].get(), *this);
+        terrain_list.push_back(t);
     }
 }
 
@@ -165,6 +169,13 @@ void TerrainGroup::draw() {
     for (int n = 0; n < terrain_list.size(); ++n) {
         terrain_list[n]->draw();
     }
+}
+
+bool TerrainGroup::is_terrain(Node* a, Node* b) {
+    for (int n = 0; n < terrain_list.size(); ++n) {
+        if (terrain_list[n]->base == a || terrain_list[n]->base == b) return true;
+    }
+    return false;
 }
 
 //-- end TerrainGroup class --

@@ -18,10 +18,12 @@ BEGIN_TERRAIN_NS
 
 namespace cc = cocos2d;
 
+class TerrainGroup;
+
 class Terrain {
 
 	public:
-        Terrain(TerrainData& t_data);
+        Terrain(TerrainData& t_data, TerrainGroup& t_group);
 
         cc::Node* base;
         cc::PhysicsBody* pbody;
@@ -61,6 +63,7 @@ public:
     void hide_debug_geometry();
     void toggle_debug_geometry();
     void draw();
+    bool is_terrain(cc::Node* a, cc::Node* b);
 
     bool is_debug_draw_on() { return debug_draw_on; }
 

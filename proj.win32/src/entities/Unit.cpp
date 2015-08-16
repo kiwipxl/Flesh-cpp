@@ -57,7 +57,7 @@ Unit::Unit() {
     pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
     root::scene->p_world->setAutoStep(false);
-    root::scene->p_world->setGravity(Vec2(0, -98.0f));
+    root::scene->p_world->setGravity(Vec2(0, -980.0f));
     base->setPhysicsBody(pbody);
 
     physics::add_on_contact_run(CC_CALLBACK_1(Unit::on_contact_run, this), this);
@@ -75,7 +75,7 @@ bool Unit::on_contact_run(PhysicsContact& contact) {
 
     if (a && b) {
         if (a == base || b == base) {
-            if (b == states::game::terrain->base || a == states::game::terrain->base) {
+            if (states::game::terrain->is_terrain(a, b)) {
                 can_jump = true;
                 colliding = true;
                 collide_timer = 0;
