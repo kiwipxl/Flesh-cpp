@@ -49,6 +49,12 @@ namespace game {
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
+                if (input::key_down(EventKeyboard::KeyCode::KEY_MINUS)) {
+                    camera->cam->setPositionZ(camera->cam->getPositionZ() + 10.0f);
+                }else if (input::key_down(EventKeyboard::KeyCode::KEY_EQUAL)) {
+                    camera->cam->setPositionZ(camera->cam->getPositionZ() - 10.0f);
+                }
+
                 //scene->p_world->step(delta_time);
                 /*physics_timing += delta_time;
                 while (physics_timing >= TIMESTEP) {

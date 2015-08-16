@@ -117,7 +117,7 @@ void Unit::update() {
     }
 
     if (colliding && moving) {
-        //base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
+        base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
     }else {
         base->setRotation(0.0f);
     }
@@ -126,15 +126,14 @@ void Unit::update() {
         moving = false;
         if (!jumping && !aiming) {
             if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
-                //pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
+                pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
                 //pbody->applyImpulse(Vec2(400.0f, 0));
-                cpBodySetForce(pbody->getCPBody(), cpVect{ 1000.0f, 0 });
                 facing_right = true;
                 base->setFlippedX(facing_right);
                 moving = true;
             }
             if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
-                //pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
+                pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
                 //pbody->applyImpulse(Vec2(-400.0f, 0));
                 facing_right = false;
                 base->setFlippedX(facing_right);

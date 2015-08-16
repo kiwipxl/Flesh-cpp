@@ -32,11 +32,11 @@ bool on_contact_run(PhysicsContact& contact) {
 //public
 
 void init() {
-    //physics::add_on_contact_run(on_contact_run, NULL);
+    physics::add_on_contact_run(on_contact_run, NULL);
 }
 
 void deinit() {
-    //physics::remove_on_contact_run(on_contact_run);
+    physics::remove_on_contact_run(on_contact_run);
 }
 
 BulletPtr create_bullet(int x, int y) {

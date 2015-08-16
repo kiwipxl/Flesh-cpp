@@ -46,7 +46,7 @@ void on_contact_post_solve(PhysicsContact& contact, const PhysicsContactPostSolv
         start_log_time = temp_time;
     }
     
-    for (int n = 0; n < run_contact_callbacks.size(); ++n) {
+    for (int n = 0; n < post_contact_callbacks.size(); ++n) {
         post_contact_callbacks[n]->post_call(contact, post_solve);
     }
 }
