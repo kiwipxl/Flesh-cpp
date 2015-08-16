@@ -44,16 +44,17 @@ public:
     }
 };
 
+typedef std::shared_ptr<TerrainData> TerrainDataPtr;
+
 class TerrainDataGroup {
 
 public:
-    std::vector<TerrainData*> data_vec;
+    std::vector<TerrainDataPtr> data_vec;
 };
 
-typedef std::shared_ptr<TerrainData> TerrainDataPtr;
 typedef std::shared_ptr<TerrainDataGroup> TerrainDataGroupPtr;
 
-extern TerrainDataGroup* load(std::string file_name);
+extern TerrainDataGroupPtr load(std::string file_name);
 
 END_TERRAIN_NS
 END_MAP_NS

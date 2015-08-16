@@ -50,7 +50,7 @@ bool split_tokens(std::string& data, std::vector<std::string>& tokens, std::stri
     return NULL;
 
 //public
-TerrainDataGroup* load(std::string file_name) {
+TerrainDataGroupPtr load(std::string file_name) {
     TerrainDataGroupPtr tgroup(new TerrainDataGroup());
 
     FILE* f = fopen(file_name.c_str(), "r");
@@ -65,67 +65,82 @@ TerrainDataGroup* load(std::string file_name) {
         temp = new char[file_len];
         fread(temp, 1, file_len, f);
 
-        TerrainDataPtr ter(new TerrainData());
+        std::string all_data = temp;
+        int last_header_end = 0;
+        const int header_begin_size = strlen("TERRAIN_BEGIN");
+        const int header_end_size = strlen("TERRAIN_END");
+        while (true) {
+            auto l = all_data.length();
+            int header_begin = all_data.substr(last_header_end).find("TERRAIN_BEGIN");
+            int header_end = all_data.substr(last_header_end).find("TERRAIN_END");
+            if (header_begin == -1 || header_end == -1) break;
+            header_begin += last_header_end + header_begin_size;
+            header_end += last_header_end + header_end_size;
+            std::string data = all_data.substr(header_begin, header_end - header_begin);
+            last_header_end = header_end;
 
-        std::string data = temp;
-        std::vector<std::string> tokens;
-		if (split_tokens(data, tokens, "vertex_data:")) {
-			for (int n = 0; n < tokens.size(); n += 2) {
-                V3F_C4B_T2F v;
-				v.vertices.x = std::stof(tokens[n]) * 40.0f;
-				v.vertices.y = std::stof(tokens[n + 1]) * 40.0f;
-				v.colors = Color4B(255, 255, 255, 255);
-				ter->points.push_back(v);
+            TerrainDataPtr ter(new TerrainData());
+            tgroup->data_vec.push_back(ter);
 
-				Vec2 dv;
-				dv.x = v.vertices.x;
-				dv.y = v.vertices.y;
-				ter->debug_points.push_back(dv);
-			}
-		}else {
-            RETURN_LOAD_ERR("vertex_data attribute missing", file_name);
-        }
-        if (split_tokens(data, tokens, "indices:")) {
-            for (int n = 0; n < tokens.size(); ++n) {
-                ter->indices.push_back(std::stof(tokens[n]));
+            std::vector<std::string> tokens;
+		    if (split_tokens(data, tokens, "vertex_data:")) {
+			    for (int n = 0; n < tokens.size(); n += 2) {
+                    V3F_C4B_T2F v;
+				    v.vertices.x = std::stof(tokens[n]) * 40.0f;
+				    v.vertices.y = std::stof(tokens[n + 1]) * 40.0f;
+				    v.colors = Color4B(255, 255, 255, 255);
+				    ter->points.push_back(v);
+
+				    Vec2 dv;
+				    dv.x = v.vertices.x;
+				    dv.y = v.vertices.y;
+				    ter->debug_points.push_back(dv);
+			    }
+		    }else {
+                RETURN_LOAD_ERR("vertex_data attribute missing", file_name);
             }
-		}else {
-            RETURN_LOAD_ERR("indices attribute missing", file_name);
-        }
-        if (split_tokens(data, tokens, "uvs:")) {
-            for (int n = 0; n < tokens.size(); n += 2) {
-				V3F_C4B_T2F& v = ter->points[n / 2];
-                v.texCoords.u = std::stof(tokens[n]);
-                v.texCoords.v = 1 - std::stof(tokens[n + 1]);
+            if (split_tokens(data, tokens, "indices:")) {
+                for (int n = 0; n < tokens.size(); ++n) {
+                    ter->indices.push_back(std::stof(tokens[n]));
+                }
+		    }else {
+                RETURN_LOAD_ERR("indices attribute missing", file_name);
             }
-		}else {
-            RETURN_LOAD_ERR("uvs attribute missing", file_name);
-        }
-        if (split_tokens(data, tokens, "collider_points:")) {
-            for (int n = 0; n < tokens.size(); n += 2) {
-                Vec2 v;
-                v.x = std::stof(tokens[n]) * 40.0f;
-                v.y = std::stof(tokens[n + 1]) * 40.0f;
-				ter->collider_points.push_back(v);
+            if (split_tokens(data, tokens, "uvs:")) {
+                for (int n = 0; n < tokens.size(); n += 2) {
+				    V3F_C4B_T2F& v = ter->points[n / 2];
+                    v.texCoords.u = std::stof(tokens[n]);
+                    v.texCoords.v = 1 - std::stof(tokens[n + 1]);
+                }
+		    }else {
+                RETURN_LOAD_ERR("uvs attribute missing", file_name);
             }
-        }
-        if (split_tokens(data, tokens, "edge_indices:", '-')) {
-            if (tokens.size() >= 2) {
-                ter->set_edge_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
-            }else {
-                RETURN_LOAD_ERR("edge_indices attribute expects more than 2 tokens", file_name);
+            if (split_tokens(data, tokens, "collider_points:")) {
+                for (int n = 0; n < tokens.size(); n += 2) {
+                    Vec2 v;
+                    v.x = std::stof(tokens[n]) * 40.0f;
+                    v.y = std::stof(tokens[n + 1]) * 40.0f;
+				    ter->collider_points.push_back(v);
+                }
             }
-		}else {
-            RETURN_LOAD_ERR("edge_indices attribute missing", file_name);
-        }
-        if (split_tokens(data, tokens, "fill_indices:", '-')) {
-            if (tokens.size() >= 2) {
-				ter->set_fill_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
-            }else {
-                RETURN_LOAD_ERR("fill_indices attribute expects more than 2 tokens", file_name);
+            if (split_tokens(data, tokens, "edge_indices:", '-')) {
+                if (tokens.size() >= 2) {
+                    ter->set_edge_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
+                }else {
+                    RETURN_LOAD_ERR("edge_indices attribute expects more than 2 tokens", file_name);
+                }
+		    }else {
+                RETURN_LOAD_ERR("edge_indices attribute missing", file_name);
             }
-		}else {
-            RETURN_LOAD_ERR("fill_indices attribute missing", file_name);
+            if (split_tokens(data, tokens, "fill_indices:", '-')) {
+                if (tokens.size() >= 2) {
+				    ter->set_fill_index_attrib(std::stof(tokens[0]), std::stof(tokens[1]));
+                }else {
+                    RETURN_LOAD_ERR("fill_indices attribute expects more than 2 tokens", file_name);
+                }
+		    }else {
+                RETURN_LOAD_ERR("fill_indices attribute missing", file_name);
+            }
         }
 		delete[] temp;
 	}else {
@@ -134,7 +149,7 @@ TerrainDataGroup* load(std::string file_name) {
 
     fclose(f);
 
-    return tgroup.get();
+    return tgroup;
 }
 
 END_TERRAIN_NS

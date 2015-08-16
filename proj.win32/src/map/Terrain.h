@@ -49,6 +49,25 @@ class Terrain {
         void remove_debug_geometry();
 };
 
+class TerrainGroup {
+
+public:
+    TerrainGroup(TerrainDataGroup* data_group);
+
+    cc::Node* base;
+    std::vector<Terrain*> terrain_list;
+
+    void show_debug_geometry(bool show_triangles = true, bool show_collider_points = true);
+    void hide_debug_geometry();
+    void toggle_debug_geometry();
+    void draw();
+
+    bool is_debug_draw_on() { return debug_draw_on; }
+
+private:
+    bool debug_draw_on = false;
+};
+
 END_TERRAIN_NS
 END_MAP_NS
 

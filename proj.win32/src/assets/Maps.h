@@ -8,7 +8,7 @@ BEGIN_ASSETS_NS
 
 namespace maps {
 
-    extern map::terrain::TerrainDataGroup* test_terrain;
+    extern map::terrain::TerrainDataGroupPtr test_terrain;
 
     extern void init();
 };

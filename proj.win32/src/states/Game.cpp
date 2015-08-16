@@ -18,7 +18,7 @@ namespace game {
     using namespace cocos2d;
 
     //public externs
-    map::terrain::Terrain* terrain;
+    map::terrain::TerrainGroup* terrain;
     map::MapCamera* camera;
     entities::Unit* current_unit;
 
@@ -35,7 +35,7 @@ namespace game {
                 current_unit = entities::units[0];
 
                 camera = new map::MapCamera();
-                terrain = new map::terrain::Terrain(*assets::maps::test_terrain);
+                terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
 
                 break;

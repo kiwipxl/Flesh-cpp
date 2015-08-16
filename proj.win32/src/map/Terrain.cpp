@@ -131,5 +131,41 @@ void Terrain::draw() {
 
 //-- end terrain class --
 
+//-- begin TerrainGroup class --
+
+TerrainGroup::TerrainGroup(TerrainDataGroup* data_group) {
+
+}
+
+void TerrainGroup::show_debug_geometry(bool show_triangles, bool show_collider_points) {
+    debug_draw_on = true;
+    for (int n = 0; n < terrain_list.size(); ++n) {
+        terrain_list[n]->show_debug_geometry(show_triangles, show_collider_points);
+    }
+}
+
+void TerrainGroup::hide_debug_geometry() {
+    debug_draw_on = false;
+    for (int n = 0; n < terrain_list.size(); ++n) {
+        terrain_list[n]->hide_debug_geometry();
+    }
+}
+
+void TerrainGroup::toggle_debug_geometry() {
+    debug_draw_on = !debug_draw_on;
+    for (int n = 0; n < terrain_list.size(); ++n) {
+        if (debug_draw_on)  terrain_list[n]->show_debug_geometry();
+        else                terrain_list[n]->hide_debug_geometry();
+    }
+}
+
+void TerrainGroup::draw() {
+    for (int n = 0; n < terrain_list.size(); ++n) {
+        terrain_list[n]->draw();
+    }
+}
+
+//-- end TerrainGroup class --
+
 END_TERRAIN_NS
 END_MAP_NS

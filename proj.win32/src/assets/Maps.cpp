@@ -6,7 +6,7 @@ BEGIN_ASSETS_NS
 
 namespace maps {
         
-    map::terrain::TerrainDataGroup* test_terrain;
+    map::terrain::TerrainDataGroupPtr test_terrain;
 
     void init() {
         test_terrain = map::terrain::load("terrain.f2d");
