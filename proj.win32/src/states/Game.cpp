@@ -8,6 +8,7 @@
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "StateManager.h"
+#include "map/Terrain.h"
 
 BEGIN_STATES_NS
 
@@ -17,7 +18,7 @@ namespace game {
     using namespace cocos2d;
 
     //public externs
-    map::ferr2d::Terrain* terrain;
+    map::terrain::Terrain* terrain;
     map::MapCamera* camera;
     entities::Unit* current_unit;
 
@@ -34,7 +35,7 @@ namespace game {
                 current_unit = entities::units[0];
 
                 camera = new map::MapCamera();
-                terrain = new map::ferr2d::Terrain(*assets::maps::test_terrain);
+                terrain = new map::terrain::Terrain(*assets::maps::test_terrain);
                 entities::bullet::init();
 
                 break;

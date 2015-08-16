@@ -6,10 +6,10 @@ BEGIN_ASSETS_NS
 
 namespace maps {
         
-    map::ferr2d::TerrainData* test_terrain;
+    map::terrain::TerrainDataGroup* test_terrain;
 
     void init() {
-        test_terrain = map::ferr2d::load("terrain.t2d");
+        test_terrain = map::terrain::load("terrain.f2d");
 
         log_print_file << "map assets loaded";
     }

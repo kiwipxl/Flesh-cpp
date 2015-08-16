@@ -9,7 +9,6 @@
 #include "gui/MessageBox.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
-#include "map/Ferr2DSystem.h"
 #include "map/MapCamera.h"
 #include "network/message/Message.h"
 #include "network/sockets/SocketManager.h"

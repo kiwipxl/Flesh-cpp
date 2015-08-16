@@ -18,3 +18,30 @@ switched to state 3 from state 3
 10061: connect error
 (tcp_serv_sock): error 10061 occurred while trying to connect to (ip: 127.0.0.1, port: 4222)
 contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
+contact pre_solve callbacks: 3
