@@ -19,11 +19,9 @@ BEGIN_ENTITIES_NS
 
 using namespace cocos2d;
 
-Unit* test_player;
-
 std::vector<Unit*> units;
 float move_vel_x = 200.0f;
-float jump_vel_x = 400.0f;
+float jump_vel_x = 450.0f;
 const float LARGE_VEL_X = 100000.0f;
 bool jumping = false;
 bool colliding = false;
@@ -58,7 +56,7 @@ Unit::Unit() {
     pbody->setRotationEnable(false);
     pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
-    root::scene->p_world->setAutoStep(true);
+    root::scene->p_world->setAutoStep(false);
     root::scene->p_world->setGravity(Vec2(0, -980.0f));
     base->setPhysicsBody(pbody);
 
@@ -67,6 +65,8 @@ Unit::Unit() {
     dest_x = base->getPositionX();
     dest_y = base->getPositionY();
     dest_rota = 0;
+
+    units.push_back(this);
 }
 
 bool Unit::on_contact_run(PhysicsContact& contact) {
@@ -76,8 +76,6 @@ bool Unit::on_contact_run(PhysicsContact& contact) {
     if (a && b) {
         if (a == base || b == base) {
             if (b == states::game::terrain->base || a == states::game::terrain->base) {
-                auto cd = contact.getContactData();
-
                 can_jump = true;
                 colliding = true;
                 collide_timer = 0;
@@ -90,6 +88,8 @@ bool Unit::on_contact_run(PhysicsContact& contact) {
 }
 
 void Unit::update() {
+    if (!player_input) return;
+
     cone->setPosition(Vec2(base->getPositionX(), base->getPositionY()));
 
     if (aiming) {
@@ -116,47 +116,39 @@ void Unit::update() {
         cone->setVisible(aiming);
     }
 
-    if (colliding && moving) {
+    if (moving) {
         base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
     }else {
         base->setRotation(0.0f);
     }
 
-    if (player_input) {
-        moving = false;
-        if (!jumping && !aiming) {
-            if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
-                pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
-                //pbody->applyImpulse(Vec2(400.0f, 0));
-                facing_right = true;
-                base->setFlippedX(facing_right);
-                moving = true;
-            }
-            if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
-                pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
-                //pbody->applyImpulse(Vec2(-400.0f, 0));
-                facing_right = false;
-                base->setFlippedX(facing_right);
-                moving = true;
-            }
-            if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_W)) {
-                pbody->setVelocity(Vec2(pbody->getVelocity().x, 700.0f));
-                if (facing_right) pbody->setVelocity(Vec2(jump_vel_x, pbody->getVelocity().y));
-                else pbody->setVelocity(Vec2(-jump_vel_x, pbody->getVelocity().y));
-
-                can_jump = false;
-                jumping = true;
-            }
+    moving = false;
+    if (!jumping && !aiming) {
+        if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
+            pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
+            //pbody->applyImpulse(Vec2(400.0f, 0));
+            facing_right = true;
+            base->setFlippedX(facing_right);
+            moving = true;
         }
-    }else {
-        pbody->setGravityEnable(false);
-        base->setPosition(base->getPositionX() + ((dest_x - base->getPositionX()) / 2.0f), (base->getPositionY() + (dest_y - base->getPositionY()) / 2.0f));
-        base->setRotation(base->getRotation() + ((dest_rota - base->getRotation()) / 2.0f));
+        if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
+            pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
+            //pbody->applyImpulse(Vec2(-400.0f, 0));
+            facing_right = false;
+            base->setFlippedX(facing_right);
+            moving = true;
+        }
+        if (can_jump && input::key_pressed(EventKeyboard::KeyCode::KEY_W)) {
+            pbody->setVelocity(Vec2(pbody->getVelocity().x, 600.0f));
+            if (facing_right) pbody->setVelocity(Vec2(jump_vel_x, pbody->getVelocity().y));
+            else pbody->setVelocity(Vec2(-jump_vel_x, pbody->getVelocity().y));
+
+            can_jump = false;
+            jumping = true;
+        }
     }
 
-    //pbody->setVelocity(Vec2(clampf(pbody->getVelocity().x, -200.0f, 200.0f), pbody->getVelocity().y));
-
-    if (pbody->getVelocity().x <= 2 && pbody->getVelocity().x > -2) {
+    if (jumping && pbody->getVelocity().x <= 2 && pbody->getVelocity().x >= -2) {
         jumping = false;
     }
 
@@ -165,10 +157,11 @@ void Unit::update() {
         colliding = false;
         can_jump = false;
     }
+
+    //pbody->setVelocity(Vec2(clampf(pbody->getVelocity().x, -200.0f, 200.0f), pbody->getVelocity().y));
 }
 
 void test_peer_join(network::peers::Peer* peer) {
-    test_player->base->setPosition(0, 0);
     Unit* unit = new Unit();
     unit->peer = peer;
     units.push_back(unit);

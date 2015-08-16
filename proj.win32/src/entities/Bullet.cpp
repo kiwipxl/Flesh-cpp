@@ -2,6 +2,7 @@
 
 #include "assets/Textures.h"
 #include "entities/BulletLogic.h"
+#include "entities/Unit.h"
 #include "debug/Logger.h"
 #include "SceneManager.h"
 #include "StateManager.h"
@@ -21,6 +22,11 @@ bool on_contact_run(PhysicsContact& contact) {
     if (a && b) {
         for (int n = 0; n < bullets.size(); ++n) {
             if (a == bullets[n]->base || b == bullets[n]->base) {
+                for (int i = 0; i < units.size(); ++i) {
+                    if (a == units[i]->base || b == units[i]->base) {
+
+                    }
+                }
                 bullets[n]->on_contact_run(contact);
             }
         }
@@ -30,7 +36,6 @@ bool on_contact_run(PhysicsContact& contact) {
 }
 
 //public
-
 void init() {
     physics::add_on_contact_run(on_contact_run, NULL);
 }

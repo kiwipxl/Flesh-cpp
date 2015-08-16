@@ -40,7 +40,6 @@ class Unit {
         void on_post_contact(cc::PhysicsContact&, const cc::PhysicsContactPostSolve&);
 };
 
-extern Unit* test_player;
 extern std::vector<Unit*> units;
 
 extern void test_peer_join(network::peers::Peer* peer);

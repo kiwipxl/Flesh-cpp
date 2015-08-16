@@ -19,6 +19,6 @@ namespace map {
     }
 
     void MapCamera::update() {
-        cam->setPosition(entities::test_player->base->getPosition());
+
     }
 };

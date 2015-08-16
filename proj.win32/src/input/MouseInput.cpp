@@ -93,5 +93,6 @@ namespace input {
     void update_mouse() {
         mouse.button_left.pressed = false;
         mouse.button_right.pressed = false;
+        mouse.scroll = { 0, 0 };
     }
 };
