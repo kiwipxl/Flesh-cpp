@@ -36,7 +36,8 @@ class Unit {
         bool can_jump = false;
         bool facing_right = false;
 
-        bool physics_contact(cc::PhysicsContact& contact);
+        bool on_contact_run(cc::PhysicsContact&);
+        void on_post_contact(cc::PhysicsContact&, const cc::PhysicsContactPostSolve&);
 };
 
 extern Unit* test_player;

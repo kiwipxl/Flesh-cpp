@@ -89,10 +89,10 @@ namespace root {
     }
 
     void update_state(float dt) {
-        if (!created_init_state) { created_init_state = true; create_state(s, true); }
-
         time_since_startup += dt;
         delta_time = dt;
+
+        if (!created_init_state) { created_init_state = true; create_state(s, true); }
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_N)) {
             switch_state((State)((int)s + 1));

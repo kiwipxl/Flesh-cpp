@@ -44,9 +44,18 @@ namespace game {
         }
     }
 
+    float physics_timing = 0;
+    const float TIMESTEP = 1.0f / 60.0f;
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
+                //scene->p_world->step(delta_time);
+                /*physics_timing += delta_time;
+                while (physics_timing >= TIMESTEP) {
+                    scene->p_world->step(TIMESTEP);
+                    physics_timing -= TIMESTEP;
+                }*/
+
                 entities::update_units();
                 entities::bullet::update();
                 camera->update();

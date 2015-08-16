@@ -4,6 +4,7 @@
 #include <physics/CCPhysicsBody.h>
 #include <base/CCEventDispatcher.h>
 #include <physics/CCPhysicsWorld.h>
+#include <chipmunk.h>
 
 #include "assets/Textures.h"
 #include "debug/Logger.h"
@@ -37,7 +38,7 @@ float power = MIN_POWER;
 
 Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
-    base->setPosition(0, 0);
+    base->setPosition(-400, 0);
     base->retain();
     root::scene->addChild(base, 1);
     
@@ -47,34 +48,36 @@ Unit::Unit() {
     root::scene->addChild(cone, 1);
 
     PhysicsMaterial mat;
-    mat.density = .1f;
-    mat.friction = 4;
-    mat.restitution = 0.0f;
+    mat.density = 0.0f;
+    mat.friction = 40.0f;
+    mat.restitution = .5f;
     pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
-        base->getContentSize().height * base->getScaleY()), mat);
+                                        base->getContentSize().height * base->getScaleY()), mat);
     pbody->setCollisionBitmask(1);
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
-    pbody->setGravityEnable(false);
     pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
-    root::scene->p_world->setGravity(Vec2(0, -1200.0f));
+    root::scene->p_world->setAutoStep(true);
+    root::scene->p_world->setGravity(Vec2(0, -980.0f));
     base->setPhysicsBody(pbody);
 
-    physics::add_on_contact_run(CC_CALLBACK_1(Unit::physics_contact, this), this);
+    physics::add_on_contact_run(CC_CALLBACK_1(Unit::on_contact_run, this), this);
 
     dest_x = base->getPositionX();
     dest_y = base->getPositionY();
     dest_rota = 0;
 }
 
-bool Unit::physics_contact(PhysicsContact& contact) {
+bool Unit::on_contact_run(PhysicsContact& contact) {
     auto a = contact.getShapeA()->getBody()->getNode();
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b) {
         if (a == base || b == base) {
             if (b == states::game::terrain->base || a == states::game::terrain->base) {
+                auto cd = contact.getContactData();
+
                 can_jump = true;
                 colliding = true;
                 collide_timer = 0;
@@ -114,7 +117,7 @@ void Unit::update() {
     }
 
     if (colliding && moving) {
-        base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
+        //base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);
     }else {
         base->setRotation(0.0f);
     }
@@ -123,13 +126,16 @@ void Unit::update() {
         moving = false;
         if (!jumping && !aiming) {
             if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
-                pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
+                //pbody->setVelocity(Vec2(move_vel_x, pbody->getVelocity().y));
+                //pbody->applyImpulse(Vec2(400.0f, 0));
+                cpBodySetForce(pbody->getCPBody(), cpVect{ 1000.0f, 0 });
                 facing_right = true;
                 base->setFlippedX(facing_right);
                 moving = true;
             }
             if (input::key_down(EventKeyboard::KeyCode::KEY_A)) {
-                pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
+                //pbody->setVelocity(Vec2(-move_vel_x, pbody->getVelocity().y));
+                //pbody->applyImpulse(Vec2(-400.0f, 0));
                 facing_right = false;
                 base->setFlippedX(facing_right);
                 moving = true;
@@ -149,11 +155,13 @@ void Unit::update() {
         base->setRotation(base->getRotation() + ((dest_rota - base->getRotation()) / 2.0f));
     }
 
+    //pbody->setVelocity(Vec2(clampf(pbody->getVelocity().x, -200.0f, 200.0f), pbody->getVelocity().y));
+
     if (pbody->getVelocity().x <= 2 && pbody->getVelocity().x > -2) {
         jumping = false;
     }
 
-    if (++collide_timer >= 6) {
+    if (++collide_timer >= 10) {
         collide_timer = 0;
         colliding = false;
         can_jump = false;

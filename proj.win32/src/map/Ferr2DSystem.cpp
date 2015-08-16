@@ -7,7 +7,6 @@
 #include <renderer/CCTrianglesCommand.h>
 #include <renderer/CCRenderer.h>
 #include <2d/CCCamera.h>
-#include <Box2D/Box2D.h>
 
 #include "assets/Textures.h"
 #include "debug/Logger.h"
@@ -36,8 +35,6 @@ namespace map {
         using namespace cocos2d;
 
         //private
-        b2World* _world;
-
         void print_load_error(std::string err_message, std::string file_name) {
             f_assert(sstream_cstr("ferr2d load error occurred: " << err_message << " (" << file_name << ")"));
         }
@@ -73,49 +70,14 @@ namespace map {
 
             base = Node::create();
 
-            _world = new b2World(b2Vec2(0.0f, -90.8f));
-
-            Sprite* s = Sprite::createWithTexture(assets::textures::test_bullet);
-            root::scene->addChild(s, 1);
-            s->setPositionY(400);
-            //
-            b2Body* sbpbody;
-            b2BodyDef sbpbody_def;
-            sbpbody_def.type = b2_dynamicBody;
-            sbpbody_def.userData = s;
-            sbpbody = _world->CreateBody(&sbpbody_def);
-
-            b2CircleShape sshape;
-            sshape.m_radius = 10.0f;
-            b2FixtureDef sshape_def;
-            sshape_def.shape = &sshape;
-
-            b2Fixture* sfixture = sbpbody->CreateFixture(&sshape_def);
-            //
-
-            //
-            b2Body* bpbody;
-            b2BodyDef bpbody_def;
-            bpbody_def.type = b2_staticBody;
-            bpbody_def.userData = base;
-            bpbody = _world->CreateBody(&bpbody_def);
-
-            b2CircleShape shape;
-            shape.m_radius = 10.0f;
-            b2FixtureDef shape_def;
-            shape_def.shape = &shape;
-
-            b2Fixture* fixture = bpbody->CreateFixture(&shape_def);
-            //
-
-            pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size());
-            pbody->setGravityEnable(false);
+            pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size(), PHYSICSBODY_MATERIAL_DEFAULT, 2.0f);
             pbody->setDynamic(false);
             pbody->setCollisionBitmask(1);
             pbody->setContactTestBitmask(true);
+            pbody->setPositionOffset(Vec2(0, -400.0f));
 
-            //base->setPhysicsBody(pbody);
-            base->setPosition(0, 100);
+            base->setPhysicsBody(pbody);
+            base->setPosition(0.0f, -200.0f);
             base_transform = &base->getNodeToWorldTransform();
             //base->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
             //base->setScale(1.1f, 1.1f);
@@ -199,23 +161,9 @@ namespace map {
         }
 
         void Terrain::draw() {
-            _world->Step(root::delta_time, 8, 1);
-
-            // Iterate over the bodies in the physics world
-            for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext()) {
-                if (b->GetUserData() != NULL) {
-                    //synchronize the AtlasSprites position and rotation with the corresponding body
-                    Sprite* myActor = (Sprite*)b->GetUserData();
-                    myActor->setPosition(Vec2(b->GetPosition().x, b->GetPosition().y));
-                    myActor->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
-                    if (b->GetUserData() == base) {
-                        auto pos = b->GetPosition();
-                        int s = 0;
-                    }
-                }
-            }
             fill_tris_cmd._mv = base->getNodeToWorldTransform();
             edge_tris_cmd._mv = base->getNodeToWorldTransform();
+            pbody->setPositionOffset(base->getPosition());
             debug_draw_node->setPosition(base->getPosition());
             Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
             Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
