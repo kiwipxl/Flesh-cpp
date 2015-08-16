@@ -69,6 +69,7 @@ TerrainDataGroupPtr load(std::string file_name) {
         int last_header_end = 0;
         const int header_begin_size = strlen("TERRAIN_BEGIN");
         const int header_end_size = strlen("TERRAIN_END");
+        std::vector<std::string> tokens;
         while (true) {
             auto l = all_data.length();
             int header_begin = all_data.substr(last_header_end).find("TERRAIN_BEGIN");
@@ -83,7 +84,6 @@ TerrainDataGroupPtr load(std::string file_name) {
             tgroup->data_vec.push_back(ter);
             ter->parent = tgroup.get();
 
-            std::vector<std::string> tokens;
 		    if (split_tokens(data, tokens, "vertex_data:")) {
 			    for (int n = 0; n < tokens.size(); n += 2) {
                     V3F_C4B_T2F v;
@@ -163,6 +163,14 @@ TerrainDataGroupPtr load(std::string file_name) {
                 }
 		    }else {
                 RETURN_LOAD_ERR("fill_indices attribute missing", file_name);
+            }
+        }
+        if (split_tokens(all_data, tokens, "global_spawn_points:", ',')) {
+            for (int n = 0; n < tokens.size(); n += 2) {
+                Vec2 v;
+                v.x = std::stof(tokens[n]) * 40.0f;
+                v.y = std::stof(tokens[n + 1]) * 40.0f;
+                tgroup->spawn_points.push_back(v);
             }
         }
 		delete[] temp;

@@ -30,6 +30,7 @@ namespace game {
             case STATE_GAME:
                 auto unit = new entities::Unit();
                 unit->player_input = true;
+                unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
                 auto unit2 = new entities::Unit();
 
                 current_unit = entities::units[0];

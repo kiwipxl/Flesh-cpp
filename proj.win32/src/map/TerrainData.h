@@ -60,6 +60,7 @@ class TerrainDataGroup {
 
 public:
     std::vector<TerrainDataPtr> data_vec;
+    std::vector<cc::Vec2> spawn_points;
     cc::Vec2 min;
     cc::Vec2 max;
     int max_width;

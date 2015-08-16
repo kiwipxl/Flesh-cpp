@@ -57,7 +57,7 @@ Unit::Unit() {
     pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
     root::scene->p_world->setAutoStep(false);
-    root::scene->p_world->setGravity(Vec2(0, -980.0f));
+    root::scene->p_world->setGravity(Vec2(0, -98.0f));
     base->setPhysicsBody(pbody);
 
     physics::add_on_contact_run(CC_CALLBACK_1(Unit::on_contact_run, this), this);

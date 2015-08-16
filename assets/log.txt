@@ -11,9 +11,10 @@ switching to state 2 from state 1
 removed state 1
 created state 2
 switched to state 2 from state 2
+10061: connect error
+(tcp_serv_sock): error 10061 occurred while trying to connect to (ip: 127.0.0.1, port: 4222)
 switching to state 3 from state 2
 removed state 2
 created state 3
 switched to state 3 from state 3
-10061: connect error
-(tcp_serv_sock): error 10061 occurred while trying to connect to (ip: 127.0.0.1, port: 4222)
+contact pre_solve callbacks: 3
