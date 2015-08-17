@@ -13,6 +13,7 @@
 #include "assets/Textures.h"
 #include "debug/Logger.h"
 #include "entities/Unit.h"
+#include "map/Cam.h"
 #include "StateManager.h"
 
 BEGIN_MAP_NS
@@ -46,6 +47,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     base->retain();
     t_group.base->addChild(base, 1);
 
+    //init edge_tris, fill_tris and commands for both of them
     edge_tris.indices = &t_data.indices[t_data.edge_indices_start];
     edge_tris.indexCount = t_data.edge_indices_end;
     edge_tris.verts = &t_data.points[0];
@@ -72,13 +74,14 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
 
     fill_tris_cmd.init(0.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, base->getNodeToWorldTransform(), Node::FLAGS_RENDER_AS_3D);
 
+    //turn on/off debug geometry depending on default value
     debug_draw_node = DrawNode::create();
     debug_draw_node->retain();
 
     debug_draw_on = !debug_draw_on;
     toggle_debug_geometry();
 }
-        
+
 void Terrain::create_debug_geometry(bool show_triangles, bool show_collider_points) {
     base->addChild(debug_draw_node);
 
@@ -124,8 +127,8 @@ void Terrain::toggle_debug_geometry() {
 }
 
 void Terrain::draw() {
-    fill_tris_cmd._mv = base->getNodeToWorldTransform();
-    edge_tris_cmd._mv = base->getNodeToWorldTransform();
+    //fill_tris_cmd.getModelView() = base->getNodeToWorldTransform();
+    //edge_tris_cmd.getModelView() = base->getNodeToWorldTransform();
     if (has_collider) pbody->setPositionOffset(base->getPosition());
     debug_draw_node->setPosition(base->getPosition());
     Director::getInstance()->getRenderer()->addCommand(&fill_tris_cmd);
@@ -138,7 +141,7 @@ void Terrain::draw() {
 
 TerrainGroup::TerrainGroup(TerrainDataGroup* data_group) {
     base = Node::create();
-    root::scene->addChild(base);
+    root::map_layer->addChild(base);
     for (int n = 0; n < data_group->data_vec.size(); ++n) {
         auto t = new Terrain(*data_group->data_vec[n].get(), *this);
         terrain_list.push_back(t);

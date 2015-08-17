@@ -78,7 +78,7 @@ public:
             auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
             bullet_explosion->setPosition(bref->base->getPosition());
             bullet_explosion->setScale(.325f);
-            root::scene->addChild(bullet_explosion, 1);
+            root::map_layer->addChild(bullet_explosion, 1);
             bullet_explosion->setAutoRemoveOnFinish(true);
 
             bref->schedule_removal();
@@ -118,7 +118,7 @@ public:
             bullet_explosion->setPosition(bref->base->getPosition());
             bullet_explosion->setScale(.8f);
             bullet_explosion->setAutoRemoveOnFinish(true);
-            root::scene->addChild(bullet_explosion, 1);
+            root::map_layer->addChild(bullet_explosion, 1);
             bref->schedule_removal();
         }
     }

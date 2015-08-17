@@ -75,7 +75,6 @@ namespace game {
                 }
                 dest_zoom -= dest_zoom / 8.0f;
                 map::camera::map_cam->setPositionZ(map::camera::map_cam->getPositionZ() + dest_zoom);
-                map::camera::static_cam->setPositionZ(map::camera::static_cam->getPositionZ() + dest_zoom);
 
                 entities::update_units();
                 entities::bullet::update();
@@ -85,7 +84,8 @@ namespace game {
                 if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_D)) {
                     terrain->toggle_debug_geometry();
 
-                    root::scene->p_world->setDebugDrawMask(terrain->is_debug_draw_on() ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
+                    root::scene->p_world->setDebugDrawMask(terrain->is_debug_draw_on() ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE,
+                                                           map::camera::map_cam->getCameraMask());
                 }
 
                 scene->p_world->step(TIMESTEP);

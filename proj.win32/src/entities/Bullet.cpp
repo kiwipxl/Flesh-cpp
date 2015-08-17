@@ -65,7 +65,7 @@ void update() {
 Bullet::Bullet(int x, int y) {
     base = Sprite::createWithTexture(assets::textures::test_bullet);
     base->setPosition(x, y);
-    root::scene->addChild(base, 1);
+    root::map_layer->addChild(base, 1);
 
     pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
         base->getContentSize().height * base->getScaleY()));
@@ -86,7 +86,7 @@ void Bullet::cleanup() {
         delete logic_list[n];
     }
     logic_list.clear();
-    root::scene->removeChild(base, 1);
+    root::map_layer->removeChild(base, 1);
 }
 
 void Bullet::schedule_removal() {

@@ -38,12 +38,12 @@ Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
     base->setPosition(-400, 0);
     base->retain();
-    root::scene->addChild(base, 1);
+    root::map_layer->addChild(base, 1);
     
     cone = Sprite::create("cone.png");
     cone->setAnchorPoint(Vec2(.5f, -.25f));
     cone->setVisible(false);
-    root::scene->addChild(cone, 1);
+    root::map_layer->addChild(cone, 1);
 
     PhysicsMaterial mat;
     mat.density = 0.0f;
