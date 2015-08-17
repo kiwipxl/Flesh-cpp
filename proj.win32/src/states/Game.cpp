@@ -25,6 +25,8 @@ namespace game {
 
     //private
     float dest_zoom = 0;
+    float physics_timing = 0;
+    const float TIMESTEP = 1.0f / 60.0f;
 
     void create_state(State state) {
         switch (state) {
@@ -32,7 +34,7 @@ namespace game {
                 turn_time_label = Label::createWithBMFont("fonts/lucida.fnt", "ayyyyyyyyy lmao");
                 turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 80);
                 turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
-                ui_node->addChild(turn_time_label, 1);
+                ui_layer->addChild(turn_time_label, 1);
 
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
@@ -57,8 +59,6 @@ namespace game {
         }
     }
 
-    float physics_timing = 0;
-    const float TIMESTEP = 1.0f / 60.0f;
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:

@@ -29,14 +29,14 @@ namespace startup {
                 info_label = Label::createWithBMFont("fonts/lucida.fnt", "connecting...");
                 info_label->setDimensions(scene->screen_size.width - 40, 400);
                 info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
-                scene->addChild(info_label, 1);
+                ui_layer->addChild(info_label, 1);
 
                 {
                     auto spinner_animation = Animate::create(Animation::createWithSpriteFrames(assets::animations::spinner_frames, .05f, UINT32_MAX));
                     spinner_sprite = Sprite::create();
                     spinner_sprite->runAction(spinner_animation);
                     spinner_sprite->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 45);
-                    scene->addChild(spinner_sprite, 1);
+                    ui_layer->addChild(spinner_sprite, 1);
                 }
 
                 network::sock::setup_tcp_sock();
@@ -47,8 +47,8 @@ namespace startup {
     void remove_state(State state) {
         switch (state) {
             case STATE_SERVER_CONNECT_SCREEN:
-                scene->removeChild(info_label);
-                scene->removeChild(spinner_sprite);
+                ui_layer->removeChild(info_label);
+                ui_layer->removeChild(spinner_sprite);
                 break;
         }
     }

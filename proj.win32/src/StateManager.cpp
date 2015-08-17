@@ -28,8 +28,8 @@ namespace root {
     //public
     SceneManager* scene;
     State s = STATE_EMPTY;
-    Node* ui_node;
-    Node* map_node;
+    Node* ui_layer;
+    Node* map_layer;
 
     float time_since_startup = 0;
     float delta_time = 0;
@@ -44,12 +44,11 @@ namespace root {
         scene = scene_ref;
         scene->setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
-        ui_node = Node::create();
-        ui_node->setCameraMask((u_short)CameraFlag::USER1);
-        scene->addChild(ui_node);
-        map_node = Node::create();
-        map_node->setCameraMask((u_short)CameraFlag::USER2);
-        scene->addChild(map_node);
+        ui_layer = Node::create();
+        scene->addChild(ui_layer);
+        map_layer = Node::create();
+        scene->addChild(map_layer);
+        map::camera::init();
 
         debug::init_logger();
         assets::init();
@@ -58,8 +57,6 @@ namespace root {
         input::init_keyboard();
         input::init_mouse();
         physics::init();
-
-        scene->scheduleUpdate();
 
         s = STATE_SERVER_CONNECT_SCREEN;
     }
@@ -98,6 +95,9 @@ namespace root {
     }
 
     void update_state(float dt) {
+        ui_layer->setCameraMask((u_short)CameraFlag::USER1);
+        map_layer->setCameraMask((u_short)CameraFlag::USER2);
+
         time_since_startup += dt;
         delta_time = dt;
 

@@ -28,10 +28,10 @@ namespace gui {
 
     void Button::add_to_scene() {
         cf_assert(!button, sstream_cstr("cannot add NULL button to scene"));
-        root::scene->addChild(button);
+        root::ui_layer->addChild(button);
     }
 
     Button::~Button() {
-        if (button) root::scene->removeChild(button);
+        if (button) root::ui_layer->removeChild(button);
     }
 };

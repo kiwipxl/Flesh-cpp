@@ -92,7 +92,7 @@ namespace login {
             case STATE_LOGIN_REGISTER_SCREEN:
                 {
                     assets::csb::load_csb(login_page, assets::csb::login_page_name);
-                    scene->addChild(login_page);
+                    ui_layer->addChild(login_page);
                     auto login_button = assets::csb::get_child<ui::Button>(login_page, "login_button");
                     auto register_button = assets::csb::get_child<ui::Button>(login_page, "register_button");
 
@@ -169,6 +169,7 @@ namespace login {
             case STATE_LOGIN_REGISTER_SCREEN:
                 login_page->removeAllChildren();
                 login_page->cleanup();
+                gui::close_message_box();
                 break;
         }
     }

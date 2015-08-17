@@ -25,6 +25,8 @@ namespace root {
         screen_size = Director::getInstance()->getVisibleSize();
         screen_origin = Director::getInstance()->getVisibleOrigin();
 
+        scheduleUpdate();
+
         return true;
     }
 

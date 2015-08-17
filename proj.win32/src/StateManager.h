@@ -19,8 +19,8 @@ namespace root {
     };
 
     extern SceneManager* scene;
-    extern cc::Node* ui_node;
-    extern cc::Node* map_node;
+    extern cc::Node* ui_layer;
+    extern cc::Node* map_layer;
 
     extern State s;
     extern float time_since_startup;

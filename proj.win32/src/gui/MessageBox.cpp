@@ -18,7 +18,7 @@ namespace gui {
         assets::csb::load_csb(container, assets::csb::message_box_name);
         //container = assets::csb::message_box;
 
-        root::scene->addChild(container, 10);
+        root::ui_layer->addChild(container, 10);
 
         frame = assets::csb::get_child<ui::ImageView>(container, "frame_image");
 
@@ -69,7 +69,7 @@ namespace gui {
 
     void MessageBox::close() {
         if (!closed) {
-            root::scene->removeChild(container);
+            root::ui_layer->removeChild(container);
             closed = true;
             //container->cleanup();
         }

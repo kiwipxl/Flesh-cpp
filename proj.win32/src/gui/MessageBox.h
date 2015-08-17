@@ -19,6 +19,7 @@ namespace gui {
 
     namespace cc = cocos2d;
 
+    //default callback used for messagebox class
     extern void close_message_box_callback(cc::Ref* r);
 
     class MessageBox {
