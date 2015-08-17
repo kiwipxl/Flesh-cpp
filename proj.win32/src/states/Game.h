@@ -2,7 +2,6 @@
 #define _GAME_H_
 
 #include "map/Terrain.h"
-#include "map/MapCamera.h"
 #include "states/Defines.h"
 
 namespace root {
@@ -15,7 +14,6 @@ BEGIN_STATES_NS
 namespace game {
 
     extern map::terrain::TerrainGroup* terrain;
-    extern map::MapCamera* camera;
 
     extern void create_state(root::State);
     extern void remove_state(root::State);

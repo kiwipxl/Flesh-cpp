@@ -19,6 +19,7 @@ namespace startup {
 
     //private
     Sprite* spinner_sprite;
+    Label* info_label;
 
     //public externs
 

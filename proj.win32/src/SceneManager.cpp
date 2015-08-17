@@ -25,12 +25,12 @@ namespace root {
         screen_size = Director::getInstance()->getVisibleSize();
         screen_origin = Director::getInstance()->getVisibleOrigin();
 
-        init_root(this);
-
         return true;
     }
 
     void SceneManager::update(float dt) {
+        if (!has_init) { init_root(this); has_init = true; }
+
         time_since_startup += dt;
         update_state(dt);
     }

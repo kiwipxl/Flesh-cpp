@@ -2,6 +2,9 @@
 
 #include <renderer/CCGLProgram.h>
 #include <renderer/CCGLProgramCache.h>
+#include <base/CCDirector.h>
+#include <ui/CocosGUI.h>
+#include "cocos2d.h"
 
 #include "assets/Assets.h"
 #include "debug/Errors.h"
@@ -9,7 +12,7 @@
 #include "gui/MessageBox.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
-#include "map/MapCamera.h"
+#include "map/Cam.h"
 #include "network/message/Message.h"
 #include "network/sockets/SocketManager.h"
 #include "physics/Physics.h"
@@ -25,8 +28,8 @@ namespace root {
     //public
     SceneManager* scene;
     State s = STATE_EMPTY;
-
-    Label* info_label;
+    Node* ui_node;
+    Node* map_node;
 
     float time_since_startup = 0;
     float delta_time = 0;
@@ -40,6 +43,13 @@ namespace root {
     void init_root(SceneManager* scene_ref) {
         scene = scene_ref;
         scene->setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+        ui_node = Node::create();
+        ui_node->setCameraMask((u_short)CameraFlag::USER1);
+        scene->addChild(ui_node);
+        map_node = Node::create();
+        map_node->setCameraMask((u_short)CameraFlag::USER2);
+        scene->addChild(map_node);
 
         debug::init_logger();
         assets::init();
@@ -94,6 +104,7 @@ namespace root {
         if (!created_init_state) { created_init_state = true; create_state(s, true); }
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_N)) {
+            //Director::getInstance()->getOpenGLView()->setFrameSize(800, 600);
             switch_state((State)((int)s + 1));
         }else if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_L)) {
             static bool local_ip = false;

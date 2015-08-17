@@ -7,6 +7,7 @@
 #include "entities/Bullet.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
+#include "map/Cam.h"
 #include "StateManager.h"
 #include "map/Terrain.h"
 
@@ -19,8 +20,8 @@ namespace game {
 
     //public externs
     map::terrain::TerrainGroup* terrain;
-    map::MapCamera* camera;
     entities::Unit* current_unit;
+    Label* turn_time_label;
 
     //private
     float dest_zoom = 0;
@@ -28,16 +29,20 @@ namespace game {
     void create_state(State state) {
         switch (state) {
             case STATE_GAME:
+                turn_time_label = Label::createWithBMFont("fonts/lucida.fnt", "ayyyyyyyyy lmao");
+                turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 80);
+                turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
+                ui_node->addChild(turn_time_label, 1);
+
+                terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
+                entities::bullet::init();
+
                 auto unit = new entities::Unit();
                 unit->player_input = true;
                 unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
                 auto unit2 = new entities::Unit();
-
+                unit2->base->setPosition(assets::maps::test_terrain->spawn_points[1]);
                 current_unit = entities::units[0];
-
-                camera = new map::MapCamera();
-                terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
-                entities::bullet::init();
 
                 break;
         }
@@ -57,7 +62,7 @@ namespace game {
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
-                camera->cam->setPosition(current_unit->base->getPosition());
+                map::camera::map_cam->setPosition(current_unit->base->getPosition());
 
                 if (input::get_mouse_scroll().y <= -1) {
                     dest_zoom -= 20.0f;
@@ -69,11 +74,12 @@ namespace game {
                     dest_zoom -= 10.0f;
                 }
                 dest_zoom -= dest_zoom / 8.0f;
-                camera->cam->setPositionZ(camera->cam->getPositionZ() + dest_zoom);
+                map::camera::map_cam->setPositionZ(map::camera::map_cam->getPositionZ() + dest_zoom);
+                map::camera::static_cam->setPositionZ(map::camera::static_cam->getPositionZ() + dest_zoom);
 
                 entities::update_units();
                 entities::bullet::update();
-                camera->update();
+                map::camera::update();
                 terrain->draw();
 
                 if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_D)) {

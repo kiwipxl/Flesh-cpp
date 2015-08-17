@@ -87,7 +87,7 @@ public class Ferr2DExporter : MonoBehaviour {
             temp += "fill_indices:0," + m.GetIndices(0).Length + ",\n";
             temp += "edge_indices:" + m.GetIndices(0).Length + "," + m.GetIndices(1).Length + ",\n";
             if (vertex_colour_str != "") temp += "vertex_colour:" + vertex_colour_str + "\n\n";
-
+			
             data += temp;
             data += "-- TERRAIN_END --\n\n";
 
@@ -101,7 +101,7 @@ public class Ferr2DExporter : MonoBehaviour {
         while (true) {
             GameObject spawn_obj = GameObject.Find("spawnpoint" + s);
             if (spawn_obj == null) break;
-            spawn_points_str += spawn_obj.transform.position.x + "," + spawn_obj.transform.position.y;
+            spawn_points_str += spawn_obj.transform.position.x + "," + spawn_obj.transform.position.y + ",";
             ++s;
         }
         if (spawn_points_str != "") data += "global_spawn_points:" + spawn_points_str + "\n\n";

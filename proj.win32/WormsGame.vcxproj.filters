@@ -34,7 +34,6 @@
     <ClCompile Include="src\assets\Animations.cpp" />
     <ClCompile Include="src\assets\CSB.cpp" />
     <ClCompile Include="src\assets\Assets.cpp" />
-    <ClCompile Include="src\map\MapCamera.cpp" />
     <ClCompile Include="src\assets\Maps.cpp" />
     <ClCompile Include="src\states\Startup.cpp" />
     <ClCompile Include="src\states\Login.cpp" />
@@ -46,6 +45,7 @@
     <ClCompile Include="src\physics\Physics.cpp" />
     <ClCompile Include="src\map\TerrainData.cpp" />
     <ClCompile Include="src\map\Terrain.cpp" />
+    <ClCompile Include="src\map\Cam.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -71,7 +71,6 @@
     <ClInclude Include="src\assets\Animations.h" />
     <ClInclude Include="src\assets\CSB.h" />
     <ClInclude Include="src\assets\Assets.h" />
-    <ClInclude Include="src\map\MapCamera.h" />
     <ClInclude Include="src\assets\Maps.h" />
     <ClInclude Include="src\network\Defines.h" />
     <ClInclude Include="src\states\Startup.h" />
@@ -90,6 +89,7 @@
     <ClInclude Include="src\map\TerrainData.h" />
     <ClInclude Include="src\map\Terrain.h" />
     <ClInclude Include="src\map\MapDefines.h" />
+    <ClInclude Include="src\map\Cam.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -10,18 +10,21 @@ namespace root {
 
     class SceneManager : public cc::Layer {
 
-        public:
-            static cc::Scene* create_scene();
+    public:
+        static cc::Scene* create_scene();
 
-            virtual bool init();
-            virtual void update(float dt);
-            virtual void onExit();
+        virtual bool init();
+        virtual void update(float dt);
+        virtual void onExit();
 
-            cc::PhysicsWorld* p_world;
+        cc::PhysicsWorld* p_world;
 
-            float time_since_startup = 0;
-            cc::Size screen_size;
-            cc::Vec2 screen_origin;
+        float time_since_startup = 0;
+        cc::Size screen_size;
+        cc::Vec2 screen_origin;
+
+    private:
+        bool has_init = false;
     };
 };
 

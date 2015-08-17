@@ -173,7 +173,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\input\KeyboardInput.cpp" />
     <ClCompile Include="src\input\MouseInput.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\map\MapCamera.cpp" />
+    <ClCompile Include="src\map\Cam.cpp" />
     <ClCompile Include="src\map\TerrainData.cpp" />
     <ClCompile Include="src\network\message\Callback.cpp" />
     <ClCompile Include="src\network\GameMessages.cpp" />
@@ -213,7 +213,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\gui\MessageBox.h" />
     <ClInclude Include="src\input\KeyboardInput.h" />
     <ClInclude Include="src\input\MouseInput.h" />
-    <ClInclude Include="src\map\MapCamera.h" />
+    <ClInclude Include="src\map\Cam.h" />
     <ClInclude Include="src\map\MapDefines.h" />
     <ClInclude Include="src\map\TerrainData.h" />
     <ClInclude Include="src\network\message\Callback.h" />
