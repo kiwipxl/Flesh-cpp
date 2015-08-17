@@ -26,7 +26,7 @@ namespace startup {
     void create_state(State state) {
         switch (state) {
             case STATE_SERVER_CONNECT_SCREEN:
-                info_label = Label::createWithBMFont("fonts/lucida.fnt", "connecting...");
+                info_label = Label::createWithBMFont("fonts/felt.fnt", "connecting...");
                 info_label->setDimensions(scene->screen_size.width - 40, 400);
                 info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
                 ui_layer->addChild(info_label, 1);

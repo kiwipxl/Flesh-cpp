@@ -21,6 +21,7 @@ namespace game {
     //public externs
     map::terrain::TerrainGroup* terrain;
     entities::Unit* current_unit;
+    int current_unit_index = 0;
     Label* turn_time_label;
 
     //private
@@ -28,13 +29,18 @@ namespace game {
     float physics_timing = 0;
     const float TIMESTEP = 1.0f / 60.0f;
 
+    //private time
+    clock_t countdown_start;
+    int countdown_seconds = 5;
+
     void create_state(State state) {
         switch (state) {
             case STATE_GAME:
-                turn_time_label = Label::createWithBMFont("fonts/lucida.fnt", "ayyyyyyyyy lmao");
-                turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 80);
+                turn_time_label = Label::createWithBMFont("fonts/felt.fnt", "0");
+                turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 40);
                 turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
                 ui_layer->addChild(turn_time_label, 1);
+                countdown_start = clock();
 
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
@@ -44,7 +50,7 @@ namespace game {
                 unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
                 auto unit2 = new entities::Unit();
                 unit2->base->setPosition(assets::maps::test_terrain->spawn_points[1]);
-                current_unit = entities::units[0];
+                current_unit = entities::units[current_unit_index];
 
                 break;
         }
@@ -59,10 +65,36 @@ namespace game {
         }
     }
 
+    void next_unit() {
+        current_unit->player_input = false;
+        ++current_unit_index;
+        if (current_unit_index >= entities::units.size()) {
+            current_unit_index = 0;
+        }
+        current_unit = entities::units[current_unit_index];
+        current_unit->player_input = true;
+    }
+
+    void update_time() {
+        float t = (countdown_seconds * 1000) - (clock() - countdown_start);
+        if (t <= 0) {
+            countdown_start = clock();
+            next_unit();
+            return;
+        }
+        int seconds = t / 1000.0f;
+        int ms = clampf(fmod(t, 1000.0f) / 10.0f, 0, 99);
+        turn_time_label->setString(sstream_str(seconds << ":" << ms));
+    }
+
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
-                map::camera::map_cam->setPosition(current_unit->base->getPosition());
+                update_time();
+
+                auto& v = map::camera::map_cam->getPosition();
+                auto& vb = current_unit->base->getPosition();
+                map::camera::map_cam->setPosition(v.x - (v.x - vb.x) / 10.0f, v.y - (v.y - vb.y) / 10.0f);
 
                 if (input::get_mouse_scroll().y <= -1) {
                     dest_zoom -= 20.0f;

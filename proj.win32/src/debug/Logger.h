@@ -120,7 +120,7 @@ namespace debug {
             std::stringstream stream;
 
             StrStream& clear() {
-                stream.clear();
+                stream.str("");
                 return *this;
             }
 
