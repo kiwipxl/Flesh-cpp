@@ -16,20 +16,19 @@ class Unit;
 BEGIN_COMPONENTS_NS
 
 struct BulletAimerComponent;
+struct ColliderComponent;
 
 class PlayerMoveComponent : public ComponentBase {
 
 public:
-    bool can_jump = false;
     bool facing_right = false;
     float move_vel_x = 200.0f;
     float jump_vel_x = 450.0f;
     const float LARGE_VEL_X = 100000.0f;
     bool jumping = false;
-    bool colliding = false;
-    int collide_timer = 0;
     bool moving = false;
     BulletAimerComponent* bullet_aimer;
+    ColliderComponent* collider;
 
     PlayerMoveComponent(Unit* _ref) { ref = _ref; }
 

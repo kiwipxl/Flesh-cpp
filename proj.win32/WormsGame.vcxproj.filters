@@ -48,6 +48,7 @@
     <ClCompile Include="src\map\Cam.cpp" />
     <ClCompile Include="src\entities\components\BulletAimer.cpp" />
     <ClCompile Include="src\entities\components\PlayerMove.cpp" />
+    <ClCompile Include="src\entities\components\Collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -95,6 +96,7 @@
     <ClInclude Include="src\entities\components\ComponentBase.h" />
     <ClInclude Include="src\entities\components\PlayerMove.h" />
     <ClInclude Include="src\entities\components\BulletAimer.h" />
+    <ClInclude Include="src\entities\components\Collider.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

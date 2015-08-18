@@ -53,15 +53,15 @@ class Unit {
         void schedule_removal() { removal_scheduled = true; }
         bool is_scheduled_removal() { return removal_scheduled; }
 
-        template <typename T> T* add_component();
-        template <typename T> void remove_component();
-        template <typename T> T* get_component();
+        template <typename T> T*    add_component();
+        template <typename T> void  remove_component();
+        template <typename T> T*    get_component();
 
     private:
         bool removal_scheduled = false;
         std::vector<components::ComponentBase*> components;
 
-        //bool on_contact_run(cc::PhysicsContact&);
+        bool on_contact_run(cc::PhysicsContact&);
         //void on_post_contact(cc::PhysicsContact&, const cc::PhysicsContactPostSolve&);
 };
 
