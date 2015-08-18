@@ -90,6 +90,9 @@
     <ClInclude Include="src\map\Terrain.h" />
     <ClInclude Include="src\map\MapDefines.h" />
     <ClInclude Include="src\map\Cam.h" />
+    <ClInclude Include="src\entities\components\ComponentBase.h" />
+    <ClInclude Include="src\entities\components\PlayerMove.h" />
+    <ClInclude Include="src\entities\components\BulletAimer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

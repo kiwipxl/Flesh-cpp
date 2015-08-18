@@ -12,8 +12,6 @@ BEGIN_PHYSICS_NS
 
 namespace cc = cocos2d;
 
-#define CHECK_COLLISION(x, y) (a == x || b == x) && (a == y || b == y)
-
 extern cc::EventListenerPhysicsContact* contact_listener;
 
 typedef std::function<bool(cc::PhysicsContact&)> RunContactCallback;

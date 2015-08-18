@@ -1,11 +1,17 @@
 #ifndef _BULLET_LOGIC_H_
 #define _BULLET_LOGIC_H_
 
+/*
+contains bullet logic components that inherit from a base logic class
+logic components can be added or removed to a bullet object
+*/
+
 #include <vector>
 
 #include "assets/Particles.h"
 #include "entities/Bullet.h"
 #include "entities/EntityDefines.h"
+#include "entities/Unit.h"
 #include "states/Game.h"
 #include "StateManager.h"
 
@@ -74,14 +80,26 @@ public:
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && states::game::terrain->is_terrain(a, b)) {
-            auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
-            bullet_explosion->setPosition(bref->base->getPosition());
-            bullet_explosion->setScale(.325f);
-            root::map_layer->addChild(bullet_explosion, 1);
-            bullet_explosion->setAutoRemoveOnFinish(true);
+        map::terrain::Terrain* t;
+        if (a && b && CHECK_AB_COLLIDE(bref->base)) {
+            for (auto& u : units) {
+                if (u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                    u->schedule_removal();
+                    bref->schedule_removal();
+                }
+            }
 
-            bref->schedule_removal();
+            if (t = states::game::terrain->is_terrain(a, b)) {
+                //t->test_explosion_at(bref->base->getPosition());
+
+                auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
+                bullet_explosion->setPosition(bref->base->getPosition());
+                bullet_explosion->setScale(.325f);
+                root::map_layer->addChild(bullet_explosion, 1);
+                bullet_explosion->setAutoRemoveOnFinish(true);
+
+                bref->schedule_removal();
+            }
         }
 
         return false;
@@ -110,7 +128,7 @@ public:
         if (++timer >= 40) {
             gen_explosion = true;
             for (int n = 0; n < 8; ++n) {
-                auto b = create_bullet(bref->base->getPositionX(), bref->base->getPositionY());
+                auto b = create_bullet(bref->base->getPositionX(), bref->base->getPositionY(), bref->unit_parent);
                 float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
                 b->add_logic_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
             }

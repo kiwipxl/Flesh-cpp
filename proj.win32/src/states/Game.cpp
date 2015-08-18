@@ -20,8 +20,6 @@ namespace game {
 
     //public externs
     map::terrain::TerrainGroup* terrain;
-    entities::Unit* current_unit;
-    int current_unit_index = 0;
     Label* turn_time_label;
 
     //private
@@ -29,9 +27,9 @@ namespace game {
     float physics_timing = 0;
     const float TIMESTEP = 1.0f / 60.0f;
 
-    //private time
+    //time
     clock_t countdown_start;
-    int countdown_seconds = 5;
+    int countdown_seconds = 5000;
 
     void create_state(State state) {
         switch (state) {
@@ -45,12 +43,17 @@ namespace game {
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
 
-                auto unit = new entities::Unit();
-                unit->player_input = true;
-                unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
-                auto unit2 = new entities::Unit();
-                unit2->base->setPosition(assets::maps::test_terrain->spawn_points[1]);
-                current_unit = entities::units[current_unit_index];
+                for (int n = 0; n < 2; ++n) {
+                    auto unit = new entities::Unit();
+                    unit->team_type = (entities::UnitTeamType)1;
+                    unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
+                }
+                for (int n = 0; n < 2; ++n) {
+                    auto unit = new entities::Unit();
+                    unit->team_type = (entities::UnitTeamType)2;
+                    unit->base->setPosition(assets::maps::test_terrain->spawn_points[n + 2]);
+                }
+                entities::select_current_unit();
 
                 break;
         }
@@ -65,21 +68,11 @@ namespace game {
         }
     }
 
-    void next_unit() {
-        current_unit->player_input = false;
-        ++current_unit_index;
-        if (current_unit_index >= entities::units.size()) {
-            current_unit_index = 0;
-        }
-        current_unit = entities::units[current_unit_index];
-        current_unit->player_input = true;
-    }
-
     void update_time() {
         float t = (countdown_seconds * 1000) - (clock() - countdown_start);
         if (t <= 0) {
             countdown_start = clock();
-            next_unit();
+            entities::next_unit();
             return;
         }
         int seconds = t / 1000.0f;
@@ -93,7 +86,7 @@ namespace game {
                 update_time();
 
                 auto& v = map::camera::map_cam->getPosition();
-                auto& vb = current_unit->base->getPosition();
+                auto& vb = entities::current_unit->base->getPosition();
                 map::camera::map_cam->setPosition(v.x - (v.x - vb.x) / 10.0f, v.y - (v.y - vb.y) / 10.0f);
 
                 if (input::get_mouse_scroll().y <= -1) {

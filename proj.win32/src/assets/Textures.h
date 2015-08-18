@@ -13,6 +13,7 @@ namespace textures {
 
     extern cc::Texture2D* duck;
     extern cc::Texture2D* test_bullet;
+    extern cc::Texture2D* cone;
 
     extern void init();
 };

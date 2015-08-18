@@ -35,6 +35,8 @@ class Terrain {
         void toggle_debug_geometry();
         void draw();
 
+        void test_explosion_at(cc::Vec2 vec);
+
         bool is_debug_draw_on() { return debug_draw_on; }
         bool has_collider_points() { return has_collider; }
 
@@ -63,7 +65,7 @@ public:
     void hide_debug_geometry();
     void toggle_debug_geometry();
     void draw();
-    bool is_terrain(cc::Node* a, cc::Node* b);
+    Terrain* is_terrain(cc::Node* a, cc::Node* b);
 
     bool is_debug_draw_on() { return debug_draw_on; }
 

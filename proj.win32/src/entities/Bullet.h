@@ -17,6 +17,9 @@ handles management and logic of bullets
 #define END_BULLET_NS       };
 
 BEGIN_ENTITIES_NS
+
+class Unit;
+
 BEGIN_BULLET_NS
 
 namespace cc = cocos2d;
@@ -28,11 +31,12 @@ enum BulletLogicType;
 class Bullet {
 
     public:
-        Bullet(int x, int y);
+        Bullet(int x, int y, Unit* _unit_parent);
         ~Bullet();
 
         cc::Sprite* base;
         cc::PhysicsBody* pbody;
+        Unit* unit_parent;
 
         void update();
         void cleanup();
@@ -55,7 +59,7 @@ typedef std::shared_ptr<Bullet> BulletPtr;
 
 extern void init();
 extern void deinit();
-extern BulletPtr create_bullet(int x, int y);
+extern BulletPtr create_bullet(int x, int y, Unit* _unit_parent);
 extern void update();
 
 END_BULLET_NS

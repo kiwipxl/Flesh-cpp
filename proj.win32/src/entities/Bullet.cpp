@@ -44,8 +44,8 @@ void deinit() {
     physics::remove_on_contact_run(on_contact_run);
 }
 
-BulletPtr create_bullet(int x, int y) {
-    BulletPtr b(new Bullet(x, y));
+BulletPtr create_bullet(int x, int y, Unit* _unit_parent) {
+    BulletPtr b(new Bullet(x, y, _unit_parent));
     bullets.push_back(b);
     return b;
 }
@@ -62,7 +62,9 @@ void update() {
 
 //-- begin Bullet class --
 
-Bullet::Bullet(int x, int y) {
+Bullet::Bullet(int x, int y, Unit* _unit_parent) {
+    unit_parent = _unit_parent;
+
     base = Sprite::createWithTexture(assets::textures::test_bullet);
     base->setPosition(x, y);
     root::map_layer->addChild(base, 1);

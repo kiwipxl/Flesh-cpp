@@ -14,6 +14,7 @@ namespace textures {
     //private
     Texture2D* duck;
     Texture2D* test_bullet;
+    Texture2D* cone;
 
     void load_image(Texture2D*& tex, std::string file_name) {
         tex = Director::getInstance()->getTextureCache()->addImage(file_name);
@@ -22,6 +23,7 @@ namespace textures {
     void init() {
         load_image(duck, "duck.png");
         load_image(test_bullet, "bullet.png");
+        load_image(cone, "cone.png");
 
         log_print_file << "texture assets loaded";
     }
