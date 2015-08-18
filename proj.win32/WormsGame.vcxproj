@@ -167,6 +167,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\debug\Errors.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\entities\Bullet.cpp" />
+    <ClCompile Include="src\entities\components\BulletAimer.cpp" />
+    <ClCompile Include="src\entities\components\PlayerMove.cpp" />
     <ClCompile Include="src\entities\Unit.cpp" />
     <ClCompile Include="src\gui\Button.cpp" />
     <ClCompile Include="src\gui\MessageBox.cpp" />

@@ -6,6 +6,7 @@
 #include "entities/Unit.h"
 #include "entities/Bullet.h"
 #include "entities/components/PlayerMove.h"
+#include "entities/components/BulletAimer.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "map/Cam.h"

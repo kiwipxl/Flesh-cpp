@@ -9,6 +9,7 @@
 #include "debug/Logger.h"
 #include "entities/Bullet.h"
 #include "entities/components/PlayerMove.h"
+#include "entities/components/BulletAimer.h"
 #include "input/KeyboardInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
@@ -51,7 +52,7 @@ Unit::Unit() {
 }
 
 template <typename T> T* Unit::add_component() {
-    auto t = new T(this);
+    T* t = new T(this);
     components.push_back(t);
     return t;
 }

@@ -46,6 +46,8 @@
     <ClCompile Include="src\map\TerrainData.cpp" />
     <ClCompile Include="src\map\Terrain.cpp" />
     <ClCompile Include="src\map\Cam.cpp" />
+    <ClCompile Include="src\entities\components\BulletAimer.cpp" />
+    <ClCompile Include="src\entities\components\PlayerMove.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
