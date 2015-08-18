@@ -29,7 +29,7 @@ int current_unit_index;
 
 Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
-    base->retain();
+    base->setScale(.5f);
     root::map_layer->addChild(base, 1);
 
     PhysicsMaterial mat;
@@ -41,7 +41,7 @@ Unit::Unit() {
     pbody->setCollisionBitmask(1);
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
-    pbody->setPositionOffset(Vec2(0, -10));
+    //pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
     root::scene->p_world->setAutoStep(false);
     root::scene->p_world->setGravity(Vec2(0, -980.0f));
@@ -60,6 +60,8 @@ bool Unit::on_contact_run(PhysicsContact& contact) {
 
     if (a && b) {
         if (a == base || b == base) {
+            //loop through all component on_contact_run functions (if one exists)
+            //if a collision occurred, true is returned
             bool collided = false;
             for (auto& c : components) {
                 if (c->on_contact_run(contact)) collided = true;
@@ -74,6 +76,7 @@ bool Unit::on_contact_run(PhysicsContact& contact) {
 Unit::~Unit() {
     pbody->release();
     root::map_layer->removeChild(base);
+    physics::remove_on_contact_run(this);
 }
 
 void Unit::update() {

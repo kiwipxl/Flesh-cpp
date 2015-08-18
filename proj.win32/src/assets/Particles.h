@@ -13,7 +13,8 @@ namespace particles {
 	namespace cc = cocos2d;
 
 	extern cc::ParticleSystem* bullet_explosion;
-	extern std::string bullet_explosion_name;
+    extern std::string bullet_explosion_name;
+    extern std::string bullet_fire_trail;
 
 	extern void init();
 };

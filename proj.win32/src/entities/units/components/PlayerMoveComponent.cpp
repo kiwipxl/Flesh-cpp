@@ -63,6 +63,8 @@ void PlayerMoveComponent::update() {
             ref->pbody->setVelocity(Vec2(ref->pbody->getVelocity().x, 600.0f));
             if (facing_right) ref->pbody->setVelocity(Vec2(jump_vel_x, ref->pbody->getVelocity().y));
             else ref->pbody->setVelocity(Vec2(-jump_vel_x, ref->pbody->getVelocity().y));
+
+            jumping = true;
         }
     }
 

@@ -111,19 +111,27 @@ class BulletLogicTest : public BulletLogicBase {
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_TEST;
     bool gen_explosion = false;
+    cc::ParticleSystemQuad* fire_trail_particle;
 
     BulletLogicTest(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
         bref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
         bref->add_logic_terrain_destroy();
+        
+        fire_trail_particle = cc::ParticleSystemQuad::create(assets::particles::bullet_fire_trail);
+        fire_trail_particle->setPosition(bref->base->getPosition());
+        fire_trail_particle->setScale(.65f);
+        root::map_layer->addChild(fire_trail_particle, 1);
     }
 
     virtual ~BulletLogicTest() {
-
+        root::map_layer->removeChild(fire_trail_particle, 1);
     }
 
     virtual void update() {
+        fire_trail_particle->setPosition(bref->base->getPosition());
+
         if (gen_explosion) return;
         if (++timer >= 40) {
             gen_explosion = true;
@@ -147,13 +155,28 @@ class BulletLogicTest2 : public BulletLogicBase {
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_TEST2;
     bool gen_explosion = false;
+    cc::ParticleSystemQuad* fire_trail_particle;
 
     BulletLogicTest2(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
         bref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
 
+        bref->base->setTexture(assets::textures::test_bullet);
         bref->add_logic_terrain_destroy();
+
+        fire_trail_particle = cc::ParticleSystemQuad::create(assets::particles::bullet_fire_trail);
+        fire_trail_particle->setPosition(bref->base->getPosition());
+        fire_trail_particle->setScale(.25f);
+        root::map_layer->addChild(fire_trail_particle, 1);
+    }
+
+    virtual ~BulletLogicTest2() {
+        root::map_layer->removeChild(fire_trail_particle, 1);
+    }
+
+    virtual void update() {
+        fire_trail_particle->setPosition(bref->base->getPosition());
     }
 };
 

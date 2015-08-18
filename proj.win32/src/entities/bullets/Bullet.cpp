@@ -65,12 +65,11 @@ void update() {
 Bullet::Bullet(int x, int y, Unit* _unit_parent) {
     unit_parent = _unit_parent;
 
-    base = Sprite::createWithTexture(assets::textures::test_bullet);
+    base = Sprite::create();
     base->setPosition(x, y);
     root::map_layer->addChild(base, 1);
 
-    pbody = PhysicsBody::createBox(Size(base->getContentSize().width * base->getScaleX(),
-        base->getContentSize().height * base->getScaleY()));
+    pbody = PhysicsBody::createBox(Size(32.0f, 32.0f));
     pbody->setCollisionBitmask(1);
     pbody->setContactTestBitmask(true);
     pbody->setRotationEnable(false);
