@@ -43,7 +43,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
         //base->setScale(1.1f, 1.1f);
         has_collider = true;
     }
-    base->setPosition(t_data.pos * 20.0f);
+    base->setPosition(t_data.pos * (t_data.parent->get_scale() / 2.0f));
     base->retain();
     t_group.base->addChild(base, 1);
 

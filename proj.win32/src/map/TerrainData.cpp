@@ -50,8 +50,8 @@ bool split_tokens(std::string& data, std::vector<std::string>& tokens, std::stri
     return NULL;
 
 //public
-TerrainDataGroupPtr load(std::string file_name) {
-    TerrainDataGroupPtr tgroup(new TerrainDataGroup());
+TerrainDataGroupPtr load(std::string file_name, float scale) {
+    TerrainDataGroupPtr tgroup(new TerrainDataGroup(scale));
 
     FILE* f = fopen(file_name.c_str(), "r");
     char* temp = NULL;
@@ -95,8 +95,8 @@ TerrainDataGroupPtr load(std::string file_name) {
 		    if (split_tokens(data, tokens, "vertex_data:")) {
 			    for (int n = 0; n < tokens.size(); n += 2) {
                     V3F_C4B_T2F v;
-				    v.vertices.x = std::stof(tokens[n]) * 40.0f;
-                    v.vertices.y = std::stof(tokens[n + 1]) * 40.0f;
+				    v.vertices.x = std::stof(tokens[n]) * scale;
+                    v.vertices.y = std::stof(tokens[n + 1]) * scale;
                     v.colors = ter->vertex_colour;
 				    ter->points.push_back(v);
 
@@ -134,8 +134,8 @@ TerrainDataGroupPtr load(std::string file_name) {
             if (split_tokens(data, tokens, "collider_points:")) {
                 for (int n = 0; n < tokens.size(); n += 2) {
                     Vec2 v;
-                    v.x = std::stof(tokens[n]) * 40.0f;
-                    v.y = std::stof(tokens[n + 1]) * 40.0f;
+                    v.x = std::stof(tokens[n]) * scale;
+                    v.y = std::stof(tokens[n + 1]) * scale;
 				    ter->collider_points.push_back(v);
                 }
             }
@@ -176,8 +176,8 @@ TerrainDataGroupPtr load(std::string file_name) {
         if (split_tokens(all_data, tokens, "global_spawn_points:", ',')) {
             for (int n = 0; n < tokens.size(); n += 2) {
                 Vec2 v;
-                v.x = std::stof(tokens[n]) * 40.0f;
-                v.y = std::stof(tokens[n + 1]) * 40.0f;
+                v.x = std::stof(tokens[n]) * scale;
+                v.y = std::stof(tokens[n + 1]) * scale;
                 tgroup->spawn_points.push_back(v);
             }
         }

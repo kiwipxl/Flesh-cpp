@@ -12,14 +12,6 @@ switching to state 3 from state 1
 removed state 1
 created state 3
 switched to state 3 from state 3
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 4
-contact pre_solve callbacks: 3
-contact pre_solve callbacks: 2
-contact pre_solve callbacks: 2
-contact pre_solve callbacks: 2
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5

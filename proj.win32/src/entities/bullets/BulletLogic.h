@@ -82,13 +82,6 @@ public:
 
         map::terrain::Terrain* t;
         if (a && b && CHECK_AB_COLLIDE(bref->base)) {
-            for (auto& u : units) {
-                if (u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
-                    u->schedule_removal();
-                    bref->schedule_removal();
-                }
-            }
-
             if (t = states::game::terrain->is_terrain(a, b)) {
                 //t->test_explosion_at(bref->base->getPosition());
 
@@ -112,6 +105,7 @@ public:
     const BulletLogicType logic_type = BULLET_LOGIC_TEST;
     bool gen_explosion = false;
     cc::ParticleSystemQuad* fire_trail_particle;
+    const float DAMAGE = 2.0f;
 
     BulletLogicTest(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
@@ -148,6 +142,22 @@ public:
             bref->schedule_removal();
         }
     }
+
+    virtual bool on_contact_run(cc::PhysicsContact& contact) {
+        auto a = contact.getShapeA()->getBody()->getNode();
+        auto b = contact.getShapeB()->getBody()->getNode();
+
+        if (a && b && CHECK_AB_COLLIDE(bref->base)) {
+            for (auto& u : units) {
+                if (bref->unit_parent->team_type != u->team_type && u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                    u->take_damage(DAMAGE);
+                    bref->schedule_removal();
+                }
+            }
+        }
+
+        return false;
+    }
 };
 
 class BulletLogicTest2 : public BulletLogicBase {
@@ -156,6 +166,7 @@ public:
     const BulletLogicType logic_type = BULLET_LOGIC_TEST2;
     bool gen_explosion = false;
     cc::ParticleSystemQuad* fire_trail_particle;
+    const float DAMAGE = 1.0f;
 
     BulletLogicTest2(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
@@ -177,6 +188,22 @@ public:
 
     virtual void update() {
         fire_trail_particle->setPosition(bref->base->getPosition());
+    }
+
+    virtual bool on_contact_run(cc::PhysicsContact& contact) {
+        auto a = contact.getShapeA()->getBody()->getNode();
+        auto b = contact.getShapeB()->getBody()->getNode();
+
+        if (a && b && CHECK_AB_COLLIDE(bref->base)) {
+            for (auto& u : units) {
+                if (u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                    u->take_damage(DAMAGE);
+                    bref->schedule_removal();
+                }
+            }
+        }
+
+        return false;
     }
 };
 

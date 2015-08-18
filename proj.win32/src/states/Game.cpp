@@ -20,18 +20,45 @@ namespace game {
     using namespace root;
     using namespace cocos2d;
 
-    //public externs
-    map::terrain::TerrainGroup* terrain;
-    Label* turn_time_label;
-
     //private
+    Label* turn_time_label;
+    clock_t countdown_start;
+    int countdown_seconds = 5000;
+
     float dest_zoom = 0;
     float physics_timing = 0;
     const float TIMESTEP = 1.0f / 60.0f;
 
-    //time
-    clock_t countdown_start;
-    int countdown_seconds = 5000;
+    struct UIBar {
+
+        Sprite* bar;
+    };
+
+    struct TeamUI {
+
+        std::vector<UIBar*> ui_bars;
+    };
+
+    void update_time() {
+        float t = (countdown_seconds * 1000) - (clock() - countdown_start);
+        if (t <= 0) {
+            countdown_start = clock();
+            entities::next_unit();
+            return;
+        }
+        int seconds = t / 1000.0f;
+        int ms = clampf(fmod(t, 1000.0f) / 10.0f, 0, 99);
+        turn_time_label->setString(sstream_str(seconds << ":" << ms));
+    }
+
+    void create_team_unit(entities::UnitTeamType team_type) {
+        auto unit = new entities::Unit();
+        unit->team_type = team_type;
+        unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
+    }
+
+    //public
+    map::terrain::TerrainGroup* terrain;
 
     void create_state(State state) {
         switch (state) {
@@ -46,14 +73,10 @@ namespace game {
                 entities::bullet::init();
 
                 for (int n = 0; n < 2; ++n) {
-                    auto unit = new entities::Unit();
-                    unit->team_type = (entities::UnitTeamType)1;
-                    unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
+                    create_team_unit(entities::UNIT_TEAM_BLUE);
                 }
                 for (int n = 0; n < 2; ++n) {
-                    auto unit = new entities::Unit();
-                    unit->team_type = (entities::UnitTeamType)2;
-                    unit->base->setPosition(assets::maps::test_terrain->spawn_points[n + 2]);
+                    create_team_unit(entities::UNIT_TEAM_RED);
                 }
                 entities::select_current_unit();
                 entities::current_unit->add_component<entities::components::BulletAimerComponent>()->init();
@@ -70,18 +93,6 @@ namespace game {
 
                 break;
         }
-    }
-
-    void update_time() {
-        float t = (countdown_seconds * 1000) - (clock() - countdown_start);
-        if (t <= 0) {
-            countdown_start = clock();
-            entities::next_unit();
-            return;
-        }
-        int seconds = t / 1000.0f;
-        int ms = clampf(fmod(t, 1000.0f) / 10.0f, 0, 99);
-        turn_time_label->setString(sstream_str(seconds << ":" << ms));
     }
 
     void update_state(State state) {

@@ -27,6 +27,33 @@ std::vector<Unit*> units;
 Unit* current_unit;
 int current_unit_index;
 
+void next_unit() {
+    current_unit->player_input = false;
+    ++current_unit_index;
+    if (current_unit_index >= units.size()) {
+        current_unit_index = 0;
+    }
+    current_unit = units[current_unit_index];
+    current_unit->player_input = true;
+}
+
+void select_current_unit() {
+    current_unit = units[current_unit_index];
+    current_unit->player_input = true;
+}
+
+void update_units() {
+    for (int n = 0; n < units.size(); ++n) {
+        if (!units[n]->is_scheduled_removal()) units[n]->update();
+        if (units[n]->is_scheduled_removal()) {
+            delete units[n];
+            units.erase(units.begin() + n, units.begin() + n + 1);
+            --n;
+            select_current_unit();
+        }
+    }
+}
+
 Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
     base->setScale(.5f);
@@ -85,6 +112,10 @@ void Unit::update() {
     }
 }
 
+void Unit::take_damage(float amount) {
+    damage -= amount;
+}
+
 //-- begin template definitions --
 
 template <typename T> T* Unit::add_component() {
@@ -118,32 +149,5 @@ template void Unit::remove_component<components::BulletAimerComponent>();
 template void Unit::remove_component<components::ColliderComponent>();
 
 //-- end component template definitions --
-
-void next_unit() {
-    current_unit->player_input = false;
-    ++current_unit_index;
-    if (current_unit_index >= units.size()) {
-        current_unit_index = 0;
-    }
-    current_unit = units[current_unit_index];
-    current_unit->player_input = true;
-}
-
-void select_current_unit() {
-    current_unit = units[current_unit_index];
-    current_unit->player_input = true;
-}
-
-void update_units() {
-    for (int n = 0; n < units.size(); ++n) {
-        if (!units[n]->is_scheduled_removal()) units[n]->update();
-        if (units[n]->is_scheduled_removal()) {
-            delete units[n];
-            units.erase(units.begin() + n, units.begin() + n + 1);
-            --n;
-            select_current_unit();
-        }
-    }
-}
 
 END_ENTITIES_NS

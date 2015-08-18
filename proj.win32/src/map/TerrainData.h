@@ -60,17 +60,24 @@ typedef std::shared_ptr<TerrainData> TerrainDataPtr;
 class TerrainDataGroup {
 
 public:
+    TerrainDataGroup(float _scale) : scale(_scale) { }
+
     std::vector<TerrainDataPtr> data_vec;
     std::vector<cc::Vec2> spawn_points;
     cc::Vec2 min;
     cc::Vec2 max;
     int max_width;
     int max_height;
+
+    float get_scale() { return scale; }
+
+private:
+    float scale;
 };
 
 typedef std::shared_ptr<TerrainDataGroup> TerrainDataGroupPtr;
 
-extern TerrainDataGroupPtr load(std::string file_name);
+extern TerrainDataGroupPtr load(std::string file_name, float scale = 40.0f);
 
 END_TERRAIN_NS
 END_MAP_NS

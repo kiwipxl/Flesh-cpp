@@ -50,6 +50,8 @@ class Unit {
         void update();
         void despawn();
 
+        void take_damage(float amount);
+
         void schedule_removal() { removal_scheduled = true; }
         bool is_scheduled_removal() { return removal_scheduled; }
 
@@ -60,6 +62,7 @@ class Unit {
     private:
         bool removal_scheduled = false;
         std::vector<components::ComponentBase*> components;
+        float damage = 0.0f;
 
         bool on_contact_run(cc::PhysicsContact&);
         //void on_post_contact(cc::PhysicsContact&, const cc::PhysicsContactPostSolve&);
