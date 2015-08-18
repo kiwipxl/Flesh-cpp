@@ -21,6 +21,8 @@ BEGIN_COMPONENTS_NS
 class ComponentBase {
 
 public:
+    virtual ~ComponentBase() { }
+
     Unit* ref;
 
     virtual void update() = 0;

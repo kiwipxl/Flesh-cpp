@@ -20,14 +20,15 @@ BEGIN_COMPONENTS_NS
 class BulletAimerComponent : public ComponentBase {
 
 public:
+    BulletAimerComponent(Unit* _ref) { ref = _ref; }
+    virtual ~BulletAimerComponent();
+
     cc::Sprite* cone;
     bool aiming = false;
 
     const float MIN_POWER = .5f;
     const float MAX_POWER = 1;
     float power = MIN_POWER;
-
-    BulletAimerComponent(Unit* _ref) { ref = _ref; }
 
     void init();
     virtual void update();

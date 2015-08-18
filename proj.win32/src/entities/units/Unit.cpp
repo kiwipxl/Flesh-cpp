@@ -63,11 +63,16 @@ Unit::~Unit() {
     pbody->release();
     root::map_layer->removeChild(base);
     physics::remove_on_contact_run(this);
+
+    for (auto& c : components) {
+        delete c;
+    }
+    components.clear();
 }
 
 void Unit::update() {
-    for (int n = 0; n < components.size(); ++n) {
-        components[n]->update();
+    for (auto& c : components) {
+        c->update();
     }
 }
 
@@ -78,6 +83,13 @@ void Unit::take_damage(float amount) {
 //-- begin template definitions --
 
 template <typename T> T* Unit::add_component() {
+    for (auto* c : components) {
+        if (typeid(*c) == typeid(T)) {
+            log_error << "attempted to add a component when another one of the same type already existed. \
+                          cannot have more than 1 component";
+        }
+    }
+
     T* t = new T(this);
     components.push_back(t);
     return t;
@@ -99,8 +111,12 @@ template components::BulletAimerComponent*      Unit::get_component<components::
 template components::ColliderComponent*         Unit::get_component<components::ColliderComponent>();
 
 template <typename T> void Unit::remove_component() {
-    for (auto* c : components) {
-
+    for (int n = 0; n < components.size(); ++n) {
+        if (typeid(*components[n]) == typeid(T)) {
+            delete components[n];
+            components.erase(components.begin() + n, components.begin() + n + 1);
+            return;
+        }
     }
 }
 template void Unit::remove_component<components::PlayerMoveComponent>();

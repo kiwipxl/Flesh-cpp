@@ -39,9 +39,7 @@ public:
         bref = &bullet_ref;
     }
 
-    virtual ~BulletLogicBase() {
-
-    }
+    virtual ~BulletLogicBase() { }
 
     virtual void update() { }
     virtual bool on_contact_run(cc::PhysicsContact& contact) { return false; }

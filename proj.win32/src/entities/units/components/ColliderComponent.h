@@ -21,10 +21,10 @@ struct BulletAimerComponent;
 class ColliderComponent : public ComponentBase {
 
 public:
-    bool colliding = false;
-    bool colliding_with_delay = false;       //includes a delay for when colliding switches off
-
     ColliderComponent(Unit* _ref) { ref = _ref; }
+
+    bool colliding = false;                     //test whether colliding or not (no delay)
+    bool colliding_with_delay = false;          //includes a delay for when colliding switches off so it's not immediate
 
     void init();
     virtual bool on_contact_run(cc::PhysicsContact& contact);

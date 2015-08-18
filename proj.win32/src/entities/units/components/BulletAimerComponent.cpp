@@ -25,6 +25,10 @@ void BulletAimerComponent::init() {
     root::map_layer->addChild(cone, 1);
 }
 
+BulletAimerComponent::~BulletAimerComponent() {
+    root::map_layer->removeChild(cone);
+}
+
 void BulletAimerComponent::update() {
     cone->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
 

@@ -22,6 +22,8 @@ struct ColliderComponent;
 class PlayerMoveComponent : public ComponentBase {
 
 public:
+    PlayerMoveComponent(Unit* _ref) { ref = _ref; }
+
     bool facing_right = false;
     float move_vel_x = 200.0f;
     float jump_vel_x = 450.0f;
@@ -30,8 +32,6 @@ public:
     bool moving = false;
     BulletAimerComponent* bullet_aimer;
     ColliderComponent* collider;
-
-    PlayerMoveComponent(Unit* _ref) { ref = _ref; }
 
     void init();
     virtual bool on_contact_run(cc::PhysicsContact& contact);
