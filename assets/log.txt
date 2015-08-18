@@ -14,4 +14,9 @@ created state 3
 switched to state 3 from state 3
 contact pre_solve callbacks: 5
 contact pre_solve callbacks: 5
-removed state 3
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5
+contact pre_solve callbacks: 5

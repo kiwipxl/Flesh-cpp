@@ -22,7 +22,7 @@ namespace game {
     //private
     Label* turn_time_label;
     clock_t countdown_start;
-    int countdown_seconds = 5000;
+    int countdown_seconds = 5;
 
     float dest_zoom = 0;
     float physics_timing = 0;

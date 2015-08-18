@@ -3,7 +3,11 @@
 
 #include <vector>
 
+#include <2d/CCSprite.h>
+
 #include "entities/EntityDefines.h"
+
+namespace cc = cocos2d;
 
 BEGIN_ENTITIES_NS
 BEGIN_UNITS_NS
@@ -13,18 +17,18 @@ class Unit;
 class UnitTeam {
 
 public:
-    UnitTeam(int _team_id) : team_id(team_id) {
-
-    }
+    UnitTeam(int _team_id, cc::Color3B _colour) : team_id(team_id), colour(_colour) { }
 
     //returns the number of members in the team
     int get_num_members() { return num_members; }
+    cc::Color3B get_colour() { return colour; }
 
 private:
     //the id (or index) in unit_teams vector
     int team_id;
     //the number of members in the team
     int num_members = 0;
+    cc::Color3B colour;
 };
 
 extern std::vector<Unit*> all_units;

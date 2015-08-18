@@ -40,7 +40,6 @@ class Unit {
         cc::Sprite* base;
         cc::PhysicsBody* pbody;
 
-        bool player_input = false;
         UnitType type;
         UnitTeam* team;
 
