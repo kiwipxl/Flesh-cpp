@@ -7,6 +7,7 @@
 #include "entities/components/ComponentBase.h"
 #include "entities/Unit.h"
 #include "input/MouseInput.h"
+#include "input/KeyboardInput.h"
 #include "StateManager.h"
 
 BEGIN_ENTITIES_NS
@@ -29,6 +30,10 @@ public:
         cone = Sprite::createWithTexture(assets::textures::cone);
         cone->setAnchorPoint(Vec2(.5f, -.25f));
         root::map_layer->addChild(cone, 1);
+    }
+
+    void init() {
+
     }
 
     virtual void update() {

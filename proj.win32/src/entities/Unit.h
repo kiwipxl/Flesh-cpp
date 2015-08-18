@@ -25,8 +25,13 @@ enum UnitType {
 
 enum UnitTeamType {
 
-    UNIT_TEAM_BLUE, 
+    UNIT_TEAM_BLUE,
     UNIT_TEAM_RED
+};
+
+namespace components {
+
+    struct PlayerMoveComponent;
 };
 
 class Unit {
@@ -48,11 +53,9 @@ class Unit {
         void schedule_removal() { removal_scheduled = true; }
         bool is_scheduled_removal() { return removal_scheduled; }
 
-        void add_component(components::ComponentBase* c);
-        void remove_component(components::ComponentBase* c);
-        template <typename T> T* get_component() {
-            return NULL;
-        }
+        template <typename T> T* add_component();
+        template <typename T> void remove_component();
+        template <typename T> T* get_component();
 
     private:
         bool removal_scheduled = false;

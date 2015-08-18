@@ -5,6 +5,7 @@
 #include "assets/Assets.h"
 #include "entities/Unit.h"
 #include "entities/Bullet.h"
+#include "entities/components/PlayerMove.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "map/Cam.h"
@@ -54,6 +55,8 @@ namespace game {
                     unit->base->setPosition(assets::maps::test_terrain->spawn_points[n + 2]);
                 }
                 entities::select_current_unit();
+                entities::current_unit->add_component<entities::components::BulletAimerComponent>()->init();
+                entities::current_unit->add_component<entities::components::PlayerMoveComponent>()->init();
 
                 break;
         }

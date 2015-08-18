@@ -8,8 +8,8 @@
 #include "assets/Textures.h"
 #include "debug/Logger.h"
 #include "entities/Bullet.h"
+#include "entities/components/PlayerMove.h"
 #include "input/KeyboardInput.h"
-#include "input/MouseInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
 #include "StateManager.h"
@@ -50,21 +50,42 @@ Unit::Unit() {
     units.push_back(this);
 }
 
+template <typename T> T* Unit::add_component() {
+    auto t = new T(this);
+    components.push_back(t);
+    return t;
+}
+template components::PlayerMoveComponent* Unit::add_component<components::PlayerMoveComponent>();
+template components::BulletAimerComponent* Unit::add_component<components::BulletAimerComponent>();
+
+template <typename T> T* Unit::get_component() {
+    for (auto* c : components) {
+        if (typeid(*c) == typeid(T)) {
+            return (T*)c;
+        }
+    }
+    return NULL;
+}
+template components::PlayerMoveComponent* Unit::get_component<components::PlayerMoveComponent>();
+template components::BulletAimerComponent* Unit::get_component<components::BulletAimerComponent>();
+
+template <typename T> void Unit::remove_component() {
+    for (auto* c : components) {
+
+    }
+}
+template void Unit::remove_component<components::PlayerMoveComponent>();
+template void Unit::remove_component<components::BulletAimerComponent>();
+
 Unit::~Unit() {
     pbody->release();
     root::map_layer->removeChild(base);
 }
 
 void Unit::update() {
-    if (!player_input) return;
-}
-
-void Unit::add_component(components::ComponentBase* c) {
-    components.push_back(c);
-}
-
-void Unit::remove_component(components::ComponentBase* c) {
-
+    for (int n = 0; n < components.size(); ++n) {
+        components[n]->update();
+    }
 }
 
 void next_unit() {
