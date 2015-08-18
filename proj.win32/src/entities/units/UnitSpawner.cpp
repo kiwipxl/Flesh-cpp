@@ -4,6 +4,7 @@
 #include "entities/units/Unit.h"
 #include "entities/units/components/PlayerMoveComponent.h"
 #include "entities/units/components/BulletAimerComponent.h"
+#include "gui/GameGUI.h"
 
 BEGIN_ENTITIES_NS
 BEGIN_UNITS_NS
@@ -34,6 +35,8 @@ void spawn_test_units() {
     select_current_unit();
     current_unit->add_component<components::BulletAimerComponent>()->init();
     current_unit->add_component<components::PlayerMoveComponent>()->init();
+
+    gui::game::init_ui_bars();
 }
 
 void next_unit() {
