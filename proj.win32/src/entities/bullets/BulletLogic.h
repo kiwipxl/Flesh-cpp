@@ -128,9 +128,9 @@ public:
         if (gen_explosion) return;
         if (++timer >= 40) {
             gen_explosion = true;
-            for (int n = 0; n < 8; ++n) {
+            for (int n = 0; n < 14; ++n) {
                 auto b = create_bullet(bref->base->getPositionX(), bref->base->getPositionY(), bref->unit_parent);
-                float angle = ((rand() / (float)RAND_MAX) * 90.0f) + 45.0f;
+                float angle = ((rand() / (float)RAND_MAX) * 30.0f) + 75.0f;
                 b->add_logic_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
             }
             auto bullet_explosion = cc::ParticleSystemQuad::create("Ring.plist");
@@ -195,7 +195,7 @@ public:
 
         if (a && b && CHECK_AB_COLLIDE(bref->base)) {
             for (auto& u : units::all_units) {
-                if (u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                if (bref->unit_parent->team != u->team && u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     bref->schedule_removal();
                 }

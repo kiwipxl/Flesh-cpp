@@ -29,17 +29,20 @@ public:
 
     entities::units::Unit* unit;
     cc::Sprite* bar;
-
+    
     bool is_created() { return created; }
+    int get_height() { return height; }
 
 private:
     bool created = false;
+    int height;
 };
 
 extern std::vector<UnitUIBar*> unit_ui_bars;
 
 extern void init_ui_bars();
 extern void sort_ui_bars();
+extern void remove_ui_bar(entities::units::Unit* unit);
 extern void update();
 
 END_GAME_NS

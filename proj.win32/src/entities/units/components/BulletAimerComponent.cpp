@@ -7,6 +7,7 @@
 #include "entities/bullets/Bullet.h"
 #include "input/MouseInput.h"
 #include "input/KeyboardInput.h"
+#include "states/Game.h"
 #include "StateManager.h"
 
 using namespace cocos2d;
@@ -48,6 +49,8 @@ void BulletAimerComponent::update() {
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
             auto b = bullet::create_bullet(ref->base->getPositionX(), ref->base->getPositionY(), ref);
             b->add_logic_test(-cone->getRotation() + 90, power);
+            states::game::set_countdown_to(3);
+            schedule_removal();
         }
     }
 

@@ -21,6 +21,7 @@ UnitUIBar::UnitUIBar(entities::units::Unit* _unit) {
 
     bar = Sprite::createWithTexture(unit->type == entities::units::UNIT_TYPE_MINION ? assets::textures::minion_health_bar : 
                                     assets::textures::captain_health_bar);
+    height = bar->getContentSize().height;
     bar->setAnchorPoint(Vec2(0, 0));
     root::ui_layer->addChild(bar, 1);
 }
@@ -35,12 +36,21 @@ void init_ui_bars() {
 }
 
 void sort_ui_bars() {
-    int height = assets::textures::captain_health_bar->getContentSize().height;
     Vec2 pos{ 0, root::scene->screen_size.height };
     for (auto& b : unit_ui_bars) {
-        pos.y -= height + 4;
+        pos.y -= b->get_height() + 4;
         b->bar->setColor(b->unit->team->get_colour());
+        b->bar->setScaleX(b->unit->get_health() / b->unit->get_max_health());
         b->bar->setPosition(pos);
+    }
+}
+
+void remove_ui_bar(entities::units::Unit* unit) {
+    for (int n = 0; n < unit_ui_bars.size(); ++n) {
+        if (unit_ui_bars[n]->unit == unit) {
+            unit_ui_bars.erase(unit_ui_bars.begin() + n, unit_ui_bars.begin() + n + 1);
+            --n;
+        }
     }
 }
 

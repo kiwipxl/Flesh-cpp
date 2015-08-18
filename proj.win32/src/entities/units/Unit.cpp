@@ -7,6 +7,7 @@
 #include "entities/units/components/PlayerMoveComponent.h"
 #include "entities/units/components/BulletAimerComponent.h"
 #include "entities/units/components/ColliderComponent.h"
+#include "gui/GameGUI.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
 #include "StateManager.h"
@@ -17,10 +18,25 @@ BEGIN_UNITS_NS
 using namespace cocos2d;
 
 //public
-Unit::Unit() {
+Unit::Unit(UnitTeam* _team, UnitType _type) {
+    team = _team;
+    type = _type;
+
+    if (type == UNIT_TYPE_CAPTAIN) {
+        max_health = 20.0f;
+    }else {
+        max_health = 12.0f;
+    }
+    health = max_health;
+
     base = Sprite::createWithTexture(assets::textures::duck);
     base->setScale(.5f);
-    root::map_layer->addChild(base, 1);
+    root::map_layer->addChild(base, 2);
+
+    shadow = Sprite::createWithTexture(assets::textures::unit_shadow);
+    shadow->setScale(base->getScale());
+    shadow->setColor(team->get_colour());
+    root::map_layer->addChild(shadow, 1);
 
     PhysicsMaterial mat;
     mat.density = 0.0f;
@@ -62,6 +78,7 @@ bool Unit::on_contact_run(PhysicsContact& contact) {
 Unit::~Unit() {
     pbody->release();
     root::map_layer->removeChild(base);
+    root::map_layer->removeChild(shadow);
     physics::remove_on_contact_run(this);
 
     for (auto& c : components) {
@@ -71,13 +88,24 @@ Unit::~Unit() {
 }
 
 void Unit::update() {
-    for (auto& c : components) {
-        c->update();
+    shadow->setPosition(base->getPosition());
+
+    for (int n = 0; n < components.size(); ++n) {
+        if (!components[n]->is_removal_scheduled()) components[n]->update();
+        if (components[n]->is_removal_scheduled()) {
+            delete components[n];
+            components.erase(components.begin() + n, components.begin() + n + 1);
+            --n;
+        }
     }
 }
 
-void Unit::take_damage(float amount) {
-    damage -= amount;
+void Unit::take_damage(float damage) {
+    health -= damage;
+    if (health <= 0) {
+        schedule_removal();
+    }
+    gui::game::sort_ui_bars();
 }
 
 //-- begin template definitions --

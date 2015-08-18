@@ -19,15 +19,15 @@ class UnitTeam {
 public:
     UnitTeam(int _team_id, cc::Color3B _colour) : team_id(team_id), colour(_colour) { }
 
-    //returns the number of members in the team
-    int get_num_members() { return num_members; }
+    //the number of members in the team
+    int num_members = 0;
+
     cc::Color3B get_colour() { return colour; }
 
 private:
     //the id (or index) in unit_teams vector
     int team_id;
-    //the number of members in the team
-    int num_members = 0;
+    //team colour
     cc::Color3B colour;
 };
 

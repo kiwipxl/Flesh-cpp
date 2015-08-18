@@ -22,33 +22,17 @@ namespace game {
     //private
     Label* turn_time_label;
     clock_t countdown_start;
-    int countdown_seconds = 5;
 
     float dest_zoom = 0;
     float physics_timing = 0;
     const float TIMESTEP = 1.0f / 60.0f;
 
-    struct UIBar {
-
-        Sprite* bar;
-
-        UIBar(bool captain) {
-            bar = Sprite::createWithTexture(captain ? assets::textures::captain_health_bar : assets::textures::minion_health_bar);
-            ui_layer->addChild(bar);
-        }
-    };
-
-    struct TeamUI {
-
-        std::vector<UIBar*> ui_bars;
-    };
-    TeamUI* team_ui_list;
-
     void update_time() {
-        float t = (countdown_seconds * 1000) - (clock() - countdown_start);
+        float t = (current_countdown_seconds * 1000) - (clock() - countdown_start);
         if (t <= 0) {
             countdown_start = clock();
             entities::units::next_unit();
+            current_countdown_seconds = starting_countdown_seconds;
             return;
         }
         int seconds = t / 1000.0f;
@@ -58,10 +42,19 @@ namespace game {
 
     //public
     map::terrain::TerrainGroup* terrain;
+    int starting_countdown_seconds = 5;
+    int current_countdown_seconds;
+    
+    void set_countdown_to(float seconds) {
+        current_countdown_seconds = seconds;
+        countdown_start = clock();
+    }
 
     void create_state(State state) {
         switch (state) {
             case STATE_GAME:
+                glClearColor(0.05f, 0.05f, 0.2f, 0.0f);
+
                 root::scene->p_world->setAutoStep(false);
                 root::scene->p_world->setGravity(Vec2(0, -980.0f));
 
@@ -70,6 +63,7 @@ namespace game {
                 turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
                 ui_layer->addChild(turn_time_label, 1);
                 countdown_start = clock();
+                current_countdown_seconds = starting_countdown_seconds;
 
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();

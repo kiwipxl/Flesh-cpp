@@ -34,22 +34,24 @@ struct UnitTeam;
 class Unit {
 
     public:
-        Unit();
+        Unit(UnitTeam* _team, UnitType _type);
         ~Unit();
 
         cc::Sprite* base;
+        cc::Sprite* shadow;
         cc::PhysicsBody* pbody;
 
         UnitType type;
         UnitTeam* team;
 
         void update();
-        void despawn();
 
-        void take_damage(float amount);
+        void take_damage(float damage);
 
         void schedule_removal() { removal_scheduled = true; }
         bool is_scheduled_removal() { return removal_scheduled; }
+        float get_health() { return health; }
+        float get_max_health() { return max_health; }
 
         template <typename T> T*    add_component();
         template <typename T> void  remove_component();
@@ -58,7 +60,8 @@ class Unit {
     private:
         bool removal_scheduled = false;
         std::vector<components::ComponentBase*> components;
-        float damage = 0.0f;
+        float health;
+        float max_health;
 
         bool on_contact_run(cc::PhysicsContact&);
         //void on_post_contact(cc::PhysicsContact&, const cc::PhysicsContactPostSolve&);

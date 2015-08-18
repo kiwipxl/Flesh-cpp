@@ -27,6 +27,12 @@ public:
 
     virtual void update() = 0;
     virtual bool on_contact_run(cc::PhysicsContact& contact) { return false; }
+
+    void schedule_removal() { scheduled_removal = true; }
+    bool is_removal_scheduled() { return scheduled_removal; }
+
+private:
+    bool scheduled_removal = false;
 };
 
 END_COMPONENTS_NS

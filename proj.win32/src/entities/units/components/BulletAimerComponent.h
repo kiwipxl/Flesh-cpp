@@ -27,7 +27,7 @@ public:
     bool aiming = false;
 
     const float MIN_POWER = .5f;
-    const float MAX_POWER = 1;
+    const float MAX_POWER = 2.0f;
     float power = MIN_POWER;
 
     void init();

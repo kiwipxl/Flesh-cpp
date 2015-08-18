@@ -16,6 +16,7 @@ namespace textures {
     extern cc::Texture2D* cone;
     extern cc::Texture2D* captain_health_bar;
     extern cc::Texture2D* minion_health_bar;
+    extern cc::Texture2D* unit_shadow;
 
     extern void init();
 };
