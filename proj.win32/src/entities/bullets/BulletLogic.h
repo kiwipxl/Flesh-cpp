@@ -12,6 +12,7 @@ logic components can be added or removed to a bullet object
 #include "entities/bullets/Bullet.h"
 #include "entities/EntityDefines.h"
 #include "entities/units/Unit.h"
+#include "entities/units/UnitSpawner.h"
 #include "states/Game.h"
 #include "StateManager.h"
 
@@ -149,7 +150,7 @@ public:
 
         if (a && b && CHECK_AB_COLLIDE(bref->base)) {
             for (auto& u : units::all_units) {
-                if (bref->unit_parent->team_type != u->team_type && u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                if (bref->unit_parent->team != u->team && u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     bref->schedule_removal();
                 }

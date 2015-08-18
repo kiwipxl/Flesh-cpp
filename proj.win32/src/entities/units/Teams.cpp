@@ -1,7 +1,0 @@
-#include "entities/units/Teams.h"
-
-BEGIN_ENTITIES_NS
-BEGIN_UNITS_NS
-
-END_UNITS_NS
-END_ENTITIES_NS

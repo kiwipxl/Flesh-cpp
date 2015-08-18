@@ -1,17 +1,12 @@
 #include "entities/units/Unit.h"
 
-#include <2d/CCCamera.h>
-#include <physics/CCPhysicsBody.h>
-#include <physics/CCPhysicsWorld.h>
-#include <chipmunk.h>
-
 #include "assets/Textures.h"
 #include "debug/Logger.h"
 #include "entities/bullets/Bullet.h"
+#include "entities/units/UnitSpawner.h"
 #include "entities/units/components/PlayerMoveComponent.h"
 #include "entities/units/components/BulletAimerComponent.h"
 #include "entities/units/components/ColliderComponent.h"
-#include "input/KeyboardInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
 #include "StateManager.h"
@@ -22,39 +17,6 @@ BEGIN_UNITS_NS
 using namespace cocos2d;
 
 //public
-std::vector<Unit*> all_units;
-
-//private
-Unit* current_unit;
-int current_unit_index;
-
-void next_unit() {
-    current_unit->player_input = false;
-    ++current_unit_index;
-    if (current_unit_index >= all_units.size()) {
-        current_unit_index = 0;
-    }
-    current_unit = all_units[current_unit_index];
-    current_unit->player_input = true;
-}
-
-void select_current_unit() {
-    current_unit = all_units[current_unit_index];
-    current_unit->player_input = true;
-}
-
-void update_all_units() {
-    for (int n = 0; n < all_units.size(); ++n) {
-        if (!all_units[n]->is_scheduled_removal()) all_units[n]->update();
-        if (all_units[n]->is_scheduled_removal()) {
-            delete all_units[n];
-            all_units.erase(all_units.begin() + n, all_units.begin() + n + 1);
-            --n;
-            select_current_unit();
-        }
-    }
-}
-
 Unit::Unit() {
     base = Sprite::createWithTexture(assets::textures::duck);
     base->setScale(.5f);
@@ -71,15 +33,11 @@ Unit::Unit() {
     pbody->setRotationEnable(false);
     //pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
-    root::scene->p_world->setAutoStep(false);
-    root::scene->p_world->setGravity(Vec2(0, -980.0f));
     base->setPhysicsBody(pbody);
 
     physics::add_on_contact_run(CC_CALLBACK_1(Unit::on_contact_run, this), this);
 
     add_component<components::ColliderComponent>()->init();
-
-    all_units.push_back(this);
 }
 
 bool Unit::on_contact_run(PhysicsContact& contact) {

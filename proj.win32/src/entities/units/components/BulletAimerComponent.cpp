@@ -3,6 +3,7 @@
 #include "assets/Textures.h"
 #include "entities/units/components/ComponentBase.h"
 #include "entities/units/Unit.h"
+#include "entities/units/UnitSpawner.h"
 #include "entities/bullets/Bullet.h"
 #include "input/MouseInput.h"
 #include "input/KeyboardInput.h"

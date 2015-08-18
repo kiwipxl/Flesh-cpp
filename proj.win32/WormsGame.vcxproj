@@ -170,7 +170,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\entities\units\components\BulletAimerComponent.cpp" />
     <ClCompile Include="src\entities\units\components\ColliderComponent.cpp" />
     <ClCompile Include="src\entities\units\components\PlayerMoveComponent.cpp" />
-    <ClCompile Include="src\entities\units\Teams.cpp" />
+    <ClCompile Include="src\entities\units\UnitSpawner.cpp" />
     <ClCompile Include="src\entities\units\Unit.cpp" />
     <ClCompile Include="src\gui\Button.cpp" />
     <ClCompile Include="src\gui\GameGUI.cpp" />
@@ -217,7 +217,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\entities\units\components\ComponentBase.h" />
     <ClInclude Include="src\entities\units\components\PlayerMoveComponent.h" />
     <ClInclude Include="src\entities\EntityDefines.h" />
-    <ClInclude Include="src\entities\units\Teams.h" />
+    <ClInclude Include="src\entities\units\UnitSpawner.h" />
     <ClInclude Include="src\entities\units\Unit.h" />
     <ClInclude Include="src\gui\Button.h" />
     <ClInclude Include="src\gui\GameGUI.h" />

@@ -3,10 +3,9 @@
 #include <physics/CCPhysicsWorld.h>
 
 #include "assets/Assets.h"
-#include "entities/units/Unit.h"
 #include "entities/bullets/Bullet.h"
-#include "entities/units/components/PlayerMoveComponent.h"
-#include "entities/units/components/BulletAimerComponent.h"
+#include "entities/units/Unit.h"
+#include "entities/units/UnitSpawner.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "map/Cam.h"
@@ -57,21 +56,15 @@ namespace game {
         turn_time_label->setString(sstream_str(seconds << ":" << ms));
     }
 
-    /*void create_team_unit(entities::UnitTeamType team_type) {
-        auto unit = new entities::Unit();
-        unit->team_type = team_type;
-        unit->base->setPosition(assets::maps::test_terrain->spawn_points[entities::units.size() - 1]);
-
-        auto ui_bar = new UIBar((entities::units.size() - 1) % 2 == 0);
-        team_ui_list[(int)team_type].ui_bars.push_back(ui_bar);
-    }*/
-
     //public
     map::terrain::TerrainGroup* terrain;
 
     void create_state(State state) {
         switch (state) {
             case STATE_GAME:
+                root::scene->p_world->setAutoStep(false);
+                root::scene->p_world->setGravity(Vec2(0, -980.0f));
+
                 turn_time_label = Label::createWithBMFont("fonts/felt.fnt", "0");
                 turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 40);
                 turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
@@ -81,16 +74,7 @@ namespace game {
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
 
-                team_ui_list = new TeamUI[2];
-                for (int n = 0; n < 2; ++n) {
-                    //create_team_unit(entities::UNIT_TEAM_BLUE);
-                }
-                for (int n = 0; n < 2; ++n) {
-                    //create_team_unit(entities::UNIT_TEAM_RED);
-                }
-                entities::units::select_current_unit();
-                entities::units::current_unit->add_component<entities::units::components::BulletAimerComponent>()->init();
-                entities::units::current_unit->add_component<entities::units::components::PlayerMoveComponent>()->init();
+                entities::units::spawn_test_units();
 
                 break;
         }
