@@ -3,10 +3,10 @@
 #include <physics/CCPhysicsWorld.h>
 
 #include "assets/Assets.h"
-#include "entities/Unit.h"
-#include "entities/Bullet.h"
-#include "entities/components/PlayerMove.h"
-#include "entities/components/BulletAimer.h"
+#include "entities/units/Unit.h"
+#include "entities/bullets/Bullet.h"
+#include "entities/units/components/PlayerMoveComponent.h"
+#include "entities/units/components/BulletAimerComponent.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "map/Cam.h"

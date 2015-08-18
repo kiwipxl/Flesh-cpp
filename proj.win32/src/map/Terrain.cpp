@@ -12,7 +12,7 @@
 
 #include "assets/Textures.h"
 #include "debug/Logger.h"
-#include "entities/Unit.h"
+#include "entities/units/Unit.h"
 #include "map/Cam.h"
 #include "StateManager.h"
 

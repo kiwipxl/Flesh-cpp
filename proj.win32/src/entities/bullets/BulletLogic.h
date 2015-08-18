@@ -9,9 +9,9 @@ logic components can be added or removed to a bullet object
 #include <vector>
 
 #include "assets/Particles.h"
-#include "entities/Bullet.h"
+#include "entities/bullets/Bullet.h"
 #include "entities/EntityDefines.h"
-#include "entities/Unit.h"
+#include "entities/units/Unit.h"
 #include "states/Game.h"
 #include "StateManager.h"
 

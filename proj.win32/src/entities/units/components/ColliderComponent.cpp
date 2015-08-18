@@ -1,4 +1,4 @@
-#include "entities/components/Collider.h"
+#include "entities/units/components/ColliderComponent.h"
 
 #include <physics/CCPhysicsContact.h>
 #include <physics/CCPhysicsWorld.h>

@@ -1,4 +1,4 @@
-#include "entities/Unit.h"
+#include "entities/units/Unit.h"
 
 #include <2d/CCCamera.h>
 #include <physics/CCPhysicsBody.h>
@@ -7,10 +7,10 @@
 
 #include "assets/Textures.h"
 #include "debug/Logger.h"
-#include "entities/Bullet.h"
-#include "entities/components/PlayerMove.h"
-#include "entities/components/BulletAimer.h"
-#include "entities/components/Collider.h"
+#include "entities/bullets/Bullet.h"
+#include "entities/units/components/PlayerMoveComponent.h"
+#include "entities/units/components/BulletAimerComponent.h"
+#include "entities/units/components/ColliderComponent.h"
 #include "input/KeyboardInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"

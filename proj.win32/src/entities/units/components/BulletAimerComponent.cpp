@@ -1,8 +1,9 @@
-#include "entities/components/BulletAimer.h"
+#include "entities/units/components/BulletAimerComponent.h"
 
 #include "assets/Textures.h"
-#include "entities/components/ComponentBase.h"
-#include "entities/Unit.h"
+#include "entities/units/components/ComponentBase.h"
+#include "entities/units/Unit.h"
+#include "entities/bullets/Bullet.h"
 #include "input/MouseInput.h"
 #include "input/KeyboardInput.h"
 #include "StateManager.h"
@@ -18,6 +19,7 @@ BEGIN_COMPONENTS_NS
 void BulletAimerComponent::init() {
     cone = Sprite::createWithTexture(assets::textures::cone);
     cone->setAnchorPoint(Vec2(.5f, -.25f));
+    cone->setVisible(false);
     root::map_layer->addChild(cone, 1);
 }
 
@@ -38,8 +40,8 @@ void BulletAimerComponent::update() {
         }
 
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
-            //auto b = bullet::create_bullet(base->getPositionX(), base->getPositionY(), this);
-            //b->add_logic_test(-cone->getRotation() + 90, power);
+            auto b = bullet::create_bullet(ref->base->getPositionX(), ref->base->getPositionY(), ref);
+            b->add_logic_test(-cone->getRotation() + 90, power);
         }
     }
 

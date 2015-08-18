@@ -1,8 +1,8 @@
-#include "entities/Bullet.h"
+#include "entities/bullets/Bullet.h"
 
 #include "assets/Textures.h"
-#include "entities/BulletLogic.h"
-#include "entities/Unit.h"
+#include "entities/bullets/BulletLogic.h"
+#include "entities/units/Unit.h"
 #include "debug/Logger.h"
 #include "SceneManager.h"
 #include "StateManager.h"

@@ -1,6 +1,6 @@
 #include "map/Cam.h"
 
-#include "entities/Unit.h"
+#include "entities/units/Unit.h"
 #include "StateManager.h"
 
 BEGIN_MAP_NS

@@ -1,6 +1,6 @@
 #include "network/GameMessages.h"
 
-#include "entities/Unit.h"
+#include "entities/units/Unit.h"
 #include "debug/Logger.h"
 #include "message/Message.h"
 #include "network/Peers.h"

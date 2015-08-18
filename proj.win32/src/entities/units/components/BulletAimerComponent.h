@@ -3,7 +3,7 @@
 
 #include <2d/CCSprite.h>
 
-#include "entities/components/ComponentBase.h"
+#include "entities/units/components/ComponentBase.h"
 
 namespace cocos2d {
 

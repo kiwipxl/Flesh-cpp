@@ -1,12 +1,12 @@
-#include "entities/components/PlayerMove.h"
+#include "entities/units/components/PlayerMoveComponent.h"
 
 #include <base/CCEventDispatcher.h>
 #include <physics/CCPhysicsContact.h>
 #include <physics/CCPhysicsWorld.h>
 
-#include "entities/components/BulletAimer.h"
-#include "entities/components/Collider.h"
-#include "entities/Unit.h"
+#include "entities/units/components/BulletAimerComponent.h"
+#include "entities/units/components/ColliderComponent.h"
+#include "entities/units/Unit.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "states/Game.h"

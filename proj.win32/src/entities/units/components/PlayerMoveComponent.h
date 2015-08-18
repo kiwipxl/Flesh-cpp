@@ -1,7 +1,7 @@
 #ifndef _COMPONENT_PLAYER_MOVE_H_
 #define _COMPONENT_PLAYER_MOVE_H_
 
-#include "entities/components/ComponentBase.h"
+#include "entities/units/components/ComponentBase.h"
 
 namespace cc = cocos2d;
 namespace cocos2d {

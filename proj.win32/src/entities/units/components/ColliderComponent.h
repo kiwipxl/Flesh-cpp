@@ -1,7 +1,7 @@
 #ifndef _COMPONENT_COLLIDER_H_
 #define _COMPONENT_COLLIDER_H_
 
-#include "entities/components/ComponentBase.h"
+#include "entities/units/components/ComponentBase.h"
 
 namespace cc = cocos2d;
 namespace cocos2d {

@@ -11,7 +11,7 @@ this class temporarily handles all player movement and other things, will be mod
 
 #include "network/Peers.h"
 #include "entities/EntityDefines.h"
-#include "entities/components/ComponentBase.h"
+#include "entities/units/components/ComponentBase.h"
 
 BEGIN_ENTITIES_NS
 
