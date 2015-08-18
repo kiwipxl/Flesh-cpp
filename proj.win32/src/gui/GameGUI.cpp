@@ -1,0 +1,7 @@
+#include "gui/GameGUI.h"
+
+BEGIN_GUI_NS
+BEGIN_GAME_NS
+
+END_GAME_NS
+END_GUI_NS

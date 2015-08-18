@@ -13,6 +13,7 @@ BEGIN_ENTITIES_NS
 
 class Unit;
 
+BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 struct BulletAimerComponent;
@@ -34,6 +35,7 @@ private:
 };
 
 END_COMPONENTS_NS
+END_UNITS_NS
 END_ENTITIES_NS
 
 #endif

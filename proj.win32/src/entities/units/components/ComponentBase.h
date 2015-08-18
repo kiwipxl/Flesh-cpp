@@ -5,18 +5,17 @@
 
 #include "entities/EntityDefines.h"
 
-#define BEGIN_COMPONENTS_NS     namespace components {
-#define END_COMPONENTS_NS       };
-
-namespace cocos2d {
-
-};
 namespace cc = cocos2d;
 
 BEGIN_ENTITIES_NS
 
-class Unit;
+//forward declare unit in entities::units namespace
+namespace units {
 
+    class Unit;
+}
+
+BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 class ComponentBase {
@@ -29,6 +28,7 @@ public:
 };
 
 END_COMPONENTS_NS
+END_UNITS_NS
 END_ENTITIES_NS
 
 #endif

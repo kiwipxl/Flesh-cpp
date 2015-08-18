@@ -9,6 +9,7 @@
 using namespace cocos2d;
 
 BEGIN_ENTITIES_NS
+BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 //private
@@ -41,4 +42,5 @@ void ColliderComponent::update() {
 }
 
 END_COMPONENTS_NS
+END_UNITS_NS
 END_ENTITIES_NS

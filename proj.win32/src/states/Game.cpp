@@ -32,18 +32,24 @@ namespace game {
     struct UIBar {
 
         Sprite* bar;
+
+        UIBar(bool captain) {
+            bar = Sprite::createWithTexture(captain ? assets::textures::captain_health_bar : assets::textures::minion_health_bar);
+            ui_layer->addChild(bar);
+        }
     };
 
     struct TeamUI {
 
         std::vector<UIBar*> ui_bars;
     };
+    TeamUI* team_ui_list;
 
     void update_time() {
         float t = (countdown_seconds * 1000) - (clock() - countdown_start);
         if (t <= 0) {
             countdown_start = clock();
-            entities::next_unit();
+            entities::units::next_unit();
             return;
         }
         int seconds = t / 1000.0f;
@@ -51,11 +57,14 @@ namespace game {
         turn_time_label->setString(sstream_str(seconds << ":" << ms));
     }
 
-    void create_team_unit(entities::UnitTeamType team_type) {
+    /*void create_team_unit(entities::UnitTeamType team_type) {
         auto unit = new entities::Unit();
         unit->team_type = team_type;
-        unit->base->setPosition(assets::maps::test_terrain->spawn_points[0]);
-    }
+        unit->base->setPosition(assets::maps::test_terrain->spawn_points[entities::units.size() - 1]);
+
+        auto ui_bar = new UIBar((entities::units.size() - 1) % 2 == 0);
+        team_ui_list[(int)team_type].ui_bars.push_back(ui_bar);
+    }*/
 
     //public
     map::terrain::TerrainGroup* terrain;
@@ -72,15 +81,16 @@ namespace game {
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
 
+                team_ui_list = new TeamUI[2];
                 for (int n = 0; n < 2; ++n) {
-                    create_team_unit(entities::UNIT_TEAM_BLUE);
+                    //create_team_unit(entities::UNIT_TEAM_BLUE);
                 }
                 for (int n = 0; n < 2; ++n) {
-                    create_team_unit(entities::UNIT_TEAM_RED);
+                    //create_team_unit(entities::UNIT_TEAM_RED);
                 }
-                entities::select_current_unit();
-                entities::current_unit->add_component<entities::components::BulletAimerComponent>()->init();
-                entities::current_unit->add_component<entities::components::PlayerMoveComponent>()->init();
+                entities::units::select_current_unit();
+                entities::units::current_unit->add_component<entities::units::components::BulletAimerComponent>()->init();
+                entities::units::current_unit->add_component<entities::units::components::PlayerMoveComponent>()->init();
 
                 break;
         }
@@ -101,7 +111,7 @@ namespace game {
                 update_time();
 
                 auto& v = map::camera::map_cam->getPosition();
-                auto& vb = entities::current_unit->base->getPosition();
+                auto& vb = entities::units::current_unit->base->getPosition();
                 map::camera::map_cam->setPosition(v.x - (v.x - vb.x) / 10.0f, v.y - (v.y - vb.y) / 10.0f);
 
                 if (input::get_mouse_scroll().y <= -1) {
@@ -116,7 +126,7 @@ namespace game {
                 dest_zoom -= dest_zoom / 8.0f;
                 map::camera::map_cam->setPositionZ(map::camera::map_cam->getPositionZ() + dest_zoom);
 
-                entities::update_units();
+                entities::units::update_all_units();
                 entities::bullet::update();
                 map::camera::update();
                 terrain->draw();

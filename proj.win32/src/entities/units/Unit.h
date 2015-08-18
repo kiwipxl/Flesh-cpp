@@ -14,6 +14,7 @@ this class temporarily handles all player movement and other things, will be mod
 #include "entities/units/components/ComponentBase.h"
 
 BEGIN_ENTITIES_NS
+BEGIN_UNITS_NS
 
 namespace cc = cocos2d;
 
@@ -68,12 +69,12 @@ class Unit {
         //void on_post_contact(cc::PhysicsContact&, const cc::PhysicsContactPostSolve&);
 };
 
-extern std::vector<Unit*> units;
+extern std::vector<Unit*> all_units;
 
 extern void test_peer_join(network::peers::Peer* peer);
 extern void test_peer_movement(network::peers::Peer* peer, int x, int y, float rota);
 
-extern void update_units();
+extern void update_all_units();
 
 extern Unit* current_unit;
 extern int current_unit_index;
@@ -81,6 +82,7 @@ extern int current_unit_index;
 extern void next_unit();
 extern void select_current_unit();
 
+END_UNITS_NS
 END_ENTITIES_NS
 
 #endif

@@ -11,6 +11,7 @@
 using namespace cocos2d;
 
 BEGIN_ENTITIES_NS
+BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 //private
@@ -24,7 +25,7 @@ void BulletAimerComponent::init() {
 }
 
 void BulletAimerComponent::update() {
-    cone->setPosition(Vec2(entities::current_unit->base->getPositionX(), entities::current_unit->base->getPositionY()));
+    cone->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
 
     if (aiming) {
         float x = (root::scene->screen_size.width) / 2.0f;
@@ -51,4 +52,5 @@ void BulletAimerComponent::update() {
     }
 }
 END_COMPONENTS_NS
+END_UNITS_NS
 END_ENTITIES_NS

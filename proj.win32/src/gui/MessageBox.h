@@ -14,49 +14,51 @@ note: only one message box can be opened at a time, however a class is used in c
 #include <ui/UIImageView.h>
 
 #include "gui/Button.h"
+#include "gui/GUIDefines.h"
 
-namespace gui {
+BEGIN_GUI_NS
 
-    namespace cc = cocos2d;
+namespace cc = cocos2d;
 
-    //default callback used for messagebox class
-    extern void close_message_box_callback(cc::Ref* r);
+//default callback used for messagebox class
+extern void close_message_box_callback(cc::Ref* r);
 
-    class MessageBox {
+class MessageBox {
 
-        public:
-            MessageBox(std::string title, std::string message);
-            ~MessageBox();
+    public:
+        MessageBox(std::string title, std::string message);
+        ~MessageBox();
 
-            cc::Node* container;
-            cc::ui::ImageView* frame;
-            cc::ui::Text* message_text;
-            cc::ui::Text* message_title;
+        cc::Node* container;
+        cc::ui::ImageView* frame;
+        cc::ui::Text* message_text;
+        cc::ui::Text* message_title;
 
-            std::vector<Button*> buttons;
-            bool closed = false;
+        std::vector<Button*> buttons;
+        bool closed = false;
 
-            void add_button(Button& button);
-            void add_button(std::string button_text, int x, int y, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
+        void add_button(Button& button);
+        void add_button(std::string button_text, int x, int y, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
+                        ButtonClickCallback on_click = close_message_box_callback);
+        void stack_button(std::string button_text, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
                             ButtonClickCallback on_click = close_message_box_callback);
-            void stack_button(std::string button_text, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
-                              ButtonClickCallback on_click = close_message_box_callback);
             
-            cc::Sprite* add_spinner();
+        cc::Sprite* add_spinner();
 
-            void close();
-    };
-
-    typedef std::shared_ptr<MessageBox> MessageBoxPtr;
-
-    extern MessageBoxPtr current_message_box;
-
-    extern MessageBoxPtr show_message_box(std::string title, std::string message);
-    extern MessageBoxPtr show_message_box(std::string title, std::string message, std::string button_title, 
-                                          ButtonClickCallback on_click = close_message_box_callback);
-    extern MessageBoxPtr show_loading_message_box(std::string title, std::string message);
-
-    extern void close_message_box();
+        void close();
 };
+
+typedef std::shared_ptr<MessageBox> MessageBoxPtr;
+
+extern MessageBoxPtr current_message_box;
+
+extern MessageBoxPtr show_message_box(std::string title, std::string message);
+extern MessageBoxPtr show_message_box(std::string title, std::string message, std::string button_title, 
+                                        ButtonClickCallback on_click = close_message_box_callback);
+extern MessageBoxPtr show_loading_message_box(std::string title, std::string message);
+
+extern void close_message_box();
+
+END_GUI_NS
 
 #endif

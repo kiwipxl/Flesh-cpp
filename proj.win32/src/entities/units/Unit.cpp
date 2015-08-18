@@ -17,11 +17,12 @@
 #include "StateManager.h"
 
 BEGIN_ENTITIES_NS
+BEGIN_UNITS_NS
 
 using namespace cocos2d;
 
 //public
-std::vector<Unit*> units;
+std::vector<Unit*> all_units;
 
 //private
 Unit* current_unit;
@@ -30,24 +31,24 @@ int current_unit_index;
 void next_unit() {
     current_unit->player_input = false;
     ++current_unit_index;
-    if (current_unit_index >= units.size()) {
+    if (current_unit_index >= all_units.size()) {
         current_unit_index = 0;
     }
-    current_unit = units[current_unit_index];
+    current_unit = all_units[current_unit_index];
     current_unit->player_input = true;
 }
 
 void select_current_unit() {
-    current_unit = units[current_unit_index];
+    current_unit = all_units[current_unit_index];
     current_unit->player_input = true;
 }
 
-void update_units() {
-    for (int n = 0; n < units.size(); ++n) {
-        if (!units[n]->is_scheduled_removal()) units[n]->update();
-        if (units[n]->is_scheduled_removal()) {
-            delete units[n];
-            units.erase(units.begin() + n, units.begin() + n + 1);
+void update_all_units() {
+    for (int n = 0; n < all_units.size(); ++n) {
+        if (!all_units[n]->is_scheduled_removal()) all_units[n]->update();
+        if (all_units[n]->is_scheduled_removal()) {
+            delete all_units[n];
+            all_units.erase(all_units.begin() + n, all_units.begin() + n + 1);
             --n;
             select_current_unit();
         }
@@ -78,7 +79,7 @@ Unit::Unit() {
 
     add_component<components::ColliderComponent>()->init();
 
-    units.push_back(this);
+    all_units.push_back(this);
 }
 
 bool Unit::on_contact_run(PhysicsContact& contact) {
@@ -150,4 +151,5 @@ template void Unit::remove_component<components::ColliderComponent>();
 
 //-- end component template definitions --
 
+END_UNITS_NS
 END_ENTITIES_NS

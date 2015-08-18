@@ -22,11 +22,6 @@ bool on_contact_run(PhysicsContact& contact) {
     if (a && b) {
         for (int n = 0; n < bullets.size(); ++n) {
             if (a == bullets[n]->base || b == bullets[n]->base) {
-                for (int i = 0; i < units.size(); ++i) {
-                    if (a == units[i]->base || b == units[i]->base) {
-
-                    }
-                }
                 bullets[n]->on_contact_run(contact);
             }
         }
@@ -44,7 +39,7 @@ void deinit() {
     physics::remove_on_contact_run(on_contact_run);
 }
 
-BulletPtr create_bullet(int x, int y, Unit* _unit_parent) {
+BulletPtr create_bullet(int x, int y, units::Unit* _unit_parent) {
     BulletPtr b(new Bullet(x, y, _unit_parent));
     bullets.push_back(b);
     return b;
@@ -62,7 +57,7 @@ void update() {
 
 //-- begin Bullet class --
 
-Bullet::Bullet(int x, int y, Unit* _unit_parent) {
+Bullet::Bullet(int x, int y, units::Unit* _unit_parent) {
     unit_parent = _unit_parent;
 
     base = Sprite::create();

@@ -14,6 +14,7 @@ BEGIN_ENTITIES_NS
 
 class Unit;
 
+BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 class BulletAimerComponent : public ComponentBase {
@@ -33,6 +34,7 @@ public:
 };
 
 END_COMPONENTS_NS
+END_UNITS_NS
 END_ENTITIES_NS
 
 #endif

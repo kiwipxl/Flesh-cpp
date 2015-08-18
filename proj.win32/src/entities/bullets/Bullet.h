@@ -18,7 +18,11 @@ handles management and logic of bullets
 
 BEGIN_ENTITIES_NS
 
-class Unit;
+//forward declare in entities::units namespace
+namespace units {
+
+    class Unit;
+};
 
 BEGIN_BULLET_NS
 
@@ -31,12 +35,12 @@ enum BulletLogicType;
 class Bullet {
 
     public:
-        Bullet(int x, int y, Unit* _unit_parent);
+        Bullet(int x, int y, units::Unit* _unit_parent);
         ~Bullet();
 
         cc::Sprite* base;
         cc::PhysicsBody* pbody;
-        Unit* unit_parent;
+        units::Unit* unit_parent;
 
         void update();
         void cleanup();
@@ -59,7 +63,7 @@ typedef std::shared_ptr<Bullet> BulletPtr;
 
 extern void init();
 extern void deinit();
-extern BulletPtr create_bullet(int x, int y, Unit* _unit_parent);
+extern BulletPtr create_bullet(int x, int y, units::Unit* _unit_parent);
 extern void update();
 
 END_BULLET_NS
