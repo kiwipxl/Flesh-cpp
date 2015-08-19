@@ -71,7 +71,7 @@ void BulletAimerComponent::update() {
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
             auto g = bullets::create_group(ref);
             auto b = g->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
-            b->add_logic_c4(-weapon->getRotation() + 90, power);
+            b->add_logic_fire_bullet(-weapon->getRotation() + 90, power);
             gui::game::wait_for_bullet(g);
             map::camera::follow_bullet(g);
 

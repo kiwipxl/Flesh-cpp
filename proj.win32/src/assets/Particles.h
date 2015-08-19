@@ -10,12 +10,13 @@ BEGIN_ASSETS_NS
 
 namespace particles {
 
-	namespace cc = cocos2d;
+    namespace cc = cocos2d;
 
-	extern cc::ParticleSystem* bullet_explosion;
-    extern std::string bullet_explosion_name;
+    extern std::string bullet_explosion;
     extern std::string bullet_fire_trail;
     extern std::string c4_explosion;
+    extern std::string ring;
+    extern std::string health_ring;
 
 	extern void init();
 };

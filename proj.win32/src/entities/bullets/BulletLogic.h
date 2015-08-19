@@ -176,7 +176,7 @@ public:
             float angle = ((rand() / (float)RAND_MAX) * 50.0f) + 65.0f;
             b->add_logic_mini_fire_bullet(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
         }
-        auto bullet_explosion = cc::ParticleSystemQuad::create("Ring.plist");
+        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::ring);
         bullet_explosion->setPosition(ref->base->getPosition());
         bullet_explosion->setScale(.8f);
         bullet_explosion->setAutoRemoveOnFinish(true);
@@ -189,7 +189,7 @@ public:
     virtual ~BulletLogicFireBullet() {
         root::map_layer->removeChild(fire_trail_particle, 1);
 
-        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
+        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion);
         bullet_explosion->setPosition(ref->base->getPosition());
         bullet_explosion->setScale(.325f);
         root::map_layer->addChild(bullet_explosion, 1);
@@ -255,7 +255,7 @@ public:
     virtual ~BulletLogicMiniFireBullet() {
         root::map_layer->removeChild(fire_trail_particle, 1);
 
-        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
+        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion);
         bullet_explosion->setPosition(ref->base->getPosition());
         bullet_explosion->setScale(.325f);
         root::map_layer->addChild(bullet_explosion, 1);
