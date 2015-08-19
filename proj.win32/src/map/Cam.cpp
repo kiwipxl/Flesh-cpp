@@ -1,6 +1,7 @@
 #include "map/Cam.h"
 
 #include "entities/bullets/Bullet.h"
+#include "entities/bullets/BulletGroup.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "input/KeyboardInput.h"
@@ -14,7 +15,7 @@ using namespace cocos2d;
 
 //private
 float dest_zoom = 0;
-entities::bullets::BulletPtr target_follow_bullet;
+entities::bullets::BulletGroupPtr target_follow_bullet;
 
 //public
 Camera* map_cam;
@@ -41,8 +42,9 @@ void update_game_cam() {
 
     auto& v = map::camera::map_cam->getPosition();
     Node* target;
-    if (target_follow_bullet) target = target_follow_bullet->base;
-    else target = entities::units::current_unit->base;
+    //if (target_follow_bullet) target = target_follow_bullet->base;
+    //else
+    target = entities::units::current_unit->base;
     map::camera::map_cam->setPosition(v.x - (v.x - target->getPositionX()) / 10.0f, v.y - (v.y - target->getPositionY()) / 10.0f);
 
     if (input::get_mouse_scroll().y <= -1) {
@@ -58,7 +60,7 @@ void update_game_cam() {
     map::camera::map_cam->setPositionZ(map::camera::map_cam->getPositionZ() + dest_zoom);
 }
 
-void follow_bullet(entities::bullets::BulletPtr& bullet) {
+void follow_bullet(entities::bullets::BulletGroupPtr& bullet) {
     target_follow_bullet = bullet;
 }
 

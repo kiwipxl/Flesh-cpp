@@ -49,8 +49,6 @@ class Bullet {
         std::vector<BulletLogicBase*> logic_list;
 };
 
-extern BulletPtr create_bullet(int x, int y, BulletGroupPtr& group);
-
 END_BULLETS_NS
 END_ENTITIES_NS
 

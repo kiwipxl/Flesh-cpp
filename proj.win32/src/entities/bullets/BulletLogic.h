@@ -11,6 +11,7 @@ logic components can be added or removed to a bullet object
 #include "assets/Particles.h"
 #include "debug/Logger.h"
 #include "entities/bullets/Bullet.h"
+#include "entities/bullets/BulletGroup.h"
 #include "entities/EntityDefines.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
@@ -51,7 +52,7 @@ public:
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && CHECK_AB_COLLIDE(ref->base) && CHECK_AB_COLLIDE(ref->unit_parent->base)) {
+        if (a && b && CHECK_AB_COLLIDE(ref->base) && CHECK_AB_COLLIDE(ref->parent->unit_parent->base)) {
             bullet_left_parent = false;
         }
 
@@ -65,7 +66,7 @@ public:
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && CHECK_AB_COLLIDE(ref->base) && CHECK_AB_COLLIDE(ref->unit_parent->base)) {
+        if (a && b && CHECK_AB_COLLIDE(ref->base) && CHECK_AB_COLLIDE(ref->parent->unit_parent->base)) {
             bullet_left_parent = true;
         }
     }
@@ -173,7 +174,7 @@ public:
         if (++timer >= 40) {
             gen_explosion = true;
             for (int n = 0; n < 14; ++n) {
-                auto b = create_bullet(ref->base->getPositionX(), ref->base->getPositionY(), ref->unit_parent);
+                auto b = ref->parent->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
                 float angle = ((rand() / (float)RAND_MAX) * 50.0f) + 65.0f;
                 b->add_logic_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
             }

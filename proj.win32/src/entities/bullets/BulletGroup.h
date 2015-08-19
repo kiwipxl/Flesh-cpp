@@ -21,11 +21,14 @@ namespace cc = cocos2d;
 class BulletGroup {
 
 public:
-    BulletGroup(int _x, int _y, units::Unit* _unit_parent);
+    BulletGroup(units::Unit* _unit_parent);
     ~BulletGroup();
 
     std::vector<BulletPtr> bullets;
     units::Unit* unit_parent = NULL;
+    BulletGroupPtr self_ptr;
+    
+    BulletPtr create_bullet(int _x, int _y);
 
     void update();
 
@@ -38,7 +41,7 @@ protected:
 
 extern void init();
 extern void deinit();
-extern BulletGroupPtr create_group(int _x, int _y, units::Unit* _unit_parent);
+extern BulletGroupPtr create_group(units::Unit* _unit_parent);
 extern void update();
 
 END_BULLETS_NS

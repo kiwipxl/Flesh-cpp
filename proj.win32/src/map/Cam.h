@@ -19,7 +19,7 @@ extern cc::Camera* static_cam;
 
 extern void init();
 extern void update_game_cam();
-extern void follow_bullet(entities::bullets::BulletPtr& bullet);
+extern void follow_bullet(entities::bullets::BulletGroupPtr& bullet);
 
 END_CAMERA_NS
 END_MAP_NS

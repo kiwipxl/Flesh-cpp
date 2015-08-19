@@ -52,7 +52,7 @@ void set_power_text(float power) {
     power_label->setString(sstream_cstr("power: " << power << "x"));
 }
 
-void wait_for_bullet(entities::bullets::BulletPtr bullet) {
+void wait_for_bullet(entities::bullets::BulletGroupPtr bullet) {
 
 }
 

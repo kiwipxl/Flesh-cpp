@@ -58,8 +58,9 @@ void deinit() {
     physics::remove_on_contact_leave(on_contact_leave);
 }
 
-BulletGroupPtr create_group(int _x, int _y, units::Unit* _unit_parent) {
-    BulletGroupPtr b(new BulletGroup(_x, _y, _unit_parent));
+BulletGroupPtr create_group(units::Unit* _unit_parent) {
+    BulletGroupPtr b(new BulletGroup(_unit_parent));
+    b->self_ptr = b;
     bullet_groups.push_back(b);
     return b;
 }
@@ -78,12 +79,17 @@ void update() {
 
 //-- begin BulletGroup class --
 
-BulletGroup::BulletGroup(int _x, int _y, units::Unit* _unit_parent) {
+BulletGroup::BulletGroup(units::Unit* _unit_parent) {
     unit_parent = _unit_parent;
 }
 
 BulletGroup::~BulletGroup() {
     bullet_groups.clear();
+}
+
+BulletPtr BulletGroup::create_bullet(int _x, int _y) {
+    BulletPtr b(new Bullet(_x, _y, self_ptr));
+    return b;
 }
 
 void BulletGroup::update() {

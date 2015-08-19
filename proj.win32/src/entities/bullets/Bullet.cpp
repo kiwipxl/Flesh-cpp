@@ -13,10 +13,6 @@ BEGIN_ENTITIES_NS
 BEGIN_BULLETS_NS
 
 //private
-BulletPtr create_bullet(int _x, int _y, BulletGroupPtr& _parent) {
-    BulletPtr b(new Bullet(_x, _y, _parent));
-    return b;
-}
 
 //-- begin Bullet class --
 

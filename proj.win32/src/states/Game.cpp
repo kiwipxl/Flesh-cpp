@@ -4,6 +4,7 @@
 
 #include "assets/Assets.h"
 #include "entities/bullets/Bullet.h"
+#include "entities/bullets/BulletGroup.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "gui/GameGUI.h"

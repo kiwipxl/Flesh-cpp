@@ -38,7 +38,7 @@ extern int current_countdown_seconds;
 extern void set_countdown_to(float seconds);
 extern void set_power_text(float power);
 extern void reset_countdown();
-extern void wait_for_bullet(entities::bullets::BulletPtr bullet);
+extern void wait_for_bullet(entities::bullets::BulletGroupPtr bullet);
 
 extern void init();
 extern void sort_ui_bars();
