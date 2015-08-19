@@ -55,6 +55,8 @@ void Bullet::update() {
     for (int n = 0; n < logic_list.size(); ++n) {
         logic_list[n]->update();
     }
+
+    if (removal_in_ms != 0.0f && clock() - removal_start_time >= removal_in_ms) schedule_removal();
 }
 
 void Bullet::add_logic_decay(float decay_after_ms) {

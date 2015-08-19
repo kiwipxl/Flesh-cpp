@@ -80,7 +80,7 @@ public:
         ref->pbody->setContactTestBitmask(true);
         ref->pbody->setRotationEnable(false);
         ref->pbody->setMass(100.0f);
-        ref->pbody->setVelocityLimit(1000.0f);
+        ref->pbody->setVelocityLimit(700.0f);
         ref->base->setPhysicsBody(ref->pbody);
     }
 
@@ -271,8 +271,9 @@ public:
     bool gen_explosion = false;
     cc::ParticleSystemQuad* fire_trail_particle;
     const float DAMAGE = 4.0f;
-    const float EXPLODE_AFTER_TIME = 5000.0f;
+    const float EXPLODE_AFTER_TIME = 4000.0f;
     clock_t start_time;
+    bool has_gen_explosion = false;
 
     BulletLogicC4(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         cc::PhysicsMaterial mat;
@@ -300,15 +301,22 @@ public:
     }
 
     virtual void update() {
+        if (has_gen_explosion) return;
+
         if (clock() - start_time >= EXPLODE_AFTER_TIME) {
+            has_gen_explosion = true;
+            ref->base->setVisible(false);
+
             auto bullet_explosion = cc::ParticleSystemQuad::create("c4_explosion.plist");
-            bullet_explosion->setRadialAccel(-1500.0f);
+            bullet_explosion->setRadialAccel(-1000.0f);
+            bullet_explosion->setSpeed(220.0f);
+            bullet_explosion->setDuration(.25f);
             bullet_explosion->setPosition(ref->base->getPosition());
-            bullet_explosion->setScale(2.5f);
+            bullet_explosion->setScale(3.0f);
             root::map_layer->addChild(bullet_explosion, 1);
             bullet_explosion->setAutoRemoveOnFinish(true);
 
-            ref->schedule_removal();
+            ref->schedule_removal_in(1500.0f);
         }
     }
 
