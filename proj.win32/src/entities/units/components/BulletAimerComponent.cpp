@@ -1,6 +1,7 @@
 #include "entities/units/components/BulletAimerComponent.h"
 
 #include "assets/Textures.h"
+#include "debug/Logger.h"
 #include "entities/units/components/ComponentBase.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
