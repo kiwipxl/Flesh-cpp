@@ -4,15 +4,8 @@
 #include "entities/units/components/ComponentBase.h"
 
 namespace cc = cocos2d;
-namespace cocos2d {
-
-    class PhysicsContact;
-};
 
 BEGIN_ENTITIES_NS
-
-class Unit;
-
 BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 

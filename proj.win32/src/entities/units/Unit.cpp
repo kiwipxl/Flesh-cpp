@@ -92,6 +92,7 @@ void Unit::update() {
 
     for (int n = 0; n < components.size(); ++n) {
         if (!components[n]->is_removal_scheduled()) components[n]->update();
+        log_info << base->getRotation() << ": " << components[n]->type;
         if (components[n]->is_removal_scheduled()) {
             delete components[n];
             components.erase(components.begin() + n, components.begin() + n + 1);

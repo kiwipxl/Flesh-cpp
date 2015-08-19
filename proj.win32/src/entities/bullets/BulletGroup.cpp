@@ -89,6 +89,7 @@ BulletGroup::~BulletGroup() {
 
 BulletPtr BulletGroup::create_bullet(int _x, int _y) {
     BulletPtr b(new Bullet(_x, _y, self_ptr));
+    bullets.push_back(b);
     return b;
 }
 

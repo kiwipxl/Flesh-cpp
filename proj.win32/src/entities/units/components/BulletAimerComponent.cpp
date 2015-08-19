@@ -23,6 +23,8 @@ BEGIN_COMPONENTS_NS
 
 //public
 void BulletAimerComponent::init() {
+    type = UNIT_COMPONENT_TYPE_BULLET_AIMER;
+
     cone = Sprite::createWithTexture(assets::textures::cone);
     cone->setAnchorPoint(Vec2(.5f, -.25f));
     cone->setVisible(false);

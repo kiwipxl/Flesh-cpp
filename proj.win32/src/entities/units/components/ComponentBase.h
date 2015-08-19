@@ -8,15 +8,15 @@
 namespace cc = cocos2d;
 
 BEGIN_ENTITIES_NS
-
-//forward declare unit in entities::units namespace
-namespace units {
-
-    class Unit;
-}
-
 BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
+
+enum ComponentType {
+
+    UNIT_COMPONENT_TYPE_BULLET_AIMER, 
+    UNIT_COMPONENT_TYPE_COLLIDER, 
+    UNIT_COMPONENT_TYPE_PLAYER_MOVE
+};
 
 class ComponentBase {
 
@@ -24,6 +24,7 @@ public:
     virtual ~ComponentBase() { }
 
     Unit* ref;
+    ComponentType type;
 
     virtual void update() = 0;
     virtual bool on_contact_run(cc::PhysicsContact& contact) { return false; }

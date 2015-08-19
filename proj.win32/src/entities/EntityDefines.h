@@ -27,6 +27,11 @@ BEGIN_UNITS_NS
 class Unit;
 END_UNITS_NS
 END_ENTITIES_NS
+
+namespace cocos2d {
+
+    class PhysicsContact;
+};
 //forward declarations end
 
 #endif

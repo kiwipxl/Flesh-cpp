@@ -5,15 +5,9 @@
 
 #include "entities/units/components/ComponentBase.h"
 
-namespace cocos2d {
-
-};
 namespace cc = cocos2d;
 
 BEGIN_ENTITIES_NS
-
-class Unit;
-
 BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 

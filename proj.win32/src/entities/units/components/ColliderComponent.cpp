@@ -16,7 +16,7 @@ BEGIN_COMPONENTS_NS
 
 //public
 void ColliderComponent::init() {
-
+    type = UNIT_COMPONENT_TYPE_COLLIDER;
 }
 
 bool ColliderComponent::on_contact_run(PhysicsContact& contact) {

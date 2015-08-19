@@ -4,6 +4,7 @@
 #include <physics/CCPhysicsContact.h>
 #include <physics/CCPhysicsWorld.h>
 
+#include "debug/Logger.h"
 #include "entities/units/components/BulletAimerComponent.h"
 #include "entities/units/components/ColliderComponent.h"
 #include "entities/units/Unit.h"
@@ -22,6 +23,8 @@ BEGIN_COMPONENTS_NS
 
 //public
 void PlayerMoveComponent::init() {
+    type = UNIT_COMPONENT_TYPE_PLAYER_MOVE;
+
     bullet_aimer = ref->get_component<BulletAimerComponent>();
     collider = ref->get_component<ColliderComponent>();
 }
