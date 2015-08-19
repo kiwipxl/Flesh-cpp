@@ -11,6 +11,7 @@ handles management of groups of bullets
 #include <2d/CCSprite.h>
 
 #include "entities/EntityDefines.h"
+#include "entities/EntityScheduler.h"
 #include "physics/Physics.h"
 
 BEGIN_ENTITIES_NS
@@ -18,7 +19,7 @@ BEGIN_BULLETS_NS
 
 namespace cc = cocos2d;
 
-class BulletGroup {
+class BulletGroup : public EntityScheduler {
 
 public:
     BulletGroup(units::Unit* _unit_parent);
@@ -35,12 +36,6 @@ public:
     BulletPtr create_bullet(int _x, int _y);
 
     void update();
-
-    void schedule_removal() { removal_scheduled = true; }
-    bool is_removal_scheduled() { return removal_scheduled; }
-
-protected:
-    bool removal_scheduled = false;
 };
 
 extern void init();

@@ -26,6 +26,8 @@ public:
     bool is_removal_scheduled() { return removal_scheduled; }
 
 protected:
+    EntityScheduler() { }
+
     bool removal_scheduled = false;
     clock_t removal_start_time;
     float removal_in_ms = 0.0f;
@@ -33,9 +35,6 @@ protected:
     void update_scheduler() {
         if (removal_in_ms != 0.0f && clock() - removal_start_time >= removal_in_ms) schedule_removal();
     }
-
-private:
-    EntityScheduler() { }
 };
 
 #endif

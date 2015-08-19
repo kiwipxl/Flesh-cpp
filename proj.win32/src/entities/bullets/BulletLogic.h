@@ -10,6 +10,7 @@ logic components can be added or removed to a bullet object
 
 #include "assets/Particles.h"
 #include "debug/Logger.h"
+#include "entities/EntityScheduler.h"
 #include "entities/bullets/Bullet.h"
 #include "entities/bullets/BulletGroup.h"
 #include "entities/EntityDefines.h"
@@ -32,7 +33,7 @@ enum BulletLogicType {
     BULLET_LOGIC_C4
 };
 
-class BulletLogicBase {
+class BulletLogicBase : public EntityScheduler {
 
 public:
     Bullet* ref;
@@ -45,11 +46,10 @@ public:
     virtual ~BulletLogicBase() { }
     virtual void cleanup() { }
 
+    virtual void update() {
+        update_scheduler();
+    }
 
-    void schedule_removal() { removal_scheduled = true; }
-    bool is_removal_scheduled() { return removal_scheduled; }
-
-    virtual void update() { }
     virtual bool on_contact_run(cc::PhysicsContact& contact) {
         //checks if the bullet is colliding with the parent
 
@@ -93,9 +93,6 @@ public:
 
 private:
     bool bullet_left_parent = true;
-
-protected:
-    bool removal_scheduled = false;
 };
 
 class BulletLogicDecay : public BulletLogicBase {
