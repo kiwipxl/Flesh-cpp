@@ -49,6 +49,7 @@ Unit::Unit(UnitTeam* _team, UnitType _type) {
     pbody->setRotationEnable(false);
     //pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
+    pbody->setVelocityLimit(1000.0f);
     base->setPhysicsBody(pbody);
 
     physics::add_on_contact_run(CC_CALLBACK_1(Unit::on_contact_run, this), this);

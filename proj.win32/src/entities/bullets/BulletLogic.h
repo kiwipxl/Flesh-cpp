@@ -268,10 +268,8 @@ class BulletLogicC4 : public BulletLogicBase {
 
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_C4;
-    bool gen_explosion = false;
-    cc::ParticleSystemQuad* fire_trail_particle;
     const float DAMAGE = 4.0f;
-    const float EXPLODE_AFTER_TIME = 4000.0f;
+    const float EXPLODE_AFTER_TIME = 500.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
 
@@ -280,13 +278,13 @@ public:
         mat.density = .1f;
         mat.friction = .4f;
         mat.restitution = 1.0f;
-        create_physics_body_box(32.0f, 32.0f, &mat);
+        create_physics_body_box(64.0f, 64.0f, &mat);
         ref->pbody->setRotationEnable(true);
 
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
         ref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
-        ref->pbody->applyTorque(100.0f);
+        ref->pbody->applyTorque(200.0f);
 
         ref->base->setTexture(assets::textures::c4);
         cc::Size s = ref->base->getTexture()->getContentSize();
@@ -306,6 +304,7 @@ public:
         if (clock() - start_time >= EXPLODE_AFTER_TIME) {
             has_gen_explosion = true;
             ref->base->setVisible(false);
+            ref->base->setPhysicsBody(NULL);
 
             auto bullet_explosion = cc::ParticleSystemQuad::create("c4_explosion.plist");
             bullet_explosion->setRadialAccel(-1000.0f);
@@ -317,6 +316,16 @@ public:
             bullet_explosion->setAutoRemoveOnFinish(true);
 
             ref->schedule_removal_in(1500.0f);
+
+            cc::Vec2 center = ref->base->getPosition();
+            for (auto& u : units::all_units) {
+                float dist = sqrt(pow(u->base->getPositionX() - center.x, 2) + pow(u->base->getPositionY() - center.y, 2));
+                float radius = 250;
+                float angle = atan2(u->base->getPositionY() - center.y, u->base->getPositionX() - center.x);
+                float force_x = cos(angle) * MAX(radius - dist, 0);
+                float force_y = sin(angle) * MAX(radius - dist, 0);
+                u->pbody->applyImpulse(cc::Vec2(force_x * 100.0f, abs(force_y) * 25.0f));
+            }
         }
     }
 

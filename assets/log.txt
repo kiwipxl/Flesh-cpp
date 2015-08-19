@@ -6,10 +6,21 @@ map assets loaded
 particle assets loaded
 asset loading completed
 created state 3
+65.2168, -34.3491
+0, -0
+0, -0
+0, -0
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
+-0, 0
+-0, 0
+0, -0
+0, -0
+-0, 0
+-0, 0
+51.0147, -8.20874
+0, -0
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
+-0, 0
+-0, 0
+0, -0
+71.7043, -46.573
