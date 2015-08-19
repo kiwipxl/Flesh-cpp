@@ -65,8 +65,8 @@ void update_all_units() {
     }
 
     for (int n = 0; n < all_units.size(); ++n) {
-        if (!all_units[n]->is_scheduled_removal()) all_units[n]->update();
-        if (all_units[n]->is_scheduled_removal()) {
+        if (!all_units[n]->is_removal_scheduled()) all_units[n]->update();
+        if (all_units[n]->is_removal_scheduled()) {
             gui::game::remove_ui_bar(all_units[n]);
 
             delete all_units[n];

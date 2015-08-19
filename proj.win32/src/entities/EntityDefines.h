@@ -25,6 +25,12 @@ END_BULLETS_NS
 
 BEGIN_UNITS_NS
 class Unit;
+
+BEGIN_COMPONENTS_NS
+    struct PlayerMoveComponent;
+END_COMPONENTS_NS
+
+struct UnitTeam;
 END_UNITS_NS
 END_ENTITIES_NS
 

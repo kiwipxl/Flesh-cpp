@@ -47,6 +47,8 @@ void Bullet::on_contact_leave(PhysicsContact& contact) {
 }
 
 void Bullet::update() {
+    update_scheduler();
+
     parent->min_pos.x = MIN(base->getPositionX(), parent->min_pos.x);
     parent->min_pos.y = MIN(base->getPositionY(), parent->min_pos.y);
     parent->max_pos.x = MAX(base->getPositionX(), parent->max_pos.x);
@@ -62,8 +64,6 @@ void Bullet::update() {
             --n;
         }
     }
-
-    if (removal_in_ms != 0.0f && clock() - removal_start_time >= removal_in_ms) schedule_removal();
 }
 
 void Bullet::add_logic_decay(float decay_after_ms) {

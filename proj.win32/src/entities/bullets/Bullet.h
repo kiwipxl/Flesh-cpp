@@ -11,6 +11,7 @@ handles individual bullets and management of their logic components
 #include <2d/CCSprite.h>
 
 #include "entities/EntityDefines.h"
+#include "entities/EntityScheduler.h"
 #include "physics/Physics.h"
 
 BEGIN_ENTITIES_NS
@@ -22,7 +23,7 @@ struct BulletLogicBase;
 
 enum BulletLogicType;
 
-class Bullet {
+class Bullet : public EntityScheduler {
 
     public:
         Bullet(int x, int y, BulletGroupPtr& _parent);
@@ -42,16 +43,7 @@ class Bullet {
         void add_logic_mini_fire_bullet(float angle, float power);
         void add_logic_c4(float angle, float power);
 
-        void schedule_removal() { removal_scheduled = true; }
-        void schedule_removal_in(float ms) { removal_start_time = clock(); removal_in_ms = ms; }
-        bool is_removal_scheduled() { return removal_scheduled; }
-
         std::vector<BulletLogicBase*> logic_list;
-
-    protected:
-        bool removal_scheduled = false;
-        clock_t removal_start_time;
-        float removal_in_ms = 0.0f;
 };
 
 END_BULLETS_NS

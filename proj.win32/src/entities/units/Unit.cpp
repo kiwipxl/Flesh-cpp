@@ -30,7 +30,7 @@ Unit::Unit(UnitTeam* _team, UnitType _type) {
     health = max_health;
 
     base = Sprite::createWithTexture(assets::textures::duck);
-    base->setScale(type == UNIT_TYPE_CAPTAIN ? .4f : .6f);
+    base->setScale(type == UNIT_TYPE_CAPTAIN ? .6f : .4f);
     root::map_layer->addChild(base, 2);
 
     shadow = Sprite::createWithTexture(assets::textures::unit_shadow);
@@ -89,6 +89,8 @@ Unit::~Unit() {
 }
 
 void Unit::update() {
+    update_scheduler();
+
     shadow->setPosition(base->getPosition());
 
     for (int n = 0; n < components.size(); ++n) {

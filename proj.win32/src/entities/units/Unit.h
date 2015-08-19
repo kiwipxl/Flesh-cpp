@@ -10,6 +10,7 @@ this class temporarily handles all player movement and other things, will be mod
 #include <physics/CCPhysicsContact.h>
 
 #include "entities/EntityDefines.h"
+#include "entities/EntityScheduler.h"
 #include "entities/units/components/ComponentBase.h"
 
 BEGIN_ENTITIES_NS
@@ -23,15 +24,7 @@ enum UnitType {
     UNIT_TYPE_MINION
 };
 
-//forward declares begin
-namespace components {
-
-    struct PlayerMoveComponent;
-};
-struct UnitTeam;
-//forward declares end
-
-class Unit {
+class Unit : public EntityScheduler {
 
     public:
         Unit(UnitTeam* _team, UnitType _type);
@@ -48,8 +41,6 @@ class Unit {
 
         void take_damage(float damage);
 
-        void schedule_removal() { removal_scheduled = true; }
-        bool is_scheduled_removal() { return removal_scheduled; }
         float get_health() { return health; }
         float get_max_health() { return max_health; }
 
@@ -58,7 +49,6 @@ class Unit {
         template <typename T> T*    get_component();
 
     private:
-        bool removal_scheduled = false;
         std::vector<components::ComponentBase*> components;
         float health;
         float max_health;
