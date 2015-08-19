@@ -293,22 +293,23 @@ public:
     bool has_gen_explosion = false;
 
     BulletLogicC4(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
+        ref->base->setTexture(assets::textures::c4);
+        cc::Size s = ref->base->getTexture()->getContentSize();
+        ref->base->setTextureRect(cc::Rect(0, 0, s.width, s.height));
+        ref->base->setScale(.55f);
+
         cc::PhysicsMaterial mat;
         mat.density = .1f;
         mat.friction = .4f;
-        mat.restitution = 1.0f;
+        mat.restitution = 1.2f;
         create_physics_body_box(64.0f, 64.0f, &mat);
         ref->pbody->setRotationEnable(true);
+        ref->base->setRotation(angle);
 
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
         ref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
         ref->pbody->applyTorque(200.0f);
-
-        ref->base->setTexture(assets::textures::c4);
-        cc::Size s = ref->base->getTexture()->getContentSize();
-        ref->base->setTextureRect(cc::Rect(0, 0, s.width, s.height));
-        ref->base->setScale(.55f);
 
         start_time = clock();
     }
@@ -320,7 +321,12 @@ public:
     virtual void update() {
         if (has_gen_explosion) return;
 
-        if (clock() - start_time >= EXPLODE_AFTER_TIME) {
+        //if time is over or the time is halfway through and the bullet is not moving
+        if (clock() - start_time >= EXPLODE_AFTER_TIME || 
+           (ref->pbody->getVelocity().x >= -2.0f && ref->pbody->getVelocity().x <= 2.0f && 
+            ref->pbody->getVelocity().y >= -2.0f && ref->pbody->getVelocity().y <= 2.0f &&
+            clock() - start_time >= EXPLODE_AFTER_TIME / 2.0f)) {
+
             has_gen_explosion = true;
             ref->base->setVisible(false);
             ref->base->setPhysicsBody(NULL);
@@ -343,7 +349,7 @@ public:
                 float angle = atan2(u->base->getPositionY() - center.y, u->base->getPositionX() - center.x);
                 float force_x = cos(angle) * MAX(radius - dist, 0);
                 float force_y = sin(angle) * MAX(radius - dist, 0);
-                u->pbody->applyImpulse(cc::Vec2(force_x * 100.0f, abs(force_y) * 25.0f));
+                u->pbody->applyImpulse(cc::Vec2(force_x * 100.0f, abs(force_y) * 100.0f));
             }
         }
     }

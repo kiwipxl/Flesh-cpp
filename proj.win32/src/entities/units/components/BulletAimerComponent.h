@@ -26,6 +26,7 @@ public:
 
     void init();
     virtual void update();
+    virtual void cleanup();
 };
 
 END_COMPONENTS_NS

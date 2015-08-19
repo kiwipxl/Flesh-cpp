@@ -131,7 +131,7 @@ void start() {
 }
 
 void update() {
-    root::scene->p_world->step(TIMESTEP);
+    root::scene->p_world->step(root::delta_time);
     /*physics_timing += delta_time;
     while (physics_timing >= TIMESTEP) {
     scene->p_world->step(TIMESTEP);

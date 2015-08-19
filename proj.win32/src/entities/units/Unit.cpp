@@ -82,9 +82,6 @@ Unit::~Unit() {
     root::map_layer->removeChild(shadow);
     physics::remove_on_contact_run(this);
 
-    for (auto& c : components) {
-        delete c;
-    }
     components.clear();
 }
 
@@ -96,7 +93,7 @@ void Unit::update() {
     for (int n = 0; n < components.size(); ++n) {
         if (!components[n]->is_removal_scheduled()) components[n]->update();
         if (components[n]->is_removal_scheduled()) {
-            delete components[n];
+            components[n]->cleanup();
             components.erase(components.begin() + n, components.begin() + n + 1);
             --n;
         }
@@ -113,38 +110,37 @@ void Unit::take_damage(float damage) {
 
 //-- begin template definitions --
 
-template <typename T> T* Unit::add_component() {
-    for (auto* c : components) {
-        if (typeid(*c) == typeid(T)) {
+template <typename T> std::shared_ptr<T> Unit::add_component() {
+    for (auto& c : components) {
+        if (typeid(*c.get()) == typeid(T)) {
             log_error << "attempted to add a component when another one of the same type already existed. \
                           cannot have more than 1 component";
         }
     }
 
-    T* t = new T(this);
+    std::shared_ptr<T> t(new T(this));
     components.push_back(t);
     return t;
 }
-template components::PlayerMoveComponent*       Unit::add_component<components::PlayerMoveComponent>();
-template components::BulletAimerComponent*      Unit::add_component<components::BulletAimerComponent>();
-template components::ColliderComponent*         Unit::add_component<components::ColliderComponent>();
+template components::PlayerMoveComponentPtr       Unit::add_component<components::PlayerMoveComponent>();
+template components::BulletAimerComponentPtr      Unit::add_component<components::BulletAimerComponent>();
+template components::ColliderComponentPtr         Unit::add_component<components::ColliderComponent>();
 
-template <typename T> T* Unit::get_component() {
-    for (auto* c : components) {
-        if (typeid(*c) == typeid(T)) {
-            return (T*)c;
+template <typename T> std::shared_ptr<T> Unit::get_component() {
+    for (auto& c : components) {
+        if (typeid(*c.get()) == typeid(T)) {
+            return std::static_pointer_cast<T>(c);
         }
     }
     return NULL;
 }
-template components::PlayerMoveComponent*       Unit::get_component<components::PlayerMoveComponent>();
-template components::BulletAimerComponent*      Unit::get_component<components::BulletAimerComponent>();
-template components::ColliderComponent*         Unit::get_component<components::ColliderComponent>();
+template components::PlayerMoveComponentPtr       Unit::get_component<components::PlayerMoveComponent>();
+template components::BulletAimerComponentPtr      Unit::get_component<components::BulletAimerComponent>();
+template components::ColliderComponentPtr         Unit::get_component<components::ColliderComponent>();
 
 template <typename T> void Unit::remove_component() {
     for (int n = 0; n < components.size(); ++n) {
-        if (typeid(*components[n]) == typeid(T)) {
-            delete components[n];
+        if (typeid(*components[n].get()) == typeid(T)) {
             components.erase(components.begin() + n, components.begin() + n + 1);
             return;
         }

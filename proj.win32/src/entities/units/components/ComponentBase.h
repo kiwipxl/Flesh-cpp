@@ -3,6 +3,7 @@
 
 #include <physics/CCPhysicsContact.h>
 
+#include "debug/Logger.h"
 #include "entities/EntityDefines.h"
 #include "entities/EntityScheduler.h"
 
@@ -29,6 +30,7 @@ public:
 
     virtual void update() = 0;
     virtual bool on_contact_run(cc::PhysicsContact& contact) { return false; }
+    virtual void cleanup() { }
 };
 
 END_COMPONENTS_NS

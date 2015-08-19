@@ -27,7 +27,13 @@ BEGIN_UNITS_NS
 class Unit;
 
 BEGIN_COMPONENTS_NS
-    struct PlayerMoveComponent;
+struct PlayerMoveComponent;
+struct BulletAimerComponent;
+struct ColliderComponent;
+
+typedef std::shared_ptr<PlayerMoveComponent> PlayerMoveComponentPtr;
+typedef std::shared_ptr<BulletAimerComponent> BulletAimerComponentPtr;
+typedef std::shared_ptr<ColliderComponent> ColliderComponentPtr;
 END_COMPONENTS_NS
 
 struct UnitTeam;

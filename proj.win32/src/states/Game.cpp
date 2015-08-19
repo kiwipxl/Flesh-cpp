@@ -54,7 +54,6 @@ namespace game {
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
-                physics::update();
                 gui::game::update();
                 map::camera::update_game_cam();
 
@@ -68,6 +67,8 @@ namespace game {
                     root::scene->p_world->setDebugDrawMask(terrain->is_debug_draw_on() ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE,
                                                            map::camera::map_cam->getCameraMask());
                 }
+
+                physics::update();
 
                 /*for (int n = 0; n < peers::peer_list.size(); ++n) {
                     msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<

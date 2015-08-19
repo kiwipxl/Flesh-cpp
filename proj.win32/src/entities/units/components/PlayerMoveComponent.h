@@ -9,9 +9,6 @@ BEGIN_ENTITIES_NS
 BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
-struct BulletAimerComponent;
-struct ColliderComponent;
-
 class PlayerMoveComponent : public ComponentBase {
 
 public:
@@ -23,8 +20,8 @@ public:
     const float LARGE_VEL_X = 100000.0f;
     bool jumping = false;
     bool moving = false;
-    BulletAimerComponent* bullet_aimer;
-    ColliderComponent* collider;
+    BulletAimerComponentPtr bullet_aimer;
+    ColliderComponentPtr collider;
 
     void init();
     virtual bool on_contact_run(cc::PhysicsContact& contact);

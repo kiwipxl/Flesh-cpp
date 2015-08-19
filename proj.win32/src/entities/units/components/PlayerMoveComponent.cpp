@@ -48,7 +48,7 @@ void PlayerMoveComponent::update() {
     }
 
     moving = false;
-    if (!jumping && (bullet_aimer == NULL || !bullet_aimer->aiming)) {
+    if (!jumping && bullet_aimer && !bullet_aimer->is_removal_scheduled() && !bullet_aimer->aiming) {
         if (input::key_down(EventKeyboard::KeyCode::KEY_D)) {
             ref->pbody->setVelocity(Vec2(move_vel_x, ref->pbody->getVelocity().y));
             //pbody->applyImpulse(Vec2(400.0f, 0));

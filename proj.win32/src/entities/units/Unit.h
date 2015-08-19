@@ -44,12 +44,12 @@ class Unit : public EntityScheduler {
         float get_health() { return health; }
         float get_max_health() { return max_health; }
 
-        template <typename T> T*    add_component();
+        template <typename T> std::shared_ptr<T>    add_component();
         template <typename T> void  remove_component();
-        template <typename T> T*    get_component();
+        template <typename T> std::shared_ptr<T>    get_component();
 
     private:
-        std::vector<components::ComponentBase*> components;
+        std::vector<std::shared_ptr<components::ComponentBase>> components;
         float health;
         float max_health;
 
