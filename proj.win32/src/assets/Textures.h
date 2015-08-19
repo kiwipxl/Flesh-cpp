@@ -18,6 +18,7 @@ namespace textures {
     extern cc::Texture2D* minion_health_bar;
     extern cc::Texture2D* unit_shadow;
     extern cc::Texture2D* c4;
+    extern cc::Texture2D* laser_machine_gun;
 
     extern void init();
 };

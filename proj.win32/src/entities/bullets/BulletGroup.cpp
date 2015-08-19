@@ -2,6 +2,7 @@
 
 #include "assets/Textures.h"
 #include "entities/bullets/Bullet.h"
+#include "entities/bullets/BulletLogic.h"
 #include "entities/units/Unit.h"
 #include "debug/Logger.h"
 #include "SceneManager.h"
@@ -21,9 +22,9 @@ bool on_contact_run(PhysicsContact& contact) {
 
     if (a && b) {
         bool do_collide = false;
-        for (auto& bg : bullet_groups) {
-            for (auto& b : bg->bullets) {
-                if (b->on_contact_run(contact)) do_collide = true;
+        for (int i = 0; i < bullet_groups.size(); ++i) {
+            for (int n = 0; n < bullet_groups[i]->bullets.size(); ++n) {
+                if (bullet_groups[i]->bullets[n]->on_contact_run(contact)) do_collide = true;
             }
         }
         return do_collide;
@@ -103,6 +104,9 @@ void BulletGroup::update() {
         if (!bullets[n]) continue;
         if (!bullets[n]->is_removal_scheduled()) bullets[n]->update();
         if (bullets[n]->is_removal_scheduled()) {
+            for (auto& l : bullets[n]->logic_list) {
+                l->cleanup();
+            }
             bullets.erase(bullets.begin() + n, bullets.begin() + n + 1);
             --n;
         }

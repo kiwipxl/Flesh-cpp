@@ -53,7 +53,14 @@ void Bullet::update() {
     parent->max_pos.y = MAX(base->getPositionY(), parent->max_pos.y);
 
     for (int n = 0; n < logic_list.size(); ++n) {
-        logic_list[n]->update();
+        auto& l = logic_list[n];
+        if (!l) continue;
+        if (!l->is_removal_scheduled()) l->update();
+        if (l->is_removal_scheduled()) {
+            l->cleanup();
+            logic_list.erase(logic_list.begin() + n, logic_list.begin() + n + 1);
+            --n;
+        }
     }
 
     if (removal_in_ms != 0.0f && clock() - removal_start_time >= removal_in_ms) schedule_removal();

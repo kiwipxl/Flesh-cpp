@@ -43,6 +43,11 @@ public:
     }
 
     virtual ~BulletLogicBase() { }
+    virtual void cleanup() { }
+
+
+    void schedule_removal() { removal_scheduled = true; }
+    bool is_removal_scheduled() { return removal_scheduled; }
 
     virtual void update() { }
     virtual bool on_contact_run(cc::PhysicsContact& contact) {
@@ -80,7 +85,7 @@ public:
         ref->pbody->setContactTestBitmask(true);
         ref->pbody->setRotationEnable(false);
         ref->pbody->setMass(100.0f);
-        ref->pbody->setVelocityLimit(700.0f);
+        ref->pbody->setVelocityLimit(900.0f);
         ref->base->setPhysicsBody(ref->pbody);
     }
 
@@ -88,6 +93,9 @@ public:
 
 private:
     bool bullet_left_parent = true;
+
+protected:
+    bool removal_scheduled = false;
 };
 
 class BulletLogicDecay : public BulletLogicBase {
@@ -141,11 +149,12 @@ public:
     const BulletLogicType logic_type = BULLET_LOGIC_FIRE_BULLET;
     cc::ParticleSystemQuad* fire_trail_particle;
     const float DAMAGE = 4.0f;
-    const float EXPLODE_AFTER_TIME = 800.0f;
+    const float EXPLODE_AFTER_TIME = 600.0f;
     clock_t start_time;
+    bool has_gen_explosion = false;
 
     BulletLogicFireBullet(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
-        create_physics_body_box(32.0f, 32.0f);
+        create_physics_body_box(50.0f, 50.0f);
         ref->add_logic_decay(4000.0f + ((rand() / (float)RAND_MAX) * 4000.0f));
 
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
@@ -161,6 +170,24 @@ public:
         start_time = clock();
     }
 
+    void gen_explosion() {
+        if (has_gen_explosion) return;
+        
+        for (int n = 0; n < 14; ++n) {
+            auto b = ref->parent->create_bullet(ref->base->getPositionX(), ref->base->getPositionY() + 40);
+            float angle = ((rand() / (float)RAND_MAX) * 50.0f) + 65.0f;
+            b->add_logic_mini_fire_bullet(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
+        }
+        auto bullet_explosion = cc::ParticleSystemQuad::create("Ring.plist");
+        bullet_explosion->setPosition(ref->base->getPosition());
+        bullet_explosion->setScale(.8f);
+        bullet_explosion->setAutoRemoveOnFinish(true);
+        root::map_layer->addChild(bullet_explosion, 1);
+        ref->schedule_removal();
+
+        has_gen_explosion = true;
+    }
+
     virtual ~BulletLogicFireBullet() {
         root::map_layer->removeChild(fire_trail_particle, 1);
 
@@ -171,21 +198,15 @@ public:
         bullet_explosion->setAutoRemoveOnFinish(true);
     }
 
+    virtual void cleanup() {
+        gen_explosion();
+    }
+
     virtual void update() {
         fire_trail_particle->setPosition(ref->base->getPosition());
 
         if (clock() - start_time >= EXPLODE_AFTER_TIME) {
-            for (int n = 0; n < 14; ++n) {
-                auto b = ref->parent->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
-                float angle = ((rand() / (float)RAND_MAX) * 50.0f) + 65.0f;
-                b->add_logic_mini_fire_bullet(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
-            }
-            auto bullet_explosion = cc::ParticleSystemQuad::create("Ring.plist");
-            bullet_explosion->setPosition(ref->base->getPosition());
-            bullet_explosion->setScale(.8f);
-            bullet_explosion->setAutoRemoveOnFinish(true);
-            root::map_layer->addChild(bullet_explosion, 1);
-            ref->schedule_removal();
+            gen_explosion();
         }
     }
 
@@ -200,6 +221,7 @@ public:
                 if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     ref->schedule_removal();
+
                     return true;
                 }
             }
@@ -217,7 +239,7 @@ public:
     const float DAMAGE = 2.5f;
 
     BulletLogicMiniFireBullet(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
-        create_physics_body_box(20.0f, 20.0f);
+        create_physics_body_box(32.0f, 32.0f);
         ref->add_logic_decay(4000.0f + ((rand() / (float)RAND_MAX) * 4000.0f));
 
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
@@ -269,7 +291,7 @@ class BulletLogicC4 : public BulletLogicBase {
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_C4;
     const float DAMAGE = 4.0f;
-    const float EXPLODE_AFTER_TIME = 500.0f;
+    const float EXPLODE_AFTER_TIME = 5000.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
 

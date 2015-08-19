@@ -21,30 +21,34 @@ BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 //private
+float rotation_offset = 0;
 
 //public
 void BulletAimerComponent::init() {
     type = UNIT_COMPONENT_TYPE_BULLET_AIMER;
 
-    cone = Sprite::createWithTexture(assets::textures::cone);
-    cone->setAnchorPoint(Vec2(.5f, -.25f));
-    cone->setVisible(false);
-    root::map_layer->addChild(cone, 1);
+    weapon = Sprite::createWithTexture(assets::textures::laser_machine_gun);
+    weapon->setAnchorPoint(Vec2(.5f, .5f));
+    weapon->setVisible(false);
+    weapon->setScale(.2f);
+    rotation_offset = 180;
+    root::map_layer->addChild(weapon, 4);
 }
 
 BulletAimerComponent::~BulletAimerComponent() {
-    root::map_layer->removeChild(cone);
+    root::map_layer->removeChild(weapon);
 }
 
 void BulletAimerComponent::update() {
     gui::game::set_power_text(power);
 
-    cone->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
+    weapon->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
 
     if (aiming) {
         float x = (root::scene->screen_size.width) / 2.0f;
-        float y = (ref->base->getContentSize().height + root::scene->screen_size.height) / 2.0f;
-        cone->setRotation(atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI) + 90);
+        float y = (root::scene->screen_size.height) / 2.0f;
+        weapon->setRotation(atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI) + rotation_offset);
+        weapon->setFlippedY(weapon->getRotation() >= 90 && weapon->getRotation() <= 270);
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_W)) {
             power += .05f;
@@ -57,7 +61,7 @@ void BulletAimerComponent::update() {
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
             auto g = bullets::create_group(ref);
             auto b = g->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
-            b->add_logic_c4(-cone->getRotation() + 90, power);
+            b->add_logic_fire_bullet(-weapon->getRotation() + 180, power);
             gui::game::wait_for_bullet(g);
             map::camera::follow_bullet(g);
             schedule_removal();
@@ -66,7 +70,7 @@ void BulletAimerComponent::update() {
 
     if (input::get_mouse_button_pressed(MOUSE_BUTTON_RIGHT)) {
         aiming = !aiming;
-        cone->setVisible(aiming);
+        weapon->setVisible(aiming);
     }
 }
 END_COMPONENTS_NS

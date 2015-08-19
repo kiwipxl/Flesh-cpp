@@ -23,7 +23,7 @@ Unit::Unit(UnitTeam* _team, UnitType _type) {
     type = _type;
 
     if (type == UNIT_TYPE_CAPTAIN) {
-        max_health = 20.0f;
+        max_health = 25.0f;
     }else {
         max_health = 12.0f;
     }

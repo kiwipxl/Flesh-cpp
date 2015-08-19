@@ -17,11 +17,11 @@ public:
     BulletAimerComponent(Unit* _ref) { ref = _ref; }
     virtual ~BulletAimerComponent();
 
-    cc::Sprite* cone;
+    cc::Sprite* weapon;
     bool aiming = false;
 
     const float MIN_POWER = .5f;
-    const float MAX_POWER = 1.25f;
+    const float MAX_POWER = 2.0f;
     float power = MIN_POWER;
 
     void init();

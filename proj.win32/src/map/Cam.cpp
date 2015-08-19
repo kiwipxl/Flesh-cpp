@@ -45,7 +45,7 @@ void update_game_cam() {
 
     auto& v = map::camera::map_cam->getPosition();
     Vec2 pos;
-    if (target_follow_bullet) {
+    if (target_follow_bullet && target_follow_bullet->bullets.size() >= 1) {
         pos.x = target_follow_bullet->min_pos.x + (target_follow_bullet->max_size.width / 2.0f);
         pos.y = target_follow_bullet->min_pos.y + (target_follow_bullet->max_size.height / 2.0f);
     }else {

@@ -46,11 +46,12 @@ class Bullet {
         void schedule_removal_in(float ms) { removal_start_time = clock(); removal_in_ms = ms; }
         bool is_removal_scheduled() { return removal_scheduled; }
 
+        std::vector<BulletLogicBase*> logic_list;
+
     protected:
         bool removal_scheduled = false;
         clock_t removal_start_time;
         float removal_in_ms = 0.0f;
-        std::vector<BulletLogicBase*> logic_list;
 };
 
 END_BULLETS_NS
