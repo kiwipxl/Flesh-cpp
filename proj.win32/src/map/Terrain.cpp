@@ -32,7 +32,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     base = Node::create();
 
     if (t_data.collider_points.size() >= 1) {
-        pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size(), PHYSICSBODY_MATERIAL_DEFAULT, 2.0f);
+        pbody = PhysicsBody::createEdgePolygon(&t_data.collider_points[0], t_data.collider_points.size(), PHYSICSBODY_MATERIAL_DEFAULT, 8.0f);
         pbody->setDynamic(false);
         pbody->setCollisionBitmask(1);
         pbody->setContactTestBitmask(true);

@@ -30,7 +30,7 @@ Unit::Unit(UnitTeam* _team, UnitType _type) {
     health = max_health;
 
     base = Sprite::createWithTexture(assets::textures::duck);
-    base->setScale(type == UNIT_TYPE_CAPTAIN ? .6f : .4f);
+    base->setScale(type == UNIT_TYPE_CAPTAIN ? .65f : .5f);
     root::map_layer->addChild(base, 2);
 
     shadow = Sprite::createWithTexture(assets::textures::unit_shadow);
@@ -50,6 +50,7 @@ Unit::Unit(UnitTeam* _team, UnitType _type) {
     //pbody->setPositionOffset(Vec2(0, -10));
     //pbody->setGravityEnable(false);
     pbody->setVelocityLimit(1000.0f);
+    pbody->setMass(100.0f);
     base->setPhysicsBody(pbody);
 
     physics::add_on_contact_run(CC_CALLBACK_1(Unit::on_contact_run, this), this);

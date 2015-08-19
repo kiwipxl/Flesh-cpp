@@ -38,6 +38,7 @@ class BulletLogicBase : public EntityScheduler {
 public:
     Bullet* ref;
     int timer = 0;
+    const float max_vel = 1200.0f;
 
     BulletLogicBase(Bullet& bullet_ref) {
         ref = &bullet_ref;
@@ -85,7 +86,7 @@ public:
         ref->pbody->setContactTestBitmask(true);
         ref->pbody->setRotationEnable(false);
         ref->pbody->setMass(100.0f);
-        ref->pbody->setVelocityLimit(900.0f);
+        ref->pbody->setVelocityLimit(max_vel);
         ref->base->setPhysicsBody(ref->pbody);
     }
 
@@ -287,7 +288,7 @@ class BulletLogicC4 : public BulletLogicBase {
 
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_C4;
-    const float DAMAGE = 4.0f;
+    const float MAX_DAMAGE = 8.5f;
     const float EXPLODE_AFTER_TIME = 5000.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
@@ -349,7 +350,8 @@ public:
                 float angle = atan2(u->base->getPositionY() - center.y, u->base->getPositionX() - center.x);
                 float force_x = cos(angle) * MAX(radius - dist, 0);
                 float force_y = sin(angle) * MAX(radius - dist, 0);
-                u->pbody->applyImpulse(cc::Vec2(force_x * 100.0f, abs(force_y) * 100.0f));
+                u->pbody->setVelocity(cc::Vec2(MIN(force_x * 55.0f, max_vel), MIN(abs(force_x) * 200.0f, max_vel * 8.0f)));
+                u->take_damage((cc::clampf(radius - dist, 0, radius) / radius) * MAX_DAMAGE);
             }
         }
     }
