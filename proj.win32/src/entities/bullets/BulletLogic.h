@@ -43,7 +43,32 @@ public:
     virtual ~BulletLogicBase() { }
 
     virtual void update() { }
-    virtual bool on_contact_run(cc::PhysicsContact& contact) { return false; }
+    virtual bool on_contact_run(cc::PhysicsContact& contact) {
+        //checks if the bullet is colliding with the parent
+
+        if (!bullet_left_parent) return false;
+
+        auto a = contact.getShapeA()->getBody()->getNode();
+        auto b = contact.getShapeB()->getBody()->getNode();
+
+        if (a && b && CHECK_AB_COLLIDE(ref->base) && CHECK_AB_COLLIDE(ref->unit_parent->base)) {
+            bullet_left_parent = false;
+        }
+
+        return false;
+    }
+    virtual void on_contact_leave(cc::PhysicsContact& contact) {
+        //checks if the bullet has left the parent
+
+        if (bullet_left_parent) return;
+
+        auto a = contact.getShapeA()->getBody()->getNode();
+        auto b = contact.getShapeB()->getBody()->getNode();
+
+        if (a && b && CHECK_AB_COLLIDE(ref->base) && CHECK_AB_COLLIDE(ref->unit_parent->base)) {
+            bullet_left_parent = true;
+        }
+    }
 
     void create_physics_body_box(int width, int height) {
         if (ref->pbody != NULL) { log_error << "tried to create physics body box, but one already existed"; ref->pbody->release(); }
@@ -55,6 +80,11 @@ public:
         ref->pbody->setMass(100.0f);
         ref->base->setPhysicsBody(ref->pbody);
     }
+
+    bool has_bullet_left_parent() { return bullet_left_parent; }
+
+private:
+    bool bullet_left_parent = true;
 };
 
 class BulletLogicDecay : public BulletLogicBase {
@@ -157,10 +187,12 @@ public:
     }
 
     virtual bool on_contact_run(cc::PhysicsContact& contact) {
+        BulletLogicBase::on_contact_run(contact);
+
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && CHECK_AB_COLLIDE(ref->base)) {
+        if (a && b && has_bullet_left_parent() && CHECK_AB_COLLIDE(ref->base)) {
             for (auto& u : units::all_units) {
                 if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
@@ -217,7 +249,7 @@ public:
 
         if (a && b && CHECK_AB_COLLIDE(ref->base)) {
             for (auto& u : units::all_units) {
-                if (ref->unit_parent->team != u->team && u != ref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     ref->schedule_removal();
                 }

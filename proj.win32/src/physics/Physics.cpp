@@ -45,7 +45,7 @@ void on_contact_post_solve(PhysicsContact& contact, const PhysicsContactPostSolv
 }
 
 void on_contact_separate(PhysicsContact& contact) {
-    for (int n = 0; n < post_contact_callbacks.size(); ++n) {
+    for (int n = 0; n < leave_contact_callbacks.size(); ++n) {
         leave_contact_callbacks[n]->leave_call(contact);
     }
 }

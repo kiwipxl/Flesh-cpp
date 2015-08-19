@@ -45,6 +45,7 @@ class Bullet {
         void update();
         void cleanup();
         bool on_contact_run(cc::PhysicsContact& contact);
+        void on_contact_leave(cc::PhysicsContact& contact);
 
         void add_logic_decay(float decay_after_seconds);
         void add_logic_terrain_destroy();

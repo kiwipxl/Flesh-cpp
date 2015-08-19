@@ -30,13 +30,30 @@ bool on_contact_run(PhysicsContact& contact) {
     return false;
 }
 
+void on_contact_leave(PhysicsContact& contact) {
+    auto a = contact.getShapeA()->getBody()->getNode();
+    auto b = contact.getShapeB()->getBody()->getNode();
+
+    if (a && b) {
+        for (int n = 0; n < bullets.size(); ++n) {
+            if (!bullets[n]) continue;
+
+            if (!bullets[n]->is_removal_scheduled()) {
+                bullets[n]->on_contact_leave(contact);
+            }
+        }
+    }
+}
+
 //public
 void init() {
     physics::add_on_contact_run(on_contact_run, NULL);
+    physics::add_on_contact_leave(on_contact_leave, NULL);
 }
 
 void deinit() {
     physics::remove_on_contact_run(on_contact_run);
+    physics::remove_on_contact_leave(on_contact_leave);
 }
 
 BulletPtr create_bullet(int x, int y, units::Unit* _unit_parent) {
@@ -47,7 +64,8 @@ BulletPtr create_bullet(int x, int y, units::Unit* _unit_parent) {
 
 void update() {
     for (int n = 0; n < bullets.size(); ++n) {
-        bullets[n]->update();
+        if (!bullets[n]) continue;
+        if (!bullets[n]->is_removal_scheduled()) bullets[n]->update();
         if (bullets[n]->is_removal_scheduled()) {
             bullets.erase(bullets.begin() + n, bullets.begin() + n + 1);
             --n;
@@ -84,11 +102,17 @@ void Bullet::schedule_removal() {
 }
 
 bool Bullet::on_contact_run(PhysicsContact& contact) {
+    bool do_collide = false;
     for (int n = 0; n < logic_list.size(); ++n) {
-        logic_list[n]->on_contact_run(contact);
+        if (logic_list[n]->on_contact_run(contact)) do_collide = true;
     }
+    return do_collide;
+}
 
-    return true;
+void Bullet::on_contact_leave(PhysicsContact& contact) {
+    for (int n = 0; n < logic_list.size(); ++n) {
+        logic_list[n]->on_contact_leave(contact);
+    }
 }
 
 void Bullet::update() {

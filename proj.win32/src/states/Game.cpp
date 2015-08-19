@@ -42,7 +42,12 @@ namespace game {
     map::terrain::TerrainGroup* terrain;
     int starting_countdown_seconds = 10;
     int current_countdown_seconds;
-    
+
+    void reset_countdown() {
+        current_countdown_seconds = starting_countdown_seconds;
+        countdown_start = clock();
+    }
+
     void set_countdown_to(float seconds) {
         current_countdown_seconds = seconds;
         countdown_start = clock();
