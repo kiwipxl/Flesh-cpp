@@ -73,9 +73,13 @@ void update_all_units() {
             all_units.erase(all_units.begin() + n, all_units.begin() + n + 1);
             --n;
 
-            select_current_unit();
             gui::game::sort_ui_bars();
-            gui::game::reset_countdown();
+            if (!gui::game::countdown_paused) {
+                select_current_unit();
+                gui::game::reset_countdown();
+            }
+
+            break;
         }
     }
 }

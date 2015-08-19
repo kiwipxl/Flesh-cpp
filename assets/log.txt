@@ -9,21 +9,5 @@ created state 3
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-attempted to add a component when another one of the same type already existed.                           cannot have more than 1 component
 contact pre_solve callbacks: 4, post_solve: 0, separate: 1
-contact pre_solve callbacks: 4, post_solve: 0, separate: 1
-contact pre_solve callbacks: 4, post_solve: 0, separate: 1
-attempted to add a component when another one of the same type already existed.                           cannot have more than 1 component
-contact pre_solve callbacks: 4, post_solve: 0, separate: 1
-contact pre_solve callbacks: 4, post_solve: 0, separate: 1
-contact pre_solve callbacks: 4, post_solve: 0, separate: 1
+removed state 3
