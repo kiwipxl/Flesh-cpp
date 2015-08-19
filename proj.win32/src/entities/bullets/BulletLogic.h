@@ -96,12 +96,6 @@ public:
             if (t = states::game::terrain->is_terrain(a, b)) {
                 //t->test_explosion_at(ref->base->getPosition());
 
-                auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
-                bullet_explosion->setPosition(ref->base->getPosition());
-                bullet_explosion->setScale(.325f);
-                root::map_layer->addChild(bullet_explosion, 1);
-                bullet_explosion->setAutoRemoveOnFinish(true);
-
                 ref->schedule_removal();
             }
         }
@@ -134,6 +128,12 @@ public:
 
     virtual ~BulletLogicTest() {
         root::map_layer->removeChild(fire_trail_particle, 1);
+
+        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
+        bullet_explosion->setPosition(ref->base->getPosition());
+        bullet_explosion->setScale(.325f);
+        root::map_layer->addChild(bullet_explosion, 1);
+        bullet_explosion->setAutoRemoveOnFinish(true);
     }
 
     virtual void update() {
@@ -162,7 +162,7 @@ public:
 
         if (a && b && CHECK_AB_COLLIDE(ref->base)) {
             for (auto& u : units::all_units) {
-                if (ref->unit_parent->team != u->team && u != ref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     ref->schedule_removal();
                 }
@@ -199,6 +199,12 @@ public:
 
     virtual ~BulletLogicTest2() {
         root::map_layer->removeChild(fire_trail_particle, 1);
+
+        auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
+        bullet_explosion->setPosition(ref->base->getPosition());
+        bullet_explosion->setScale(.325f);
+        root::map_layer->addChild(bullet_explosion, 1);
+        bullet_explosion->setAutoRemoveOnFinish(true);
     }
 
     virtual void update() {

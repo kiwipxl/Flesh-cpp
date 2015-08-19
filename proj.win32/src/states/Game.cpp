@@ -23,10 +23,7 @@ namespace game {
     Label* turn_time_label;
     clock_t countdown_start;
     Label* power_label;
-
     float dest_zoom = 0;
-    float physics_timing = 0;
-    const float TIMESTEP = 1.0f / 60.0f;
 
     void update_time() {
         float t = (current_countdown_seconds * 1000) - (clock() - countdown_start);
@@ -60,8 +57,7 @@ namespace game {
             case STATE_GAME:
                 glClearColor(0.05f, 0.05f, 0.2f, 0.0f);
 
-                root::scene->p_world->setAutoStep(false);
-                root::scene->p_world->setGravity(Vec2(0, -980.0f));
+                physics::start();
 
                 turn_time_label = Label::createWithBMFont("fonts/felt.fnt", "");
                 turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 40);
@@ -96,6 +92,7 @@ namespace game {
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
+                physics::update();
                 update_time();
 
                 auto& v = map::camera::map_cam->getPosition();
@@ -125,13 +122,6 @@ namespace game {
                     root::scene->p_world->setDebugDrawMask(terrain->is_debug_draw_on() ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE,
                                                            map::camera::map_cam->getCameraMask());
                 }
-
-                scene->p_world->step(TIMESTEP);
-                /*physics_timing += delta_time;
-                while (physics_timing >= TIMESTEP) {
-                scene->p_world->step(TIMESTEP);
-                physics_timing -= TIMESTEP;
-                }*/
 
                 /*for (int n = 0; n < peers::peer_list.size(); ++n) {
                     msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<
