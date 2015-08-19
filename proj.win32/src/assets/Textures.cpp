@@ -13,8 +13,6 @@ namespace textures {
 
     //private
     Texture2D* duck;
-    Texture2D* test_bullet;
-    Texture2D* cone;
     Texture2D* captain_health_bar;
     Texture2D* minion_health_bar;
     Texture2D* unit_shadow;
@@ -26,13 +24,11 @@ namespace textures {
     }
 
     void init() {
-        load_image(duck, "duck.png");
-        load_image(test_bullet, "bullet.png");
-        load_image(cone, "cone.png");
-        load_image(captain_health_bar, "captain_health_bar.png");
-        load_image(minion_health_bar, "minion_health_bar.png");
-        load_image(unit_shadow, "unit_shadow.png");
-        load_image(c4, "c4.png");
+        load_image(duck, "characters/duck.png");
+        load_image(captain_health_bar, "ui/captain_health_bar.png");
+        load_image(minion_health_bar, "ui/minion_health_bar.png");
+        load_image(unit_shadow, "characters/unit_shadow.png");
+        load_image(c4, "bullets/c4.png");
         load_image(laser_machine_gun, "guns/laser_machine_gun.png");
 
         log_print_file << "texture assets loaded";

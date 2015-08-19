@@ -12,8 +12,8 @@ namespace csb {
 
     using namespace cocos2d;
 
-    std::string login_page_name = "Scene.csb";
-    std::string message_box_name = "message_box.csb";
+    std::string login_page_name = "csb/Scene.csb";
+    std::string message_box_name = "csb/message_box.csb";
     Node* message_box;
 
     void init() {

@@ -58,7 +58,7 @@ namespace root {
         input::init_mouse();
         physics::init();
 
-        s = STATE_GAME;
+        s = STATE_SERVER_CONNECT_SCREEN;
     }
 
     void create_state(State c_state, bool force) {

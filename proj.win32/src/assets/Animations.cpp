@@ -15,7 +15,7 @@ namespace animations {
     Vector<SpriteFrame*> spinner_frames;
 
     void init() {
-        load_ani_frames("spinner_sheet.png", spinner_frames, Rect(0, 0, 34, 34));
+        load_ani_frames("ui/spinner_sheet.png", spinner_frames, Rect(0, 0, 34, 34));
 
         log_print_file << "animation assets loaded";
     }
