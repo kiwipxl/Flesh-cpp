@@ -79,6 +79,7 @@ public:
         ref->pbody->setContactTestBitmask(true);
         ref->pbody->setRotationEnable(false);
         ref->pbody->setMass(100.0f);
+        ref->pbody->setVelocityLimit(1000.0f);
         ref->base->setPhysicsBody(ref->pbody);
     }
 

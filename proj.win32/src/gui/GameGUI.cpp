@@ -21,6 +21,7 @@ Label* power_label;
 std::vector<UnitUIBar*> unit_ui_bars;
 int starting_countdown_seconds = 10;
 int current_countdown_seconds;
+extern bool countdown_paused = false;
 
 //-- begin UnitUIBar class --
 UnitUIBar::UnitUIBar(entities::units::Unit* _unit) {
@@ -39,6 +40,8 @@ UnitUIBar::~UnitUIBar() {
 //-- end UnitUIBar class --
 
 void reset_countdown() {
+    if (turn_time_label) turn_time_label->setVisible(true);
+    countdown_paused = false;
     current_countdown_seconds = starting_countdown_seconds;
     countdown_start = clock();
 }
@@ -53,7 +56,8 @@ void set_power_text(float power) {
 }
 
 void wait_for_bullet(entities::bullets::BulletGroupPtr bullet) {
-
+    turn_time_label->setVisible(false);
+    countdown_paused = true;
 }
 
 void init() {
@@ -61,8 +65,7 @@ void init() {
     turn_time_label->setPosition(root::scene->screen_size.width / 2.0f, root::scene->screen_size.height - 40);
     turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
     root::ui_layer->addChild(turn_time_label, 1);
-    countdown_start = clock();
-    current_countdown_seconds = starting_countdown_seconds;
+    reset_countdown();
 
     power_label = Label::createWithBMFont("fonts/felt.fnt", "");
     power_label->setPosition(root::scene->screen_size.width / 2.0f, 40);
@@ -97,6 +100,8 @@ void remove_ui_bar(entities::units::Unit* unit) {
 }
 
 void update() {
+    if (countdown_paused) return;
+
     float t = (current_countdown_seconds * 1000) - (clock() - countdown_start);
     if (t <= 0) {
         reset_countdown();

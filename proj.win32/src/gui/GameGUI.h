@@ -34,6 +34,7 @@ extern std::vector<UnitUIBar*> unit_ui_bars;
 
 extern int starting_countdown_seconds;
 extern int current_countdown_seconds;
+extern bool countdown_paused;
 
 extern void set_countdown_to(float seconds);
 extern void set_power_text(float power);

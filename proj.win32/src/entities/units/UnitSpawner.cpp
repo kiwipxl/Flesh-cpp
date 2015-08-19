@@ -55,6 +55,8 @@ void select_current_unit() {
     current_unit = all_units[current_unit_index];
     current_unit->add_component<components::BulletAimerComponent>()->init();
     current_unit->add_component<components::PlayerMoveComponent>()->init();
+
+    gui::game::reset_countdown();
 }
 
 void update_all_units() {
