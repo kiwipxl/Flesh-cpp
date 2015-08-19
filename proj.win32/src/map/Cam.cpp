@@ -38,7 +38,10 @@ void init() {
 }
 
 void update_game_cam() {
-    if (target_follow_bullet && target_follow_bullet->is_removal_scheduled()) target_follow_bullet = NULL;
+    if (target_follow_bullet && target_follow_bullet->is_removal_scheduled()) {
+        entities::units::next_unit();
+        target_follow_bullet = NULL;
+    }
 
     auto& v = map::camera::map_cam->getPosition();
     Vec2 pos;

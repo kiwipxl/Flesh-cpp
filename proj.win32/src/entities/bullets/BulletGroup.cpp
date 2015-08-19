@@ -108,6 +108,8 @@ void BulletGroup::update() {
 
     max_size.width = max_pos.x - min_pos.x;
     max_size.height = max_pos.y - min_pos.y;
+
+    if (bullets.size() == 0) schedule_removal();
 }
 
 //-- end BulletGroup class --
