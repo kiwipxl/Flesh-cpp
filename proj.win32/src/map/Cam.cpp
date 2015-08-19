@@ -41,11 +41,14 @@ void update_game_cam() {
     if (target_follow_bullet && target_follow_bullet->is_removal_scheduled()) target_follow_bullet = NULL;
 
     auto& v = map::camera::map_cam->getPosition();
-    Node* target;
-    //if (target_follow_bullet) target = target_follow_bullet->base;
-    //else
-    target = entities::units::current_unit->base;
-    map::camera::map_cam->setPosition(v.x - (v.x - target->getPositionX()) / 10.0f, v.y - (v.y - target->getPositionY()) / 10.0f);
+    Vec2 pos;
+    if (target_follow_bullet) {
+        pos.x = target_follow_bullet->min_pos.x + (target_follow_bullet->max_size.width / 2.0f);
+        pos.y = target_follow_bullet->min_pos.y + (target_follow_bullet->max_size.height / 2.0f);
+    }else {
+        pos = entities::units::current_unit->base->getPosition();
+    }
+    map::camera::map_cam->setPosition(v.x - (v.x - pos.x) / 10.0f, v.y - (v.y - pos.y) / 10.0f);
 
     if (input::get_mouse_scroll().y <= -1) {
         dest_zoom -= 20.0f;

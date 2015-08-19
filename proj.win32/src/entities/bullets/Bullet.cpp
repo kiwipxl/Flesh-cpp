@@ -49,6 +49,11 @@ void Bullet::on_contact_leave(PhysicsContact& contact) {
 }
 
 void Bullet::update() {
+    parent->min_pos.x = MIN(base->getPositionX(), parent->min_pos.x);
+    parent->min_pos.y = MIN(base->getPositionY(), parent->min_pos.y);
+    parent->max_pos.x = MAX(base->getPositionX(), parent->max_pos.x);
+    parent->max_pos.y = MAX(base->getPositionY(), parent->max_pos.y);
+
     for (int n = 0; n < logic_list.size(); ++n) {
         logic_list[n]->update();
     }

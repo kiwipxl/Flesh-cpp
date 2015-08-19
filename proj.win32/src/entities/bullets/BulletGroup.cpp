@@ -94,6 +94,9 @@ BulletPtr BulletGroup::create_bullet(int _x, int _y) {
 }
 
 void BulletGroup::update() {
+    min_pos = Vec2(FLT_MAX, FLT_MAX);
+    max_pos = Vec2(-FLT_MAX, -FLT_MAX);
+
     for (int n = 0; n < bullets.size(); ++n) {
         if (!bullets[n]) continue;
         if (!bullets[n]->is_removal_scheduled()) bullets[n]->update();
@@ -102,6 +105,9 @@ void BulletGroup::update() {
             --n;
         }
     }
+
+    max_size.width = max_pos.x - min_pos.x;
+    max_size.height = max_pos.y - min_pos.y;
 }
 
 //-- end BulletGroup class --

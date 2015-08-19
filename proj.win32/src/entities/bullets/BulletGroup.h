@@ -27,7 +27,11 @@ public:
     std::vector<BulletPtr> bullets;
     units::Unit* unit_parent = NULL;
     BulletGroupPtr self_ptr;
-    
+
+    cc::Vec2 min_pos;
+    cc::Vec2 max_pos;
+    cc::Size max_size;
+
     BulletPtr create_bullet(int _x, int _y);
 
     void update();
