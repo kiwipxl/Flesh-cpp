@@ -64,12 +64,6 @@ Bullet::Bullet(int x, int y, units::Unit* _unit_parent) {
     base->setPosition(x, y);
     root::map_layer->addChild(base, 1);
 
-    pbody = PhysicsBody::createBox(Size(32.0f, 32.0f));
-    pbody->setCollisionBitmask(1);
-    pbody->setContactTestBitmask(true);
-    pbody->setRotationEnable(false);
-    base->setPhysicsBody(pbody);
-
     add_logic_decay(4.0f + ((rand() / (float)RAND_MAX) * 4.0f));
 }
 

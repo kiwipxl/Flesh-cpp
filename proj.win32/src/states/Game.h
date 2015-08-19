@@ -22,6 +22,7 @@ namespace game {
     extern void update_state(root::State);
 
     extern void set_countdown_to(float seconds);
+    extern void set_power_text(float power);
 };
 
 END_STATES_NS

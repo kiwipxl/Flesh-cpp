@@ -9,6 +9,7 @@ logic components can be added or removed to a bullet object
 #include <vector>
 
 #include "assets/Particles.h"
+#include "debug/Logger.h"
 #include "entities/bullets/Bullet.h"
 #include "entities/EntityDefines.h"
 #include "entities/units/Unit.h"
@@ -32,17 +33,28 @@ enum BulletLogicType {
 class BulletLogicBase {
 
 public:
-    Bullet* bref;
+    Bullet* ref;
     int timer = 0;
 
     BulletLogicBase(Bullet& bullet_ref) {
-        bref = &bullet_ref;
+        ref = &bullet_ref;
     }
 
     virtual ~BulletLogicBase() { }
 
     virtual void update() { }
     virtual bool on_contact_run(cc::PhysicsContact& contact) { return false; }
+
+    void create_physics_body_box(int width, int height) {
+        if (ref->pbody != NULL) { log_error << "tried to create physics body box, but one already existed"; ref->pbody->release(); }
+
+        ref->pbody = cc::PhysicsBody::createBox(cc::Size(width, height));
+        ref->pbody->setCollisionBitmask(1);
+        ref->pbody->setContactTestBitmask(true);
+        ref->pbody->setRotationEnable(false);
+        ref->pbody->setMass(100.0f);
+        ref->base->setPhysicsBody(ref->pbody);
+    }
 };
 
 class BulletLogicDecay : public BulletLogicBase {
@@ -61,7 +73,7 @@ public:
 
         time_t temp_time;
         if (time(&temp_time) - start_time >= decay_after_seconds) {
-            bref->schedule_removal();
+            ref->schedule_removal();
         }
     }
 };
@@ -80,17 +92,17 @@ public:
         auto b = contact.getShapeB()->getBody()->getNode();
 
         map::terrain::Terrain* t;
-        if (a && b && CHECK_AB_COLLIDE(bref->base)) {
+        if (a && b && CHECK_AB_COLLIDE(ref->base)) {
             if (t = states::game::terrain->is_terrain(a, b)) {
-                //t->test_explosion_at(bref->base->getPosition());
+                //t->test_explosion_at(ref->base->getPosition());
 
                 auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
-                bullet_explosion->setPosition(bref->base->getPosition());
+                bullet_explosion->setPosition(ref->base->getPosition());
                 bullet_explosion->setScale(.325f);
                 root::map_layer->addChild(bullet_explosion, 1);
                 bullet_explosion->setAutoRemoveOnFinish(true);
 
-                bref->schedule_removal();
+                ref->schedule_removal();
             }
         }
 
@@ -104,16 +116,18 @@ public:
     const BulletLogicType logic_type = BULLET_LOGIC_TEST;
     bool gen_explosion = false;
     cc::ParticleSystemQuad* fire_trail_particle;
-    const float DAMAGE = 2.0f;
+    const float DAMAGE = 4.0f;
 
     BulletLogicTest(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
+        create_physics_body_box(32.0f, 32.0f);
+
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-        bref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
-        bref->add_logic_terrain_destroy();
+        ref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
+        ref->add_logic_terrain_destroy();
         
         fire_trail_particle = cc::ParticleSystemQuad::create(assets::particles::bullet_fire_trail);
-        fire_trail_particle->setPosition(bref->base->getPosition());
+        fire_trail_particle->setPosition(ref->base->getPosition());
         fire_trail_particle->setScale(.65f);
         root::map_layer->addChild(fire_trail_particle, 1);
     }
@@ -123,22 +137,22 @@ public:
     }
 
     virtual void update() {
-        fire_trail_particle->setPosition(bref->base->getPosition());
+        fire_trail_particle->setPosition(ref->base->getPosition());
 
         if (gen_explosion) return;
         if (++timer >= 40) {
             gen_explosion = true;
             for (int n = 0; n < 14; ++n) {
-                auto b = create_bullet(bref->base->getPositionX(), bref->base->getPositionY(), bref->unit_parent);
-                float angle = ((rand() / (float)RAND_MAX) * 30.0f) + 75.0f;
+                auto b = create_bullet(ref->base->getPositionX(), ref->base->getPositionY(), ref->unit_parent);
+                float angle = ((rand() / (float)RAND_MAX) * 50.0f) + 65.0f;
                 b->add_logic_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
             }
             auto bullet_explosion = cc::ParticleSystemQuad::create("Ring.plist");
-            bullet_explosion->setPosition(bref->base->getPosition());
+            bullet_explosion->setPosition(ref->base->getPosition());
             bullet_explosion->setScale(.8f);
             bullet_explosion->setAutoRemoveOnFinish(true);
             root::map_layer->addChild(bullet_explosion, 1);
-            bref->schedule_removal();
+            ref->schedule_removal();
         }
     }
 
@@ -146,11 +160,11 @@ public:
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && CHECK_AB_COLLIDE(bref->base)) {
+        if (a && b && CHECK_AB_COLLIDE(ref->base)) {
             for (auto& u : units::all_units) {
-                if (bref->unit_parent->team != u->team && u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                if (ref->unit_parent->team != u->team && u != ref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
-                    bref->schedule_removal();
+                    ref->schedule_removal();
                 }
             }
         }
@@ -165,18 +179,20 @@ public:
     const BulletLogicType logic_type = BULLET_LOGIC_TEST2;
     bool gen_explosion = false;
     cc::ParticleSystemQuad* fire_trail_particle;
-    const float DAMAGE = 1.0f;
+    const float DAMAGE = 2.5f;
 
     BulletLogicTest2(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
+        create_physics_body_box(20.0f, 20.0f);
+
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
-        bref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
+        ref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
 
-        bref->base->setTexture(assets::textures::test_bullet);
-        bref->add_logic_terrain_destroy();
+        ref->base->setTexture(assets::textures::test_bullet);
+        ref->add_logic_terrain_destroy();
 
         fire_trail_particle = cc::ParticleSystemQuad::create(assets::particles::bullet_fire_trail);
-        fire_trail_particle->setPosition(bref->base->getPosition());
+        fire_trail_particle->setPosition(ref->base->getPosition());
         fire_trail_particle->setScale(.25f);
         root::map_layer->addChild(fire_trail_particle, 1);
     }
@@ -186,18 +202,18 @@ public:
     }
 
     virtual void update() {
-        fire_trail_particle->setPosition(bref->base->getPosition());
+        fire_trail_particle->setPosition(ref->base->getPosition());
     }
 
     virtual bool on_contact_run(cc::PhysicsContact& contact) {
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
-        if (a && b && CHECK_AB_COLLIDE(bref->base)) {
+        if (a && b && CHECK_AB_COLLIDE(ref->base)) {
             for (auto& u : units::all_units) {
-                if (bref->unit_parent->team != u->team && u != bref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
+                if (ref->unit_parent->team != u->team && u != ref->unit_parent && CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
-                    bref->schedule_removal();
+                    ref->schedule_removal();
                 }
             }
         }

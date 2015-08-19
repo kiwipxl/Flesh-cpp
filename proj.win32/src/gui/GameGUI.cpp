@@ -25,6 +25,10 @@ UnitUIBar::UnitUIBar(entities::units::Unit* _unit) {
     bar->setAnchorPoint(Vec2(0, 0));
     root::ui_layer->addChild(bar, 1);
 }
+
+UnitUIBar::~UnitUIBar() {
+    root::ui_layer->removeChild(bar);
+}
 //-- end UnitUIBar class --
 
 void init_ui_bars() {
@@ -48,6 +52,7 @@ void sort_ui_bars() {
 void remove_ui_bar(entities::units::Unit* unit) {
     for (int n = 0; n < unit_ui_bars.size(); ++n) {
         if (unit_ui_bars[n]->unit == unit) {
+            delete unit_ui_bars[n];
             unit_ui_bars.erase(unit_ui_bars.begin() + n, unit_ui_bars.begin() + n + 1);
             --n;
         }

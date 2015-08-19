@@ -31,6 +31,8 @@ BulletAimerComponent::~BulletAimerComponent() {
 }
 
 void BulletAimerComponent::update() {
+    states::game::set_power_text(power);
+
     cone->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
 
     if (aiming) {

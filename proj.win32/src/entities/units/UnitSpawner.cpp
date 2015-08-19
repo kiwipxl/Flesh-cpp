@@ -48,7 +48,6 @@ void next_unit() {
 
     ++current_unit_index;
     if (current_unit_index >= all_units.size()) current_unit_index = 0;
-    current_unit = all_units[current_unit_index];
 
     select_current_unit();
 }

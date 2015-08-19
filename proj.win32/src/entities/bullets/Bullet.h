@@ -38,9 +38,9 @@ class Bullet {
         Bullet(int x, int y, units::Unit* _unit_parent);
         ~Bullet();
 
-        cc::Sprite* base;
-        cc::PhysicsBody* pbody;
-        units::Unit* unit_parent;
+        cc::Sprite* base = NULL;
+        cc::PhysicsBody* pbody = NULL;
+        units::Unit* unit_parent = NULL;
 
         void update();
         void cleanup();

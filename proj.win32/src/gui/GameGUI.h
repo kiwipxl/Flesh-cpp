@@ -26,6 +26,7 @@ class UnitUIBar {
 
 public:
     UnitUIBar(entities::units::Unit* _unit);
+    ~UnitUIBar();
 
     entities::units::Unit* unit;
     cc::Sprite* bar;

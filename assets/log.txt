@@ -5,12 +5,5 @@ texture assets loaded
 map assets loaded
 particle assets loaded
 asset loading completed
-attempt connect on thread...
-created state 1
-(tcp_serv_sock): connection successful
-switching to state 3 from state 1
-removed state 1
 created state 3
-switched to state 3 from state 3
-contact pre_solve callbacks: 5
 contact pre_solve callbacks: 5
