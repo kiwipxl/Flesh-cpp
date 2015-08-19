@@ -6,6 +6,7 @@
 #include "entities/bullets/Bullet.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
+#include "gui/GameGUI.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "map/Cam.h"
@@ -20,42 +21,10 @@ namespace game {
     using namespace cocos2d;
 
     //private
-    Label* turn_time_label;
-    clock_t countdown_start;
-    Label* power_label;
     float dest_zoom = 0;
-
-    void update_time() {
-        float t = (current_countdown_seconds * 1000) - (clock() - countdown_start);
-        if (t <= 0) {
-            countdown_start = clock();
-            entities::units::next_unit();
-            current_countdown_seconds = starting_countdown_seconds;
-            return;
-        }
-        int seconds = t / 1000.0f;
-        int ms = clampf(fmod(t, 1000.0f) / 10.0f, 0, 99);
-        turn_time_label->setString(sstream_str(seconds << ":" << ms));
-    }
 
     //public
     map::terrain::TerrainGroup* terrain;
-    int starting_countdown_seconds = 10;
-    int current_countdown_seconds;
-
-    void reset_countdown() {
-        current_countdown_seconds = starting_countdown_seconds;
-        countdown_start = clock();
-    }
-
-    void set_countdown_to(float seconds) {
-        current_countdown_seconds = seconds;
-        countdown_start = clock();
-    }
-
-    void set_power_text(float power) {
-        power_label->setString(sstream_cstr("power: " << power << "x"));
-    }
 
     void create_state(State state) {
         switch (state) {
@@ -64,22 +33,11 @@ namespace game {
 
                 physics::start();
 
-                turn_time_label = Label::createWithBMFont("fonts/felt.fnt", "");
-                turn_time_label->setPosition(scene->screen_size.width / 2.0f, scene->screen_size.height - 40);
-                turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
-                ui_layer->addChild(turn_time_label, 1);
-                countdown_start = clock();
-                current_countdown_seconds = starting_countdown_seconds;
-
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
                 entities::bullet::init();
 
                 entities::units::spawn_test_units();
-
-                power_label = Label::createWithBMFont("fonts/felt.fnt", "");
-                power_label->setPosition(scene->screen_size.width / 2.0f, 40);
-                power_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
-                ui_layer->addChild(power_label, 1);
+                gui::game::init();
 
                 break;
         }
@@ -98,7 +56,7 @@ namespace game {
         switch (state) {
             case STATE_GAME:
                 physics::update();
-                update_time();
+                gui::game::update();
 
                 auto& v = map::camera::map_cam->getPosition();
                 auto& vb = entities::units::current_unit->base->getPosition();

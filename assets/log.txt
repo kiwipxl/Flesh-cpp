@@ -8,9 +8,3 @@ asset loading completed
 created state 3
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
 contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 5, post_solve: 0, separate: 1
-contact pre_solve callbacks: 4, post_solve: 0, separate: 1
-contact pre_solve callbacks: 3, post_solve: 0, separate: 1
-contact pre_solve callbacks: 2, post_solve: 0, separate: 1

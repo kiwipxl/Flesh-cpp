@@ -197,6 +197,7 @@ public:
                 if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     ref->schedule_removal();
+                    return true;
                 }
             }
         }
@@ -252,6 +253,7 @@ public:
                 if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
                     ref->schedule_removal();
+                    return true;
                 }
             }
         }

@@ -38,8 +38,6 @@ void spawn_test_units() {
         create_team_unit(1);
     }
     select_current_unit();
-
-    gui::game::init_ui_bars();
 }
 
 void next_unit() {
@@ -75,6 +73,7 @@ void update_all_units() {
 
             select_current_unit();
             gui::game::sort_ui_bars();
+            gui::game::reset_countdown();
         }
     }
 }

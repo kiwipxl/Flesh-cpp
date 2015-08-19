@@ -41,7 +41,14 @@ private:
 
 extern std::vector<UnitUIBar*> unit_ui_bars;
 
-extern void init_ui_bars();
+extern int starting_countdown_seconds;
+extern int current_countdown_seconds;
+
+extern void set_countdown_to(float seconds);
+extern void set_power_text(float power);
+extern void reset_countdown();
+
+extern void init();
 extern void sort_ui_bars();
 extern void remove_ui_bar(entities::units::Unit* unit);
 extern void update();
