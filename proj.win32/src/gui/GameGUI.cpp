@@ -2,6 +2,7 @@
 
 #include "assets/Assets.h"
 #include "assets/Textures.h"
+#include "entities/bullets/Bullet.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "StateManager.h"
@@ -49,6 +50,10 @@ void set_countdown_to(float seconds) {
 
 void set_power_text(float power) {
     power_label->setString(sstream_cstr("power: " << power << "x"));
+}
+
+void wait_for_bullet(entities::bullets::BulletPtr bullet) {
+
 }
 
 void init() {

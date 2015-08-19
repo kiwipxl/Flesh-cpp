@@ -10,73 +10,18 @@
 using namespace cocos2d;
 
 BEGIN_ENTITIES_NS
-BEGIN_BULLET_NS
+BEGIN_BULLETS_NS
 
 //private
-std::vector<BulletPtr> bullets;
-
-bool on_contact_run(PhysicsContact& contact) {
-    auto a = contact.getShapeA()->getBody()->getNode();
-    auto b = contact.getShapeB()->getBody()->getNode();
-
-    if (a && b) {
-        for (int n = 0; n < bullets.size(); ++n) {
-            if (a == bullets[n]->base || b == bullets[n]->base) {
-                bullets[n]->on_contact_run(contact);
-            }
-        }
-    }
-
-    return false;
-}
-
-void on_contact_leave(PhysicsContact& contact) {
-    auto a = contact.getShapeA()->getBody()->getNode();
-    auto b = contact.getShapeB()->getBody()->getNode();
-
-    if (a && b) {
-        for (int n = 0; n < bullets.size(); ++n) {
-            if (!bullets[n]) continue;
-
-            if (!bullets[n]->is_removal_scheduled()) {
-                bullets[n]->on_contact_leave(contact);
-            }
-        }
-    }
-}
-
-//public
-void init() {
-    physics::add_on_contact_run(on_contact_run, NULL);
-    physics::add_on_contact_leave(on_contact_leave, NULL);
-}
-
-void deinit() {
-    physics::remove_on_contact_run(on_contact_run);
-    physics::remove_on_contact_leave(on_contact_leave);
-}
-
-BulletPtr create_bullet(int x, int y, units::Unit* _unit_parent) {
-    BulletPtr b(new Bullet(x, y, _unit_parent));
-    bullets.push_back(b);
+BulletPtr create_bullet(int _x, int _y, BulletGroupPtr& _parent) {
+    BulletPtr b(new Bullet(_x, _y, _parent));
     return b;
-}
-
-void update() {
-    for (int n = 0; n < bullets.size(); ++n) {
-        if (!bullets[n]) continue;
-        if (!bullets[n]->is_removal_scheduled()) bullets[n]->update();
-        if (bullets[n]->is_removal_scheduled()) {
-            bullets.erase(bullets.begin() + n, bullets.begin() + n + 1);
-            --n;
-        }
-    }
 }
 
 //-- begin Bullet class --
 
-Bullet::Bullet(int x, int y, units::Unit* _unit_parent) {
-    unit_parent = _unit_parent;
+Bullet::Bullet(int x, int y, BulletGroupPtr& _parent) {
+    parent = _parent;
 
     base = Sprite::create();
     base->setPosition(x, y);
@@ -86,19 +31,11 @@ Bullet::Bullet(int x, int y, units::Unit* _unit_parent) {
 }
 
 Bullet::~Bullet() {
-    cleanup();
-}
-
-void Bullet::cleanup() {
     for (int n = 0; n < logic_list.size(); ++n) {
         delete logic_list[n];
     }
     logic_list.clear();
     root::map_layer->removeChild(base, 1);
-}
-
-void Bullet::schedule_removal() {
-    to_be_removed = true;
 }
 
 bool Bullet::on_contact_run(PhysicsContact& contact) {
@@ -139,5 +76,5 @@ void Bullet::add_logic_test2(float angle, float power) {
 
 //-- end Bullet class --
 
-END_BULLET_NS
+END_BULLETS_NS
 END_ENTITIES_NS

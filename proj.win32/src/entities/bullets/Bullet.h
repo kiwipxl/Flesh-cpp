@@ -2,7 +2,7 @@
 #define _BULLET_H_
 
 /*
-handles management and logic of bullets
+handles individual bullets and management of their logic components
 */
 
 #include <vector>
@@ -13,18 +13,8 @@ handles management and logic of bullets
 #include "entities/EntityDefines.h"
 #include "physics/Physics.h"
 
-#define BEGIN_BULLET_NS     namespace bullet {
-#define END_BULLET_NS       };
-
 BEGIN_ENTITIES_NS
-
-//forward declare in entities::units namespace
-namespace units {
-
-    class Unit;
-};
-
-BEGIN_BULLET_NS
+BEGIN_BULLETS_NS
 
 namespace cc = cocos2d;
 
@@ -35,15 +25,14 @@ enum BulletLogicType;
 class Bullet {
 
     public:
-        Bullet(int x, int y, units::Unit* _unit_parent);
+        Bullet(int x, int y, BulletGroupPtr& _parent);
         ~Bullet();
 
         cc::Sprite* base = NULL;
         cc::PhysicsBody* pbody = NULL;
-        units::Unit* unit_parent = NULL;
+        BulletGroupPtr parent;
 
         void update();
-        void cleanup();
         bool on_contact_run(cc::PhysicsContact& contact);
         void on_contact_leave(cc::PhysicsContact& contact);
 
@@ -52,22 +41,17 @@ class Bullet {
         void add_logic_test(float angle, float power);
         void add_logic_test2(float angle, float power);
 
-        void schedule_removal();
-        bool is_removal_scheduled() { return to_be_removed; }
+        void schedule_removal() { removal_scheduled = true; }
+        bool is_removal_scheduled() { return removal_scheduled; }
 
     protected:
-        bool to_be_removed = false;
+        bool removal_scheduled = false;
         std::vector<BulletLogicBase*> logic_list;
 };
 
-typedef std::shared_ptr<Bullet> BulletPtr;
+extern BulletPtr create_bullet(int x, int y, BulletGroupPtr& group);
 
-extern void init();
-extern void deinit();
-extern BulletPtr create_bullet(int x, int y, units::Unit* _unit_parent);
-extern void update();
-
-END_BULLET_NS
+END_BULLETS_NS
 END_ENTITIES_NS
 
 #endif

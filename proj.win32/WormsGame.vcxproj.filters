@@ -51,6 +51,7 @@
     <ClCompile Include="src\entities\units\components\PlayerMoveComponent.cpp" />
     <ClCompile Include="src\gui\GameGUI.cpp" />
     <ClCompile Include="src\entities\units\UnitSpawner.cpp" />
+    <ClCompile Include="src\entities\bullets\BulletGroup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -102,6 +103,7 @@
     <ClInclude Include="src\gui\GameGUI.h" />
     <ClInclude Include="src\gui\GUIDefines.h" />
     <ClInclude Include="src\entities\units\UnitSpawner.h" />
+    <ClInclude Include="src\entities\bullets\BulletGroup.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

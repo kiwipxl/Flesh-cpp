@@ -7,4 +7,14 @@
 #define BEGIN_GAME_NS   namespace game {
 #define END_GAME_NS     };
 
+//forward declares begin
+BEGIN_GUI_NS
+class MessageBox;
+typedef std::shared_ptr<MessageBox> MessageBoxPtr;
+
+class Button;
+typedef std::shared_ptr<Button> ButtonPtr;
+END_GUI_NS
+//forward declares end
+
 #endif

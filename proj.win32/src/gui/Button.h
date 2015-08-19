@@ -37,8 +37,6 @@ class Button {
         void add_to_scene();
 };
 
-typedef std::shared_ptr<Button> ButtonPtr;
-
 END_GUI_NS
 
 #endif

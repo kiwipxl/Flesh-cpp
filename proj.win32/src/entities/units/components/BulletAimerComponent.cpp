@@ -8,6 +8,7 @@
 #include "gui/GameGUI.h"
 #include "input/MouseInput.h"
 #include "input/KeyboardInput.h"
+#include "map/Cam.h"
 #include "states/Game.h"
 #include "StateManager.h"
 
@@ -50,9 +51,10 @@ void BulletAimerComponent::update() {
         }
 
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
-            auto b = bullet::create_bullet(ref->base->getPositionX(), ref->base->getPositionY(), ref);
+            auto b = bullets::create_bullet(ref->base->getPositionX(), ref->base->getPositionY(), ref);
             b->add_logic_test(-cone->getRotation() + 90, power);
-            gui::game::set_countdown_to(3);
+            gui::game::wait_for_bullet(b);
+            map::camera::follow_bullet(b);
             schedule_removal();
         }
     }

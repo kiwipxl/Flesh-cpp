@@ -48,8 +48,6 @@ class MessageBox {
         void close();
 };
 
-typedef std::shared_ptr<MessageBox> MessageBoxPtr;
-
 extern MessageBoxPtr current_message_box;
 
 extern MessageBoxPtr show_message_box(std::string title, std::string message);

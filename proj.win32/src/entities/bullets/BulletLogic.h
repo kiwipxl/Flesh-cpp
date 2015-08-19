@@ -18,7 +18,7 @@ logic components can be added or removed to a bullet object
 #include "StateManager.h"
 
 BEGIN_ENTITIES_NS
-BEGIN_BULLET_NS
+BEGIN_BULLETS_NS
 
 namespace cc = cocos2d;
 
@@ -262,7 +262,7 @@ public:
     }
 };
 
-END_BULLET_NS
+END_BULLETS_NS
 END_ENTITIES_NS
 
 #endif

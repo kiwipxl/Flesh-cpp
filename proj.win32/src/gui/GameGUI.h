@@ -5,19 +5,10 @@
 
 #include <2d/CCSprite.h>
 
+#include "entities/EntityDefines.h"
 #include "gui/GUIDefines.h"
 
 namespace cc = cocos2d;
-
-//forward declares begin
-namespace entities {
-
-    namespace units {
-
-        class Unit;
-    };
-};
-//forward declares end
 
 BEGIN_GUI_NS
 BEGIN_GAME_NS
@@ -47,6 +38,7 @@ extern int current_countdown_seconds;
 extern void set_countdown_to(float seconds);
 extern void set_power_text(float power);
 extern void reset_countdown();
+extern void wait_for_bullet(entities::bullets::BulletPtr bullet);
 
 extern void init();
 extern void sort_ui_bars();
