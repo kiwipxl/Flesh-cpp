@@ -12,6 +12,7 @@ namespace particles {
 	ParticleSystem* bullet_explosion;
     std::string bullet_explosion_name = "fireballpls.plist";
     std::string bullet_fire_trail = "bullet_fire_trail.plist";
+    std::string c4_explosion = "c4_explosion.plist";
 
 	void load_particle(ParticleSystem*& particle, std::string file_name) {
 		particle = ParticleSystem::create(file_name);

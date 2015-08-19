@@ -20,11 +20,13 @@ bool on_contact_run(PhysicsContact& contact) {
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b) {
+        bool do_collide = false;
         for (auto& bg : bullet_groups) {
             for (auto& b : bg->bullets) {
-                b->on_contact_run(contact);
+                if (b->on_contact_run(contact)) do_collide = true;
             }
         }
+        return do_collide;
     }
 
     return false;

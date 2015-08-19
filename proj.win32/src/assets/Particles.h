@@ -15,6 +15,7 @@ namespace particles {
 	extern cc::ParticleSystem* bullet_explosion;
     extern std::string bullet_explosion_name;
     extern std::string bullet_fire_trail;
+    extern std::string c4_explosion;
 
 	extern void init();
 };

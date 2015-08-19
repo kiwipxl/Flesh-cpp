@@ -27,8 +27,9 @@ enum BulletLogicType {
 
     BULLET_LOGIC_DECAY,
     BULLET_LOGIC_TERRAIN_DESTROY,
-    BULLET_LOGIC_TEST,
-    BULLET_LOGIC_TEST2
+    BULLET_LOGIC_FIRE_BULLET, 
+    BULLET_LOGIC_MINI_FIRE_BULLET, 
+    BULLET_LOGIC_C4
 };
 
 class BulletLogicBase {
@@ -71,10 +72,10 @@ public:
         }
     }
 
-    void create_physics_body_box(int width, int height) {
+    void create_physics_body_box(int width, int height, cc::PhysicsMaterial* mat = NULL) {
         if (ref->pbody != NULL) { log_error << "tried to create physics body box, but one already existed"; ref->pbody->release(); }
 
-        ref->pbody = cc::PhysicsBody::createBox(cc::Size(width, height));
+        ref->pbody = cc::PhysicsBody::createBox(cc::Size(width, height), mat ? *mat : cc::PHYSICSBODY_MATERIAL_DEFAULT);
         ref->pbody->setCollisionBitmask(1);
         ref->pbody->setContactTestBitmask(true);
         ref->pbody->setRotationEnable(false);
@@ -93,18 +94,16 @@ class BulletLogicDecay : public BulletLogicBase {
 
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_DECAY;
-    time_t start_time = 0;
+    clock_t start_time;
     float decay_after_seconds;
 
-    BulletLogicDecay(Bullet& bullet_ref, float _decay_after_seconds) : BulletLogicBase(bullet_ref) {
-        decay_after_seconds = _decay_after_seconds;
+    BulletLogicDecay(Bullet& bullet_ref, float _decay_after_ms) : BulletLogicBase(bullet_ref) {
+        decay_after_seconds = _decay_after_ms;
+        start_time = clock();
     }
 
     virtual void update() {
-        if (start_time == 0) time(&start_time);
-
-        time_t temp_time;
-        if (time(&temp_time) - start_time >= decay_after_seconds) {
+        if (clock() - start_time >= decay_after_seconds) {
             ref->schedule_removal();
         }
     }
@@ -136,16 +135,18 @@ public:
     }
 };
 
-class BulletLogicTest : public BulletLogicBase {
+class BulletLogicFireBullet : public BulletLogicBase {
 
 public:
-    const BulletLogicType logic_type = BULLET_LOGIC_TEST;
-    bool gen_explosion = false;
+    const BulletLogicType logic_type = BULLET_LOGIC_FIRE_BULLET;
     cc::ParticleSystemQuad* fire_trail_particle;
     const float DAMAGE = 4.0f;
+    const float EXPLODE_AFTER_TIME = 800.0f;
+    clock_t start_time;
 
-    BulletLogicTest(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
+    BulletLogicFireBullet(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         create_physics_body_box(32.0f, 32.0f);
+        ref->add_logic_decay(4000.0f + ((rand() / (float)RAND_MAX) * 4000.0f));
 
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
@@ -156,9 +157,11 @@ public:
         fire_trail_particle->setPosition(ref->base->getPosition());
         fire_trail_particle->setScale(.65f);
         root::map_layer->addChild(fire_trail_particle, 1);
+
+        start_time = clock();
     }
 
-    virtual ~BulletLogicTest() {
+    virtual ~BulletLogicFireBullet() {
         root::map_layer->removeChild(fire_trail_particle, 1);
 
         auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
@@ -171,13 +174,11 @@ public:
     virtual void update() {
         fire_trail_particle->setPosition(ref->base->getPosition());
 
-        if (gen_explosion) return;
-        if (++timer >= 40) {
-            gen_explosion = true;
+        if (clock() - start_time >= EXPLODE_AFTER_TIME) {
             for (int n = 0; n < 14; ++n) {
                 auto b = ref->parent->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
                 float angle = ((rand() / (float)RAND_MAX) * 50.0f) + 65.0f;
-                b->add_logic_test2(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
+                b->add_logic_mini_fire_bullet(angle, ((rand() / (float)RAND_MAX) * .2f) + .5f);
             }
             auto bullet_explosion = cc::ParticleSystemQuad::create("Ring.plist");
             bullet_explosion->setPosition(ref->base->getPosition());
@@ -208,22 +209,21 @@ public:
     }
 };
 
-class BulletLogicTest2 : public BulletLogicBase {
+class BulletLogicMiniFireBullet : public BulletLogicBase {
 
 public:
-    const BulletLogicType logic_type = BULLET_LOGIC_TEST2;
-    bool gen_explosion = false;
+    const BulletLogicType logic_type = BULLET_LOGIC_MINI_FIRE_BULLET;
     cc::ParticleSystemQuad* fire_trail_particle;
     const float DAMAGE = 2.5f;
 
-    BulletLogicTest2(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
+    BulletLogicMiniFireBullet(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         create_physics_body_box(20.0f, 20.0f);
+        ref->add_logic_decay(4000.0f + ((rand() / (float)RAND_MAX) * 4000.0f));
 
         float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
         float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
         ref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
 
-        ref->base->setTexture(assets::textures::test_bullet);
         ref->add_logic_terrain_destroy();
 
         fire_trail_particle = cc::ParticleSystemQuad::create(assets::particles::bullet_fire_trail);
@@ -232,7 +232,7 @@ public:
         root::map_layer->addChild(fire_trail_particle, 1);
     }
 
-    virtual ~BulletLogicTest2() {
+    virtual ~BulletLogicMiniFireBullet() {
         root::map_layer->removeChild(fire_trail_particle, 1);
 
         auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion_name);
@@ -257,6 +257,69 @@ public:
                     ref->schedule_removal();
                     return true;
                 }
+            }
+        }
+
+        return false;
+    }
+};
+
+class BulletLogicC4 : public BulletLogicBase {
+
+public:
+    const BulletLogicType logic_type = BULLET_LOGIC_C4;
+    bool gen_explosion = false;
+    cc::ParticleSystemQuad* fire_trail_particle;
+    const float DAMAGE = 4.0f;
+    const float EXPLODE_AFTER_TIME = 5000.0f;
+    clock_t start_time;
+
+    BulletLogicC4(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
+        cc::PhysicsMaterial mat;
+        mat.density = .1f;
+        mat.friction = .4f;
+        mat.restitution = 1.0f;
+        create_physics_body_box(32.0f, 32.0f, &mat);
+        ref->pbody->setRotationEnable(true);
+
+        float force_x = cos(angle / (180.0f / M_PI)) * 100000.0f * power;
+        float force_y = sin(angle / (180.0f / M_PI)) * 100000.0f * power;
+        ref->pbody->applyImpulse(cc::Vec2(force_x, force_y));
+        ref->pbody->applyTorque(100.0f);
+
+        ref->base->setTexture(assets::textures::c4);
+        cc::Size s = ref->base->getTexture()->getContentSize();
+        ref->base->setTextureRect(cc::Rect(0, 0, s.width, s.height));
+        ref->base->setScale(.55f);
+
+        start_time = clock();
+    }
+
+    virtual ~BulletLogicC4() {
+
+    }
+
+    virtual void update() {
+        if (clock() - start_time >= EXPLODE_AFTER_TIME) {
+            auto bullet_explosion = cc::ParticleSystemQuad::create("c4_explosion.plist");
+            bullet_explosion->setRadialAccel(-1500.0f);
+            bullet_explosion->setPosition(ref->base->getPosition());
+            bullet_explosion->setScale(2.5f);
+            root::map_layer->addChild(bullet_explosion, 1);
+            bullet_explosion->setAutoRemoveOnFinish(true);
+
+            ref->schedule_removal();
+        }
+    }
+
+    virtual bool on_contact_run(cc::PhysicsContact& contact) {
+        auto a = contact.getShapeA()->getBody()->getNode();
+        auto b = contact.getShapeB()->getBody()->getNode();
+
+        map::terrain::Terrain* t;
+        if (a && b && CHECK_AB_COLLIDE(ref->base)) {
+            if (t = states::game::terrain->is_terrain(a, b)) {
+                return true;
             }
         }
 

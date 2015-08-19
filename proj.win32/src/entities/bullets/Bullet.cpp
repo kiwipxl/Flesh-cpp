@@ -22,8 +22,6 @@ Bullet::Bullet(int x, int y, BulletGroupPtr& _parent) {
     base = Sprite::create();
     base->setPosition(x, y);
     root::map_layer->addChild(base, 1);
-
-    add_logic_decay(4.0f + ((rand() / (float)RAND_MAX) * 4.0f));
 }
 
 Bullet::~Bullet() {
@@ -59,20 +57,24 @@ void Bullet::update() {
     }
 }
 
-void Bullet::add_logic_decay(float decay_after_seconds) {
-    logic_list.push_back(new BulletLogicDecay(*this, decay_after_seconds));
+void Bullet::add_logic_decay(float decay_after_ms) {
+    logic_list.push_back(new BulletLogicDecay(*this, decay_after_ms));
 }
 
 void Bullet::add_logic_terrain_destroy() {
     logic_list.push_back(new BulletLogicTerrainDestroy(*this));
 }
 
-void Bullet::add_logic_test(float angle, float power) {
-    logic_list.push_back(new BulletLogicTest(*this, angle, power));
+void Bullet::add_logic_fire_bullet(float angle, float power) {
+    logic_list.push_back(new BulletLogicFireBullet(*this, angle, power));
 }
 
-void Bullet::add_logic_test2(float angle, float power) {
-    logic_list.push_back(new BulletLogicTest2(*this, angle, power));
+void Bullet::add_logic_mini_fire_bullet(float angle, float power) {
+    logic_list.push_back(new BulletLogicMiniFireBullet(*this, angle, power));
+}
+
+void Bullet::add_logic_c4(float angle, float power) {
+    logic_list.push_back(new BulletLogicC4(*this, angle, power));
 }
 
 //-- end Bullet class --

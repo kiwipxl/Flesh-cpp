@@ -36,10 +36,11 @@ class Bullet {
         bool on_contact_run(cc::PhysicsContact& contact);
         void on_contact_leave(cc::PhysicsContact& contact);
 
-        void add_logic_decay(float decay_after_seconds);
+        void add_logic_decay(float decay_after_ms);
         void add_logic_terrain_destroy();
-        void add_logic_test(float angle, float power);
-        void add_logic_test2(float angle, float power);
+        void add_logic_fire_bullet(float angle, float power);
+        void add_logic_mini_fire_bullet(float angle, float power);
+        void add_logic_c4(float angle, float power);
 
         void schedule_removal() { removal_scheduled = true; }
         bool is_removal_scheduled() { return removal_scheduled; }
