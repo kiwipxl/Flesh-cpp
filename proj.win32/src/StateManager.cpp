@@ -11,6 +11,7 @@
 #include "debug/Logger.h"
 #include "entities/items/Weapon.h"
 #include "gui/MessageBox.h"
+#include "gui/Button.h"
 #include "input/KeyboardInput.h"
 #include "input/MouseInput.h"
 #include "map/Cam.h"
@@ -130,6 +131,7 @@ namespace root {
         states::login::update_state(s);
         states::game::update_state(s);
 
+        gui::update_buttons();
         network::sock::update();
         input::update_keyboard();
         input::update_mouse();

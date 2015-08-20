@@ -27,11 +27,17 @@ public:
     ~Button();
     Button(int _x, int _y);
 
+    cc::Sprite* base;
+    cc::LabelTTF* text;
+
     void update();
 
     void set_on_click_callback(ButtonClickCallback _callback);
     void set_size(int _width, int _height);
     void set_size(cc::Size _size);
+
+    void set_pos(cc::Vec2 _pos);
+    void set_pos(int _x, int _y);
 
     void set_text(std::string _text);
     void set_text_font_size(int _font_size);
@@ -44,14 +50,13 @@ public:
                       cc::Texture2D* _click_texture, cc::Texture2D* _disabled_texture);
     void set_textures(cc::Texture2D* _idle_texture, cc::Texture2D* _click_texture);
 
-    cc::Sprite* get_base_sprite() { return base; }
-    cc::LabelTTF* get_text_label() { return text; }
     int get_text_font_size();
     std::string get_text_string();
+    cc::Size get_size() { return size; }
+    cc::Vec2 get_pos() { return pos; }
 
 private:
-    cc::Sprite* base;
-    cc::LabelTTF* text;
+    cc::Vec2 pos;
     cc::Size size;
 
     cc::Texture2D* idle_texture;

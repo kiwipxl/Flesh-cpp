@@ -5,6 +5,7 @@
 #include "entities/bullets/Bullet.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
+#include "gui/Button.h"
 #include "StateManager.h"
 
 using namespace cocos2d;
@@ -17,6 +18,7 @@ Label* turn_time_label;
 clock_t countdown_start;
 Label* power_label;
 Sprite* footer;
+gui::ButtonPtr footer_fire_button;
 
 //public
 std::vector<UnitUIBar*> unit_ui_bars;
@@ -83,6 +85,13 @@ void init() {
     footer->setScale(root::scene->screen_size.width / footer->getContentSize().width);
     footer->setAnchorPoint(Vec2(0.0f, 0.0f));
     root::ui_layer->addChild(footer);
+
+    footer_fire_button = gui::create_button(0.0f, 0.0f);
+    footer_fire_button->set_idle_texture(assets::textures::footer_fire_button);
+    footer_fire_button->base->setScale(.4f);
+    footer_fire_button->base->setAnchorPoint(Vec2(0.0f, 0.25f));
+    footer_fire_button->set_pos(670, 0);
+    root::ui_layer->addChild(footer_fire_button->base, 10);
 }
 
 void sort_ui_bars() {

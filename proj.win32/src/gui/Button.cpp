@@ -36,9 +36,9 @@ void update_buttons() {
 
 Button::Button(int _x, int _y) {
     base = Sprite::create();
-    base->setPosition(Vec2(_x, _y));
-
     text = LabelTTF::create("", "fonts/CaviarDreams.ttf", 20);
+
+    set_pos(_x, _y);
 }
 
 Button::~Button() {
@@ -64,6 +64,18 @@ void Button::set_size(cc::Size _size) {
     base->setContentSize(size);
 }
 
+void Button::set_pos(cc::Vec2 _pos) {
+    pos = _pos;
+    base->setPosition(pos);
+    text->setPosition(pos);
+}
+
+void Button::set_pos(int _x, int _y) {
+    pos.x = _x; pos.y = _y;
+    base->setPosition(pos);
+    text->setPosition(pos);
+}
+
 void Button::set_text(std::string _text) {
     text->setString(_text);
 }
@@ -74,6 +86,9 @@ void Button::set_text_font_size(int _font_size) {
 
 void Button::set_idle_texture(Texture2D* _idle_texture) {
     idle_texture = _idle_texture;
+    base->setTexture(idle_texture);
+    base->setTextureRect(Rect(0, 0, base->getTexture()->getContentSize().width, base->getTexture()->getContentSize().height));
+    if (size.width == 0 && size.height == 0) size = base->getTextureRect().size;
 }
 
 void Button::set_hover_texture(Texture2D* _hover_texture) {
