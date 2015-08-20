@@ -41,7 +41,7 @@ void spawn_test_units() {
     select_current_unit();
 
     for (int n = 0; n < 3; ++n) {
-        items::spawn(items::ITEM_TYPE_CRATE, ((rand() / (float)RAND_MAX) * (4400 - 850)) + 850, 800);
+        items::spawn(items::ITEM_TYPE_GUN, ((rand() / (float)RAND_MAX) * (4400 - 850)) + 850, 800);
     }
 }
 

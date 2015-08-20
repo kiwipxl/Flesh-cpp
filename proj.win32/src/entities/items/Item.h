@@ -30,11 +30,13 @@ public:
 
     void update();
     bool on_contact_run(cc::PhysicsContact& contact);
+    void on_contact_leave(cc::PhysicsContact& contact);
 
     ItemType get_type() { return type; }
 
 private:
     ItemType type;
+    cc::Label* info_label;
 };
 
 extern std::vector<ItemPtr> items;

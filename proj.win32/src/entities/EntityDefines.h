@@ -55,6 +55,7 @@ END_ENTITIES_NS
 namespace cocos2d {
 
     class PhysicsContact;
+    class Label;
 };
 //forward declarations end
 
