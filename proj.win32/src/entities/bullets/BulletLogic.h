@@ -227,9 +227,7 @@ public:
             for (int n = 0; n < items::item_list.size(); ++n) {
                 auto& i = items::item_list[n];
                 if (CHECK_AB_COLLIDE(i->base)) {
-                    if (i->get_type() == items::ITEM_TYPE_CRATE) {
-                        i->take_damage(DAMAGE);
-                    }
+                    i->take_damage(DAMAGE);
                     ref->schedule_removal();
                     return true;
                 }
@@ -293,9 +291,7 @@ public:
             for (int n = 0; n < items::item_list.size(); ++n) {
                 auto& i = items::item_list[n];
                 if (CHECK_AB_COLLIDE(i->base)) {
-                    if (i->get_type() == items::ITEM_TYPE_CRATE) {
-                        i->take_damage(DAMAGE);
-                    }
+                    i->take_damage(DAMAGE);
                     ref->schedule_removal();
                     return true;
                 }
@@ -310,7 +306,7 @@ class BulletLogicC4 : public BulletLogicBase {
 
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_C4;
-    const float MAX_DAMAGE = 8.5f;
+    const float MAX_DAMAGE = 10.0f;
     const float EXPLODE_AFTER_TIME = 5000.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
@@ -354,7 +350,7 @@ public:
             ref->base->setVisible(false);
             ref->base->setPhysicsBody(NULL);
 
-            auto bullet_explosion = cc::ParticleSystemQuad::create("c4_explosion.plist");
+            auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::c4_explosion);
             bullet_explosion->setRadialAccel(-1000.0f);
             bullet_explosion->setSpeed(220.0f);
             bullet_explosion->setDuration(.25f);

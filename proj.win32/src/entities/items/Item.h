@@ -32,6 +32,7 @@ public:
     int gun_type;       //temporary
 
     void update();
+    void cleanup();
     bool on_contact_run(cc::PhysicsContact& contact);
     void on_contact_leave(cc::PhysicsContact& contact);
     void take_damage(float amount);
@@ -41,7 +42,7 @@ public:
 private:
     ItemType type = ITEM_TYPE_NONE;
     cc::Label* info_label;
-    int health = 4;
+    int health = 5.5f;
 };
 
 extern std::vector<ItemPtr> item_list;

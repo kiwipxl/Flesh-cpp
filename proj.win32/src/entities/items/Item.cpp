@@ -1,6 +1,7 @@
 #include "entities/items/Item.h"
 
 #include "assets/Textures.h"
+#include "assets/Particles.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "physics/Physics.h"
@@ -67,6 +68,7 @@ void update() {
         if (!b) continue;
         if (!b->is_removal_scheduled()) b->update();
         if (b->is_removal_scheduled()) {
+            item_list[n]->cleanup();
             item_list.erase(item_list.begin() + n, item_list.begin() + n + 1);
             --n;
         }
@@ -124,6 +126,17 @@ Item::~Item() {
     }
 }
 
+void Item::cleanup() {
+    auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::c4_explosion);
+    bullet_explosion->setRadialAccel(-1000.0f);
+    bullet_explosion->setSpeed(220.0f);
+    bullet_explosion->setDuration(.25f);
+    bullet_explosion->setPosition(base->getPosition());
+    bullet_explosion->setScale(3.0f);
+    root::map_layer->addChild(bullet_explosion, 1);
+    bullet_explosion->setAutoRemoveOnFinish(true);
+}
+
 void Item::update() {
     update_scheduler();
 
@@ -142,7 +155,7 @@ void Item::take_damage(float amount) {
         if (type == ITEM_TYPE_CRATE) {
             for (int n = 0; n < 3; ++n) {
                 auto & i = spawn(ITEM_TYPE_GUN, (rand() / (float)RAND_MAX) * 2.0f, base->getPositionX(), base->getPositionY());
-                i->pbody->setVelocity(Vec2(((rand() / (float)RAND_MAX) * 250.0f) - 125.0f, ((rand() / (float)RAND_MAX) * 400.0f) - 200.0f));
+                i->pbody->setVelocity(Vec2(((rand() / (float)RAND_MAX) * 150.0f) - 75.0f, ((rand() / (float)RAND_MAX) * 200.0f) + 400.0f));
             }
         }
         schedule_removal();
