@@ -149,6 +149,7 @@ public:
     cc::ParticleSystemQuad* fire_trail_particle;
     const float DAMAGE = 6.0f;
     const float EXPLODE_AFTER_TIME = 600.0f;
+    const float WAIT_AFTER_DONE_TIME = 1500.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
 
@@ -188,6 +189,12 @@ public:
     }
 
     virtual ~BulletLogicFireBullet() {
+
+    }
+
+    virtual void cleanup() {
+        gen_explosion();
+
         root::map_layer->removeChild(fire_trail_particle, 1);
 
         auto bullet_explosion = cc::ParticleSystemQuad::create(assets::particles::bullet_explosion);
@@ -197,11 +204,9 @@ public:
         bullet_explosion->setAutoRemoveOnFinish(true);
     }
 
-    virtual void cleanup() {
-        gen_explosion();
-    }
-
     virtual void update() {
+        if (ref->is_removal_countdown()) return;
+
         fire_trail_particle->setPosition(ref->base->getPosition());
 
         if (clock() - start_time >= EXPLODE_AFTER_TIME) {
@@ -229,6 +234,7 @@ public:
                 if (CHECK_AB_COLLIDE(i->base)) {
                     i->take_damage(DAMAGE);
                     ref->schedule_removal();
+
                     return true;
                 }
             }

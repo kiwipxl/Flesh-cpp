@@ -5,6 +5,7 @@
 #include "entities/bullets/Bullet.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
+#include "entities/units/components/BulletAimerComponent.h"
 #include "gui/Button.h"
 #include "StateManager.h"
 
@@ -92,7 +93,12 @@ void init() {
     footer_fire_button->set_pos(750, 40);
     root::ui_layer->addChild(footer_fire_button->base, 10);
     footer_fire_button->set_on_click_callback([]() {
-        int s = 0;
+        if (entities::units::current_unit) {
+            auto& t = entities::units::current_unit->get_component<entities::units::components::BulletAimerComponent>();
+            if (t) {
+                t->fire();
+            }
+        }
     });
 }
 

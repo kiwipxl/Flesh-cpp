@@ -57,13 +57,13 @@ namespace game {
     void update_state(State state) {
         switch (state) {
             case STATE_GAME:
-                gui::game::update();
-                map::camera::update_game_cam();
-
                 entities::items::update();
                 entities::units::update_all_units();
                 entities::bullets::update();
                 terrain->draw();
+
+                gui::game::update();
+                map::camera::update_game_cam();
 
                 if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_D)) {
                     terrain->toggle_debug_geometry();

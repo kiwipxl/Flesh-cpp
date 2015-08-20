@@ -20,6 +20,7 @@ public:
 
     cc::Sprite* weapon_sprite;
     bool aiming = false;
+    bool ready_to_fire = false;
 
     const float MIN_POWER = .5f;
     const float MAX_POWER = 2.0f;
@@ -28,12 +29,14 @@ public:
     void init();
     virtual void update();
     virtual void cleanup();
+    void fire();
     void switch_weapon(items::Weapon* _weapon);
 
     items::Weapon* get_weapon() { return weapon; }
 
 private:
     items::Weapon* weapon = items::weapon_none;
+    float angle = 0;
 };
 
 END_COMPONENTS_NS

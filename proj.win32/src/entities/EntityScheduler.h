@@ -22,18 +22,20 @@ class EntityScheduler {
 
 public:
     void schedule_removal() { removal_scheduled = true; }
-    void schedule_removal_in(float ms) { removal_start_time = clock(); removal_in_ms = ms; }
+    void schedule_removal_in(float ms) { removal_start_time = clock(); removal_in_ms = ms; removal_countdown = true; }
     bool is_removal_scheduled() { return removal_scheduled; }
+    bool is_removal_countdown() { return removal_countdown; }
 
 protected:
     EntityScheduler() { }
 
     bool removal_scheduled = false;
+    bool removal_countdown = false;
     clock_t removal_start_time;
     float removal_in_ms = 0.0f;
 
     void update_scheduler() {
-        if (removal_in_ms != 0.0f && clock() - removal_start_time >= removal_in_ms) schedule_removal();
+        if (removal_countdown && clock() - removal_start_time >= removal_in_ms) schedule_removal();
     }
 };
 
