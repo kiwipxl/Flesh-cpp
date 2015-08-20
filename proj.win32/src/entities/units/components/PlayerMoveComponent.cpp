@@ -40,6 +40,10 @@ bool PlayerMoveComponent::on_contact_run(PhysicsContact& contact) {
     return false;
 }
 
+void PlayerMoveComponent::cleanup() {
+    ref->base->setRotation(0);
+}
+
 void PlayerMoveComponent::update() {
     if (moving) {
         ref->base->setRotation(cos(root::time_since_startup * 15.0f) * 15.0f);

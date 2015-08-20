@@ -43,7 +43,9 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
         //base->setScale(1.1f, 1.1f);
         has_collider = true;
     }
-    base->setPosition(t_data.pos * (t_data.parent->get_scale() / 2.0f));
+    Vec2 pos = t_data.pos * (t_data.parent->get_scale() / 2.0f);
+    //pos.x -= t_data.parent->max_width / 2.0f;
+    base->setPosition(pos);
     base->retain();
     t_group.base->addChild(base, 1);
 

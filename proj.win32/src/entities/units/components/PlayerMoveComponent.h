@@ -26,6 +26,7 @@ public:
     void init();
     virtual bool on_contact_run(cc::PhysicsContact& contact);
     virtual void update();
+    virtual void cleanup();
 };
 
 END_COMPONENTS_NS

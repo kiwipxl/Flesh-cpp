@@ -4,6 +4,7 @@
 #include "entities/units/Unit.h"
 #include "entities/units/components/PlayerMoveComponent.h"
 #include "entities/units/components/BulletAimerComponent.h"
+#include "entities/Crate.h"
 #include "input/KeyboardInput.h"
 #include "gui/GameGUI.h"
 
@@ -38,6 +39,8 @@ void spawn_test_units() {
         create_team_unit(1);
     }
     select_current_unit();
+
+    crates::spawn(all_units[0]->base->getPositionX(), all_units[0]->base->getPositionY() + 400);
 }
 
 void next_unit() {

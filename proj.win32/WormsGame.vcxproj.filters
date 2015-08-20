@@ -52,6 +52,7 @@
     <ClCompile Include="src\gui\GameGUI.cpp" />
     <ClCompile Include="src\entities\units\UnitSpawner.cpp" />
     <ClCompile Include="src\entities\bullets\BulletGroup.cpp" />
+    <ClCompile Include="src\entities\Crate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -105,6 +106,7 @@
     <ClInclude Include="src\entities\units\UnitSpawner.h" />
     <ClInclude Include="src\entities\bullets\BulletGroup.h" />
     <ClInclude Include="src\entities\EntityScheduler.h" />
+    <ClInclude Include="src\entities\Crate.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

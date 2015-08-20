@@ -168,6 +168,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\entities\bullets\Bullet.cpp" />
     <ClCompile Include="src\entities\bullets\BulletGroup.cpp" />
+    <ClCompile Include="src\entities\Crate.cpp" />
     <ClCompile Include="src\entities\units\components\BulletAimerComponent.cpp" />
     <ClCompile Include="src\entities\units\components\ColliderComponent.cpp" />
     <ClCompile Include="src\entities\units\components\PlayerMoveComponent.cpp" />
@@ -213,6 +214,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\debug\PlatformConfig.h" />
     <ClInclude Include="src\entities\bullets\Bullet.h" />
     <ClInclude Include="src\entities\bullets\BulletGroup.h" />
+    <ClInclude Include="src\entities\Crate.h" />
     <ClInclude Include="src\entities\EntityScheduler.h" />
     <ClInclude Include="src\entities\units\components\BulletAimerComponent.h" />
     <ClInclude Include="src\entities\bullets\BulletLogic.h" />

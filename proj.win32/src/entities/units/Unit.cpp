@@ -1,5 +1,7 @@
 #include "entities/units/Unit.h"
 
+#include <physics/CCPhysicsContact.h>
+
 #include "assets/Textures.h"
 #include "debug/Logger.h"
 #include "entities/bullets/Bullet.h"

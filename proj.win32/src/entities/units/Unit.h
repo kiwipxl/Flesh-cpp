@@ -6,8 +6,8 @@ this class temporarily handles all player movement and other things, will be mod
 */
 
 #include <vector>
+
 #include <2d/CCSprite.h>
-#include <physics/CCPhysicsContact.h>
 
 #include "entities/EntityDefines.h"
 #include "entities/EntityScheduler.h"

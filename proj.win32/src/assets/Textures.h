@@ -11,12 +11,22 @@ namespace textures {
 
     namespace cc = cocos2d;
 
+    //characters
     extern cc::Texture2D* duck;
+    extern cc::Texture2D* unit_shadow;
+
+    //ui
     extern cc::Texture2D* captain_health_bar;
     extern cc::Texture2D* minion_health_bar;
-    extern cc::Texture2D* unit_shadow;
+
+    //bullets
     extern cc::Texture2D* c4;
+    
+    //guns
     extern cc::Texture2D* laser_machine_gun;
+
+    //entities
+    extern cc::Texture2D* crate;
 
     extern void init();
 };

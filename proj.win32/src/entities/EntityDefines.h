@@ -13,31 +13,33 @@
 #define BEGIN_BULLETS_NS            namespace bullets {
 #define END_BULLETS_NS              };
 
+#define BEGIN_CRATES_NS             namespace crates {
+#define END_CRATES_NS               };
+
 //forward declarations begin
 BEGIN_ENTITIES_NS
-BEGIN_BULLETS_NS
-class Bullet;
-typedef std::shared_ptr<Bullet> BulletPtr;
+    BEGIN_BULLETS_NS
+        class Bullet;
+        typedef std::shared_ptr<Bullet> BulletPtr;
 
-class BulletGroup;
-typedef std::shared_ptr<BulletGroup> BulletGroupPtr;
-END_BULLETS_NS
+        class BulletGroup;
+        typedef std::shared_ptr<BulletGroup> BulletGroupPtr;
+    END_BULLETS_NS
 
-BEGIN_UNITS_NS
-class Unit;
+    BEGIN_UNITS_NS
+        class Unit;
+        struct UnitTeam;
 
-BEGIN_COMPONENTS_NS
-struct PlayerMoveComponent;
-struct BulletAimerComponent;
-struct ColliderComponent;
+        BEGIN_COMPONENTS_NS
+            struct PlayerMoveComponent;
+            struct BulletAimerComponent;
+            struct ColliderComponent;
 
-typedef std::shared_ptr<PlayerMoveComponent> PlayerMoveComponentPtr;
-typedef std::shared_ptr<BulletAimerComponent> BulletAimerComponentPtr;
-typedef std::shared_ptr<ColliderComponent> ColliderComponentPtr;
-END_COMPONENTS_NS
-
-struct UnitTeam;
-END_UNITS_NS
+            typedef std::shared_ptr<PlayerMoveComponent> PlayerMoveComponentPtr;
+            typedef std::shared_ptr<BulletAimerComponent> BulletAimerComponentPtr;
+            typedef std::shared_ptr<ColliderComponent> ColliderComponentPtr;
+        END_COMPONENTS_NS
+    END_UNITS_NS
 END_ENTITIES_NS
 
 namespace cocos2d {
