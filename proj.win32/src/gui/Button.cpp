@@ -4,6 +4,7 @@
 #include <2d/CCLabelTTF.h>
 
 #include "debug/Logger.h"
+#include "input/MouseInput.h"
 #include "StateManager.h"
 
 using namespace cocos2d;
@@ -47,6 +48,15 @@ Button::~Button() {
 
 void Button::update() {
     update_scheduler();
+
+    Vec2 mpos = input::get_mouse_pos();
+    Size s = Size{ (size.width * base->getScaleX()) / 2.0f, (size.height * base->getScaleY()) / 2.0f };
+    if (mpos.x >= pos.x - s.width && mpos.y <= pos.y + s.height && 
+        mpos.x <= pos.x + s.width && mpos.y >= pos.y - s.height) {
+        if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
+            click_callback();
+        }
+    }
 }
 
 void Button::set_on_click_callback(ButtonClickCallback _callback) {

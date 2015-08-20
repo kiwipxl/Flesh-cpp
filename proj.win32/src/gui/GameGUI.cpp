@@ -89,9 +89,11 @@ void init() {
     footer_fire_button = gui::create_button(0.0f, 0.0f);
     footer_fire_button->set_idle_texture(assets::textures::footer_fire_button);
     footer_fire_button->base->setScale(.4f);
-    footer_fire_button->base->setAnchorPoint(Vec2(0.0f, 0.25f));
-    footer_fire_button->set_pos(670, 0);
+    footer_fire_button->set_pos(750, 40);
     root::ui_layer->addChild(footer_fire_button->base, 10);
+    footer_fire_button->set_on_click_callback([]() {
+        int s = 0;
+    });
 }
 
 void sort_ui_bars() {

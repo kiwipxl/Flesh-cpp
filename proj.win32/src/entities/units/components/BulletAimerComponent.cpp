@@ -61,7 +61,7 @@ void BulletAimerComponent::update() {
     if (aiming) {
         float x = (root::scene->screen_size.width) / 2.0f;
         float y = (root::scene->screen_size.height) / 2.0f;
-        float angle = atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI);
+        float angle = atan2(y - input::get_mouse_pos().y, input::get_mouse_pos().x - x) * (180 / M_PI);
         weapon_sprite->setRotation(angle + weapon->get_rotation_offset());
         if (weapon->is_weapon_flippable()) {
             weapon_sprite->setFlippedY(angle >= -90 && angle <= 90);
