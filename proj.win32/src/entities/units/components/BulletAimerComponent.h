@@ -4,6 +4,7 @@
 #include <2d/CCSprite.h>
 
 #include "entities/units/components/ComponentBase.h"
+#include "entities/items/Weapon.h"
 
 namespace cc = cocos2d;
 
@@ -17,9 +18,8 @@ public:
     BulletAimerComponent(Unit* _ref) { ref = _ref; }
     virtual ~BulletAimerComponent();
 
-    cc::Sprite* weapon;
+    cc::Sprite* weapon_sprite;
     bool aiming = false;
-    int weapon_id;
 
     const float MIN_POWER = .5f;
     const float MAX_POWER = 2.0f;
@@ -28,7 +28,12 @@ public:
     void init();
     virtual void update();
     virtual void cleanup();
-    void equip_weapon(int weapon_id); //temp argument
+    void switch_weapon(items::Weapon* _weapon);
+
+    items::Weapon* get_weapon() { return weapon; }
+
+private:
+    items::Weapon* weapon;
 };
 
 END_COMPONENTS_NS

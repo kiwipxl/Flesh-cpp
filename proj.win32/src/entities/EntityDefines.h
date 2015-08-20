@@ -56,6 +56,7 @@ namespace cocos2d {
 
     class PhysicsContact;
     class Label;
+    class Texture2D;
 };
 //forward declarations end
 

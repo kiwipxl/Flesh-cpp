@@ -47,14 +47,14 @@ void BulletAimerComponent::cleanup() {
     schedule_removal();
 }
 
-void BulletAimerComponent::equip_weapon(int _weapon_id) { //temp argument
-    weapon_id = _weapon_id;
-    if (weapon_id == 0) {
+void BulletAimerComponent::switch_weapon(items::Weapon* _weapon) {
+    weapon = _weapon;
+    if (weapon == items::weapon_flame_fireworks) {
         weapon->setTexture(assets::textures::laser_machine_gun);
         weapon->setScale(.2f);
         rotation_offset = -180;
         flip_weapon = true;
-    }else if (weapon_id == 1) {
+    }else if (weapon == items::weapon_c4) {
         weapon->setTexture(assets::textures::c4);
         weapon->setScale(.55f);
         rotation_offset = 90;
