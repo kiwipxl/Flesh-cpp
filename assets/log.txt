@@ -7,3 +7,9 @@ particle assets loaded
 asset loading completed
 created state 3
 contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2

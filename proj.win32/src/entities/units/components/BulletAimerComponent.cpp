@@ -21,8 +21,6 @@ BEGIN_UNITS_NS
 BEGIN_COMPONENTS_NS
 
 //private
-float rotation_offset = 0;
-bool flip_weapon = false;
 
 //public
 void BulletAimerComponent::init() {
@@ -32,6 +30,8 @@ void BulletAimerComponent::init() {
     weapon_sprite->setAnchorPoint(Vec2(.5f, .5f));
     weapon_sprite->setVisible(false);
     root::map_layer->addChild(weapon_sprite, 4);
+
+    switch_weapon(items::weapon_flame_fireworks);
 }
 
 BulletAimerComponent::~BulletAimerComponent() {
@@ -62,7 +62,7 @@ void BulletAimerComponent::update() {
         float x = (root::scene->screen_size.width) / 2.0f;
         float y = (root::scene->screen_size.height) / 2.0f;
         float angle = atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI);
-        weapon_sprite->setRotation(angle + rotation_offset);
+        weapon_sprite->setRotation(angle + weapon->get_rotation_offset());
         if (weapon->is_weapon_flippable()) {
             weapon_sprite->setFlippedY(angle >= -90 && angle <= 90);
         }

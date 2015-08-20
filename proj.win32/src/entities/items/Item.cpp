@@ -174,6 +174,7 @@ bool Item::on_contact_run(PhysicsContact& contact) {
 
                     if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
                         u->switch_weapon(weapon);
+                        schedule_removal();
                     }
                     return false;
                 }

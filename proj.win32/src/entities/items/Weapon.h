@@ -44,6 +44,7 @@ extern Weapon* weapon_none;
 extern Weapon* weapon_flame_fireworks;
 extern Weapon* weapon_c4;
 
+extern void init_weapons();
 extern Weapon* get_weapon(int index);
 
 END_ITEMS_NS
