@@ -18,6 +18,7 @@ namespace textures {
     //ui
     extern cc::Texture2D* captain_health_bar;
     extern cc::Texture2D* minion_health_bar;
+    extern cc::Texture2D* footer;
 
     //bullets
     extern cc::Texture2D* c4;

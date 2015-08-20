@@ -224,6 +224,16 @@ public:
                     return true;
                 }
             }
+            for (int n = 0; n < items::item_list.size(); ++n) {
+                auto& i = items::item_list[n];
+                if (CHECK_AB_COLLIDE(i->base)) {
+                    if (i->get_type() == items::ITEM_TYPE_CRATE) {
+                        i->take_damage(DAMAGE);
+                    }
+                    ref->schedule_removal();
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -271,6 +281,7 @@ public:
         auto a = contact.getShapeA()->getBody()->getNode();
         auto b = contact.getShapeB()->getBody()->getNode();
 
+        //todo(fef): temporary loops
         if (a && b && CHECK_AB_COLLIDE(ref->base)) {
             for (auto& u : units::all_units) {
                 if (CHECK_AB_COLLIDE(u->base)) {
@@ -279,8 +290,12 @@ public:
                     return true;
                 }
             }
-            for (auto& i : items::item_list) {
+            for (int n = 0; n < items::item_list.size(); ++n) {
+                auto& i = items::item_list[n];
                 if (CHECK_AB_COLLIDE(i->base)) {
+                    if (i->get_type() == items::ITEM_TYPE_CRATE) {
+                        i->take_damage(DAMAGE);
+                    }
                     ref->schedule_removal();
                     return true;
                 }
@@ -359,6 +374,13 @@ public:
                 float force_y = sin(angle) * MAX(radius - dist, 0);
                 u->pbody->setVelocity(cc::Vec2(MIN(force_x * 55.0f, max_vel), MIN(abs(force_x) * 200.0f, max_vel * 8.0f)));
                 u->take_damage((cc::clampf(radius - dist, 0, radius) / radius) * MAX_DAMAGE);
+            }
+            int s = items::item_list.size();
+            for (int n = 0; n < s; ++n) {
+                auto& i = items::item_list[n];
+                float dist = sqrt(pow(i->base->getPositionX() - center.x, 2) + pow(i->base->getPositionY() - center.y, 2));
+                float radius = 250;
+                i->take_damage((cc::clampf(radius - dist, 0, radius) / radius) * MAX_DAMAGE);
             }
         }
     }

@@ -16,6 +16,7 @@ BEGIN_GAME_NS
 Label* turn_time_label;
 clock_t countdown_start;
 Label* power_label;
+Sprite* footer;
 
 //public
 std::vector<UnitUIBar*> unit_ui_bars;
@@ -77,6 +78,11 @@ void init() {
         unit_ui_bars.push_back(ui_bar);
     }
     sort_ui_bars();
+
+    footer = Sprite::createWithTexture(assets::textures::footer);
+    footer->setScale(root::scene->screen_size.width / footer->getContentSize().width);
+    footer->setAnchorPoint(Vec2(0.0f, 0.0f));
+    root::ui_layer->addChild(footer);
 }
 
 void sort_ui_bars() {

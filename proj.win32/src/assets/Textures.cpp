@@ -19,6 +19,7 @@ namespace textures {
     //ui
     Texture2D* captain_health_bar;
     Texture2D* minion_health_bar;
+    Texture2D* footer;
 
     //bullets
     Texture2D* c4;
@@ -37,6 +38,7 @@ namespace textures {
         load_image(duck, "characters/duck.png");
         load_image(captain_health_bar, "ui/captain_health_bar.png");
         load_image(minion_health_bar, "ui/minion_health_bar.png");
+        load_image(footer, "ui/footer.png");
         load_image(unit_shadow, "characters/unit_shadow.png");
         load_image(c4, "bullets/c4.png");
         load_image(laser_machine_gun, "guns/laser_machine_gun.png");

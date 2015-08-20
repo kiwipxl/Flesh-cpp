@@ -27,7 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
 	//turn on debugging stats (fps, gl verts, ect)
-	director->setDisplayStats(true);
+	director->setDisplayStats(false);
 
 	//set ms per frame (fps)
     director->setAnimationInterval(1.0f / 60.0f);
