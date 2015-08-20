@@ -4,6 +4,7 @@
 #include "assets/Particles.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
+#include "input/KeyboardInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
 #include "StateManager.h"
@@ -175,6 +176,10 @@ bool Item::on_contact_run(PhysicsContact& contact) {
                 if (CHECK_AB_COLLIDE(u->base)) {
                     info_label->setVisible(true);
                     info_label->setString("press X to pickup");
+
+                    if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
+                        u->equip_weapon(gun_type);
+                    }
                     return false;
                 }
             }

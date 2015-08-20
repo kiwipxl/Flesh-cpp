@@ -147,7 +147,7 @@ class BulletLogicFireBullet : public BulletLogicBase {
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_FIRE_BULLET;
     cc::ParticleSystemQuad* fire_trail_particle;
-    const float DAMAGE = 4.0f;
+    const float DAMAGE = 6.0f;
     const float EXPLODE_AFTER_TIME = 600.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
@@ -243,7 +243,7 @@ class BulletLogicMiniFireBullet : public BulletLogicBase {
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_MINI_FIRE_BULLET;
     cc::ParticleSystemQuad* fire_trail_particle;
-    const float DAMAGE = 2.5f;
+    const float DAMAGE = 2.0f;
 
     BulletLogicMiniFireBullet(Bullet& bullet_ref, float angle, float power) : BulletLogicBase(bullet_ref) {
         create_physics_body_box(32.0f, 32.0f);

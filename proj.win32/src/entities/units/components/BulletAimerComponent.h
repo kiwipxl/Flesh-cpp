@@ -19,6 +19,7 @@ public:
 
     cc::Sprite* weapon;
     bool aiming = false;
+    int weapon_id;
 
     const float MIN_POWER = .5f;
     const float MAX_POWER = 2.0f;
@@ -27,6 +28,7 @@ public:
     void init();
     virtual void update();
     virtual void cleanup();
+    void equip_weapon(int weapon_id); //temp argument
 };
 
 END_COMPONENTS_NS

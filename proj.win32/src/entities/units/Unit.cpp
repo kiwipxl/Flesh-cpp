@@ -88,6 +88,13 @@ Unit::~Unit() {
     components.clear();
 }
 
+void Unit::equip_weapon(int weapon_id) { //temp argument
+    auto& c = get_component<components::BulletAimerComponent>();
+    if (c) {
+        c->equip_weapon(weapon_id);
+    }
+}
+
 void Unit::update() {
     update_scheduler();
 

@@ -28,12 +28,12 @@ bool flip_weapon = false;
 void BulletAimerComponent::init() {
     type = UNIT_COMPONENT_TYPE_BULLET_AIMER;
 
-    weapon = Sprite::createWithTexture(assets::textures::c4);
+    weapon = Sprite::create();
     weapon->setAnchorPoint(Vec2(.5f, .5f));
     weapon->setVisible(false);
-    weapon->setScale(.55f);
-    rotation_offset = 90;
     root::map_layer->addChild(weapon, 4);
+
+    equip_weapon(0);
 }
 
 BulletAimerComponent::~BulletAimerComponent() {
@@ -47,6 +47,22 @@ void BulletAimerComponent::cleanup() {
     schedule_removal();
 }
 
+void BulletAimerComponent::equip_weapon(int _weapon_id) { //temp argument
+    weapon_id = _weapon_id;
+    if (weapon_id == 0) {
+        weapon->setTexture(assets::textures::laser_machine_gun);
+        weapon->setScale(.2f);
+        rotation_offset = -180;
+        flip_weapon = true;
+    }else if (weapon_id == 1) {
+        weapon->setTexture(assets::textures::c4);
+        weapon->setScale(.55f);
+        rotation_offset = 90;
+        flip_weapon = false;
+    }
+    weapon->setTextureRect(Rect(0, 0, weapon->getTexture()->getContentSize().width, weapon->getTexture()->getContentSize().height));
+}
+
 void BulletAimerComponent::update() {
     gui::game::set_power_text(power);
 
@@ -55,9 +71,10 @@ void BulletAimerComponent::update() {
     if (aiming) {
         float x = (root::scene->screen_size.width) / 2.0f;
         float y = (root::scene->screen_size.height) / 2.0f;
-        weapon->setRotation(atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI) + rotation_offset);
+        float angle = atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI);
+        weapon->setRotation(angle + rotation_offset);
         if (flip_weapon) {
-            weapon->setFlippedY(weapon->getRotation() + rotation_offset >= 90 && weapon->getRotation() + rotation_offset <= 270);
+            weapon->setFlippedY(angle >= -90 && angle <= 90);
         }
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_W)) {
@@ -71,7 +88,14 @@ void BulletAimerComponent::update() {
         if (input::get_mouse_button_pressed(MOUSE_BUTTON_LEFT)) {
             auto g = bullets::create_group(ref);
             auto b = g->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
-            b->add_logic_fire_bullet(-weapon->getRotation() + 90, power);
+            float r = -angle;
+
+            if (weapon_id == 0) {
+                b->add_logic_fire_bullet(r, power);
+            }else if (weapon_id == 1) {
+                b->add_logic_c4(r, power);
+            }
+
             gui::game::wait_for_bullet(g);
             map::camera::follow_bullet(g);
 
