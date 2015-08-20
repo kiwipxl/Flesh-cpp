@@ -24,7 +24,7 @@ using namespace cocos2d;
 //private
 
 //public
-//-- begin terrain class --
+//-- begin Terrain class --
 
 Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     terrain_data = &t_data;
@@ -145,7 +145,7 @@ void Terrain::draw() {
     Director::getInstance()->getRenderer()->addCommand(&edge_tris_cmd);
 }
 
-//-- end terrain class --
+//-- end Terrain class --
 
 //-- begin TerrainGroup class --
 

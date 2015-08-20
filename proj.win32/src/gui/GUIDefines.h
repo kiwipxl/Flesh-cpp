@@ -22,6 +22,7 @@ END_GUI_NS
 namespace cocos2d {
 
     class Texture2D;
+    class Sprite;
 };
 //forward declares end
 

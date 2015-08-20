@@ -42,22 +42,30 @@ MessageBox::~MessageBox() {
     close();
 }
 
-void MessageBox::add_button(Button& button) {
-    container->addChild(button.button);
-    buttons.push_back(&button);
-}
-
-void MessageBox::add_button(std::string button_text, int x, int y, int font_size, ButtonClickCallback on_click) {
-    Button* button = new Button(button_text, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, font_size, on_click);
-    container->addChild(button->button);
+void MessageBox::add_button(ButtonPtr button) {
+    container->addChild(button->get_base_sprite());
     buttons.push_back(button);
 }
 
-void MessageBox::stack_button(std::string button_text, int font_size, ButtonClickCallback on_click) {
+void MessageBox::add_button(std::string _button_text, int _x, int _y, int _font_size, ButtonClickCallback _on_click_callback) {
+    ButtonPtr button(new Button(_x, _y));
+    button->set_text(_button_text);
+    button->set_text_font_size(_font_size);
+    button->set_on_click_callback(_on_click_callback);
+    container->addChild(button->get_base_sprite());
+    buttons.push_back(button);
+}
+
+void MessageBox::stack_button(std::string _button_text, int _font_size, ButtonClickCallback _on_click_callback) {
     int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 55) - (buttons.size() * 85);
     int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
-    Button* button = new Button(button_text, x, y, 70, 34, font_size, on_click);
-    container->addChild(button->button);
+
+    ButtonPtr button(new Button(x, y));
+    button->set_text(_button_text);
+    button->set_text_font_size(_font_size);
+    button->set_on_click_callback(_on_click_callback);
+    button->set_size(70, 34);
+    container->addChild(button->get_base_sprite());
     buttons.push_back(button);
 }
     
@@ -111,8 +119,8 @@ MessageBoxPtr show_loading_message_box(std::string title, std::string message) {
 void close_message_box() {
     if (current_message_box != nullptr) current_message_box.reset();
 }
-    
-void close_message_box_callback(Ref* r) {
+
+void close_message_box_callback() {
     close_message_box();
 }
 

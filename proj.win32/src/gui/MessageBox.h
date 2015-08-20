@@ -21,7 +21,7 @@ BEGIN_GUI_NS
 namespace cc = cocos2d;
 
 //default callback used for messagebox class
-extern void close_message_box_callback(cc::Ref* r);
+extern void close_message_box_callback();
 
 class MessageBox {
 
@@ -34,14 +34,14 @@ class MessageBox {
         cc::ui::Text* message_text;
         cc::ui::Text* message_title;
 
-        std::vector<Button*> buttons;
+        std::vector<ButtonPtr> buttons;
         bool closed = false;
 
-        void add_button(Button& button);
-        void add_button(std::string button_text, int x, int y, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
-                        ButtonClickCallback on_click = close_message_box_callback);
-        void stack_button(std::string button_text, int font_size = DEFAULT_BUTTON_FONT_SIZE, 
-                            ButtonClickCallback on_click = close_message_box_callback);
+        void add_button(ButtonPtr button);
+        void add_button(std::string _button_text, int _x, int _y, int _font_size = DEFAULT_BUTTON_FONT_SIZE,
+                        ButtonClickCallback _on_click_callback = close_message_box_callback);
+        void stack_button(std::string _button_text, int _font_size = DEFAULT_BUTTON_FONT_SIZE, 
+                          ButtonClickCallback _on_click_callback = close_message_box_callback);
             
         cc::Sprite* add_spinner();
 
