@@ -16,6 +16,7 @@ logic components can be added or removed to a bullet object
 #include "entities/EntityDefines.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
+#include "entities/items/Item.h"
 #include "states/Game.h"
 #include "StateManager.h"
 
@@ -274,6 +275,12 @@ public:
             for (auto& u : units::all_units) {
                 if (CHECK_AB_COLLIDE(u->base)) {
                     u->take_damage(DAMAGE);
+                    ref->schedule_removal();
+                    return true;
+                }
+            }
+            for (auto& i : items::item_list) {
+                if (CHECK_AB_COLLIDE(i->base)) {
                     ref->schedule_removal();
                     return true;
                 }

@@ -39,7 +39,7 @@ private:
     cc::Label* info_label;
 };
 
-extern std::vector<ItemPtr> items;
+extern std::vector<ItemPtr> item_list;
 
 extern void init();
 extern void deinit();

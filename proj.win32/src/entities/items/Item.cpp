@@ -4,6 +4,7 @@
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "physics/Physics.h"
+#include "states/Game.h"
 #include "StateManager.h"
 
 using namespace cocos2d;
@@ -14,7 +15,7 @@ BEGIN_ITEMS_NS
 //private
 
 //public
-std::vector<ItemPtr> items;
+std::vector<ItemPtr> item_list;
 
 bool on_contact_run(PhysicsContact& contact) {
     auto a = contact.getShapeA()->getBody()->getNode();
@@ -22,8 +23,8 @@ bool on_contact_run(PhysicsContact& contact) {
 
     if (a && b) {
         bool do_collide = false;
-        for (int i = 0; i < items.size(); ++i) {
-            if (items[i]->on_contact_run(contact)) do_collide = true;
+        for (int i = 0; i < item_list.size(); ++i) {
+            if (item_list[i]->on_contact_run(contact)) do_collide = true;
         }
         return do_collide;
     }
@@ -36,8 +37,8 @@ void on_contact_leave(PhysicsContact& contact) {
     auto b = contact.getShapeB()->getBody()->getNode();
 
     if (a && b) {
-        for (int i = 0; i < items.size(); ++i) {
-            items[i]->on_contact_leave(contact);
+        for (int i = 0; i < item_list.size(); ++i) {
+            item_list[i]->on_contact_leave(contact);
         }
     }
 }
@@ -54,17 +55,17 @@ void deinit() {
 
 ItemPtr spawn(ItemType _type, int _x, int _y) {
     ItemPtr c(new Item(_type, _x, _y));
-    items.push_back(c);
+    item_list.push_back(c);
     return c;
 }
 
 void update() {
-    for (int n = 0; n < items.size(); ++n) {
-        auto& b = items[n];
+    for (int n = 0; n < item_list.size(); ++n) {
+        auto& b = item_list[n];
         if (!b) continue;
         if (!b->is_removal_scheduled()) b->update();
         if (b->is_removal_scheduled()) {
-            items.erase(items.begin() + n, items.begin() + n + 1);
+            item_list.erase(item_list.begin() + n, item_list.begin() + n + 1);
             --n;
         }
     }
