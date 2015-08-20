@@ -4,6 +4,7 @@
 #include "assets/Particles.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
+#include "entities/items/Weapon.h"
 #include "input/KeyboardInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
@@ -57,8 +58,8 @@ void deinit() {
     physics::remove_on_contact_leave(on_contact_leave);
 }
 
-ItemPtr spawn(ItemType _type, int _gun_type, int _x, int _y) {
-    ItemPtr c(new Item(_type, _gun_type, _x, _y));
+ItemPtr spawn(ItemType _type, int _x, int _y, items::Weapon* _weapon) {
+    ItemPtr c(new Item(_type, _x, _y, _weapon));
     item_list.push_back(c);
     return c;
 }
@@ -77,9 +78,9 @@ void update() {
 }
 
 //-- begin Item class --
-Item::Item(ItemType _type, int _gun_type, int _x, int _y) {
+Item::Item(ItemType _type, int _x, int _y, items::Weapon* _weapon) {
     type = _type;
-    gun_type = _gun_type;
+    weapon = _weapon;
 
     base = Sprite::create();
     base->setPosition(_x, _y);
@@ -91,14 +92,8 @@ Item::Item(ItemType _type, int _gun_type, int _x, int _y) {
         base->setScale(.2f);
         break;
     case ITEM_TYPE_GUN:
-        //very temporary if statement
-        if (gun_type == 0) {
-            base->setTexture(assets::textures::laser_machine_gun);
-            base->setScale(.2f);
-        }else if (gun_type == 1) {
-            base->setTexture(assets::textures::c4);
-            base->setScale(.55f);
-        }
+        base->setTexture(weapon->get_texture());
+        base->setScale(weapon->get_scale());
         info_label = Label::create("0", "fonts/Roboto-Light.ttf", 20.0f);
         root::map_layer->addChild(info_label);
         info_label->setVisible(false);
@@ -155,7 +150,7 @@ void Item::take_damage(float amount) {
     if (health <= 0) {
         if (type == ITEM_TYPE_CRATE) {
             for (int n = 0; n < 3; ++n) {
-                auto & i = spawn(ITEM_TYPE_GUN, (rand() / (float)RAND_MAX) * 2.0f, base->getPositionX(), base->getPositionY());
+                auto & i = spawn(ITEM_TYPE_GUN, base->getPositionX(), base->getPositionY(), items::get_weapon((rand() / (float)RAND_MAX) * 2.0f));
                 i->pbody->setVelocity(Vec2(((rand() / (float)RAND_MAX) * 150.0f) - 75.0f, ((rand() / (float)RAND_MAX) * 200.0f) + 400.0f));
             }
         }
@@ -178,7 +173,7 @@ bool Item::on_contact_run(PhysicsContact& contact) {
                     info_label->setString("press X to pickup");
 
                     if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
-                        u->equip_weapon(gun_type);
+                        u->switch_weapon(weapon);
                     }
                     return false;
                 }

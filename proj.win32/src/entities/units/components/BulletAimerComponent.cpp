@@ -28,12 +28,10 @@ bool flip_weapon = false;
 void BulletAimerComponent::init() {
     type = UNIT_COMPONENT_TYPE_BULLET_AIMER;
 
-    weapon = Sprite::create();
-    weapon->setAnchorPoint(Vec2(.5f, .5f));
-    weapon->setVisible(false);
-    root::map_layer->addChild(weapon, 4);
-
-    equip_weapon(0);
+    weapon_sprite = Sprite::create();
+    weapon_sprite->setAnchorPoint(Vec2(.5f, .5f));
+    weapon_sprite->setVisible(false);
+    root::map_layer->addChild(weapon_sprite, 4);
 }
 
 BulletAimerComponent::~BulletAimerComponent() {
@@ -43,38 +41,30 @@ BulletAimerComponent::~BulletAimerComponent() {
 void BulletAimerComponent::cleanup() {
     if (is_removal_scheduled()) return;
 
-    root::map_layer->removeChild(weapon);
+    root::map_layer->removeChild(weapon_sprite);
     schedule_removal();
 }
 
 void BulletAimerComponent::switch_weapon(items::Weapon* _weapon) {
     weapon = _weapon;
-    if (weapon == items::weapon_flame_fireworks) {
-        weapon->setTexture(assets::textures::laser_machine_gun);
-        weapon->setScale(.2f);
-        rotation_offset = -180;
-        flip_weapon = true;
-    }else if (weapon == items::weapon_c4) {
-        weapon->setTexture(assets::textures::c4);
-        weapon->setScale(.55f);
-        rotation_offset = 90;
-        flip_weapon = false;
-    }
-    weapon->setTextureRect(Rect(0, 0, weapon->getTexture()->getContentSize().width, weapon->getTexture()->getContentSize().height));
+    weapon_sprite->setTexture(weapon->get_texture());
+    weapon_sprite->setScale(weapon->get_scale());
+    weapon_sprite->setTextureRect(Rect(0, 0, weapon_sprite->getTexture()->getContentSize().width, 
+                                             weapon_sprite->getTexture()->getContentSize().height));
 }
 
 void BulletAimerComponent::update() {
     gui::game::set_power_text(power);
 
-    weapon->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
+    weapon_sprite->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
 
     if (aiming) {
         float x = (root::scene->screen_size.width) / 2.0f;
         float y = (root::scene->screen_size.height) / 2.0f;
         float angle = atan2(-input::get_mouse_pos().y - y, input::get_mouse_pos().x - x) * (180 / M_PI);
-        weapon->setRotation(angle + rotation_offset);
-        if (flip_weapon) {
-            weapon->setFlippedY(angle >= -90 && angle <= 90);
+        weapon_sprite->setRotation(angle + rotation_offset);
+        if (weapon->is_weapon_flippable()) {
+            weapon_sprite->setFlippedY(angle >= -90 && angle <= 90);
         }
 
         if (input::key_down(EventKeyboard::KeyCode::KEY_W)) {
@@ -90,9 +80,9 @@ void BulletAimerComponent::update() {
             auto b = g->create_bullet(ref->base->getPositionX(), ref->base->getPositionY());
             float r = -angle;
 
-            if (weapon_id == 0) {
+            if (weapon == items::weapon_flame_fireworks) {
                 b->add_logic_fire_bullet(r, power);
-            }else if (weapon_id == 1) {
+            }else if (weapon == items::weapon_c4) {
                 b->add_logic_c4(r, power);
             }
 
@@ -105,7 +95,7 @@ void BulletAimerComponent::update() {
 
     if (input::get_mouse_button_pressed(MOUSE_BUTTON_RIGHT)) {
         aiming = !aiming;
-        weapon->setVisible(aiming);
+        weapon_sprite->setVisible(aiming);
     }
 }
 END_COMPONENTS_NS

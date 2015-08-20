@@ -88,10 +88,10 @@ Unit::~Unit() {
     components.clear();
 }
 
-void Unit::equip_weapon(int weapon_id) { //temp argument
+void Unit::switch_weapon(items::Weapon* _weapon) {
     auto& c = get_component<components::BulletAimerComponent>();
     if (c) {
-        c->equip_weapon(weapon_id);
+        c->switch_weapon(_weapon);
     }
 }
 

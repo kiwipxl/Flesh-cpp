@@ -40,7 +40,7 @@ class Unit : public EntityScheduler {
         void update();
 
         void take_damage(float damage);
-        void equip_weapon(int weapon_id); //temp argument
+        void switch_weapon(items::Weapon* weapon);
 
         float get_health() { return health; }
         float get_max_health() { return max_health; }

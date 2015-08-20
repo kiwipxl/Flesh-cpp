@@ -1,6 +1,8 @@
 #ifndef _ENTITY_DEFINES_H_
 #define _ENTITY_DEFINES_H_
 
+#include <memory>
+
 /*
 contains all namespace declarations for all entity modules as well as forward declares and any other
 relevant defines
@@ -49,6 +51,8 @@ BEGIN_ENTITIES_NS
     BEGIN_ITEMS_NS
         class Item;
         typedef std::shared_ptr<Item> ItemPtr;
+
+        class Weapon;
     END_ITEMS_NS
 END_ENTITIES_NS
 

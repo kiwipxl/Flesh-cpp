@@ -33,7 +33,7 @@ public:
     items::Weapon* get_weapon() { return weapon; }
 
 private:
-    items::Weapon* weapon;
+    items::Weapon* weapon = items::weapon_none;
 };
 
 END_COMPONENTS_NS

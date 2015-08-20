@@ -24,12 +24,11 @@ enum ItemType {
 class Item : public EntityScheduler {
 
 public:
-    Item(ItemType _type, int _gun_type, int _x, int _y);
+    Item(ItemType _type, int _x, int _y, items::Weapon* _weapon = NULL);
     ~Item();
 
     cc::Sprite* base;
     cc::PhysicsBody* pbody;
-    int gun_type;       //temporary
 
     void update();
     void cleanup();
@@ -43,13 +42,14 @@ private:
     ItemType type = ITEM_TYPE_NONE;
     cc::Label* info_label;
     int health = 5.5f;
+    items::Weapon* weapon;
 };
 
 extern std::vector<ItemPtr> item_list;
 
 extern void init();
 extern void deinit();
-extern ItemPtr spawn(ItemType _type, int _gun_type, int _x, int _y);
+extern ItemPtr spawn(ItemType _type, int _x, int _y, items::Weapon* _weapon = NULL);
 extern void update();
 
 END_ITEMS_NS
