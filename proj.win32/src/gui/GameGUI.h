@@ -7,6 +7,7 @@
 
 #include "entities/EntityDefines.h"
 #include "gui/GUIDefines.h"
+#include "gui/Button.h"
 
 namespace cc = cocos2d;
 

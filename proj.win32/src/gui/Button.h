@@ -8,8 +8,6 @@ class to create gui buttons more easier with extra functionality
 #include <memory>
 #include <functional>
 
-#include <ui/UIButton.h>
-
 #include "GUIDefines.h"
 
 BEGIN_GUI_NS
@@ -20,21 +18,34 @@ BEGIN_GUI_NS
 
 namespace cc = cocos2d;
 
-typedef cc::ui::Widget::ccWidgetClickCallback ButtonClickCallback;
-
 class Button {
 
-    public:
-        ~Button();
-        Button(std::string text, int x, int y, int width = DEFAULT_BUTTON_WIDTH, int height = DEFAULT_BUTTON_HEIGHT, 
-                int font_size = DEFAULT_BUTTON_FONT_SIZE, ButtonClickCallback on_click = nullptr);
-        Button(std::string text, int x, int y, 
-                int font_size = DEFAULT_BUTTON_FONT_SIZE, ButtonClickCallback on_click = nullptr);
+public:
+    ~Button();
+    Button(int _x, int _y);
 
-        cc::ui::Button* button;
+    void set_text(std::string _text);
+    void set_text_font_size(int _font_size);
 
-        void create(std::string text, int x, int y, int width, int height, int font_size, ButtonClickCallback on_click);
-        void add_to_scene();
+    void set_idle_texture(cc::Texture2D* _idle_texture);
+    void set_hover_texture(cc::Texture2D* _hover_texture);
+    void set_click_texture(cc::Texture2D* _click_texture);
+    void set_disabled_texture(cc::Texture2D* _disabled_texture);
+    void set_textures(cc::Texture2D* _idle_texture, cc::Texture2D* _hover_texture,
+                      cc::Texture2D* _click_texture, cc::Texture2D* _disabled_texture);
+    void set_textures(cc::Texture2D* _idle_texture, cc::Texture2D* _click_texture);
+
+    cc::Sprite* get_base_sprite() { return base; }
+    cc::Label* get_text_label() { return text; }
+
+private:
+    cc::Sprite* base;
+    cc::Label* text;
+
+    cc::Texture2D* idle_texture;
+    cc::Texture2D* hover_texture;
+    cc::Texture2D* click_texture;
+    cc::Texture2D* disabled_texture;
 };
 
 END_GUI_NS

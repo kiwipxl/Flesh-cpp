@@ -128,7 +128,7 @@ void Item::cleanup() {
     bullet_explosion->setSpeed(220.0f);
     bullet_explosion->setDuration(.25f);
     bullet_explosion->setPosition(base->getPosition());
-    bullet_explosion->setScale(3.0f);
+    bullet_explosion->setScale(type == ITEM_TYPE_CRATE ? 3.0f : .5f);
     root::map_layer->addChild(bullet_explosion, 1);
     bullet_explosion->setAutoRemoveOnFinish(true);
 }
@@ -151,7 +151,7 @@ void Item::take_damage(float amount) {
         if (type == ITEM_TYPE_CRATE) {
             for (int n = 0; n < 3; ++n) {
                 auto & i = spawn(ITEM_TYPE_GUN, base->getPositionX(), base->getPositionY(), items::get_weapon((rand() / (float)RAND_MAX) * 2.0f));
-                i->pbody->setVelocity(Vec2(((rand() / (float)RAND_MAX) * 150.0f) - 75.0f, ((rand() / (float)RAND_MAX) * 200.0f) + 400.0f));
+                i->pbody->setVelocity(Vec2(((rand() / (float)RAND_MAX) * 150.0f) - 75.0f, ((rand() / (float)RAND_MAX) * 800.0f) + 400.0f));
             }
         }
         schedule_removal();
@@ -170,7 +170,7 @@ bool Item::on_contact_run(PhysicsContact& contact) {
             for (auto& u : units::all_units) {
                 if (CHECK_AB_COLLIDE(u->base)) {
                     info_label->setVisible(true);
-                    info_label->setString("press X to pickup");
+                    info_label->setString(sstream_cstr("press X to pickup " << weapon->get_name()));
 
                     if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
                         u->switch_weapon(weapon);

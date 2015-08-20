@@ -21,13 +21,13 @@ Weapon* weapon_c4;
 
 void init_weapons() {
     weapon_none = new Weapon{ "empty", NULL, 0, 0, false };
-    weapon_flame_fireworks = new Weapon{ "Flame Fireworks", assets::textures::laser_machine_gun, .2f, -180, true };
+    weapon_flame_fireworks = new Weapon{ "fireworks gun", assets::textures::laser_machine_gun, .2f, -180, true };
     weapon_c4 = new Weapon{ "C4", assets::textures::c4, .55f, 90, false };
 }
 
 Weapon* get_weapon(int index) {
     cf_assert(index < 0 || index >= weapon_list.size(), sstream_cstr("failed to get weapon, index " << index << " out of range"));
-    return weapon_list[index];
+    return weapon_list[index + 1];
 }
 
 //-- begin Weapon class --

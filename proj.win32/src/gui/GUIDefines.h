@@ -14,7 +14,15 @@ typedef std::shared_ptr<MessageBox> MessageBoxPtr;
 
 class Button;
 typedef std::shared_ptr<Button> ButtonPtr;
+
+typedef std::function<void()> ButtonClickCallback;
+
 END_GUI_NS
+
+namespace cocos2d {
+
+    class Texture2D;
+};
 //forward declares end
 
 #endif
