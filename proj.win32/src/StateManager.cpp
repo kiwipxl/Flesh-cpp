@@ -43,6 +43,7 @@ namespace root {
     void init_root(SceneManager* scene_ref) {
         scene = scene_ref;
         scene->setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        srand(time(NULL));
 
         ui_layer = Node::create();
         scene->addChild(ui_layer);

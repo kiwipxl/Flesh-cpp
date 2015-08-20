@@ -5,7 +5,7 @@
 #include "assets/Assets.h"
 #include "entities/bullets/Bullet.h"
 #include "entities/bullets/BulletGroup.h"
-#include "entities/Crate.h"
+#include "entities/items/Item.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "gui/GameGUI.h"
@@ -37,7 +37,7 @@ namespace game {
 
                 entities::bullets::init();
                 entities::units::spawn_test_units();
-                entities::crates::init();
+                entities::items::init();
 
                 gui::game::init();
 
@@ -60,7 +60,7 @@ namespace game {
                 gui::game::update();
                 map::camera::update_game_cam();
 
-                entities::crates::update();
+                entities::items::update();
                 entities::units::update_all_units();
                 entities::bullets::update();
                 terrain->draw();

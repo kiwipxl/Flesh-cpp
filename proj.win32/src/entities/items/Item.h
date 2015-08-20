@@ -1,5 +1,5 @@
-#ifndef _CRATE_H_
-#define _CRATE_H_
+#ifndef _ITEM_H_
+#define _ITEM_H_
 
 #include <vector>
 
@@ -12,28 +12,39 @@
 namespace cc = cocos2d;
 
 BEGIN_ENTITIES_NS
-BEGIN_CRATES_NS
+BEGIN_ITEMS_NS
 
-class Crate : public EntityScheduler {
+enum ItemType {
+
+    ITEM_TYPE_CRATE, 
+    ITEM_TYPE_GUN
+};
+
+class Item : public EntityScheduler {
 
 public:
-    Crate(int _x, int _y);
+    Item(ItemType _type, int _x, int _y);
 
     cc::Sprite* base;
     cc::PhysicsBody* pbody;
 
     void update();
     bool on_contact_run(cc::PhysicsContact& contact);
+
+    ItemType get_type() { return type; }
+
+private:
+    ItemType type;
 };
 
-extern std::vector<Crate*> crates;
+extern std::vector<ItemPtr> items;
 
 extern void init();
 extern void deinit();
-extern void spawn(int _x, int _y);
+extern ItemPtr spawn(ItemType _type, int _x, int _y);
 extern void update();
 
-END_CRATES_NS
+END_ITEMS_NS
 END_ENTITIES_NS
 
 #endif

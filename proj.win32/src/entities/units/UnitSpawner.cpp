@@ -4,7 +4,7 @@
 #include "entities/units/Unit.h"
 #include "entities/units/components/PlayerMoveComponent.h"
 #include "entities/units/components/BulletAimerComponent.h"
-#include "entities/Crate.h"
+#include "entities/items/Item.h"
 #include "input/KeyboardInput.h"
 #include "gui/GameGUI.h"
 
@@ -40,7 +40,9 @@ void spawn_test_units() {
     }
     select_current_unit();
 
-    crates::spawn(all_units[0]->base->getPositionX(), all_units[0]->base->getPositionY() + 400);
+    for (int n = 0; n < 3; ++n) {
+        items::spawn(items::ITEM_TYPE_CRATE, ((rand() / (float)RAND_MAX) * (4400 - 850)) + 850, 800);
+    }
 }
 
 void next_unit() {
