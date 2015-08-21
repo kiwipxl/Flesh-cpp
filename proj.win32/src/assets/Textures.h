@@ -30,6 +30,9 @@ namespace textures {
     //entities
     extern cc::Texture2D* crate;
 
+    //terrain
+    extern cc::Texture2D* jungle_background;
+
     extern void init();
 };
 

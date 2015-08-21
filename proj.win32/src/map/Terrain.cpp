@@ -55,7 +55,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     edge_tris.verts = &t_data.points[0];
     edge_tris.vertCount = t_data.points.size();
 
-    Texture2D* edge_t = Director::getInstance()->getTextureCache()->addImage("ForestEdges.png");
+    Texture2D* edge_t = Director::getInstance()->getTextureCache()->addImage("terrain/ForestEdges.png");
     edge_t->retain();
     edge_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
@@ -70,7 +70,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     fill_tris.verts = &t_data.points[0];
     fill_tris.vertCount = t_data.points.size();
 
-    Texture2D* fill_t = Director::getInstance()->getTextureCache()->addImage("ForestFill.png");
+    Texture2D* fill_t = Director::getInstance()->getTextureCache()->addImage("terrain/ForestFill.png");
     fill_t->retain();
     fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 

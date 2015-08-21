@@ -18,6 +18,7 @@ std::vector<Unit*> all_units;
 std::vector<UnitTeam*> unit_teams;
 Unit* current_unit;
 int current_unit_index;
+int current_turn = 0;
 
 void create_team_unit(int team_id) {
     auto unit = new Unit(unit_teams[team_id], (unit_teams[team_id]->num_members == 0) ? UNIT_TYPE_CAPTAIN : UNIT_TYPE_MINION);
@@ -53,6 +54,11 @@ void next_unit() {
     if (current_unit_index >= all_units.size()) current_unit_index = 0;
 
     select_current_unit();
+
+    if (current_turn % 3 == 0) {
+        auto& i = items::spawn(items::ITEM_TYPE_CRATE, ((rand() / (float)RAND_MAX) * (4400 - 850)) + 850, 800);
+    }
+    ++current_turn;
 }
 
 void select_current_unit() {

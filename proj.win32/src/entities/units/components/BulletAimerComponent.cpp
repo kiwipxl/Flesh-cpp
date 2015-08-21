@@ -31,7 +31,7 @@ void BulletAimerComponent::init() {
     weapon_sprite->setVisible(false);
     root::map_layer->addChild(weapon_sprite, 4);
 
-    switch_weapon(items::weapon_flame_fireworks);
+    switch_weapon(items::weapon_c4);
 }
 
 BulletAimerComponent::~BulletAimerComponent() {

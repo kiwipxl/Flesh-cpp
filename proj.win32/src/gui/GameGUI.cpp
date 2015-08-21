@@ -23,7 +23,7 @@ gui::ButtonPtr footer_fire_button;
 
 //public
 std::vector<UnitUIBar*> unit_ui_bars;
-int starting_countdown_seconds = 10;
+int starting_countdown_seconds = 20;
 int current_countdown_seconds;
 extern bool countdown_paused = false;
 
