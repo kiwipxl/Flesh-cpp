@@ -41,8 +41,10 @@ extern void set_power_text(float power);
 extern void reset_countdown();
 extern void wait_for_bullet(entities::bullets::BulletGroupPtr bullet);
 
-extern void init();
+extern void init_ui_bars();
+extern void init_footer();
 extern void sort_ui_bars();
+extern void update_inventory();
 extern void remove_ui_bar(entities::units::Unit* unit);
 extern void update();
 

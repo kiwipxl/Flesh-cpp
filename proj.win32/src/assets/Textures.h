@@ -20,6 +20,9 @@ namespace textures {
     extern cc::Texture2D* minion_health_bar;
     extern cc::Texture2D* footer;
     extern cc::Texture2D* footer_fire_button;
+    extern cc::Texture2D* inventory_empty;
+    extern cc::Texture2D* inventory_c4;
+    extern cc::Texture2D* inventory_fireworks_gun;
 
     //bullets
     extern cc::Texture2D* c4;

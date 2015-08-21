@@ -22,6 +22,8 @@ int current_turn = 0;
 
 void create_team_unit(int team_id) {
     auto unit = new Unit(unit_teams[team_id], (unit_teams[team_id]->num_members == 0) ? UNIT_TYPE_CAPTAIN : UNIT_TYPE_MINION);
+    unit->inventory.push_back(items::weapon_c4);
+    unit->inventory.push_back(items::weapon_none);
 
     ++unit->team->num_members;
 
@@ -44,6 +46,8 @@ void spawn_test_units() {
     for (int n = 0; n < 3; ++n) {
         auto& i = items::spawn(items::ITEM_TYPE_CRATE, ((rand() / (float)RAND_MAX) * (4400 - 850)) + 850, 800);
     }
+
+    gui::game::update_inventory();
 }
 
 void next_unit() {
@@ -59,6 +63,8 @@ void next_unit() {
         auto& i = items::spawn(items::ITEM_TYPE_CRATE, ((rand() / (float)RAND_MAX) * (4400 - 850)) + 850, 800);
     }
     ++current_turn;
+
+    gui::game::update_inventory();
 }
 
 void select_current_unit() {
@@ -84,11 +90,12 @@ void update_all_units() {
             all_units.erase(all_units.begin() + n, all_units.begin() + n + 1);
             --n;
 
-            gui::game::sort_ui_bars();
             if (!gui::game::countdown_paused) {
                 select_current_unit();
                 gui::game::reset_countdown();
             }
+            gui::game::sort_ui_bars();
+            gui::game::update_inventory();
 
             break;
         }

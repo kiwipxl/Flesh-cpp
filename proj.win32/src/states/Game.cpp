@@ -25,21 +25,29 @@ namespace game {
 
     //public
     map::terrain::TerrainGroup* terrain;
+    Sprite* jungle_background;
 
     void create_state(State state) {
         switch (state) {
             case STATE_GAME:
                 glClearColor(0.05f, 0.05f, 0.2f, 0.0f);
 
+                jungle_background = Sprite::createWithTexture(assets::textures::jungle_background);
+                jungle_background->setPosition(2700, 200);
+                jungle_background->setScale(2.35f);
+                //bg_layer->addChild(jungle_background, 1);
+
                 physics::start();
 
                 terrain = new map::terrain::TerrainGroup(assets::maps::test_terrain.get());
+
+                gui::game::init_footer();
 
                 entities::bullets::init();
                 entities::units::spawn_test_units();
                 entities::items::init();
 
-                gui::game::init();
+                gui::game::init_ui_bars();
 
                 break;
         }
@@ -60,7 +68,6 @@ namespace game {
                 entities::items::update();
                 entities::units::update_all_units();
                 entities::bullets::update();
-                terrain->draw();
 
                 gui::game::update();
                 map::camera::update_game_cam();
@@ -73,6 +80,7 @@ namespace game {
                 }
 
                 physics::update();
+                terrain->draw();
 
                 /*for (int n = 0; n < peers::peer_list.size(); ++n) {
                     msg::send(*peers::peer_list[n]->udp_sock, msg::MsgStream() << _MID->PO_PLAYER_MOVEMENT <<

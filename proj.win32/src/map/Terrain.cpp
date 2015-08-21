@@ -63,7 +63,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     blend_func.src = GL_SRC_ALPHA;
     blend_func.dst = GL_ONE_MINUS_SRC_ALPHA;
 
-    edge_tris_cmd.init(0.0f, edge_t->getName(), root::scene->getGLProgramState(), blend_func, edge_tris, base->getNodeToWorldTransform());
+    edge_tris_cmd.init(-100.0f, edge_t->getName(), root::scene->getGLProgramState(), blend_func, edge_tris, base->getNodeToWorldTransform());
 
     fill_tris.indices = &t_data.indices[t_data.fill_indices_start];
     fill_tris.indexCount = t_data.fill_indices_end;
@@ -74,7 +74,7 @@ Terrain::Terrain(TerrainData& t_data, TerrainGroup& t_group) {
     fill_t->retain();
     fill_t->setTexParameters({ GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT });
 
-    fill_tris_cmd.init(0.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, base->getNodeToWorldTransform());
+    fill_tris_cmd.init(-100.0f, fill_t->getName(), root::scene->getGLProgramState(), blend_func, fill_tris, base->getNodeToWorldTransform());
 
     //turn on/off debug geometry depending on default value
     debug_draw_node = DrawNode::create();

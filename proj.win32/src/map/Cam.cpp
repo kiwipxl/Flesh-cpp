@@ -20,15 +20,22 @@ entities::bullets::BulletGroupPtr target_follow_bullet;
 //public
 Camera* map_cam;
 Camera* static_cam;
+Camera* bg_cam;
 
 void init() {
     Camera::getDefaultCamera()->setVisible(false);
-    
+
     map_cam = Camera::createPerspective(60, root::scene->screen_size.width / root::scene->screen_size.height, 1.0f, 10000.0f);
-    map_cam->setCameraFlag(CameraFlag::USER2);
-    map_cam->setCameraMask((u_short)CameraFlag::USER2);
+    map_cam->setCameraFlag(CameraFlag::USER3);
+    map_cam->setCameraMask((u_short)CameraFlag::USER3);
     root::scene->addChild(map_cam);
     map_cam->setPositionZ(600);
+
+    bg_cam = Camera::createPerspective(60, root::scene->screen_size.width / root::scene->screen_size.height, 1.0f, 10000.0f);
+    bg_cam->setCameraFlag(CameraFlag::USER2);
+    bg_cam->setCameraMask((u_short)CameraFlag::USER2);
+    root::scene->addChild(bg_cam);
+    bg_cam->setPositionZ(600);
 
     static_cam = Camera::createOrthographic(root::scene->screen_size.width, root::scene->screen_size.height, 1.0f, 10000.0f);
     static_cam->setCameraFlag(CameraFlag::USER1);
@@ -52,6 +59,7 @@ void update_game_cam() {
         pos = entities::units::current_unit->base->getPosition();
     }
     map::camera::map_cam->setPosition(v.x - (v.x - pos.x) / 10.0f, v.y - (v.y - pos.y) / 10.0f);
+    map::camera::bg_cam->setPosition(v.x - (v.x - (pos.x / 40.0f)) / 10.0f, v.y - (v.y - (pos.y / 40.0f)) / 10.0f);
 
     if (input::get_mouse_scroll().y <= -1) {
         dest_zoom -= 20.0f;
@@ -64,6 +72,7 @@ void update_game_cam() {
     }
     dest_zoom -= dest_zoom / 8.0f;
     map::camera::map_cam->setPositionZ(map::camera::map_cam->getPositionZ() + dest_zoom);
+    map::camera::bg_cam->setPositionZ(map::camera::map_cam->getPositionZ() + dest_zoom);
 }
 
 void follow_bullet(entities::bullets::BulletGroupPtr& bullet) {

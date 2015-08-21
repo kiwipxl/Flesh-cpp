@@ -37,6 +37,8 @@ class Unit : public EntityScheduler {
         UnitType type;
         UnitTeam* team;
 
+        std::vector<items::Weapon*> inventory;
+
         void update();
 
         void take_damage(float damage);

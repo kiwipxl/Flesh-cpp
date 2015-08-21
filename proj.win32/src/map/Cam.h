@@ -16,6 +16,7 @@ namespace cc = cocos2d;
 
 extern cc::Camera* map_cam;
 extern cc::Camera* static_cam;
+extern cc::Camera* bg_cam;
 
 extern void init();
 extern void update_game_cam();

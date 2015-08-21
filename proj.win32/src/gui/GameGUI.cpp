@@ -6,6 +6,7 @@
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "entities/units/components/BulletAimerComponent.h"
+#include "entities/items/Weapon.h"
 #include "gui/Button.h"
 #include "StateManager.h"
 
@@ -20,6 +21,7 @@ clock_t countdown_start;
 Label* power_label;
 Sprite* footer;
 gui::ButtonPtr footer_fire_button;
+std::vector<gui::ButtonPtr> inventory_buttons;
 
 //public
 std::vector<UnitUIBar*> unit_ui_bars;
@@ -64,7 +66,7 @@ void wait_for_bullet(entities::bullets::BulletGroupPtr bullet) {
     countdown_paused = true;
 }
 
-void init() {
+void init_ui_bars() {
     turn_time_label = Label::createWithBMFont("fonts/felt.fnt", "");
     turn_time_label->setPosition(root::scene->screen_size.width / 2.0f, root::scene->screen_size.height - 40);
     turn_time_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
@@ -81,16 +83,17 @@ void init() {
         unit_ui_bars.push_back(ui_bar);
     }
     sort_ui_bars();
+}
 
+void init_footer() {
     footer = Sprite::createWithTexture(assets::textures::footer);
     footer->setScale(root::scene->screen_size.width / footer->getContentSize().width);
     footer->setAnchorPoint(Vec2(0.0f, 0.0f));
     root::ui_layer->addChild(footer);
 
-    footer_fire_button = gui::create_button(0.0f, 0.0f);
+    footer_fire_button = gui::create_button(750, 30);
     footer_fire_button->set_idle_texture(assets::textures::footer_fire_button);
     footer_fire_button->base->setScale(.4f);
-    footer_fire_button->set_pos(750, 40);
     root::ui_layer->addChild(footer_fire_button->base, 10);
     footer_fire_button->set_on_click_callback([]() {
         if (entities::units::current_unit) {
@@ -100,6 +103,28 @@ void init() {
             }
         }
     });
+
+    for (int i = 0; i < 2; ++i) {
+        auto& b = gui::create_button(40.0f + (i * 70.0f), 40.0f);
+        b->set_idle_texture(assets::textures::inventory_empty);
+        root::ui_layer->addChild(b->base, 10);
+        inventory_buttons.push_back(b);
+
+        b->set_on_click_callback([]() {
+
+        });
+    }
+}
+
+void update_inventory() {
+    int n = 0;
+    for (auto& w : entities::units::current_unit->inventory) {
+        auto a = assets::textures::inventory_empty;
+        if (w == entities::items::weapon_c4) a = assets::textures::inventory_c4;
+        else if (w == entities::items::weapon_flame_fireworks) a = assets::textures::inventory_fireworks_gun;
+        inventory_buttons[n]->set_idle_texture(a);
+        ++n;
+    }
 }
 
 void sort_ui_bars() {

@@ -32,6 +32,7 @@ namespace root {
     State s = STATE_EMPTY;
     Node* ui_layer;
     Node* map_layer;
+    Node* bg_layer;
 
     float time_since_startup = 0;
     float delta_time = 0;
@@ -48,9 +49,11 @@ namespace root {
         srand(time(NULL));
 
         ui_layer = Node::create();
-        scene->addChild(ui_layer);
+        scene->addChild(ui_layer, 3);
         map_layer = Node::create();
-        scene->addChild(map_layer);
+        scene->addChild(map_layer, 2);
+        bg_layer = Node::create();
+        scene->addChild(bg_layer, 1);
         map::camera::init();
 
         debug::init_logger();
@@ -100,7 +103,8 @@ namespace root {
 
     void update_state(float dt) {
         ui_layer->setCameraMask((u_short)CameraFlag::USER1);
-        map_layer->setCameraMask((u_short)CameraFlag::USER2);
+        map_layer->setCameraMask((u_short)CameraFlag::USER3);
+        bg_layer->setCameraMask((u_short)CameraFlag::USER2);
 
         time_since_startup += dt;
         delta_time = dt;
