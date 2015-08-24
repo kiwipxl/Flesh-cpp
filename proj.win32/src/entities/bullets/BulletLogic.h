@@ -312,7 +312,7 @@ class BulletLogicC4 : public BulletLogicBase {
 
 public:
     const BulletLogicType logic_type = BULLET_LOGIC_C4;
-    const float MAX_DAMAGE = 10.0f;
+    const float MAX_DAMAGE = 15.0f;
     const float EXPLODE_AFTER_TIME = 5000.0f;
     clock_t start_time;
     bool has_gen_explosion = false;
@@ -327,7 +327,7 @@ public:
         mat.density = .1f;
         mat.friction = .4f;
         mat.restitution = 1.2f;
-        create_physics_body_box(64.0f, 64.0f, &mat);
+        create_physics_body_box(64.0f, 64.0f);
         ref->pbody->setRotationEnable(true);
         ref->base->setRotation(angle);
 
@@ -374,7 +374,7 @@ public:
                 float angle = atan2(u->base->getPositionY() - center.y, u->base->getPositionX() - center.x);
                 float force_x = cos(angle) * MAX(radius - dist, 0);
                 float force_y = sin(angle) * MAX(radius - dist, 0);
-                u->pbody->setVelocity(cc::Vec2(MIN(force_x * 55.0f, max_vel), MIN(abs(force_x) * 200.0f, max_vel * 8.0f)));
+                u->pbody->setVelocity(cc::Vec2(MIN(force_x * 55.0f, max_vel), MIN(abs(force_x) * 200.0f, max_vel * 3.0f)));
                 u->take_damage((cc::clampf(radius - dist, 0, radius) / radius) * MAX_DAMAGE);
             }
             int s = items::item_list.size();

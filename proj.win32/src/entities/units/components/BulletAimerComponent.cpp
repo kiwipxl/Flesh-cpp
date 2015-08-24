@@ -31,7 +31,7 @@ void BulletAimerComponent::init() {
     weapon_sprite->setVisible(false);
     root::map_layer->addChild(weapon_sprite, 4);
 
-    switch_weapon(items::weapon_c4);
+    gui::game::set_power_text(power);
 }
 
 BulletAimerComponent::~BulletAimerComponent() {
@@ -56,9 +56,23 @@ void BulletAimerComponent::switch_weapon(items::Weapon* _weapon) {
 void BulletAimerComponent::update() {
     weapon_sprite->setPosition(Vec2(current_unit->base->getPositionX(), current_unit->base->getPositionY()));
 
-    if (ready_to_fire) return;
+    if (aiming || ready_to_fire) {
+        gui::game::set_power_text(power);
 
-    gui::game::set_power_text(power);
+        if (input::key_down(EventKeyboard::KeyCode::KEY_W)) {
+            power += .05f;
+            power = clampf(power, MIN_POWER, MAX_POWER);
+        }else if (input::key_down(EventKeyboard::KeyCode::KEY_S)) {
+            power -= .05f;
+            power = clampf(power, MIN_POWER, MAX_POWER);
+        }
+
+        if (input::key_pressed(EventKeyboard::KeyCode::KEY_ESCAPE) || input::get_mouse_button_down(MOUSE_BUTTON_RIGHT)) {
+            stop_aiming();
+        }
+    }
+
+    if (ready_to_fire) return;
 
     if (aiming) {
         float x = (root::scene->screen_size.width) / 2.0f;
@@ -69,23 +83,22 @@ void BulletAimerComponent::update() {
             weapon_sprite->setFlippedY(angle >= -90 && angle <= 90);
         }
 
-        if (input::key_down(EventKeyboard::KeyCode::KEY_W)) {
-            power += .05f;
-            power = clampf(power, MIN_POWER, MAX_POWER);
-        }else if (input::key_down(EventKeyboard::KeyCode::KEY_S)) {
-            power -= .05f;
-            power = clampf(power, MIN_POWER, MAX_POWER);
-        }
-
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             ready_to_fire = true;
         }
     }
+}
 
-    if (input::get_mouse_button_pressed(MOUSE_BUTTON_RIGHT)) {
-        aiming = !aiming;
-        weapon_sprite->setVisible(aiming);
-    }
+void BulletAimerComponent::begin_aiming() {
+    aiming = true;
+    weapon_sprite->setVisible(true);
+    ready_to_fire = false;
+}
+
+void BulletAimerComponent::stop_aiming() {
+    aiming = false;
+    weapon_sprite->setVisible(false);
+    ready_to_fire = false;
 }
 
 void BulletAimerComponent::fire() {

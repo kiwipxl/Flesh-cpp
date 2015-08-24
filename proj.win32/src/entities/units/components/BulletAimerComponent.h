@@ -30,6 +30,8 @@ public:
     virtual void update();
     virtual void cleanup();
     void fire();
+    void begin_aiming();
+    void stop_aiming();
     void switch_weapon(items::Weapon* _weapon);
 
     items::Weapon* get_weapon() { return weapon; }

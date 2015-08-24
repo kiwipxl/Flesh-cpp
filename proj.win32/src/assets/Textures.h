@@ -23,6 +23,7 @@ namespace textures {
     extern cc::Texture2D* inventory_empty;
     extern cc::Texture2D* inventory_c4;
     extern cc::Texture2D* inventory_fireworks_gun;
+    extern cc::Texture2D* ui_button_idle;
 
     //bullets
     extern cc::Texture2D* c4;

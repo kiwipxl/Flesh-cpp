@@ -24,6 +24,7 @@ namespace textures {
     Texture2D* inventory_empty;
     Texture2D* inventory_c4;
     Texture2D* inventory_fireworks_gun;
+    Texture2D* ui_button_idle;
 
     //bullets
     Texture2D* c4;
@@ -52,6 +53,7 @@ namespace textures {
         load_image(inventory_empty, "ui/inventory_empty.png");
         load_image(inventory_c4, "ui/inventory_c4.png");
         load_image(inventory_fireworks_gun, "ui/inventory_fireworks_gun.png");
+        load_image(ui_button_idle, "ui/ui_button_idle.png");
 
         load_image(c4, "bullets/c4.png");
         load_image(laser_machine_gun, "guns/laser_machine_gun.png");

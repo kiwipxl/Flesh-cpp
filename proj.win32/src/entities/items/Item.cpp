@@ -5,6 +5,7 @@
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
 #include "entities/items/Weapon.h"
+#include "gui/GameGUI.h"
 #include "input/KeyboardInput.h"
 #include "physics/Physics.h"
 #include "states/Game.h"
@@ -149,7 +150,7 @@ void Item::take_damage(float amount) {
     health -= amount;
     if (health <= 0) {
         if (type == ITEM_TYPE_CRATE) {
-            for (int n = 0; n < 3; ++n) {
+            for (int n = 0; n < 2; ++n) {
                 auto & i = spawn(ITEM_TYPE_GUN, base->getPositionX(), base->getPositionY(), items::get_weapon((rand() / (float)RAND_MAX) * 2.0f));
                 i->pbody->setVelocity(Vec2(((rand() / (float)RAND_MAX) * 150.0f) - 75.0f, ((rand() / (float)RAND_MAX) * 800.0f) + 400.0f));
             }
@@ -170,12 +171,24 @@ bool Item::on_contact_run(PhysicsContact& contact) {
             for (auto& u : units::all_units) {
                 if (CHECK_AB_COLLIDE(u->base)) {
                     info_label->setVisible(true);
-                    info_label->setString(sstream_cstr("press X to pickup " << weapon->get_name()));
 
-                    if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
-                        u->switch_weapon(weapon);
-                        schedule_removal();
+                    if (u->inventory.size() < 2) {
+                        info_label->setString(sstream_cstr("press X to pickup " << weapon->get_name()));
+                        if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
+                            u->inventory.push_back(weapon);
+                            u->switch_weapon(weapon);
+                            schedule_removal();
+                        }
+                    }else {
+                        info_label->setString(sstream_cstr("press X to switch " << u->inventory[1]->get_name() << " for " << weapon->get_name()));
+                        if (input::key_pressed(EventKeyboard::KeyCode::KEY_X)) {
+                            u->inventory[1] = weapon;
+                            u->switch_weapon(weapon);
+                            schedule_removal();
+                        }
                     }
+                    gui::game::update_inventory();
+
                     return false;
                 }
             }

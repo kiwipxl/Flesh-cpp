@@ -65,7 +65,7 @@ namespace root {
         physics::init();
         entities::items::init_weapons();
 
-        s = STATE_GAME;
+        s = STATE_LOGIN_REGISTER_SCREEN;
     }
 
     void create_state(State c_state, bool force) {

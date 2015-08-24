@@ -3,6 +3,7 @@
 #include <2d/CCSprite.h>
 #include <2d/CCLabelTTF.h>
 
+#include "assets/Textures.h"
 #include "debug/Logger.h"
 #include "input/MouseInput.h"
 #include "StateManager.h"
@@ -37,8 +38,14 @@ void update_buttons() {
 
 Button::Button(int _x, int _y) {
     base = Sprite::create();
-    text = LabelTTF::create("", "fonts/CaviarDreams.ttf", 20);
+    text = LabelTTF::create("", "fonts/CaviarDreams.ttf", DEFAULT_BUTTON_FONT_SIZE);
+    base->addChild(text, 1);
 
+    text->setHorizontalAlignment(TextHAlignment::CENTER);
+    text->setVerticalAlignment(TextVAlignment::CENTER);
+
+    set_idle_texture(assets::textures::ui_button_idle);
+    set_size(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT);
     set_pos(_x, _y);
 }
 
@@ -54,8 +61,14 @@ void Button::update() {
     if (mpos.x >= pos.x - s.width && mpos.y <= pos.y + s.height && 
         mpos.x <= pos.x + s.width && mpos.y >= pos.y - s.height) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
+            button_down = true;
+        }else if (button_down) {
             click_callback();
         }
+    }
+
+    if (!input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
+        button_down = false;
     }
 }
 
@@ -63,27 +76,40 @@ void Button::set_on_click_callback(ButtonClickCallback _callback) {
     click_callback = _callback;
 }
 
+void Button::update_text_pos() {
+    text->setPosition(Vec2(0, 0));
+    text->setAnchorPoint(Vec2(0, 0));
+}
+
 void Button::set_size(int _width, int _height) {
     size.width = _width;
     size.height = _height;
+
+    base->setScaleX(_width / base->getContentSize().width);
+    base->setScaleY(_height / base->getContentSize().height);
+
+    text->setScaleX(base->getContentSize().width / _width);
+    text->setScaleY(base->getContentSize().height / _height);
+    text->setDimensions(size);
+    update_text_pos();
+
     base->setContentSize(size);
 }
 
 void Button::set_size(cc::Size _size) {
-    size = _size;
-    base->setContentSize(size);
+    set_size(_size.width, _size.height);
 }
 
 void Button::set_pos(cc::Vec2 _pos) {
     pos = _pos;
     base->setPosition(pos);
-    text->setPosition(pos);
+    update_text_pos();
 }
 
 void Button::set_pos(int _x, int _y) {
     pos.x = _x; pos.y = _y;
     base->setPosition(pos);
-    text->setPosition(pos);
+    update_text_pos();
 }
 
 void Button::set_text(std::string _text) {

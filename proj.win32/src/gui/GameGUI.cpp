@@ -58,7 +58,7 @@ void set_countdown_to(float seconds) {
 }
 
 void set_power_text(float power) {
-    power_label->setString(sstream_cstr("power: " << power << "x"));
+    if (power_label) power_label->setString(sstream_cstr("power: " << power << "x"));
 }
 
 void wait_for_bullet(entities::bullets::BulletGroupPtr bullet) {
@@ -110,19 +110,33 @@ void init_footer() {
         root::ui_layer->addChild(b->base, 10);
         inventory_buttons.push_back(b);
 
-        b->set_on_click_callback([]() {
+        b->set_on_click_callback([b]() {
+            if (b->get_idle_texture() == assets::textures::inventory_empty) return;
 
+            auto e = entities::units::current_unit;
+            if (e) {
+                auto c = e->get_component<entities::units::components::BulletAimerComponent>();
+                if (c) {
+                    auto w = entities::items::weapon_none;
+                    if (b->get_idle_texture() == assets::textures::inventory_c4) w = entities::items::weapon_c4;
+                    if (b->get_idle_texture() == assets::textures::inventory_fireworks_gun) w = entities::items::weapon_flame_fireworks;
+                    c->switch_weapon(w);
+                    c->begin_aiming();
+                }
+            }
         });
     }
 }
 
 void update_inventory() {
     int n = 0;
-    for (auto& w : entities::units::current_unit->inventory) {
+    for (auto i : inventory_buttons) {
+        entities::items::Weapon* w = entities::items::weapon_none;
+        if (n <= entities::units::current_unit->inventory.size() - 1) w = entities::units::current_unit->inventory[n];
         auto a = assets::textures::inventory_empty;
         if (w == entities::items::weapon_c4) a = assets::textures::inventory_c4;
         else if (w == entities::items::weapon_flame_fireworks) a = assets::textures::inventory_fireworks_gun;
-        inventory_buttons[n]->set_idle_texture(a);
+        i->set_idle_texture(a);
         ++n;
     }
 }

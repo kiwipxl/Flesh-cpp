@@ -2,9 +2,10 @@
 
 #include <2d/CCActionInterval.h>
 
-#include "StateManager.h"
 #include "assets/Animations.h"
 #include "assets/CSB.h"
+#include "assets/Textures.h"
+#include "StateManager.h"
 
 BEGIN_GUI_NS
 
@@ -52,6 +53,7 @@ void MessageBox::add_button(std::string _button_text, int _x, int _y, int _font_
     button->set_text(_button_text);
     button->set_text_font_size(_font_size);
     button->set_on_click_callback(_on_click_callback);
+    button->set_idle_texture(assets::textures::ui_button_idle);
     container->addChild(button->base);
     buttons.push_back(button);
 }
@@ -64,7 +66,8 @@ void MessageBox::stack_button(std::string _button_text, int _font_size, ButtonCl
     button->set_text(_button_text);
     button->set_text_font_size(_font_size);
     button->set_on_click_callback(_on_click_callback);
-    button->set_size(70, 34);
+    button->set_idle_texture(assets::textures::ui_button_idle);
+    button->set_size(120, 34);
     container->addChild(button->base);
     buttons.push_back(button);
 }

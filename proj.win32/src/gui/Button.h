@@ -55,6 +55,13 @@ public:
     cc::Size get_size() { return size; }
     cc::Vec2 get_pos() { return pos; }
 
+    cc::Texture2D* get_idle_texture() { return idle_texture; }
+    cc::Texture2D* get_hover_texture() { return hover_texture; }
+    cc::Texture2D* get_click_texture() { return click_texture; }
+    cc::Texture2D* get_disabled_texture() { return disabled_texture; }
+
+    bool is_button_down() { return button_down; }
+
 private:
     cc::Vec2 pos;
     cc::Size size;
@@ -65,6 +72,9 @@ private:
     cc::Texture2D* disabled_texture;
 
     ButtonClickCallback click_callback = nullptr;
+    bool button_down = false;
+
+    void update_text_pos();
 };
 
 extern ButtonPtr create_button(int _x, int _y);

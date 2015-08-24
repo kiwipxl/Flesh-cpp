@@ -109,6 +109,7 @@
     <ClInclude Include="src\entities\EntityScheduler.h" />
     <ClInclude Include="src\entities\items\Item.h" />
     <ClInclude Include="src\entities\items\Weapon.h" />
+    <ClInclude Include="src\entities\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
