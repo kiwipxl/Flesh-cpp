@@ -63,7 +63,7 @@ void Button::update() {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
         }else if (button_down) {
-            click_callback();
+            if (click_callback) click_callback();
         }
     }
 
