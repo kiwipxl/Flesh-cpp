@@ -63,11 +63,16 @@ namespace menu {
             options_menu->setPositionX(-scene->screen_size.width);
             customisations_menu->setPositionX(scene->screen_size.width);
 
-            lbutton = gui::create_button(32, scene->screen_size.height / 2.0f);
+            lbutton = gui::create_button(40, scene->screen_size.height / 2.0f);
             lbutton->set_on_click_callback(scroll_left);
+            lbutton->set_idle_texture(assets::textures::arrow_button);
+            lbutton->set_size(assets::textures::arrow_button->getContentSize());
             ui_layer->addChild(lbutton->base, 1);
-            rbutton = gui::create_button(scene->screen_size.width - 32, scene->screen_size.height / 2.0f);
+            rbutton = gui::create_button(scene->screen_size.width - 40, scene->screen_size.height / 2.0f);
             rbutton->set_on_click_callback(scroll_right);
+            rbutton->set_idle_texture(assets::textures::arrow_button);
+            rbutton->set_size(assets::textures::arrow_button->getContentSize());
+            rbutton->base->setFlippedX(true);
             ui_layer->addChild(rbutton->base, 1);
 
             break;
