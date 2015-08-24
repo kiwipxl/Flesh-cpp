@@ -198,6 +198,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\map\Terrain.cpp" />
     <ClCompile Include="src\states\Game.cpp" />
     <ClCompile Include="src\states\Login.cpp" />
+    <ClCompile Include="src\states\Menu.cpp" />
     <ClCompile Include="src\states\Startup.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +255,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\states\Defines.h" />
     <ClInclude Include="src\states\Game.h" />
     <ClInclude Include="src\states\Login.h" />
+    <ClInclude Include="src\states\Menu.h" />
     <ClInclude Include="src\states\Startup.h" />
   </ItemGroup>
   <ItemGroup>

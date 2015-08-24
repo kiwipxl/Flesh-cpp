@@ -15,6 +15,7 @@ namespace root {
         STATE_EMPTY, 
         STATE_SERVER_CONNECT_SCREEN,  
         STATE_LOGIN_REGISTER_SCREEN, 
+        STATE_MENU, 
         STATE_GAME
     };
 

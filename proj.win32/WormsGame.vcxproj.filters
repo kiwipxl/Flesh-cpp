@@ -54,6 +54,7 @@
     <ClCompile Include="src\entities\bullets\BulletGroup.cpp" />
     <ClCompile Include="src\entities\items\Item.cpp" />
     <ClCompile Include="src\entities\items\Weapon.cpp" />
+    <ClCompile Include="src\states\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -110,6 +111,7 @@
     <ClInclude Include="src\entities\items\Item.h" />
     <ClInclude Include="src\entities\items\Weapon.h" />
     <ClInclude Include="src\entities\Entity.h" />
+    <ClInclude Include="src\states\Menu.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

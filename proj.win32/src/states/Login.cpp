@@ -29,6 +29,7 @@ namespace login {
     ui::TextField* password_input;
     std::string password_str;
     const std::regex input_regex("^[a-zA-Z0-9]+$");
+    Sprite* background;
 
     enum LoginResult {
         LOGIN_RESULT_SUCCESS,
@@ -91,8 +92,14 @@ namespace login {
         switch (state) {
             case STATE_LOGIN_REGISTER_SCREEN:
                 {
+                    background = Sprite::createWithTexture(assets::textures::start_screen);
+                    background->setScaleX(scene->screen_size.width / background->getContentSize().width);
+                    background->setScaleY(scene->screen_size.height / background->getContentSize().height);
+                    background->setAnchorPoint(Vec2(0, 0));
+                    ui_layer->addChild(background, 1);
+
                     assets::csb::load_csb(login_page, assets::csb::login_page_name);
-                    ui_layer->addChild(login_page);
+                    ui_layer->addChild(login_page, 1);
                     auto login_button = assets::csb::get_child<ui::Button>(login_page, "login_button");
                     auto register_button = assets::csb::get_child<ui::Button>(login_page, "register_button");
 
@@ -167,7 +174,8 @@ namespace login {
     void remove_state(State state) {
         switch (state) {
             case STATE_LOGIN_REGISTER_SCREEN:
-                login_page->removeAllChildren();
+                ui_layer->removeChild(background);
+                ui_layer->removeChild(login_page);
                 login_page->cleanup();
                 gui::close_message_box();
                 break;

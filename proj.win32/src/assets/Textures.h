@@ -37,6 +37,12 @@ namespace textures {
     //terrain
     extern cc::Texture2D* jungle_background;
 
+    //menu
+    extern cc::Texture2D* main_screen;
+    extern cc::Texture2D* start_screen;
+    extern cc::Texture2D* options_screen;
+    extern cc::Texture2D* customisation_screen;
+
     extern void init();
 };
 

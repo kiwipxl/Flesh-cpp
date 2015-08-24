@@ -38,6 +38,12 @@ namespace textures {
     //terrain
     Texture2D* jungle_background;
 
+    //menu
+    Texture2D* main_screen;
+    Texture2D* start_screen;
+    Texture2D* options_screen;
+    Texture2D* customisation_screen;
+
     void load_image(Texture2D*& tex, std::string file_name) {
         tex = Director::getInstance()->getTextureCache()->addImage(file_name);
     }
@@ -61,6 +67,11 @@ namespace textures {
         load_image(crate, "crate.png");
 
         load_image(jungle_background, "terrain/jungle_background.png");
+
+        load_image(main_screen, "ui/menu/main_screen.png");
+        load_image(start_screen, "ui/menu/start_screen.png");
+        load_image(options_screen, "ui/menu/options_screen.png");
+        load_image(customisation_screen, "ui/menu/customisation_screen.png");
 
         log_print_file << "texture assets loaded";
     }

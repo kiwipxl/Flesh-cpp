@@ -21,6 +21,7 @@
 
 #include "states/Game.h"
 #include "states/Login.h"
+#include "states/Menu.h"
 #include "states/Startup.h"
 
 namespace root {
@@ -75,6 +76,7 @@ namespace root {
         states::startup::create_state(s);
         states::login::create_state(s);
         states::game::create_state(s);
+        states::menu::create_state(s);
 
         log_info << "created state " << c_state;
     }
@@ -85,6 +87,7 @@ namespace root {
         s = r_state;
         states::startup::remove_state(s);
         states::login::remove_state(s);
+        states::game::remove_state(s);
         states::game::remove_state(s);
 
         log_info << "removed state " << r_state;
@@ -111,6 +114,7 @@ namespace root {
 
         if (!created_init_state) { created_init_state = true; create_state(s, true); }
 
+        //debugging stuff
         if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_N)) {
             //Director::getInstance()->getOpenGLView()->setFrameSize(800, 600);
             switch_state((State)((int)s + 1));
@@ -134,6 +138,7 @@ namespace root {
         states::startup::update_state(s);
         states::login::update_state(s);
         states::game::update_state(s);
+        states::menu::update_state(s);
 
         gui::update_buttons();
         network::sock::update();
