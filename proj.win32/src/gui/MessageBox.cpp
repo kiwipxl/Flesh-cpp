@@ -49,7 +49,7 @@ void MessageBox::add_button(ButtonPtr button) {
 }
 
 void MessageBox::add_button(std::string _button_text, int _x, int _y, int _font_size, ButtonClickCallback _on_click_callback) {
-    ButtonPtr button(new Button(_x, _y));
+    ButtonPtr button = create_button(_x, _y);
     button->set_text(_button_text);
     button->set_text_font_size(_font_size);
     button->set_on_click_callback(_on_click_callback);
@@ -62,12 +62,12 @@ void MessageBox::stack_button(std::string _button_text, int _font_size, ButtonCl
     int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 55) - (buttons.size() * 85);
     int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
 
-    ButtonPtr button(new Button(x, y));
+    ButtonPtr button = create_button(x, y);
     button->set_text(_button_text);
     button->set_text_font_size(_font_size);
     button->set_on_click_callback(_on_click_callback);
     button->set_idle_texture(assets::textures::ui_button_idle);
-    button->set_size(120, 34);
+    button->set_size(70, 34);
     container->addChild(button->base);
     buttons.push_back(button);
 }

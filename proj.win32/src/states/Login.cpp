@@ -57,7 +57,7 @@ namespace login {
 
         if (username_str.length() < MIN_USERNAME_LEN) {
             gui::show_message_box("account details error",
-                                   sstream_cstr("username must be greater than or equal to " << MIN_USERNAME_LEN << " characters"), "OK lol this"); return false;
+                                   sstream_cstr("username must be greater than or equal to " << MIN_USERNAME_LEN << " characters"), "OK"); return false;
         }
         if (password_str.length() < MIN_PASSWORD_LEN) {
             gui::show_message_box("account details error",
