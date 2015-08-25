@@ -39,6 +39,7 @@ u_short server_udp_port = 0;
 
 bool tcp_thread_running = false;
 bool udp_thread_running = false;
+bool thread_done = false;
 
 std::mutex mutex;
 
@@ -49,10 +50,8 @@ void init() {
 }
 
 void close_all_threads() {
-    //todo: close threads properly!
-    //msg::close_all_threads();
-    tcp_thread_running = true;
-    udp_thread_running = true;
+    tcp_thread_running = false;
+    udp_thread_running = false;
 }
 
 void cleanup_all() {
@@ -65,15 +64,16 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
     tcp_thread = std::thread([_callback]() {
         mutex.lock();
 
-        tcp_thread_running = false;
+        tcp_thread_running = true;
         connected = false;
+        thread_done = false;
 
         log_info << "attempt connect on thread...";
         if ((result = tcp_sock.s_create()) != NO_ERROR) {
             log_error << "(tcp_sock): error " << result << " occurred while creating tcp socket";
 
             mutex.unlock();
-            if (tcp_thread_running) return;
+            if (!tcp_thread_running) return;
 
             connect_done(_callback, result, "could not create tcp socket");
             return;
@@ -84,7 +84,7 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
                          tcp_sock.get_binded_ip() << ", port: " << tcp_sock.get_binded_port() << ")";
 
             mutex.unlock();
-            if (tcp_thread_running) return;
+            if (!tcp_thread_running) return;
 
             connect_done(_callback, result, "could not connect to tcp socket");
             return;
@@ -117,11 +117,17 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
             connect_done(_callback, NO_ERROR);
         });
 
-        mutex.unlock();
-        if (tcp_thread_running) return;
+        poll.add_sock(tcp_sock);
 
-        add_sock_to_poll(tcp_sock);
+        mutex.unlock();
+        if (!tcp_thread_running) return;
+
+        mutex.lock();
         msg::start_recv_thread();
+
+        tcp_thread_running = false;
+        thread_done = true;
+        mutex.unlock();
     });
     tcp_thread.detach();
 }
@@ -129,11 +135,13 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
 void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
     mutex.lock();
 
+    udp_thread_running = true;
+
     if ((result = udp_sock.s_create()) != NO_ERROR) {
         log_error << "(udp_sock): error " << result << " occurred while creating udp socket";
 
         mutex.unlock();
-        if (udp_thread_running) return;
+        if (!udp_thread_running) return;
 
         connect_done(_callback, result, "could not create udp socket"); return;
     }
@@ -142,7 +150,7 @@ void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
             " occurred while trying to bind udp socket (ip: " << udp_sock.get_binded_ip() << ")";
 
         mutex.unlock();
-        if (udp_thread_running) return;
+        if (!udp_thread_running) return;
 
         connect_done(_callback, result, "could not bind udp socket"); return;
     }
@@ -151,7 +159,7 @@ void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
     log_info << "(udp_sock): creation / binding successful";
 
     mutex.unlock();
-    if (udp_thread_running) return;
+    if (!udp_thread_running) return;
 
     connect_done(_callback, NO_ERROR);
 

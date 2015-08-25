@@ -15,6 +15,7 @@
 #include "input/MouseInput.h"
 #include "map/Cam.h"
 #include "network/message/Message.h"
+#include "network/message/MessagePoller.h"
 #include "network/server/ServerConnection.h"
 #include "physics/Physics.h"
 #include "utility/Logger.h"
@@ -134,5 +135,6 @@ namespace root {
     void exit_root() {
         remove_state(s, true);
         network::server::close_all_threads();
+        network::msg::close_thread();
     }
 };
