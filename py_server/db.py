@@ -40,13 +40,28 @@ def find_user_account(username, password):
     global cur;
 
     username, password, err = accounts.format_user_pass(username, password);
-    if (err == False): return accounts.LoginResult.INVALID_FORMAT;
+    if (err == False): return accounts.LoginResult.INVALID_FORMAT, -1;
 
     result = query("select * from accounts where user='%s' and pass='%s'" % (username, password));
-    if not (result): return accounts.LoginResult.UNKNOWN_ERROR;
-    if (cur.fetchone() == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS;
-    
-    return accounts.LoginResult.SUCCESS;
+    if not (result): return accounts.LoginResult.UNKNOWN_ERROR, -1;
+    fetch = cur.fetchone();
+    if (fetch == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS, -1;
+
+    return accounts.LoginResult.SUCCESS, fetch["id"];
+
+#returns a LoginResult enum on whether or not the username and password was found in the db
+def get_user_acc_details(acc_details, unique_id):
+    global cur;
+
+    result = query("select * from accounts where id='%d'" % (unique_id));
+    if not (result): return accounts.GeneralResult.UNKNOWN_ERROR, acc_details;
+    fetch = cur.fetchone();
+    if (fetch == None): return accounts.GeneralResult.FAILURE, acc_details;
+
+    acc_details.gold = fetch["gold"];
+    acc_details.username = fetch["user"];
+
+    return accounts.LoginResult.SUCCESS, acc_details;
 
 def query(q):
     global cur;

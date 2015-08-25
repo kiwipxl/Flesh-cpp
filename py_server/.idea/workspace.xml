@@ -86,7 +86,7 @@
         <entry file="file://$PROJECT_DIR$/db.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="4" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="4" />
+              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -107,8 +107,8 @@
       <file leaf-file-name="accounts.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accounts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71203154">
-              <caret line="49" column="71" selection-start-line="49" selection-start-column="71" selection-end-line="49" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.78698224">
+              <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -179,8 +179,8 @@
         <option value="$PROJECT_DIR$/msg.py" />
         <option value="$PROJECT_DIR$/debug.py" />
         <option value="$PROJECT_DIR$/_MID.py" />
-        <option value="$PROJECT_DIR$/db.py" />
         <option value="$PROJECT_DIR$/client.py" />
+        <option value="$PROJECT_DIR$/db.py" />
         <option value="$PROJECT_DIR$/accounts.py" />
       </list>
     </option>
@@ -920,7 +920,7 @@
     <entry file="file://$PROJECT_DIR$/db.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="4" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="4" />
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -937,8 +937,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71203154">
-          <caret line="49" column="71" selection-start-line="49" selection-start-column="71" selection-end-line="49" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.78698224">
+          <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
