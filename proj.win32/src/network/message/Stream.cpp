@@ -7,6 +7,8 @@
 BEGIN_NETWORK_NS
 BEGIN_MSG_NS
 
+//private
+
 //public
 char byte_buffer[1024];
 int byte_offset;

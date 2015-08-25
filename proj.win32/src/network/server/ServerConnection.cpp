@@ -10,6 +10,7 @@
 #include "network/sockets/Socket.h"
 #include "network/sockets/SocketPoll.h"
 #include "StateManager.h"
+#include "utility/ThreadSchedule.h"
 
 BEGIN_NETWORK_NS
 BEGIN_SERVER_NS
@@ -18,6 +19,7 @@ BEGIN_SERVER_NS
 int result;
 bool connected = false;
 sock::SocketPoll poll;
+std::thread tcp_thread;
 
 char* SERVER_IP = "104.236.253.123";
 char* LOCAL_SERVER_IP = "127.0.0.1";
@@ -30,7 +32,6 @@ void connect_done(ServerConnectCallback _callback, int err, std::string err_msg 
 //public
 sock::Socket tcp_sock;
 sock::Socket udp_sock;
-std::thread tcp_connect_thread;
 
 char* server_ip = LOCAL_SERVER_IP;
 u_short server_tcp_port = 4222;
@@ -39,8 +40,7 @@ u_short server_udp_port = 0;
 bool tcp_thread_running = false;
 bool udp_thread_running = false;
 
-std::mutex tcp_mutex;
-std::mutex udp_mutex;
+std::mutex mutex;
 
 void init() {
     udp_sock = sock::Socket(sock::PROTO_UDP);
@@ -62,8 +62,8 @@ void cleanup_all() {
 }
 
 void setup_tcp_sock(ServerConnectCallback _callback) {
-    tcp_connect_thread = std::thread([_callback]() {
-        tcp_mutex.lock();
+    tcp_thread = std::thread([_callback]() {
+        mutex.lock();
 
         tcp_thread_running = false;
         connected = false;
@@ -72,7 +72,7 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
         if ((result = tcp_sock.s_create()) != NO_ERROR) {
             log_error << "(tcp_sock): error " << result << " occurred while creating tcp socket";
 
-            tcp_mutex.unlock();
+            mutex.unlock();
             if (tcp_thread_running) return;
 
             connect_done(_callback, result, "could not create tcp socket");
@@ -83,7 +83,7 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
                          " occurred while trying to connect to tcp socket (ip: " <<
                          tcp_sock.get_binded_ip() << ", port: " << tcp_sock.get_binded_port() << ")";
 
-            tcp_mutex.unlock();
+            mutex.unlock();
             if (tcp_thread_running) return;
 
             connect_done(_callback, result, "could not connect to tcp socket");
@@ -91,9 +91,6 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
         }
 
         log_info << "(tcp_sock): connection successful";
-
-        tcp_mutex.unlock();
-        if (tcp_thread_running) return;
 
         tcp_sock.add_leave_handler([&](msg::Message* message) {
             char* leave_msg = message->get<char*>(0);
@@ -120,18 +117,22 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
             connect_done(_callback, NO_ERROR);
         });
 
+        mutex.unlock();
+        if (tcp_thread_running) return;
+
+        add_sock_to_poll(tcp_sock);
         msg::start_recv_thread();
     });
-    tcp_connect_thread.detach();
+    tcp_thread.detach();
 }
 
 void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
-    udp_mutex.lock();
+    mutex.lock();
 
     if ((result = udp_sock.s_create()) != NO_ERROR) {
         log_error << "(udp_sock): error " << result << " occurred while creating udp socket";
 
-        udp_mutex.unlock();
+        mutex.unlock();
         if (udp_thread_running) return;
 
         connect_done(_callback, result, "could not create udp socket"); return;
@@ -140,7 +141,7 @@ void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
         log_error << "(udp_sock): error " << result <<
             " occurred while trying to bind udp socket (ip: " << udp_sock.get_binded_ip() << ")";
 
-        udp_mutex.unlock();
+        mutex.unlock();
         if (udp_thread_running) return;
 
         connect_done(_callback, result, "could not bind udp socket"); return;
@@ -149,7 +150,7 @@ void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
     
     log_info << "(udp_sock): creation / binding successful";
 
-    udp_mutex.unlock();
+    mutex.unlock();
     if (udp_thread_running) return;
 
     connect_done(_callback, NO_ERROR);
@@ -179,7 +180,11 @@ void update() {
 }
 
 void add_sock_to_poll(sock::Socket& sock) {
+    //added mutex in case the poll is accessed in a different thread
+    //at the same time of adding the sock
+    mutex.lock();
     poll.add_sock(sock);
+    mutex.unlock();
 }
 sock::SocketPoll& get_poll() { return poll; }
 

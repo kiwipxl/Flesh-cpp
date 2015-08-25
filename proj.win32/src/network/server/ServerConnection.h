@@ -15,7 +15,6 @@ BEGIN_SERVER_NS
 
 extern sock::Socket tcp_sock;
 extern sock::Socket udp_sock;
-extern std::thread tcp_connect_thread;
 
 extern char* server_ip;
 extern u_short server_tcp_port;
