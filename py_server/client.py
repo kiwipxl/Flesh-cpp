@@ -59,7 +59,8 @@ def handle_join(new_tcp_sock, new_udp_sock, add_to_list = True):
     client_id_inc += 1;
 
     accounts.init_client_account(c);
-    
+
+    msg.send(c.tcp_sock, c, msg.build(_MID.SEND_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY));
     #c.add_message_handler(_MID.ALL, handle_setup_messages);
     #msg.send(c.tcp_sock, c, msg.build(_MID.REQUEST_CLIENT_TO_BIND_UDP_PORT, new_udp_sock.getsockname()[1]));
 

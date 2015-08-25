@@ -28,6 +28,7 @@ namespace startup {
                 info_label = Label::createWithBMFont("fonts/felt.fnt", "connecting...");
                 info_label->setDimensions(scene->screen_size.width - 40, 400);
                 info_label->setAlignment(TextHAlignment::CENTER, TextVAlignment::TOP);
+                info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
                 ui_layer->addChild(info_label, 1);
 
                 {
@@ -38,7 +39,15 @@ namespace startup {
                     ui_layer->addChild(spinner_sprite, 1);
                 }
 
-                network::server::setup_tcp_sock();
+                network::server::setup_tcp_sock([](int err, std::string err_msg) {
+                    if (err == NO_ERROR) {
+                        switch_state(STATE_LOGIN_REGISTER_SCREEN);
+                    }else {
+                        scene->removeChild(spinner_sprite);
+                        info_label->setString(sstream_str("an error occurred while trying to connect: " << 
+                                                           err_msg << " (code: " << err << ")"));
+                    }
+                });
                 break;
         }
     }
@@ -55,21 +64,6 @@ namespace startup {
     void update_state(State state) {
         switch (state) {
             case STATE_SERVER_CONNECT_SCREEN:
-                info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
-
-                if (network::server::connection_finished) {
-                    if (network::server::connection_err == NO_ERROR) {
-                        switch_state(STATE_LOGIN_REGISTER_SCREEN);
-                    }else {
-                        scene->removeChild(spinner_sprite);
-                        info_label->setString("an error occurred while trying to connect: " + 
-                                                ((network::server::connection_err_msg == "")
-                                                ? SSTR(network::server::connection_err)
-                                                : network::server::connection_err_msg + "(" + SSTR(network::server::connection_err) + ")"));
-                    }
-                }else {
-                    info_label->setString("connecting to server...");
-                }
                 break;
         }
     }

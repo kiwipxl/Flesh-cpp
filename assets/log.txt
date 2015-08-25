@@ -10,5 +10,3 @@ created state 1
 (tcp_sock): connection successful
 switching to state 2 from state 1
 removed state 1
-created state 2
-switched to state 2 from state 2

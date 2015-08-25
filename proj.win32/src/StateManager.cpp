@@ -118,28 +118,14 @@ namespace root {
         if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_N)) {
             //Director::getInstance()->getOpenGLView()->setFrameSize(800, 600);
             switch_state((State)((int)s + 1));
-        }else if (input::key_down(EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(EventKeyboard::KeyCode::KEY_L)) {
-            static bool local_ip = false;
-            if (local_ip = !local_ip) {
-                log_info << "switched to local server ip";
-                network::server::serv_ip = network::server::LOCAL_SERVER_IP;
-                network::server::cleanup_all();
-                switch_state(STATE_SERVER_CONNECT_SCREEN, true);
-                gui::show_message_box("", "switched to local server ip", "OK");
-            }else {
-                log_info << "switched to server ip";
-                network::server::serv_ip = network::server::SERVER_IP;
-                network::server::cleanup_all();
-                switch_state(STATE_SERVER_CONNECT_SCREEN, true);
-                gui::show_message_box("", "switched to server ip", "OK");
-            }
         }
 
         states::startup::update_state(s);
         states::login::update_state(s);
         states::game::update_state(s);
         states::menu::update_state(s);
-
+        
+        network::server::update();
         gui::update_buttons();
         input::update_keyboard();
         input::update_mouse();

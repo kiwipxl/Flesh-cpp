@@ -1,8 +1,10 @@
 #include "network/server/ServerConnection.h"
 
 #include "debug/Logger.h"
-#include "network/message/Message.h"
+#include "input/KeyboardInput.h"
+#include "gui/MessageBox.h"
 #include "network/GameMessages.h"
+#include "network/message/Message.h"
 #include "network/message/MID.h"
 #include "network/message/Stream.h"
 #include "network/sockets/Socket.h"
@@ -14,95 +16,28 @@ BEGIN_SERVER_NS
 //private
 int result;
 
+char* SERVER_IP = "104.236.253.123";
+char* LOCAL_SERVER_IP = "127.0.0.1";
+
+void connect_done(ServerConnectCallback _callback, int err, std::string err_msg = "") {
+    if (_callback) _callback(err, err_msg);
+}
+
 //public
 sock::Socket tcp_sock;
 sock::Socket udp_sock;
 std::thread tcp_connect_thread;
 
-bool udp_ping_pong = false;
-float udp_ping_pong_time = 0;
-int udp_ping_pong_tries = 0;
-sock::Socket* udp_ping_pong_sock = NULL;
+char* server_ip = LOCAL_SERVER_IP;
+u_short server_tcp_port = 4222;
+u_short server_udp_port = 0;
 
-bool connection_finished = false;
-int connection_err = -1;
-std::string connection_err_msg = "";
-
-char* SERVER_IP = "104.236.253.123";
-char* LOCAL_SERVER_IP = "127.0.0.1";
-char* serv_ip = LOCAL_SERVER_IP;
-u_short serv_port = 4222;
 std::mutex thread_lock;
 
-void tcp_connect() {
-    using namespace sock;
-
-    log_info << "attempt connect on thread...";
-    if ((result = tcp_sock.s_create()) != NO_ERROR) {
-        log_error << "(tcp_sock): error " << result << " occurred while creating tcp socket";
-        socket_setup_failed(result); return;
-    }
-    if ((result = tcp_sock.s_connect(serv_ip, serv_port)) != NO_ERROR) {
-        log_error << "(tcp_sock): error " << result << " occurred while trying to connect to (ip: " <<
-                            tcp_sock.get_binded_ip() << ", port: " << tcp_sock.get_binded_port() << ")";
-        socket_setup_failed(result); return;
-    }
-
-    log_info << "(tcp_sock): connection successful";
-
-    connection_finished = true;
-    connection_err = NO_ERROR;
-
-    tcp_sock.add_leave_handler([](msg::Message* message) {
-        char* leave_msg = message->get<char*>(0);
-        connection_finished = true;
-        connection_err = ERR_SERVER_LEAVE_CODE;
-        connection_err_msg = leave_msg;
-    });
-
-    //below is code to setup a udp socket for the server, needs to be moved once the user login system is done
-    tcp_sock.add_message_handler(msg::MID_RECV_REQUEST_FOR_ME_TO_BIND_UDP_PORT, [](msg::Message* message) {
-        if (setup_udp_sock(message->get<u_short>(0))) {
-            msg::add_poll_sock(udp_sock);
-            //msg::send(tcp_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_sock.get_binded_port());
-            msg::send(tcp_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
-        }else {
-            msg::send(tcp_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
-        }
-    });
-
-    udp_sock.add_message_handler(msg::MID_RECV_UDP_PING, [](msg::Message* message) {
-        msg::send(udp_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
-    });
-
-    tcp_sock.add_message_handler(msg::MID_RECV_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY, [](msg::Message* message) {
-        connection_finished = true;
-        connection_err = NO_ERROR;
-    });
-
-    msg::start_recv_thread();
-}
-
-bool setup_udp_sock(u_short udp_port) {
-    if ((result = udp_sock.s_create()) != NO_ERROR) {
-        log_error << "(udp_sock): error " << result << " occurred while creating tcp socket";
-        socket_setup_failed(result); return false;
-    }
-    if ((result = udp_sock.s_bind("0.0.0.0", 0)) != NO_ERROR) {
-        log_error << "(udp_sock): error " << result << " occurred while trying to bind to (ip: " <<
-            udp_sock.get_binded_ip() << ", port: " << udp_sock.get_binded_port() << ")";
-        socket_setup_failed(result); return false;
-    }
-    udp_sock.s_change_send_addr(serv_ip, udp_port);
-    
-    log_info << "(udp_sock): creation / binding successful";
-
-    return true;
-}
-
-void socket_setup_failed(int err) {
-    connection_finished = true;
-    connection_err = err;
+void init() {
+    udp_sock = sock::Socket(sock::PROTO_UDP);
+    tcp_sock = sock::Socket(sock::PROTO_TCP);
+    sock::Socket::init_sockets();
 }
 
 void close_all_threads() {
@@ -111,24 +46,96 @@ void close_all_threads() {
     //msg::close_all_threads();
 }
 
-void init() {
-    udp_sock = sock::Socket(sock::PROTO_UDP);
-    tcp_sock = sock::Socket(sock::PROTO_TCP);
-    sock::Socket::init_sockets();
-}
-
 void cleanup_all() {
     close_all_threads();
     tcp_sock.cleanup();
     udp_sock.cleanup();
 }
 
-void setup_tcp_sock() {
-    connection_finished = false;
-    connection_err = NO_ERROR;
+void setup_tcp_sock(ServerConnectCallback _callback) {
+    tcp_connect_thread = std::thread([_callback]() {
+        log_info << "attempt connect on thread...";
+        if ((result = tcp_sock.s_create()) != NO_ERROR) {
+            log_error << "(tcp_sock): error " << result << " occurred while creating tcp socket";
+            connect_done(_callback, result, "could not create tcp socket"); return;
+        }
+        if ((result = tcp_sock.s_connect(server_ip, server_tcp_port)) != NO_ERROR) {
+            log_error << "(tcp_sock): error " << result << 
+                         " occurred while trying to connect to tcp socket (ip: " <<
+                         tcp_sock.get_binded_ip() << ", port: " << tcp_sock.get_binded_port() << ")";
+            connect_done(_callback, result, "could not connect to tcp socket"); return;
+        }
 
-    tcp_connect_thread = std::thread(tcp_connect);
+        log_info << "(tcp_sock): connection successful";
+
+        tcp_sock.add_leave_handler([&](msg::Message* message) {
+            char* leave_msg = message->get<char*>(0);
+            connect_done(_callback, ERR_SERVER_LEAVE_CODE, leave_msg);
+        });
+
+        //below is code to setup a udp socket for the server, needs to be moved once the user login system is done
+        tcp_sock.add_message_handler(msg::MID_RECV_REQUEST_FOR_ME_TO_BIND_UDP_PORT, [](msg::Message* message) {
+            setup_udp_sock(message->get<u_short>(0), [](int err, std::string err_msg) {
+                if (err == NO_ERROR) {
+                    msg::add_poll_sock(udp_sock);
+                    msg::send(tcp_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_sock.get_binded_port());
+                }else {
+                    msg::send(tcp_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
+                }
+            });
+        });
+
+        udp_sock.add_message_handler(msg::MID_RECV_UDP_PING, [](msg::Message* message) {
+            msg::send(udp_sock, msg::Stream() << msg::MID_SEND_UDP_PONG);
+        });
+
+        tcp_sock.add_message_handler(msg::MID_RECV_SERVER_CONNECTION_ESTABLISHED_SUCCESSFULLY, [_callback](msg::Message* message) {
+            connect_done(_callback, NO_ERROR);
+        });
+
+        msg::start_recv_thread();
+    });
     tcp_connect_thread.detach();
+}
+
+void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
+    if ((result = udp_sock.s_create()) != NO_ERROR) {
+        log_error << "(udp_sock): error " << result << " occurred while creating udp socket";
+        connect_done(_callback, result, "could not create udp socket"); return;
+    }
+    if ((result = udp_sock.s_bind("0.0.0.0", 0)) != NO_ERROR) {
+        log_error << "(udp_sock): error " << result << 
+                     " occurred while trying to bind udp socket (ip: " << udp_sock.get_binded_ip() << ")";
+        connect_done(_callback, result, "could not bind udp socket"); return;
+    }
+    udp_sock.s_change_send_addr(server_ip, server_tcp_port);
+    
+    log_info << "(udp_sock): creation / binding successful";
+
+    connect_done(_callback, NO_ERROR);
+
+    return;
+}
+
+void update() {
+    //toggles local and server ip connections
+    //when toggled, the state is switched back to the beginning
+    if (input::key_down(input::cc::EventKeyboard::KeyCode::KEY_LEFT_CTRL) && input::key_pressed(input::cc::EventKeyboard::KeyCode::KEY_L)) {
+        static bool local_ip = false;
+        if (local_ip = !local_ip) {
+            log_info << "switched to local server ip";
+            server_ip = LOCAL_SERVER_IP;
+            cleanup_all();
+            root::switch_state(root::STATE_SERVER_CONNECT_SCREEN, true);
+            gui::show_message_box("", "switched to local server ip", "OK");
+        }else {
+            log_info << "switched to server ip";
+            server_ip = SERVER_IP;
+            cleanup_all();
+            root::switch_state(root::STATE_SERVER_CONNECT_SCREEN, true);
+            gui::show_message_box("", "switched to server ip", "OK");
+        }
+    }
 }
 
 END_SERVER_NS
