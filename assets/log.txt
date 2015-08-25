@@ -7,6 +7,11 @@ particle assets loaded
 asset loading completed
 attempt connect on thread...
 created state 1
-(tcp_sock): connection successful
 switching to state 2 from state 1
 removed state 1
+created state 2
+switched to state 2 from state 2
+10061: connect error
+(tcp_sock): error 10061 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+10057: send error
+10057: send error

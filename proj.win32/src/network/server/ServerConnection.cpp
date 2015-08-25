@@ -31,8 +31,10 @@ std::thread tcp_connect_thread;
 char* server_ip = LOCAL_SERVER_IP;
 u_short server_tcp_port = 4222;
 u_short server_udp_port = 0;
+bool connected = false;
 
-std::mutex thread_lock;
+bool stop_tcp_thread = false;
+bool stop_udp_thread = false;
 
 void init() {
     udp_sock = sock::Socket(sock::PROTO_UDP);
@@ -42,8 +44,9 @@ void init() {
 
 void close_all_threads() {
     //todo: close threads properly!
-    //if (tcp_connect_thread.native_handle() != NULL) tcp_connect_thread.detach();
     //msg::close_all_threads();
+    stop_tcp_thread = true;
+    stop_udp_thread = true;
 }
 
 void cleanup_all() {
@@ -53,20 +56,38 @@ void cleanup_all() {
 }
 
 void setup_tcp_sock(ServerConnectCallback _callback) {
+    stop_tcp_thread = false;
+    connected = false;
     tcp_connect_thread = std::thread([_callback]() {
+        std::mutex mutex;
+        mutex.lock();
+
         log_info << "attempt connect on thread...";
         if ((result = tcp_sock.s_create()) != NO_ERROR) {
             log_error << "(tcp_sock): error " << result << " occurred while creating tcp socket";
-            connect_done(_callback, result, "could not create tcp socket"); return;
+
+            mutex.unlock();
+            if (stop_tcp_thread) return;
+
+            connect_done(_callback, result, "could not create tcp socket");
+            return;
         }
         if ((result = tcp_sock.s_connect(server_ip, server_tcp_port)) != NO_ERROR) {
             log_error << "(tcp_sock): error " << result << 
                          " occurred while trying to connect to tcp socket (ip: " <<
                          tcp_sock.get_binded_ip() << ", port: " << tcp_sock.get_binded_port() << ")";
-            connect_done(_callback, result, "could not connect to tcp socket"); return;
+
+            mutex.unlock();
+            if (stop_tcp_thread) return;
+
+            connect_done(_callback, result, "could not connect to tcp socket");
+            return;
         }
 
         log_info << "(tcp_sock): connection successful";
+
+        connected = true;
+        mutex.unlock();
 
         tcp_sock.add_leave_handler([&](msg::Message* message) {
             char* leave_msg = message->get<char*>(0);
@@ -116,6 +137,8 @@ void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
 
     return;
 }
+
+bool is_connected() { return connected; }
 
 void update() {
     //toggles local and server ip connections

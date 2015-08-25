@@ -57,6 +57,9 @@ namespace startup {
             case STATE_SERVER_CONNECT_SCREEN:
                 ui_layer->removeChild(info_label);
                 ui_layer->removeChild(spinner_sprite);
+                if (!network::server::is_connected()) {
+                    network::server::close_all_threads();
+                }
                 break;
         }
     }

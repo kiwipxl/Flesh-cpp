@@ -28,6 +28,8 @@ extern void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _call
 extern void close_all_threads();
 extern void cleanup_all();
 
+extern bool is_connected();
+
 END_SERVER_NS
 END_NETWORK_NS
 
