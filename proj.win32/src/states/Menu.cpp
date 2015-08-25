@@ -4,8 +4,10 @@
 
 #include "assets/Textures.h"
 #include "gui/Button.h"
-#include "network/sockets/SocketManager.h"
 #include "network/message/Message.h"
+#include "network/message/Stream.h"
+#include "network/message/MID.h"
+#include "network/sockets/SocketManager.h"
 #include "StateManager.h"
 
 BEGIN_STATES_NS

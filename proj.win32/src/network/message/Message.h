@@ -1,13 +1,8 @@
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_
 
-#include <string>
-#include <sstream>
-
+#include "debug/Logger.h"
 #include "network/Defines.h"
-#include "network/message/Callback.h"
-#include "network/message/MID.h"
-#include "network/message/Stream.h"
 
 BEGIN_NETWORK_NS
 BEGIN_MSG_NS
@@ -24,10 +19,12 @@ struct Param {
 
 struct Message {
 
-    CMID mid = get_MID(MID_UNKNOWN);
+    CMID mid;
     std::vector<Param*> params;
-    CallbackResult callback_result = CALLBACK_RESULT_UNKNOWN;
+    CallbackResult callback_result;
     sock::Socket* sock = NULL;
+
+    Message();
 
     template <typename T> T get(int index) {
         if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");

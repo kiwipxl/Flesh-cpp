@@ -2,14 +2,27 @@
 
 #include "debug/Logger.h"
 #include "network/message/Callback.h"
+#include "network/message/MID.h"
+#include "network/message/Callback.h"
+#include "network/message/Stream.h"
 #include "network/sockets/Socket.h"
 
 BEGIN_NETWORK_NS
 BEGIN_MSG_NS
 
+//private
 template <typename T> inline int sprintf_buf(int offset, CFTYPE t, int n) {
     return sprintf(msg::print_buf + offset, t->printf_format, *(T*)msg::last_param_list[n]->data);
 }
+
+//public
+
+//-- begin Message class --
+Message::Message() {
+    mid = get_MID(MID_UNKNOWN);
+    callback_result = CALLBACK_RESULT_UNKNOWN;
+}
+//-- end Message class --
 
 const int MAX_PRINT_BUF = 1024;
 char print_buf[MAX_PRINT_BUF];
@@ -19,17 +32,6 @@ void init() {
 }
 
 void send(sock::Socket& sock, Stream& stream) {
-    //not thread safe, will crash if params are used in another thread
-    //todo: param lists can be moved innto MID class to fix
-    /*if (print_output || write_to_file) {
-        CMID mid = extract_mid(byte_buffer, byte_offset);
-        extract_params(mid, byte_buffer, byte_offset);
-        std::string temp = last_MID_to_string();
-        if (print_output) log_print << "sent mid: " << temp;
-        if (write_to_file) log_file << "sent mid: " << temp;
-        clear_param_list();
-    }*/
-
     sock.s_send(byte_buffer, byte_offset);
 }
     

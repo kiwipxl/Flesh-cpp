@@ -23,11 +23,18 @@ BEGIN_NETWORK_NS
         class Param;
         struct MID;
         struct FormatType;
+        enum MID_enum;
+        enum GeneralResult;
 
         typedef const FormatType* CFTYPE;
         typedef const MID const* CMID;
 
+        class MIDCallback;
+        enum CallbackResult;
         typedef std::function<void(Message*)> CallbackFunc;
+        typedef std::shared_ptr<MIDCallback> CallbackPtr;
+
+        class Stream;
 
     END_MSG_NS
 

@@ -3,6 +3,8 @@
 #include "debug/Logger.h"
 #include "network/message/Message.h"
 #include "network/GameMessages.h"
+#include "network/message/MID.h"
+#include "network/message/Stream.h"
 #include "StateManager.h"
 
 BEGIN_NETWORK_NS

@@ -2,6 +2,7 @@
 
 #include "network/message/Callback.h"
 #include "network/message/Message.h"
+#include "network/message/MID.h"
 
 BEGIN_NETWORK_NS
 BEGIN_MSG_NS

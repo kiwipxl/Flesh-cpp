@@ -1,9 +1,6 @@
 #ifndef _MID_H_
 #define _MID_H_
 
-#include <stdarg.h>
-
-#include <string>
 #include <vector>
 
 #include "network/Defines.h"

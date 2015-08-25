@@ -1,11 +1,12 @@
 #include "network/GameMessages.h"
 
-#include "entities/units/Unit.h"
 #include "debug/Logger.h"
+#include "entities/units/Unit.h"
 #include "message/Message.h"
 #include "network/Peers.h"
-#include "StateManager.h"
+#include "network/message/MID.h"
 #include "sockets/SocketManager.h"
+#include "StateManager.h"
 
 BEGIN_NETWORK_NS
 

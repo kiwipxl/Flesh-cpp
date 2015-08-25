@@ -2,10 +2,7 @@
 #define _CALLBACK_H_
 
 #include <ctime>
-#include <functional>
-#include <memory>
 
-#include "network/message/MID.h"
 #include "network/Defines.h"
 
 BEGIN_NETWORK_NS
@@ -25,7 +22,8 @@ enum CallbackResult {
 
 struct MIDCallback {
 
-    MIDCallback(CMID m, CallbackFunc& f, float t_len, bool r_after_call) : func(f), mid(m), timeout_len(t_len), remove_after_call(r_after_call) {
+    MIDCallback(CMID _mid, CallbackFunc& _func, float _timeout_len, bool _remove_after_call) : 
+        mid(_mid), func(_func), timeout_len(_timeout_len), remove_after_call(_remove_after_call) {
         reset_timeout();
     }
 
@@ -39,8 +37,6 @@ struct MIDCallback {
         creation_time = time(&creation_time);
     }
 };
-
-typedef std::shared_ptr<MIDCallback> CallbackPtr;
 
 extern CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback, float timeout_len = TIMEOUT_NONE, bool remove_after_call = false);
 extern void process_message_callback(MessagePtr message);

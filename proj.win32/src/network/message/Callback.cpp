@@ -1,6 +1,7 @@
 #include "network/message/Callback.h"
 
 #include "debug/Logger.h"
+#include "network/message/MID.h"
 #include "network/message/Message.h"
 #include "network/sockets/Socket.h"
 #include "network/sockets/SocketPoll.h"
@@ -8,6 +9,9 @@
 BEGIN_NETWORK_NS
 BEGIN_MSG_NS
 
+//private
+
+//public
 CallbackPtr make_MID_callback(CMID mid, CallbackFunc callback, float timeout_len, bool remove_after_call) {
     return CallbackPtr(new MIDCallback(mid, callback, timeout_len, remove_after_call));
 }
