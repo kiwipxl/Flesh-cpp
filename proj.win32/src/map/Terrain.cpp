@@ -11,7 +11,7 @@
 #include <renderer/CCGLProgramCache.h>
 
 #include "assets/Textures.h"
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 #include "entities/units/Unit.h"
 #include "map/Cam.h"
 #include "StateManager.h"

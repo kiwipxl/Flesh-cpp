@@ -1,7 +1,6 @@
 #include "entities/units/components/BulletAimerComponent.h"
 
 #include "assets/Textures.h"
-#include "debug/Logger.h"
 #include "entities/units/components/ComponentBase.h"
 #include "entities/units/Unit.h"
 #include "entities/units/UnitSpawner.h"
@@ -13,6 +12,7 @@
 #include "map/Cam.h"
 #include "states/Game.h"
 #include "StateManager.h"
+#include "utility/Logger.h"
 
 using namespace cocos2d;
 

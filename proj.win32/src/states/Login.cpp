@@ -12,7 +12,7 @@
 #include "network/message/MID.h"
 #include "network/server/ServerConnection.h"
 #include "network/sockets/Socket.h"
-#include "utility/ThreadSchedule.h"
+#include "utility/General.h"
 
 #include "StateManager.h"
 #include "SceneManager.h"

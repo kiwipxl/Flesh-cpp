@@ -10,6 +10,7 @@
 #include "physics/Physics.h"
 #include "states/Game.h"
 #include "StateManager.h"
+#include "utility/String.h"
 
 using namespace cocos2d;
 

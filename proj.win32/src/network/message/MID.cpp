@@ -2,7 +2,8 @@
 
 #include <sstream>
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
+#include "utility/String.h"
 
 BEGIN_NETWORK_NS
 BEGIN_MSG_NS

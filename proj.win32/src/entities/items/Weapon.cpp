@@ -3,7 +3,7 @@
 #include <renderer/CCTexture2D.h>
 
 #include "assets/Textures.h"
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 
 using namespace cocos2d;
 

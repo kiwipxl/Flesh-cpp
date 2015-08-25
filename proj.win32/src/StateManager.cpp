@@ -8,7 +8,6 @@
 
 #include "assets/Assets.h"
 #include "debug/Errors.h"
-#include "debug/Logger.h"
 #include "entities/items/Weapon.h"
 #include "gui/MessageBox.h"
 #include "gui/Button.h"
@@ -18,6 +17,7 @@
 #include "network/message/Message.h"
 #include "network/server/ServerConnection.h"
 #include "physics/Physics.h"
+#include "utility/Logger.h"
 
 #include "states/Game.h"
 #include "states/Login.h"
@@ -57,7 +57,7 @@ namespace root {
         scene->addChild(bg_layer, 1);
         map::camera::init();
 
-        debug::init_logger();
+        utility::init_logger();
         assets::init();
         network::server::init();
         network::msg::init();

@@ -3,9 +3,9 @@
 #include "assets/Textures.h"
 #include "entities/bullets/BulletLogic.h"
 #include "entities/units/Unit.h"
-#include "debug/Logger.h"
 #include "SceneManager.h"
 #include "StateManager.h"
+#include "utility/Logger.h"
 
 using namespace cocos2d;
 

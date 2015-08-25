@@ -1,6 +1,6 @@
 #include "network/message/Callback.h"
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 #include "network/message/MID.h"
 #include "network/message/Message.h"
 #include "network/sockets/Socket.h"

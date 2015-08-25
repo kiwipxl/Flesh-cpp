@@ -3,8 +3,8 @@
 #include <base/CCEventDispatcher.h>
 #include <physics/CCPhysicsWorld.h>
 
-#include "debug/Logger.h"
 #include "StateManager.h"
+#include "utility/Logger.h"
 
 BEGIN_PHYSICS_NS
 

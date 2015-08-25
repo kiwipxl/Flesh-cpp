@@ -1,7 +1,8 @@
 #include "network/Peers.h"
 
 #include "debug/Errors.h"
-#include "debug/Logger.h"
+#include "utility/Logger.h"
+#include "utility/String.h"
 #include "network/sockets/Socket.h"
 
 BEGIN_NETWORK_NS

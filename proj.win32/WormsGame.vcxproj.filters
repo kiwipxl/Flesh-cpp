@@ -20,7 +20,6 @@
     <ClCompile Include="src\network\Peers.cpp" />
     <ClCompile Include="src\network\sockets\Socket.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
-    <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\network\message\MID.cpp" />
     <ClCompile Include="src\network\message\Message.cpp" />
     <ClCompile Include="src\network\message\Callback.cpp" />
@@ -54,8 +53,10 @@
     <ClCompile Include="src\entities\items\Weapon.cpp" />
     <ClCompile Include="src\states\Menu.cpp" />
     <ClCompile Include="src\network\server\ServerConnection.cpp" />
-    <ClCompile Include="src\utility\ThreadSchedule.cpp" />
     <ClCompile Include="src\network\message\MessagePoller.cpp" />
+    <ClCompile Include="src\utility\General.cpp" />
+    <ClCompile Include="src\utility\Logger.cpp" />
+    <ClCompile Include="src\utility\String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -67,7 +68,6 @@
     <ClInclude Include="src\network\Peers.h" />
     <ClInclude Include="src\network\sockets\Socket.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
-    <ClInclude Include="src\debug\Logger.h" />
     <ClInclude Include="src\network\message\MID.h" />
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\Callback.h" />
@@ -112,9 +112,12 @@
     <ClInclude Include="src\entities\Entity.h" />
     <ClInclude Include="src\states\Menu.h" />
     <ClInclude Include="src\network\server\ServerConnection.h" />
-    <ClInclude Include="src\utility\ThreadSchedule.h" />
     <ClInclude Include="src\utility\Defines.h" />
     <ClInclude Include="src\network\message\MessagePoller.h" />
+    <ClInclude Include="src\utility\General.h" />
+    <ClInclude Include="src\debug\Defines.h" />
+    <ClInclude Include="src\utility\Logger.h" />
+    <ClInclude Include="src\utility\String.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

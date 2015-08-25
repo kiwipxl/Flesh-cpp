@@ -4,7 +4,8 @@
 #include <base/CCEventMouse.h>
 #include <base/CCEventListenerMouse.h>
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
+#include "utility/String.h"
 
 #include "StateManager.h"
 

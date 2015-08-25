@@ -1,7 +1,9 @@
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_
 
-#include "debug/Logger.h"
+#include <vector>
+
+#include "utility/Logger.h"
 #include "network/Defines.h"
 
 BEGIN_NETWORK_NS

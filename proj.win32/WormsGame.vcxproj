@@ -165,7 +165,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\assets\Particles.cpp" />
     <ClCompile Include="src\assets\Textures.cpp" />
     <ClCompile Include="src\debug\Errors.cpp" />
-    <ClCompile Include="src\debug\Logger.cpp" />
+    <ClCompile Include="src\utility\Logger.cpp" />
     <ClCompile Include="src\entities\bullets\Bullet.cpp" />
     <ClCompile Include="src\entities\bullets\BulletGroup.cpp" />
     <ClCompile Include="src\entities\items\Item.cpp" />
@@ -200,7 +200,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\states\Login.cpp" />
     <ClCompile Include="src\states\Menu.cpp" />
     <ClCompile Include="src\states\Startup.cpp" />
-    <ClCompile Include="src\utility\ThreadSchedule.cpp" />
+    <ClCompile Include="src\utility\General.cpp" />
+    <ClCompile Include="src\utility\String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -212,8 +213,9 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\assets\Maps.h" />
     <ClInclude Include="src\assets\Particles.h" />
     <ClInclude Include="src\assets\Textures.h" />
+    <ClInclude Include="src\debug\Defines.h" />
     <ClInclude Include="src\debug\Errors.h" />
-    <ClInclude Include="src\debug\Logger.h" />
+    <ClInclude Include="src\utility\Logger.h" />
     <ClInclude Include="src\debug\PlatformConfig.h" />
     <ClInclude Include="src\entities\bullets\Bullet.h" />
     <ClInclude Include="src\entities\bullets\BulletGroup.h" />
@@ -259,7 +261,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\states\Menu.h" />
     <ClInclude Include="src\states\Startup.h" />
     <ClInclude Include="src\utility\Defines.h" />
-    <ClInclude Include="src\utility\ThreadSchedule.h" />
+    <ClInclude Include="src\utility\General.h" />
+    <ClInclude Include="src\utility\String.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

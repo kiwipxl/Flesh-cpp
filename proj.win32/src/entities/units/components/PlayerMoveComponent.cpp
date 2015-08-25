@@ -4,7 +4,6 @@
 #include <physics/CCPhysicsContact.h>
 #include <physics/CCPhysicsWorld.h>
 
-#include "debug/Logger.h"
 #include "entities/units/components/BulletAimerComponent.h"
 #include "entities/units/components/ColliderComponent.h"
 #include "entities/units/Unit.h"
@@ -12,6 +11,7 @@
 #include "input/MouseInput.h"
 #include "states/Game.h"
 #include "StateManager.h"
+#include "utility/Logger.h"
 
 using namespace cocos2d;
 

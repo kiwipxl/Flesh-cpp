@@ -4,7 +4,7 @@
 #include <2d/CCLabelTTF.h>
 
 #include "assets/Textures.h"
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 #include "input/MouseInput.h"
 #include "StateManager.h"
 

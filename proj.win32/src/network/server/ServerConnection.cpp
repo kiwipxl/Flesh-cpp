@@ -1,6 +1,6 @@
 #include "network/server/ServerConnection.h"
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 #include "input/KeyboardInput.h"
 #include "gui/MessageBox.h"
 #include "network/message/Message.h"
@@ -10,7 +10,7 @@
 #include "network/sockets/Socket.h"
 #include "network/sockets/SocketPoll.h"
 #include "StateManager.h"
-#include "utility/ThreadSchedule.h"
+#include "utility/General.h"
 
 BEGIN_NETWORK_NS
 BEGIN_SERVER_NS

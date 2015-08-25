@@ -1,6 +1,6 @@
 #include "Maps.h"
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 
 BEGIN_ASSETS_NS
 

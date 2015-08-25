@@ -1,7 +1,8 @@
 #ifndef _MSG_STREAM_H_
 #define _MSG_STREAM_H_
 
-#include "debug/Logger.h"
+#include "utility/String.h"
+#include "utility/Logger.h"
 #include "network/Defines.h"
 
 BEGIN_NETWORK_NS

@@ -8,7 +8,8 @@
 #include "assets/Assets.h"
 #include "network/server/ServerConnection.h"
 #include "StateManager.h"
-#include "utility/ThreadSchedule.h"
+#include "utility/General.h"
+#include "utility/Logger.h"
 
 BEGIN_STATES_NS
 

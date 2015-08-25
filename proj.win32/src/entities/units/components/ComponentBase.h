@@ -3,7 +3,7 @@
 
 #include <physics/CCPhysicsContact.h>
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
 #include "entities/EntityDefines.h"
 #include "entities/EntityScheduler.h"
 

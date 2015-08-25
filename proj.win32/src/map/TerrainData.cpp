@@ -1,6 +1,7 @@
 #include "map/TerrainData.h"
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
+#include "utility/String.h"
 #include "StateManager.h"
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {

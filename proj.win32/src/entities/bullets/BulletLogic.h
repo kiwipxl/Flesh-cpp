@@ -9,7 +9,8 @@ logic components can be added or removed to a bullet object
 #include <vector>
 
 #include "assets/Particles.h"
-#include "debug/Logger.h"
+#include "utility/Logger.h"
+#include "utility/String.h"
 #include "entities/EntityScheduler.h"
 #include "entities/bullets/Bullet.h"
 #include "entities/bullets/BulletGroup.h"

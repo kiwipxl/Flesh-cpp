@@ -1,6 +1,7 @@
 #include "Particles.h"
 
-#include "debug/Logger.h"
+#include "utility/Logger.h"
+#include "utility/String.h"
 
 BEGIN_ASSETS_NS
 
