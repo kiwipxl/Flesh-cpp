@@ -184,7 +184,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\map\Cam.cpp" />
     <ClCompile Include="src\map\TerrainData.cpp" />
     <ClCompile Include="src\network\message\Callback.cpp" />
-    <ClCompile Include="src\network\GameMessages.cpp" />
+    <ClCompile Include="src\network\message\MessagePoller.cpp" />
     <ClCompile Include="src\network\message\Message.cpp" />
     <ClCompile Include="src\network\message\MID.cpp" />
     <ClCompile Include="src\network\message\Stream.cpp" />
@@ -239,7 +239,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\map\MapDefines.h" />
     <ClInclude Include="src\map\TerrainData.h" />
     <ClInclude Include="src\network\message\Callback.h" />
-    <ClInclude Include="src\network\GameMessages.h" />
+    <ClInclude Include="src\network\message\MessagePoller.h" />
     <ClInclude Include="src\network\message\Message.h" />
     <ClInclude Include="src\network\message\MID.h" />
     <ClInclude Include="src\network\message\Stream.h" />

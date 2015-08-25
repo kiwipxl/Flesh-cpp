@@ -28,7 +28,12 @@ extern void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _call
 extern void close_all_threads();
 extern void cleanup_all();
 
+extern void add_sock_to_poll(sock::Socket& sock);
+extern sock::SocketPoll& get_poll();
+
 extern bool is_connected();
+extern bool is_tcp_thread_running();
+extern bool is_udp_thread_running();
 
 END_SERVER_NS
 END_NETWORK_NS

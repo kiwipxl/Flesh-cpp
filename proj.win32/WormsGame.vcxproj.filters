@@ -17,7 +17,6 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
-    <ClCompile Include="src\network\GameMessages.cpp" />
     <ClCompile Include="src\network\Peers.cpp" />
     <ClCompile Include="src\network\sockets\Socket.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
@@ -56,6 +55,7 @@
     <ClCompile Include="src\states\Menu.cpp" />
     <ClCompile Include="src\network\server\ServerConnection.cpp" />
     <ClCompile Include="src\utility\ThreadSchedule.cpp" />
+    <ClCompile Include="src\network\message\MessagePoller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -64,7 +64,6 @@
     <ClInclude Include="src\debug\Errors.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\StateManager.h" />
-    <ClInclude Include="src\network\GameMessages.h" />
     <ClInclude Include="src\network\Peers.h" />
     <ClInclude Include="src\network\sockets\Socket.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
@@ -115,6 +114,7 @@
     <ClInclude Include="src\network\server\ServerConnection.h" />
     <ClInclude Include="src\utility\ThreadSchedule.h" />
     <ClInclude Include="src\utility\Defines.h" />
+    <ClInclude Include="src\network\message\MessagePoller.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
