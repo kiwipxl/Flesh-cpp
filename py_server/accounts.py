@@ -6,11 +6,20 @@ import re;
 import debug;
 import hashlib;
 
+class AccDetails:
+    unique_id = -1;
+    username = "";
+    gold = -1;
+    parent_client = None;
+
 class LoginResult:
     SUCCESS, INCORRECT_USER_OR_PASS, INVALID_FORMAT, UNKNOWN_ERROR = range(4);
 
 class RegisterResult:
     SUCCESS, USER_ALREADY_EXISTS, INVALID_FORMAT, UNKNOWN_ERROR = range(4);
+
+class GeneralResult:
+    SUCCESS, FAILURE, UNKNOWN_ERROR, range(3);
 
 MIN_USERNAME_LEN = 3;
 MAX_USERNAME_LEN = 16;
@@ -24,14 +33,29 @@ def init_client_account(client_obj):
 
 def handle_all_messages(m):
     if (m.mid == _MID.RECV_CLIENT_ATTEMPT_REGISTER):
-        print("attempt register: username: %s, password: %s" % (m.params[0], m.params[1]));
         result = db.add_user_account(m.params[0], m.params[1]);
         msg.send(m.sock, m.client_obj, msg.build(_MID.SEND_CLIENT_ATTEMPT_REGISTER_RESULT, result));
 
     elif (m.mid == _MID.RECV_CLIENT_ATTEMPT_LOGIN):
-        print("attempt login: username: %s, password: %s" % (m.params[0], m.params[1]));
         result = db.find_user_account(m.params[0], m.params[1]);
+        if (result == LoginResult.SUCCESS):
+            details = AccDetails();
+            m.client_obj.acc_details = details;
+
         msg.send(m.sock, m.client_obj, msg.build(_MID.SEND_CLIENT_ATTEMPT_LOGIN_RESULT, result));
+
+    elif (m.mid == _MID.RECV_REQUEST_FOR_CLIENT_ACCOUNT_DETAILS):
+        print("request client account details");
+        acc_details = m.client_obj.acc_details;
+        if (acc_details and acc_details.parent_client == m.client_obj):
+            msg.send(m.sock, m.client_obj,
+                     msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
+                              GeneralResult.SUCCESS, acc_details.username,
+                              acc_details.gold));
+        else:
+            msg.send(m.sock, m.client_obj,
+                     msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
+                               GeneralResult.FAILURE, "", -1);
 
 #checks the formatting of both the username annd password to make sure it can be put in the db
 #returns (formatted username, formatted password, error code (true = success, false = format_error))

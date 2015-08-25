@@ -12,7 +12,8 @@ def init():
 
     #con.row_factory = lite.Row;     #fetches use dictionary over tuple
     cur = con.cursor();
-    query("create table if not exists accounts(id integer primary key, user character, pass character, unique(user))");
+    query("create table if not exists accounts(id integer primary key, user character, pass character, \
+            gold integer, unique(user))");
     con.commit();
 
     debug.log("accounts db initiated", debug.P_INFO);
@@ -44,7 +45,7 @@ def find_user_account(username, password):
     result = query("select * from accounts where user='%s' and pass='%s'" % (username, password));
     if not (result): return accounts.LoginResult.UNKNOWN_ERROR;
     if (cur.fetchone() == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS;
-
+    
     return accounts.LoginResult.SUCCESS;
 
 def query(q):

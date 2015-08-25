@@ -10,16 +10,16 @@ class Client:
     tcp_sock = None;
     udp_sock = None;
     ip = "";
-    c_tcp_port = -1;   #binded tcp port on client machine connected to client tcp socket
-    c_udp_port = -1;   #binded udp port on client machine that is listening for msgs
-    s_tcp_port = -1;   #binded tcp port on server machine connected to client tcp socket
-    s_udp_port = -1;   #binded udp port on server machine that is listening for msgs
+    c_tcp_port = -1;    #binded tcp port on client machine connected to client tcp socket
+    c_udp_port = -1;    #binded udp port on client machine that is listening for msgs
+    s_tcp_port = -1;    #binded tcp port on server machine connected to client tcp socket
+    s_udp_port = -1;    #binded udp port on server machine that is listening for msgs
     joined_game = None;
     game_client = None;
     callbacks = [];
     left = False;
-
     udp_timeout_tries = 0;
+    acc_details = None;
 
     def __init__(self):
         self.udp_timeout_tries = 0;

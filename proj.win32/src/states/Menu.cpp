@@ -5,13 +5,14 @@
 #include "assets/Textures.h"
 #include "gui/Button.h"
 #include "network/sockets/SocketManager.h"
-
+#include "network/message/Message.h"
 #include "StateManager.h"
 
 BEGIN_STATES_NS
 
 namespace menu {
 
+    using namespace network;
     using namespace root;
     using namespace cocos2d;
 
@@ -75,6 +76,13 @@ namespace menu {
             rbutton->base->setFlippedX(true);
             ui_layer->addChild(rbutton->base, 1);
 
+            sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
+                std::string username = m->get<std::string>(0);
+                int gold = m->get<int>(1);
+            });
+
+            msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_REQUEST_FOR_MY_ACCOUNT_DETAILS);
+
             break;
         }
     }
@@ -95,7 +103,7 @@ namespace menu {
             if (scrolling) {
                 float x = menu_node->getPositionX() - (menu_node->getPositionX() - scroll_dest_x) / 8.0f;
                 menu_node->setPosition(x, menu_node->getPositionY());
-                if (x >= scroll_dest_x - 1 && x <= scroll_dest_x + 1) {
+                if (x >= scroll_dest_x - 4.0f && x <= scroll_dest_x + 4.0f) {
                     scrolling = false;
                     menu_node->setPositionX(scroll_dest_x);
 
