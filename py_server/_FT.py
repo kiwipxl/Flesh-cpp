@@ -31,4 +31,4 @@ FLOAT                   = FormatType('f', 'f', 4, "float");
 DOUBLE                  = FormatType('d', 'f', 8, "double");
 STRING                  = FormatType('s', 's', 1, "string");
 VOID_POINTER            = FormatType('p', 'lu', 4, "void*");
-RESPONSE                = FormatType('H', 'd', 2, "response code");
+GENERAL_RESULT          = FormatType('H', 'd', 2, "gresult");

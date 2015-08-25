@@ -19,7 +19,7 @@ class RegisterResult:
     SUCCESS, USER_ALREADY_EXISTS, INVALID_FORMAT, UNKNOWN_ERROR = range(4);
 
 class GeneralResult:
-    SUCCESS, FAILURE, UNKNOWN_ERROR, range(3);
+    SUCCESS, FAILURE, UNKNOWN_ERROR = range(3);
 
 MIN_USERNAME_LEN = 3;
 MAX_USERNAME_LEN = 16;
@@ -28,6 +28,13 @@ MAX_PASSWORD_LEN = 16;
 
 input_regex = "^[a-zA-Z0-9]+$";
 
+ID_INDEX = 0;
+USER_INDEX = 1;
+PASS_INDEX = 2;
+GOLD_INDEX = 3;
+
+STARTING_GOLD = 1225;
+
 def init_client_account(client_obj):
     client_obj.add_message_handler(_MID.ALL, handle_all_messages);
 
@@ -35,6 +42,8 @@ def update_acc_details(client_obj, unique_id):
     result, acc_details = db.get_user_acc_details(client_obj.acc_details, unique_id);
     if (result == GeneralResult.SUCCESS):
         client_obj.acc_details = acc_details;
+        debug.log_accounts("updated account details: id: %d, user: %s, gold: %d" %
+                           (acc_details.unique_id, acc_details.username, acc_details.gold));
 
 def handle_all_messages(m):
     if (m.mid == _MID.RECV_CLIENT_ATTEMPT_REGISTER):
@@ -58,12 +67,12 @@ def handle_all_messages(m):
         if (acc_details and acc_details.parent_client == m.client_obj):
             msg.send(m.sock, m.client_obj,
                      msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
-                              GeneralResult.SUCCESS, acc_details.username,
+                              GeneralResult.UNKNOWN_ERROR, acc_details.username,
                               acc_details.gold));
         else:
             msg.send(m.sock, m.client_obj,
                      msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
-                               GeneralResult.FAILURE, "", -1);
+                               GeneralResult.FAILURE, "", -1));
 
 #checks the formatting of both the username annd password to make sure it can be put in the db
 #returns (formatted username, formatted password, error code (true = success, false = format_error))

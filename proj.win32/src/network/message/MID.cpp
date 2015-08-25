@@ -1,7 +1,8 @@
 #include "network/message/MID.h"
 
-#include <cassert>
 #include <sstream>
+
+#include "debug/Logger.h"
 
 BEGIN_NETWORK_NS
 
@@ -14,20 +15,21 @@ namespace msg {
     //format types for packing and unpacking byte data
     CFTYPE FT_CHAR								= new FormatType("%c", 1, "char");
     CFTYPE FT_SIGNED_CHAR						= new FormatType("%c", 1, "schar");
-    CFTYPE FT_UNSIGNED_CHAR					= new FormatType("%c", 1, "uchar");
+    CFTYPE FT_UNSIGNED_CHAR					    = new FormatType("%c", 1, "uchar");
     CFTYPE FT_BOOL								= new FormatType("%d", 1, "bool");
-    CFTYPE FT_SHORT							= new FormatType("%d", 2, "short");
+    CFTYPE FT_SHORT							    = new FormatType("%d", 2, "short");
     CFTYPE FT_UNSIGNED_SHORT					= new FormatType("%d", 2, "ushort");
     CFTYPE FT_INT								= new FormatType("%i", 4, "int");
     CFTYPE FT_UNSIGNED_INT						= new FormatType("%u", 4, "uint");
     CFTYPE FT_LONG								= new FormatType("%li", 8, "long");
-    CFTYPE FT_UNSIGNED_LONG					= new FormatType("%lu", 8, "ulong");
-    CFTYPE FT_LONG_LONG						= new FormatType("%lli", 8, "llong");
+    CFTYPE FT_UNSIGNED_LONG					    = new FormatType("%lu", 8, "ulong");
+    CFTYPE FT_LONG_LONG						    = new FormatType("%lli", 8, "llong");
     CFTYPE FT_UNSIGNED_LONG_LONG				= new FormatType("%llu", 8, "ullong");
-    CFTYPE FT_FLOAT							= new FormatType("%f", 4, "float");
+    CFTYPE FT_FLOAT							    = new FormatType("%f", 4, "float");
     CFTYPE FT_DOUBLE							= new FormatType("%f", 8, "double");
     CFTYPE FT_STRING						    = new FormatType("%s", 1, "string");
     CFTYPE FT_VOID_POINTER						= new FormatType("%p", 4, "void*");
+    CFTYPE FT_GENERAL_RESULT                    = new FormatType("%d", 2, "gresult");
 
     int MID_id = 0;
     std::vector<CMID> MID_list;
@@ -67,11 +69,11 @@ namespace msg {
                     ++last_MID->param_count;
                     last_MID->param_total_bytes += FT_list[n]->len;
                 }else {
-                    assert(!"argument used before the first MID define");
+                    f_assert("argument used before the first MID define");
                 }
             }
         }
-        if (!found) assert(!"argument name could not be found in FT_list");
+        cf_assert(!found, "argument name could not be found in FT_list");
     }
 
     void MID_init() {

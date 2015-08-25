@@ -29,7 +29,8 @@ def add_user_account(username, password):
     query("select * from accounts where user='%s'" % (username));
     if (cur.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
 
-    result = query("insert or ignore into accounts(user, pass) values('%s', '%s')" % (username, password));
+    result = query("insert or ignore into accounts(user, pass, gold) \
+                    values('%s', '%s', '%d')" % (username, password, accounts.STARTING_GOLD));
     if not (result): return accounts.RegisterResult.UNKNOWN_ERROR;
     con.commit();
 
@@ -47,7 +48,7 @@ def find_user_account(username, password):
     fetch = cur.fetchone();
     if (fetch == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS, -1;
 
-    return accounts.LoginResult.SUCCESS, fetch["id"];
+    return accounts.LoginResult.SUCCESS, fetch[accounts.ID_INDEX];
 
 #returns a LoginResult enum on whether or not the username and password was found in the db
 def get_user_acc_details(acc_details, unique_id):
@@ -57,9 +58,9 @@ def get_user_acc_details(acc_details, unique_id):
     if not (result): return accounts.GeneralResult.UNKNOWN_ERROR, acc_details;
     fetch = cur.fetchone();
     if (fetch == None): return accounts.GeneralResult.FAILURE, acc_details;
-
-    acc_details.gold = fetch["gold"];
-    acc_details.username = fetch["user"];
+    
+    acc_details.username = str(fetch[accounts.USER_INDEX]);
+    acc_details.gold = int(fetch[accounts.GOLD_INDEX]);
 
     return accounts.LoginResult.SUCCESS, acc_details;
 

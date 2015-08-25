@@ -61,7 +61,7 @@ namespace startup {
 
                 if (network::sock::connection_finished) {
                     if (network::sock::connection_err == NO_ERROR) {
-                        switch_state(STATE_GAME);
+                        switch_state(STATE_LOGIN_REGISTER_SCREEN);
                     }else {
                         scene->removeChild(spinner_sprite);
                         info_label->setString("an error occurred while trying to connect: " + 

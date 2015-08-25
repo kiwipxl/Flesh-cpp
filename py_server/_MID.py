@@ -63,7 +63,7 @@ SEND_REQUEST_FOR_CLIENT_TO_BIND_UDP_PORT                            = MID(_FT.UN
 RECV_CLIENT_BINDED_UDP_PORT                                         = MID(_FT.UNSIGNED_SHORT);
 
 RECV_REQUEST_FOR_CLIENT_ACCOUNT_DETAILS                             = MID();
-SEND_CLIENT_ACCOUNT_DETAILS                                         = MID(_FT.STRING, _FT.INT);
+SEND_CLIENT_ACCOUNT_DETAILS                                         = MID(_FT.GENERAL_RESULT, _FT.STRING, _FT.INT);
 
 #put all x variables into a name array so messages can be debugged easier
 names = id * [None];

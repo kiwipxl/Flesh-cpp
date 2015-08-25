@@ -36,12 +36,12 @@ namespace msg {
         sock::Socket* sock = NULL;
 
         template <typename T> T get(int index) {
-            if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");
+            if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
             return *(T*)params[index]->data;
         }
         
         template <> char* get<char*>(int index) {
-            if (index < 0 || index >= params.size()) assert("index is out of bounds of message parameters");
+            if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
             return params[index]->data;
         }
     };

@@ -44,6 +44,7 @@ namespace msg {
 	extern CFTYPE FT_DOUBLE;
     extern CFTYPE FT_STRING;
     extern CFTYPE FT_VOID_POINTER;
+    extern CFTYPE FT_GENERAL_RESULT;
 
     //================== MID begin ==================
 
