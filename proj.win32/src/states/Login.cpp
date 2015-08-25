@@ -12,6 +12,7 @@
 #include "network/message/Stream.h"
 #include "network/message/MID.h"
 #include "network/sockets/SocketManager.h"
+#include "network/sockets/Socket.h"
 
 #include "StateManager.h"
 #include "SceneManager.h"

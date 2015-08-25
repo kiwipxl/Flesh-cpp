@@ -13,6 +13,11 @@
 #define BEGIN_MSG_NS        namespace msg {
 #define END_MSG_NS          };
 
+typedef unsigned short u_short;
+typedef unsigned int u_int;
+
+struct pollfd;
+
 BEGIN_NETWORK_NS
 
     BEGIN_MSG_NS

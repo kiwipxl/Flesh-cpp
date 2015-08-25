@@ -5,6 +5,7 @@
 #include "network/GameMessages.h"
 #include "network/message/MID.h"
 #include "network/message/Stream.h"
+#include "network/sockets/Socket.h"
 #include "StateManager.h"
 
 BEGIN_NETWORK_NS
@@ -61,7 +62,7 @@ namespace sock {
         //below is code to setup a udp socket for the server, needs to be moved once the user login system is done
         tcp_serv_sock.add_message_handler(msg::MID_RECV_REQUEST_FOR_ME_TO_BIND_UDP_PORT, [](msg::Message* message) {
             if (setup_udp_sock(message->get<u_short>(0))) {
-                msg::server_poll.add_sock(udp_serv_sock);
+                msg::add_poll_sock(udp_serv_sock);
                 //msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << udp_serv_sock.get_binded_port());
                 msg::send(tcp_serv_sock, msg::Stream() << msg::MID_SEND_CLIENT_BINDED_UDP_PORT << 0);
             }else {

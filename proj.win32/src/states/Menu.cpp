@@ -8,6 +8,7 @@
 #include "network/message/Stream.h"
 #include "network/message/MID.h"
 #include "network/sockets/SocketManager.h"
+#include "network/sockets/Socket.h"
 #include "StateManager.h"
 
 BEGIN_STATES_NS

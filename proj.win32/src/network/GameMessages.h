@@ -4,15 +4,15 @@
 #include <thread>
 
 #include "network/Defines.h"
-#include "network/sockets/SocketPoll.h"
 
 BEGIN_NETWORK_NS
 
 namespace msg {
 
     extern std::thread msgs_thread;
-    extern sock::SocketPoll server_poll;
     extern bool accepting_peers;
+
+    extern void add_poll_sock(sock::Socket& sock);
 
     extern void start_recv_thread();
     extern void close_all_threads();

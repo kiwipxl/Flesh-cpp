@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "network/Defines.h"
-#include "network/sockets/SocketManager.h"
 
 BEGIN_NETWORK_NS
 
