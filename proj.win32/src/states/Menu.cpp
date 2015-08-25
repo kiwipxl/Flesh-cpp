@@ -77,9 +77,10 @@ namespace menu {
             ui_layer->addChild(rbutton->base, 1);
 
             sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
-                u_short general_result = m->get<u_short>(0);
-                char* username = m->get<char*>(1);
-                int gold = m->get<int>(2);
+                if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {
+                    char* username = m->get<char*>(1);
+                    int gold = m->get<int>(2);
+                }
             });
 
             msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_REQUEST_FOR_MY_ACCOUNT_DETAILS);

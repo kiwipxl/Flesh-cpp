@@ -19,7 +19,7 @@ class RegisterResult:
     SUCCESS, USER_ALREADY_EXISTS, INVALID_FORMAT, UNKNOWN_ERROR = range(4);
 
 class GeneralResult:
-    SUCCESS, FAILURE, UNKNOWN_ERROR = range(3);
+    SUCCESS, ERROR, UNKNOWN_ERROR = range(3);
 
 MIN_USERNAME_LEN = 3;
 MAX_USERNAME_LEN = 16;
@@ -67,12 +67,12 @@ def handle_all_messages(m):
         if (acc_details and acc_details.parent_client == m.client_obj):
             msg.send(m.sock, m.client_obj,
                      msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
-                              GeneralResult.UNKNOWN_ERROR, acc_details.username,
+                              GeneralResult.SUCCESS, acc_details.username,
                               acc_details.gold));
         else:
             msg.send(m.sock, m.client_obj,
                      msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
-                               GeneralResult.FAILURE, "", -1));
+                               GeneralResult.ERROR, "", -1));
 
 #checks the formatting of both the username annd password to make sure it can be put in the db
 #returns (formatted username, formatted password, error code (true = success, false = format_error))

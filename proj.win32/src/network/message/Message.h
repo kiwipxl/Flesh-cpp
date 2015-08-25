@@ -10,61 +10,59 @@
 #include "network/message/Stream.h"
 
 BEGIN_NETWORK_NS
+BEGIN_MSG_NS
 
-namespace sock {
+struct Param {
 
-    class Socket;
-}
+    char* data;
+    int len;
 
-namespace msg {
+    template <typename ParamType> ParamType& get() {
+        return *(ParamType*)data;
+    }
+};
 
-    struct Param {
+struct Message {
 
-        char* data;
-        int len;
+    CMID mid = get_MID(MID_UNKNOWN);
+    std::vector<Param*> params;
+    CallbackResult callback_result = CALLBACK_RESULT_UNKNOWN;
+    sock::Socket* sock = NULL;
 
-        template <typename ParamType> ParamType& get() {
-            return *(ParamType*)data;
-        }
-    };
-
-    struct Message {
-
-        CMID mid = get_MID(MID_UNKNOWN);
-        std::vector<Param*> params;
-        CallbackResult callback_result = CALLBACK_RESULT_UNKNOWN;
-        sock::Socket* sock = NULL;
-
-        template <typename T> T get(int index) {
-            if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
-            return *(T*)params[index]->data;
-        }
+    template <typename T> T get(int index) {
+        if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
+        return *(T*)params[index]->data;
+    }
         
-        template <> char* get<char*>(int index) {
-            if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
-            return params[index]->data;
-        }
-    };
+    template <> char* get<char*>(int index) {
+        if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
+        return params[index]->data;
+    }
+
+    template <> GeneralResult get<GeneralResult>(int index) {
+        if (index < 0 || index >= params.size()) f_assert("index is out of bounds of message parameters");
+        return (GeneralResult)*(u_short*)params[index]->data;
+    }
+};
+
+#define MSG_HEADER_SIZE 4
+
+extern const int MAX_NUM_PARAMS;
+extern const int MAX_PRINT_BUF;
+extern char print_buf[];
+
+void init();
+void send(sock::Socket& sock, Stream& stream);
     
-    typedef std::shared_ptr<Message> MessagePtr;
-    #define MSG_HEADER_SIZE 4
+MessagePtr extract_message(sock::Socket& sock, char* buffer, int buffer_len);
+void extract_mid(MessagePtr message, char* buffer, int buffer_len);
+void extract_params(MessagePtr message, char* buffer, int buffer_len);
 
-	extern const int MAX_NUM_PARAMS;
-	extern const int MAX_PRINT_BUF;
-    extern char print_buf[];
+void print_extracted_params(bool print_output = true, bool write_to_file = false);
+std::string last_MID_to_string();
+inline const char* get_MID_name(CMID mid);
 
-    void init();
-    void send(sock::Socket& sock, Stream& stream);
-    
-    MessagePtr extract_message(sock::Socket& sock, char* buffer, int buffer_len);
-    void extract_mid(MessagePtr message, char* buffer, int buffer_len);
-    void extract_params(MessagePtr message, char* buffer, int buffer_len);
-
-    void print_extracted_params(bool print_output = true, bool write_to_file = false);
-    std::string last_MID_to_string();
-    inline const char* get_MID_name(CMID mid);
-}
-
+END_MSG_NS
 END_NETWORK_NS
 
 #endif
