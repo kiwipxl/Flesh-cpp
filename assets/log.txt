@@ -7,11 +7,153 @@ particle assets loaded
 asset loading completed
 attempt connect on thread...
 created state 1
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
+10061: connect error
+(tcp_sock): error 10061 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+switched to server ip
+switching to state 1 from state 1
+removed state 1
+attempt connect on thread...
+created state 1
+switched to state 1 from state 1
+switched to local server ip
+10038: connect error
+switching to state 1 from state 1
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+10061: connect error
+(tcp_sock): error 10061 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+switched to server ip
+switching to state 1 from state 1
+removed state 1
+attempt connect on thread...
+created state 1
+switched to state 1 from state 1
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+switched to server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+switched to server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+switched to server ip
+10038: connect error
+switching to state 1 from state 1
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+switched to server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+switched to server ip
+10038: connect error
+switching to state 1 from state 1
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+10061: connect error
+(tcp_sock): error 10061 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+switched to server ip
+switching to state 1 from state 1
+removed state 1
+attempt connect on thread...
+created state 1
+switched to state 1 from state 1
+switched to local server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)
+attempt connect on thread...
+switched to server ip
+switching to state 1 from state 1
+10038: connect error
+removed state 1
+created state 1
+switched to state 1 from state 1
+(tcp_sock): error 10038 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
+attempt connect on thread...
 switching to state 2 from state 1
 removed state 1
 created state 2
 switched to state 2 from state 2
 10061: connect error
-(tcp_sock): error 10061 occurred while trying to connect to tcp socket (ip: 127.0.0.1, port: 4222)
-10057: send error
-10057: send error
+(tcp_sock): error 10061 occurred while trying to connect to tcp socket (ip: 104.236.253.123, port: 4222)

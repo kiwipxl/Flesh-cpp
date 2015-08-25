@@ -15,12 +15,14 @@ BEGIN_SERVER_NS
 
 //private
 int result;
+bool connected = false;
 
 char* SERVER_IP = "104.236.253.123";
 char* LOCAL_SERVER_IP = "127.0.0.1";
 
 void connect_done(ServerConnectCallback _callback, int err, std::string err_msg = "") {
     if (_callback) _callback(err, err_msg);
+    connected = (err == NO_ERROR);
 }
 
 //public
@@ -31,10 +33,12 @@ std::thread tcp_connect_thread;
 char* server_ip = LOCAL_SERVER_IP;
 u_short server_tcp_port = 4222;
 u_short server_udp_port = 0;
-bool connected = false;
 
 bool stop_tcp_thread = false;
 bool stop_udp_thread = false;
+
+std::mutex tcp_mutex;
+std::mutex udp_mutex;
 
 void init() {
     udp_sock = sock::Socket(sock::PROTO_UDP);
@@ -56,17 +60,17 @@ void cleanup_all() {
 }
 
 void setup_tcp_sock(ServerConnectCallback _callback) {
-    stop_tcp_thread = false;
-    connected = false;
     tcp_connect_thread = std::thread([_callback]() {
-        std::mutex mutex;
-        mutex.lock();
+        tcp_mutex.lock();
+
+        stop_tcp_thread = false;
+        connected = false;
 
         log_info << "attempt connect on thread...";
         if ((result = tcp_sock.s_create()) != NO_ERROR) {
             log_error << "(tcp_sock): error " << result << " occurred while creating tcp socket";
 
-            mutex.unlock();
+            tcp_mutex.unlock();
             if (stop_tcp_thread) return;
 
             connect_done(_callback, result, "could not create tcp socket");
@@ -77,7 +81,7 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
                          " occurred while trying to connect to tcp socket (ip: " <<
                          tcp_sock.get_binded_ip() << ", port: " << tcp_sock.get_binded_port() << ")";
 
-            mutex.unlock();
+            tcp_mutex.unlock();
             if (stop_tcp_thread) return;
 
             connect_done(_callback, result, "could not connect to tcp socket");
@@ -86,8 +90,7 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
 
         log_info << "(tcp_sock): connection successful";
 
-        connected = true;
-        mutex.unlock();
+        tcp_mutex.unlock();
 
         tcp_sock.add_leave_handler([&](msg::Message* message) {
             char* leave_msg = message->get<char*>(0);
