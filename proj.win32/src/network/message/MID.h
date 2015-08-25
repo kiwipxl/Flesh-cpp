@@ -22,10 +22,6 @@ struct FormatType {
 	FormatType(const char* c, const short l, const char* name);
 };
 
-#define CFTYPE const msg::FormatType*
-    
-extern std::vector<CFTYPE> FT_list;
-
 //format types for packing and unpacking byte data
 extern CFTYPE FT_CHAR;
 extern CFTYPE FT_SIGNED_CHAR;
@@ -77,12 +73,10 @@ struct MID {
 	MID();
 };
 
-#define CMID const msg::MID const *
-
-extern std::vector<CMID> MID_list;
-
 extern void MID_init();
 extern CMID get_MID(MID_enum mid_enum);
+extern CMID get_MID(int index);
+extern int get_MID_list_size();
 
 END_MSG_NS
 END_NETWORK_NS

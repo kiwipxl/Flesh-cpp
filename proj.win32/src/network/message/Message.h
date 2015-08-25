@@ -60,7 +60,6 @@ void extract_params(MessagePtr message, char* buffer, int buffer_len);
 
 void print_extracted_params(bool print_output = true, bool write_to_file = false);
 std::string last_MID_to_string();
-inline const char* get_MID_name(CMID mid);
 
 END_MSG_NS
 END_NETWORK_NS

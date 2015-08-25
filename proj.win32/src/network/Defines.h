@@ -16,9 +16,16 @@
 BEGIN_NETWORK_NS
 
     BEGIN_MSG_NS
-
+        
         class Message;
         typedef std::shared_ptr<Message> MessagePtr;
+        
+        class Param;
+        struct MID;
+        struct FormatType;
+
+        typedef const FormatType* CFTYPE;
+        typedef const MID const* CMID;
 
         typedef std::function<void(Message*)> CallbackFunc;
 

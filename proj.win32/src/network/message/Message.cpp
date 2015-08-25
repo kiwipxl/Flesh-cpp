@@ -5,12 +5,11 @@
 #include "network/sockets/Socket.h"
 
 BEGIN_NETWORK_NS
+BEGIN_MSG_NS
 
 template <typename T> inline int sprintf_buf(int offset, CFTYPE t, int n) {
     return sprintf(msg::print_buf + offset, t->printf_format, *(T*)msg::last_param_list[n]->data);
 }
-
-BEGIN_MSG_NS
 
 const int MAX_PRINT_BUF = 1024;
 char print_buf[MAX_PRINT_BUF];
@@ -45,11 +44,11 @@ MessagePtr extract_message(sock::Socket& sock, char* buffer, int buffer_len) {
 }
     
 void extract_mid(MessagePtr message, char* buffer, int buffer_len) {
-    message->mid = MID_list[0];
+    message->mid = get_MID(MID_UNKNOWN);
 	if (buffer_len >= MSG_HEADER_SIZE) {
         int id = 0;
 		memcpy(&id, buffer, 4);
-		if (id >= 0 && id < MID_list.size()) message->mid = MID_list[id];
+        if (id >= 0 && id < get_MID_list_size()) message->mid = get_MID(id);
 	}
 }
 
@@ -141,10 +140,6 @@ std::string last_MID_to_string() {
     //   print_buf[offset + 1] = '\0';
 
     return print_buf;
-}
-
-inline const char* get_MID_name(CMID mid) {
-	return (MID_list.size() > 0 && mid->id > 0 && mid->id < MID_list.size()) ? MID_list[mid->id]->name : "undefined";
 }
 
 END_MSG_NS
