@@ -80,7 +80,6 @@ class Socket {
 		fd_set* w_set = NULL;
         timeval t;
 
-        int print_error(int err, char* func_err);
         int s_change_addr(sockaddr_in& addr_info, char* c_ip, u_short c_port);
         int s_update_addr_info(sockaddr_in& addr_info);
 };
