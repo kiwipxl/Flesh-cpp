@@ -16,7 +16,7 @@
 #include "input/MouseInput.h"
 #include "map/Cam.h"
 #include "network/message/Message.h"
-#include "network/sockets/SocketManager.h"
+#include "network/server/ServerConnection.h"
 #include "physics/Physics.h"
 
 #include "states/Game.h"
@@ -59,7 +59,7 @@ namespace root {
 
         debug::init_logger();
         assets::init();
-        network::sock::init();
+        network::server::init();
         network::msg::init();
         input::init_keyboard();
         input::init_mouse();
@@ -122,14 +122,14 @@ namespace root {
             static bool local_ip = false;
             if (local_ip = !local_ip) {
                 log_info << "switched to local server ip";
-                network::sock::serv_ip = network::sock::LOCAL_SERVER_IP;
-                network::sock::cleanup_all();
+                network::server::serv_ip = network::server::LOCAL_SERVER_IP;
+                network::server::cleanup_all();
                 switch_state(STATE_SERVER_CONNECT_SCREEN, true);
                 gui::show_message_box("", "switched to local server ip", "OK");
             }else {
                 log_info << "switched to server ip";
-                network::sock::serv_ip = network::sock::SERVER_IP;
-                network::sock::cleanup_all();
+                network::server::serv_ip = network::server::SERVER_IP;
+                network::server::cleanup_all();
                 switch_state(STATE_SERVER_CONNECT_SCREEN, true);
                 gui::show_message_box("", "switched to server ip", "OK");
             }
@@ -141,13 +141,12 @@ namespace root {
         states::menu::update_state(s);
 
         gui::update_buttons();
-        network::sock::update();
         input::update_keyboard();
         input::update_mouse();
     }
 
     void exit_root() {
         remove_state(s, true);
-        network::sock::close_all_threads();
+        network::server::close_all_threads();
     }
 };

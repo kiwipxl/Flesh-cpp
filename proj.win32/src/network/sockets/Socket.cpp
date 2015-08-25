@@ -6,7 +6,6 @@
 #include "network/message/Callback.h"
 #include "network/message/MID.h"
 #include "network/message/Callback.h"
-#include "network/sockets/SocketManager.h"
 
 #define PRINT_OR_ERROR(str) PRINT_IF_ERROR ? print_error(debug::get_last_error(), str) : debug::get_last_error()
 

@@ -7,7 +7,7 @@
 #include "network/message/Message.h"
 #include "network/message/Stream.h"
 #include "network/message/MID.h"
-#include "network/sockets/SocketManager.h"
+#include "network/server/ServerConnection.h"
 #include "network/sockets/Socket.h"
 #include "StateManager.h"
 
@@ -78,15 +78,15 @@ namespace menu {
             rbutton->set_size(assets::textures::arrow_button->getContentSize());
             rbutton->base->setFlippedX(true);
             ui_layer->addChild(rbutton->base, 1);
-
-            sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
+            
+            server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {
                     char* username = m->get<char*>(1);
                     int gold = m->get<int>(2);
                 }
             });
 
-            msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_REQUEST_FOR_MY_ACCOUNT_DETAILS);
+            msg::send(server::tcp_sock, msg::Stream() << msg::MID_SEND_REQUEST_FOR_MY_ACCOUNT_DETAILS);
 
             break;
         }

@@ -191,7 +191,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\network\Peers.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
     <ClCompile Include="src\network\sockets\Socket.cpp" />
-    <ClCompile Include="src\network\sockets\SocketManager.cpp" />
+    <ClCompile Include="src\network\server\ServerConnection.cpp" />
     <ClCompile Include="src\physics\Physics.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
@@ -246,7 +246,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\network\Peers.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
     <ClInclude Include="src\network\sockets\Socket.h" />
-    <ClInclude Include="src\network\sockets\SocketManager.h" />
+    <ClInclude Include="src\network\server\ServerConnection.h" />
     <ClInclude Include="src\physics\Physics.h" />
     <ClInclude Include="src\physics\PhysicsDefines.h" />
     <ClInclude Include="src\SceneManager.h" />

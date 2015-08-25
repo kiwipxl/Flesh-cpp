@@ -6,8 +6,7 @@
 #include <renderer/CCGLProgramCache.h>
 
 #include "assets/Assets.h"
-#include "network/sockets/SocketManager.h"
-
+#include "network/server/ServerConnection.h"
 #include "StateManager.h"
 
 BEGIN_STATES_NS
@@ -39,7 +38,7 @@ namespace startup {
                     ui_layer->addChild(spinner_sprite, 1);
                 }
 
-                network::sock::setup_tcp_sock();
+                network::server::setup_tcp_sock();
                 break;
         }
     }
@@ -54,20 +53,19 @@ namespace startup {
     }
 
     void update_state(State state) {
-        network::sock::update();
         switch (state) {
             case STATE_SERVER_CONNECT_SCREEN:
                 info_label->setPosition(scene->screen_size.width / 2, scene->screen_size.height - 300);
 
-                if (network::sock::connection_finished) {
-                    if (network::sock::connection_err == NO_ERROR) {
+                if (network::server::connection_finished) {
+                    if (network::server::connection_err == NO_ERROR) {
                         switch_state(STATE_LOGIN_REGISTER_SCREEN);
                     }else {
                         scene->removeChild(spinner_sprite);
                         info_label->setString("an error occurred while trying to connect: " + 
-                                                ((network::sock::connection_err_msg == "")
-                                                ? SSTR(network::sock::connection_err)
-                                                : network::sock::connection_err_msg + "(" + SSTR(network::sock::connection_err) + ")"));
+                                                ((network::server::connection_err_msg == "")
+                                                ? SSTR(network::server::connection_err)
+                                                : network::server::connection_err_msg + "(" + SSTR(network::server::connection_err) + ")"));
                     }
                 }else {
                     info_label->setString("connecting to server...");

@@ -8,7 +8,7 @@
 #include "network/sockets/SocketPoll.h"
 #include "network/message/Callback.h"
 #include "network/sockets/Socket.h"
-#include "network/sockets/SocketManager.h"
+#include "network/server/ServerConnection.h"
 #include "StateManager.h"
 
 BEGIN_NETWORK_NS
@@ -22,7 +22,7 @@ bool end_thread = false;
 
 void recv_msgs() {
     server_poll.clear();
-    server_poll.add_sock(sock::tcp_serv_sock);
+    server_poll.add_sock(server::tcp_sock);
 
 	char buffer[1024];
 	int msg_len;

@@ -20,7 +20,6 @@
     <ClCompile Include="src\network\GameMessages.cpp" />
     <ClCompile Include="src\network\Peers.cpp" />
     <ClCompile Include="src\network\sockets\Socket.cpp" />
-    <ClCompile Include="src\network\sockets\SocketManager.cpp" />
     <ClCompile Include="src\network\sockets\SocketPoll.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\network\message\MID.cpp" />
@@ -55,6 +54,7 @@
     <ClCompile Include="src\entities\items\Item.cpp" />
     <ClCompile Include="src\entities\items\Weapon.cpp" />
     <ClCompile Include="src\states\Menu.cpp" />
+    <ClCompile Include="src\network\server\ServerConnection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -66,7 +66,6 @@
     <ClInclude Include="src\network\GameMessages.h" />
     <ClInclude Include="src\network\Peers.h" />
     <ClInclude Include="src\network\sockets\Socket.h" />
-    <ClInclude Include="src\network\sockets\SocketManager.h" />
     <ClInclude Include="src\network\sockets\SocketPoll.h" />
     <ClInclude Include="src\debug\Logger.h" />
     <ClInclude Include="src\network\message\MID.h" />
@@ -112,6 +111,7 @@
     <ClInclude Include="src\entities\items\Weapon.h" />
     <ClInclude Include="src\entities\Entity.h" />
     <ClInclude Include="src\states\Menu.h" />
+    <ClInclude Include="src\network\server\ServerConnection.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

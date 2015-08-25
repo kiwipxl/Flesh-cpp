@@ -3,7 +3,6 @@
 #include "debug/Errors.h"
 #include "debug/Logger.h"
 #include "network/sockets/Socket.h"
-#include "network/sockets/SocketManager.h"
 
 BEGIN_NETWORK_NS
 

@@ -11,7 +11,7 @@
 #include "network/message/Message.h"
 #include "network/message/Stream.h"
 #include "network/message/MID.h"
-#include "network/sockets/SocketManager.h"
+#include "network/server/ServerConnection.h"
 #include "network/sockets/Socket.h"
 
 #include "StateManager.h"
@@ -111,7 +111,7 @@ namespace login {
                     password_input = assets::csb::get_child<ui::TextField>(login_page, "password_input");
                     password_input->setMaxLength(MAX_PASSWORD_LEN);
 
-                    sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
+                    server::tcp_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
                         LoginResult result = (LoginResult)m->get<int>(0);
 
                         INVOKE_MAIN_THREAD(result) {
@@ -131,8 +131,8 @@ namespace login {
                             }
                         });
                     });
-
-                    sock::tcp_serv_sock.add_message_handler(msg::MID_RECV_ATTEMPT_REGISTER_RESULT, [](msg::Message* m) {
+                    
+                    server::tcp_sock.add_message_handler(msg::MID_RECV_ATTEMPT_REGISTER_RESULT, [](msg::Message* m) {
                         RegisterResult result = (RegisterResult)m->get<int>(0);
 
                         INVOKE_MAIN_THREAD(result) {
@@ -157,7 +157,7 @@ namespace login {
                         if (verify_account_details()) {
                             auto mb = gui::show_loading_message_box("please wait...", "registering...");
 
-                            msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_REGISTER << username_str << password_str);
+                            msg::send(server::tcp_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_REGISTER << username_str << password_str);
                         }
                     });
 
@@ -166,7 +166,7 @@ namespace login {
                             auto mb = gui::show_message_box("please wait...", "logging in...", "cancel");
                             mb->add_spinner();
 
-                            msg::send(sock::tcp_serv_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_LOGIN << username_str << password_str);
+                            msg::send(server::tcp_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_LOGIN << username_str << password_str);
                         }
                     });
                 }

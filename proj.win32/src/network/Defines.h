@@ -13,6 +13,9 @@
 #define BEGIN_MSG_NS        namespace msg {
 #define END_MSG_NS          };
 
+#define BEGIN_SERVER_NS     namespace server {
+#define END_SERVER_NS       };
+
 typedef unsigned short u_short;
 typedef unsigned int u_int;
 
