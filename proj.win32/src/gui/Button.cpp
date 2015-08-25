@@ -57,9 +57,8 @@ void Button::update() {
     update_scheduler();
 
     Vec2 mpos = input::get_mouse_pos();
-    Size s = Size{ (size.width * base->getScaleX()) / 2.0f, (size.height * base->getScaleY()) / 2.0f };
-    if (mpos.x >= pos.x - s.width && mpos.y <= pos.y + s.height && 
-        mpos.x <= pos.x + s.width && mpos.y >= pos.y - s.height) {
+    if (mpos.x >= pos.x - size.width && mpos.y <= pos.y + size.height && 
+        mpos.x <= pos.x + size.width && mpos.y >= pos.y - size.height) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
         }else if (button_down) {
@@ -124,7 +123,7 @@ void Button::set_idle_texture(Texture2D* _idle_texture) {
     idle_texture = _idle_texture;
     base->setTexture(idle_texture);
     base->setTextureRect(Rect(0, 0, base->getTexture()->getContentSize().width, base->getTexture()->getContentSize().height));
-    if (size.width == 0 && size.height == 0) size = base->getTextureRect().size;
+    if (size.width == 0 && size.height == 0) set_size(base->getTextureRect().size);
 }
 
 void Button::set_hover_texture(Texture2D* _hover_texture) {

@@ -72,6 +72,7 @@ namespace menu {
             lbutton->set_idle_texture(assets::textures::arrow_button);
             lbutton->set_size(assets::textures::arrow_button->getContentSize());
             ui_layer->addChild(lbutton->base, 1);
+
             rbutton = gui::create_button(scene->screen_size.width - 40, scene->screen_size.height / 2.0f);
             rbutton->set_on_click_callback(scroll_right);
             rbutton->set_idle_texture(assets::textures::arrow_button);
@@ -95,9 +96,11 @@ namespace menu {
     void remove_state(State state) {
         switch (state) {
         case STATE_MENU:
-            ui_layer->removeChild(main_menu);
-            ui_layer->removeChild(options_menu);
-            ui_layer->removeChild(customisations_menu);
+            ui_layer->removeChild(menu_node);
+
+            ui_layer->removeChild(lbutton->base);
+            ui_layer->removeChild(rbutton->base);
+
             break;
         }
     }

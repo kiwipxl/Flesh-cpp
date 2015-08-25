@@ -88,7 +88,7 @@ namespace root {
         states::startup::remove_state(s);
         states::login::remove_state(s);
         states::game::remove_state(s);
-        states::game::remove_state(s);
+        states::menu::remove_state(s);
 
         log_info << "removed state " << r_state;
     }
