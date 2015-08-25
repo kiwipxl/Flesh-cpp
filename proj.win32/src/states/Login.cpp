@@ -2,7 +2,6 @@
 
 #include <regex>
 
-#include <base/CCScheduler.h>
 #include <ui/UIButton.h>
 #include <ui/UITextField.h>
 
@@ -13,6 +12,7 @@
 #include "network/message/MID.h"
 #include "network/server/ServerConnection.h"
 #include "network/sockets/Socket.h"
+#include "utility/ThreadSchedule.h"
 
 #include "StateManager.h"
 #include "SceneManager.h"
@@ -114,7 +114,7 @@ namespace login {
                     server::tcp_sock.add_message_handler(msg::MID_RECV_ATTEMPT_LOGIN_RESULT, [](msg::Message* m) {
                         LoginResult result = (LoginResult)m->get<int>(0);
 
-                        INVOKE_MAIN_THREAD(result) {
+                        utility::invoke_main_thread([result]() {
                             switch (result) {
                                 case LOGIN_RESULT_SUCCESS:
                                     gui::show_message_box("successful", "logged in successfully", "OK");
@@ -135,7 +135,7 @@ namespace login {
                     server::tcp_sock.add_message_handler(msg::MID_RECV_ATTEMPT_REGISTER_RESULT, [](msg::Message* m) {
                         RegisterResult result = (RegisterResult)m->get<int>(0);
 
-                        INVOKE_MAIN_THREAD(result) {
+                        utility::invoke_main_thread([result]() {
                             switch (result) {
                                 case REGISTER_RESULT_SUCCESS:
                                     gui::show_message_box("successful", "registered successfully", "OK");

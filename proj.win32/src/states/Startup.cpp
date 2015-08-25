@@ -8,6 +8,7 @@
 #include "assets/Assets.h"
 #include "network/server/ServerConnection.h"
 #include "StateManager.h"
+#include "utility/ThreadSchedule.h"
 
 BEGIN_STATES_NS
 
@@ -40,13 +41,16 @@ namespace startup {
                 }
 
                 network::server::setup_tcp_sock([](int err, std::string err_msg) {
-                    if (err == NO_ERROR) {
-                        switch_state(STATE_LOGIN_REGISTER_SCREEN);
-                    }else {
-                        scene->removeChild(spinner_sprite);
-                        info_label->setString(sstream_str("an error occurred while trying to connect: " << 
-                                                           err_msg << " (code: " << err << ")"));
-                    }
+                    utility::invoke_main_thread([err, err_msg]() {
+                        if (err == NO_ERROR) {
+                            info_label->setString("connected!");
+                            switch_state(STATE_LOGIN_REGISTER_SCREEN);
+                        }else {
+                            ui_layer->removeChild(spinner_sprite);
+                            info_label->setString(sstream_str("an error occurred while trying to connect: " <<
+                                err_msg << " (code: " << err << ")"));
+                        }
+                    });
                 });
                 break;
         }

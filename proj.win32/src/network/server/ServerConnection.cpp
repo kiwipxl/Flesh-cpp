@@ -91,6 +91,7 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
         log_info << "(tcp_sock): connection successful";
 
         tcp_mutex.unlock();
+        if (stop_tcp_thread) return;
 
         tcp_sock.add_leave_handler([&](msg::Message* message) {
             char* leave_msg = message->get<char*>(0);
@@ -123,18 +124,31 @@ void setup_tcp_sock(ServerConnectCallback _callback) {
 }
 
 void setup_udp_sock(u_short _server_udp_port, ServerConnectCallback _callback) {
+    udp_mutex.lock();
+
     if ((result = udp_sock.s_create()) != NO_ERROR) {
         log_error << "(udp_sock): error " << result << " occurred while creating udp socket";
+
+        udp_mutex.unlock();
+        if (stop_udp_thread) return;
+
         connect_done(_callback, result, "could not create udp socket"); return;
     }
     if ((result = udp_sock.s_bind("0.0.0.0", 0)) != NO_ERROR) {
-        log_error << "(udp_sock): error " << result << 
-                     " occurred while trying to bind udp socket (ip: " << udp_sock.get_binded_ip() << ")";
+        log_error << "(udp_sock): error " << result <<
+            " occurred while trying to bind udp socket (ip: " << udp_sock.get_binded_ip() << ")";
+
+        udp_mutex.unlock();
+        if (stop_udp_thread) return;
+
         connect_done(_callback, result, "could not bind udp socket"); return;
     }
     udp_sock.s_change_send_addr(server_ip, server_tcp_port);
     
     log_info << "(udp_sock): creation / binding successful";
+
+    udp_mutex.unlock();
+    if (stop_udp_thread) return;
 
     connect_done(_callback, NO_ERROR);
 

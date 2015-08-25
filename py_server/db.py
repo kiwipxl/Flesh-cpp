@@ -58,7 +58,7 @@ def get_user_acc_details(acc_details, unique_id):
     if not (result): return accounts.GeneralResult.UNKNOWN_ERROR, acc_details;
     fetch = cur.fetchone();
     if (fetch == None): return accounts.GeneralResult.ERROR, acc_details;
-
+    
     acc_details.username = str(fetch[accounts.USER_INDEX]);
     acc_details.gold = int(fetch[accounts.GOLD_INDEX]);
 

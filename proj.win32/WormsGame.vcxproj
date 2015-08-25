@@ -200,6 +200,7 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="src\states\Login.cpp" />
     <ClCompile Include="src\states\Menu.cpp" />
     <ClCompile Include="src\states\Startup.cpp" />
+    <ClCompile Include="src\utility\ThreadSchedule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -257,6 +258,8 @@ xcopy "$(ProjectDir)..\assets" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="src\states\Login.h" />
     <ClInclude Include="src\states\Menu.h" />
     <ClInclude Include="src\states\Startup.h" />
+    <ClInclude Include="src\utility\Defines.h" />
+    <ClInclude Include="src\utility\ThreadSchedule.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

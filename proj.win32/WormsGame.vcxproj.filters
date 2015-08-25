@@ -55,6 +55,7 @@
     <ClCompile Include="src\entities\items\Weapon.cpp" />
     <ClCompile Include="src\states\Menu.cpp" />
     <ClCompile Include="src\network\server\ServerConnection.cpp" />
+    <ClCompile Include="src\utility\ThreadSchedule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AppDelegate.h" />
@@ -112,6 +113,8 @@
     <ClInclude Include="src\entities\Entity.h" />
     <ClInclude Include="src\states\Menu.h" />
     <ClInclude Include="src\network\server\ServerConnection.h" />
+    <ClInclude Include="src\utility\ThreadSchedule.h" />
+    <ClInclude Include="src\utility\Defines.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
