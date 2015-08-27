@@ -7,6 +7,7 @@
 #include "entities/items/Item.h"
 #include "input/KeyboardInput.h"
 #include "gui/GameGUI.h"
+#include "StateManager.h"
 
 using namespace cocos2d;
 
@@ -83,6 +84,11 @@ void update_all_units() {
     for (int n = 0; n < all_units.size(); ++n) {
         if (!all_units[n]->is_removal_scheduled()) all_units[n]->update();
         if (all_units[n]->is_removal_scheduled()) {
+            if (all_units.size() == 1) {
+                root::switch_state(root::STATE_MENU);
+                return;
+            }
+
             gui::game::remove_ui_bar(all_units[n]);
 
             delete all_units[n];
