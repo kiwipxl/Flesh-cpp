@@ -210,9 +210,12 @@ namespace menu {
                 b->set_on_click_callback([n]() {
                     server::tcp_sock.add_message_handler(msg::MID_RECV_REQUEST_TO_BUY_BOOSTER_PACK_RESULT, [n](msg::Message* m) {
                         auto result = m->get<msg::GeneralResult>(0);
-                        utility::invoke_main_thread([result, n]() {
+                        int gold = m->get<int>(1);
+                        utility::invoke_main_thread([result, gold, n]() {
                             if (result == msg::GENERAL_RESULT_SUCCESS) {
                                 gui::show_message_box("Success", sstream_cstr("Purchased booster pack " << n << " successfully"), "OK");
+
+                                gold_label->setString(sstream_cstr(gold));
                             }else if (result == msg::GENERAL_RESULT_ERROR) {
                                 gui::show_message_box("Error", sstream_cstr("Insufficient funds!"), "OK");
                             }else if (result == msg::GENERAL_RESULT_UNKNOWN_ERROR) {
@@ -259,6 +262,12 @@ namespace menu {
             rbutton = NULL;
             ui_layer->removeChild(corner_box_boosts->base);
             corner_box_boosts = NULL;
+
+            for (int n = 0; n < boost_buy_buttons.size(); ++n) {
+                ui_layer->removeChild(boost_buy_buttons[n]->base);
+                boost_buy_buttons[n] = NULL;
+            }
+            boost_buy_buttons.clear();
 
             ui_layer->removeChild(corner_box_left);
             ui_layer->removeChild(corner_box_right);

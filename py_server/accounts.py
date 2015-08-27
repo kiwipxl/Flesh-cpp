@@ -91,6 +91,8 @@ def handle_all_messages(m):
                 gold = acc_details.gold - cost;
                 if (gold >= 0):
                     result = db.set_acc_gold(acc_details.unique_id, gold);
+                    if (result == GeneralResult.SUCCESS):
+                        acc_details.gold = gold;
                 else:
                     result = GeneralResult.ERROR;
 

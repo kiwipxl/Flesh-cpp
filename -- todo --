@@ -1,0 +1,17 @@
+-- worms game todo --
+
+------------ physics ------------
+
+	---- rework physics
+	either use box2d and fix things such as the tunelling issue or continue
+	to use chipmunk.
+
+		---- rework physics contact
+		need a better system to manage physics collisions
+
+------------ debug ------------
+
+	---- for optimisation purposes, use a separate thread when logging
+	when using log_info, log_print, ect, the strings can be created and put in 
+	a queue, but are only put to action (log to console, write to file)
+	when they are run by the logging thread

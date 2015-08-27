@@ -26,11 +26,11 @@ def add_user_account(username, password):
     username, password, err = accounts.format_user_pass(username, password);
     if (err == False): return accounts.RegisterResult.INVALID_FORMAT;
 
-    query("select * from accounts where user='%s'" % (username));
+    query("select * from accounts where user=?", (username, ));
     if (cur.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
 
     result = query("insert or ignore into accounts(user, pass, gold) \
-                    values('%s', '%s', '%d')" % (username, password, accounts.STARTING_GOLD));
+                    values(?, ?, ?)", (username, password, accounts.STARTING_GOLD));
     if not (result): return accounts.RegisterResult.UNKNOWN_ERROR;
 
     return accounts.RegisterResult.SUCCESS;
@@ -42,7 +42,7 @@ def find_user_account(username, password):
     username, password, err = accounts.format_user_pass(username, password);
     if (err == False): return accounts.LoginResult.INVALID_FORMAT, -1;
 
-    result = query("select * from accounts where user='%s' and pass='%s'" % (username, password));
+    result = query("select * from accounts where user=? and pass=?", (username, password));
     if not (result): return accounts.LoginResult.UNKNOWN_ERROR, -1;
     fetch = cur.fetchone();
     if (fetch == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS, -1;
@@ -53,7 +53,7 @@ def find_user_account(username, password):
 def get_user_acc_details(acc_details, unique_id):
     global cur;
 
-    result = query("select * from accounts where id='%d'" % (unique_id));
+    result = query("select * from accounts where id=?", (unique_id, ));
     if not (result): return accounts.GeneralResult.UNKNOWN_ERROR, acc_details;
     fetch = cur.fetchone();
     if (fetch == None): return accounts.GeneralResult.ERROR, acc_details;
@@ -77,11 +77,10 @@ def query(*args):
     global con;
 
     if (len(args) == 0): return False;
-    
+
     try:
         cur.execute(*args);
         con.commit();
-        debug.log_db("query: %s" % args[0]);
         return True;
     except lite.Error as err:
         debug.log_db("database error occurred: %s" % err.args[0]);
