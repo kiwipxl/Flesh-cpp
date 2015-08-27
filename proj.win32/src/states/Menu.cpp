@@ -23,6 +23,10 @@ namespace menu {
     Sprite* main_menu;
     Sprite* options_menu;
     Sprite* customisations_menu;
+    Sprite* corner_box_left;
+    Sprite* corner_box_right;
+    Label* username_label;
+    Label* gold_label;
     gui::ButtonPtr lbutton;
     gui::ButtonPtr rbutton;
     Node* menu_node;
@@ -36,6 +40,22 @@ namespace menu {
         s->setScaleY(scene->screen_size.height / s->getContentSize().height);
         s->setAnchorPoint(Vec2(0, 0));
         menu_node->addChild(s, 1);
+    }
+
+    void create_corner_box(Sprite*& s) {
+        s = Sprite::createWithTexture(assets::textures::ui_corner_box);
+        s->setScaleX(225.0f / s->getContentSize().width);
+        s->setScaleY(70.0f / s->getContentSize().height);
+        s->setAnchorPoint(Vec2(0, 0));
+        s->setPositionY(scene->screen_size.height - (s->getContentSize().height * s->getScaleY()));
+        ui_layer->addChild(s, 1);
+    }
+
+    void create_corner_label(Label*& l) {
+        l = Label::createWithBMFont("fonts/felt.fnt", "n/a", TextHAlignment::CENTER);
+        l->setAnchorPoint(Vec2(0, 0));
+        l->setVerticalAlignment(TextVAlignment::CENTER);
+        ui_layer->addChild(l, 1);
     }
 
     void scroll_left() {
@@ -79,7 +99,24 @@ namespace menu {
             rbutton->set_size(assets::textures::arrow_button->getContentSize());
             rbutton->base->setFlippedX(true);
             ui_layer->addChild(rbutton->base, 1);
-            
+
+            create_corner_box(corner_box_left);
+            create_corner_box(corner_box_right);
+            int corner_width = corner_box_right->getContentSize().width * corner_box_right->getScaleX();
+            int corner_height = corner_box_right->getContentSize().height * corner_box_right->getScaleY();
+            corner_box_right->setPositionX(scene->screen_size.width - corner_width);
+            corner_box_right->setFlippedX(true);
+
+            create_corner_label(username_label);
+            username_label->setWidth(corner_width - 40);
+            username_label->setHeight(corner_height);
+            username_label->setPositionY(scene->screen_size.height - corner_height);
+            create_corner_label(gold_label);
+            gold_label->setPositionX(corner_box_right->getPositionX() + 40);
+            gold_label->setWidth(corner_width - 40);
+            gold_label->setHeight(corner_height);
+            gold_label->setPositionY(scene->screen_size.height - corner_height);
+
             server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {
                     char* username = m->get<char*>(1);

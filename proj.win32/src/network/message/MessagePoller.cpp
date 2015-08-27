@@ -26,8 +26,8 @@ int msg_len;
 //public
 void close_thread() {
     recv_thread_running = false;
-    //if (recv_thread.native_handle()) recv_thread.join();
-    Sleep(1000);
+    //temporary thread fix
+    Sleep(500);
 }
 
 void poll(sock::SocketPoll& p) {
@@ -85,6 +85,8 @@ void start_recv_thread() {
         recv_mutex.unlock();
     });
     recv_thread.detach();
+    bool j = recv_thread.joinable();
+    int s = 0;
 }
 
 bool is_recv_thread_running() { return recv_thread_running; }

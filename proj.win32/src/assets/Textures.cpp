@@ -44,6 +44,7 @@ namespace textures {
     Texture2D* options_screen;
     Texture2D* customisation_screen;
     Texture2D* arrow_button;
+    Texture2D* ui_corner_box;
 
     void load_image(Texture2D*& tex, std::string file_name) {
         tex = Director::getInstance()->getTextureCache()->addImage(file_name);
@@ -74,6 +75,7 @@ namespace textures {
         load_image(options_screen, "ui/menu/options_screen.png");
         load_image(customisation_screen, "ui/menu/customisation_screen.png");
         load_image(arrow_button, "ui/menu/arrow_button.png");
+        load_image(ui_corner_box, "ui/menu/corner_box.png");
 
         log_print_file << "texture assets loaded";
     }
