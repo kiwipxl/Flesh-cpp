@@ -25,6 +25,7 @@ namespace textures {
     Texture2D* inventory_c4;
     Texture2D* inventory_fireworks_gun;
     Texture2D* ui_button_idle;
+    Texture2D* checkered_black;
 
     //bullets
     Texture2D* c4;
@@ -46,6 +47,8 @@ namespace textures {
     Texture2D* arrow_button;
     Texture2D* ui_corner_box;
     Texture2D* begin_button;
+    Texture2D* menu_buy_button;
+    Texture2D* menu_boosts_overlay;
 
     void load_image(Texture2D*& tex, std::string file_name) {
         tex = Director::getInstance()->getTextureCache()->addImage(file_name);
@@ -63,6 +66,7 @@ namespace textures {
         load_image(inventory_c4, "ui/inventory_c4.png");
         load_image(inventory_fireworks_gun, "ui/inventory_fireworks_gun.png");
         load_image(ui_button_idle, "ui/ui_button_idle.png");
+        load_image(checkered_black, "ui/checkered_black.png");
 
         load_image(c4, "bullets/c4.png");
         load_image(laser_machine_gun, "guns/laser_machine_gun.png");
@@ -78,6 +82,8 @@ namespace textures {
         load_image(arrow_button, "ui/menu/arrow_button.png");
         load_image(ui_corner_box, "ui/menu/corner_box.png");
         load_image(begin_button, "ui/menu/begin_button.png");
+        load_image(menu_buy_button, "ui/menu/buy_button.png");
+        load_image(menu_boosts_overlay, "ui/menu/boosts_overlay.png");
 
         log_print_file << "texture assets loaded";
     }

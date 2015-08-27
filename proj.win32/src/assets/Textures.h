@@ -24,6 +24,7 @@ namespace textures {
     extern cc::Texture2D* inventory_c4;
     extern cc::Texture2D* inventory_fireworks_gun;
     extern cc::Texture2D* ui_button_idle;
+    extern cc::Texture2D* checkered_black;
 
     //bullets
     extern cc::Texture2D* c4;
@@ -45,6 +46,8 @@ namespace textures {
     extern cc::Texture2D* arrow_button;
     extern cc::Texture2D* ui_corner_box;
     extern cc::Texture2D* begin_button;
+    extern cc::Texture2D* menu_buy_button;
+    extern cc::Texture2D* menu_boosts_overlay;
 
     extern void init();
 };

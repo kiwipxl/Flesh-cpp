@@ -26,6 +26,7 @@ void update_buttons() {
     for (int n = 0; n < button_list.size(); ++n) {
         auto& b = button_list[n];
         if (!b) continue;
+        //if button_list vector owns unique ptr, then remove
         if (b.unique()) b->schedule_removal();
         if (!b->is_removal_scheduled()) b->update();
         if (b->is_removal_scheduled()) {

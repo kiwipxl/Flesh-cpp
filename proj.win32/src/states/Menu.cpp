@@ -24,13 +24,21 @@ namespace menu {
     Sprite* main_menu;
     Sprite* options_menu;
     Sprite* customisations_menu;
+
     Sprite* corner_box_left;
     Sprite* corner_box_right;
     Label* username_label;
     Label* gold_label;
+
+    gui::ButtonPtr corner_box_boosts;
+    Sprite* boosts_overlay;
+    Sprite* checkered_bg;
+
     gui::ButtonPtr lbutton;
     gui::ButtonPtr rbutton;
+
     gui::ButtonPtr begin_button;
+
     Node* menu_node;
 
     bool scrolling = false;
@@ -79,12 +87,24 @@ namespace menu {
     void create_state(State state) {
         switch (state) {
         case STATE_MENU:
+            //warning: spaghetti below
+
             menu_node = Node::create();
             ui_layer->addChild(menu_node, 1);
 
             create_menu(main_menu, *assets::textures::main_screen);
             create_menu(options_menu, *assets::textures::options_screen);
             create_menu(customisations_menu, *assets::textures::customisation_screen);
+
+            checkered_bg = Sprite::createWithTexture(assets::textures::checkered_black);
+            Texture2D::TexParams tex_params;
+            tex_params.wrapS = GL_REPEAT;
+            tex_params.wrapT = GL_REPEAT;
+            checkered_bg->getTexture()->setTexParameters(tex_params);
+            checkered_bg->setTextureRect(Rect(0, 0, scene->screen_size.width, scene->screen_size.height));
+            checkered_bg->setAnchorPoint(Vec2(0, 0));
+            checkered_bg->setVisible(false);
+            ui_layer->addChild(checkered_bg, 4);
 
             options_menu->setPositionX(-scene->screen_size.width);
             customisations_menu->setPositionX(scene->screen_size.width);
@@ -104,10 +124,24 @@ namespace menu {
 
             create_corner_box(corner_box_left);
             create_corner_box(corner_box_right);
+
             int corner_width = corner_box_right->getContentSize().width * corner_box_right->getScaleX();
             int corner_height = corner_box_right->getContentSize().height * corner_box_right->getScaleY();
             corner_box_right->setPositionX(scene->screen_size.width - corner_width);
             corner_box_right->setFlippedX(true);
+
+            corner_box_boosts = gui::create_button(35, 15);
+            corner_box_boosts->set_idle_texture(assets::textures::ui_corner_box);
+            corner_box_boosts->base->setFlippedY(true);
+            corner_box_boosts->set_text("Boosts");
+            corner_box_boosts->set_size(170, 60);
+            corner_box_boosts->set_text_font_size(30);
+            corner_box_boosts->set_on_click_callback([]() {
+                boosts_overlay->setVisible(true);
+                checkered_bg->setVisible(true);
+                corner_box_boosts->set_text("Back");
+            });
+            ui_layer->addChild(corner_box_boosts->base, 5);
 
             create_corner_label(username_label);
             username_label->setWidth(corner_width - 40);
@@ -128,6 +162,16 @@ namespace menu {
                 switch_state(STATE_GAME);
             });
             menu_node->addChild(begin_button->base, 1);
+
+            boosts_overlay = Sprite::createWithTexture(assets::textures::menu_boosts_overlay);
+            boosts_overlay->setVisible(false);
+            int offset_x = 100;
+            int offset_y = 250;
+            boosts_overlay->setPosition(offset_x / 2.0f, offset_y / 2.0f);
+            boosts_overlay->setScaleX((scene->screen_size.width - offset_x) / boosts_overlay->getTexture()->getContentSize().width);
+            boosts_overlay->setScaleY((scene->screen_size.height - offset_y) / boosts_overlay->getTexture()->getContentSize().height);
+            boosts_overlay->setAnchorPoint(Vec2(0, 0));
+            ui_layer->addChild(boosts_overlay, 10);
 
             server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {
@@ -155,6 +199,8 @@ namespace menu {
             lbutton = NULL;
             ui_layer->removeChild(rbutton->base);
             rbutton = NULL;
+            ui_layer->removeChild(corner_box_boosts->base);
+            corner_box_boosts = NULL;
 
             ui_layer->removeChild(corner_box_left);
             ui_layer->removeChild(corner_box_right);
