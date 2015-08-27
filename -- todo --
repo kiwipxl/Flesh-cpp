@@ -1,17 +1,111 @@
 -- worms game todo --
 
+
+=======================================================================================================
+										CLIENT TO-DO LIST 		
+=======================================================================================================
+
 ------------ physics ------------
 
-	---- rework physics
-	either use box2d and fix things such as the tunelling issue or continue
-	to use chipmunk.
+	--- rework physics ---
+		there are a few major issues with the current physics system.
+		chipmunk is being used but does not support swept collisions, which
+		make players able to tunnel into objects.
+		the solution is either to hack around this or just use box2d instead.
+		the downsides to box2d is the API is ugly as hell imo and it will
+		be time consuming.
 
-		---- rework physics contact
-		need a better system to manage physics collisions
+		--- rework physics contact ---
+			currently chipmunks physics collision system is being used. whether or not
+			chipmunk or box2d is being used, the contact listener system needs
+			to be a lot nicer than it is now.
 
 ------------ debug ------------
 
-	---- for optimisation purposes, use a separate thread when logging
-	when using log_info, log_print, ect, the strings can be created and put in 
-	a queue, but are only put to action (log to console, write to file)
-	when they are run by the logging thread
+	--- for optimisation purposes, use a separate thread when logging ---
+		when using log_info, log_print, ect, the strings can be created and put in 
+		a queue, but are only put to action (log to console, write to file)
+		when they are run by the logging thread.
+
+	--- for every system that uses a vector of smart ptrs, log the vector size every x seconds ---
+		this is to make sure there are no dangling smart ptrs around. the vector size
+		is logged because each system will remove a element if it doesn't exist anymore.
+
+------------ networking ------------
+
+	--- think about whether or not all message_handler callbacks should invoke main thread before-hand ---
+
+------------ UI ------------
+
+	--- clean up button class ---
+		the button gui class needs to be cleaned up and working properly
+		
+------------ map ------------
+
+	--- vertex destructable terrain ---
+
+		--- remove vertices and indices ---
+			figure out how to remove a vertex and ALL it's corresponding indices. currently, 
+			i don't know what it's pattern is and how it's formed, but any triangle can draw
+			from any vertex point, meaning that removing a vertex breaks all connecting
+			triangles
+
+		--- try delete all vertices in a radius ---
+			if this works and looks nice, then proceed to go ahead with vertex destructable terrain
+
+		--- triangulate all terrain objects in unity ---
+
+		--- realign collider points ---
+			can probably move all nearby points towards the furthest vertices
+
+------------ code design ------------
+
+------------ utility ------------
+
+------------ entity ------------
+
+	--- implement an entity component system (ECS) ---
+		rewrite the current entity system as it's pretty unorganised and rushed, so i feel an ECS is a good 
+		idea for putting everything together and setting it up for the future
+
+		--- implement a base entity class (or GameObject, or GameActor) ---
+			the base entity class will contain an id and a list of components
+
+=======================================================================================================
+										SERVER TO-DO list
+=======================================================================================================
+
+------------ debug -----------
+
+	--- for optimisation purposes, use a separate thread for logging ---
+		when using log_info, log_print, ect, the strings can be created and put in 
+		a queue, but are only put to action (log to console, write to file)
+		when they are run by the logging thread.
+
+	--- option to log to file, console or both ---
+
+	--- console commands ---
+		add the ability to input commands in the console while all logs are printed to a file.
+
+		--- stats command ---
+			shows current amount of players connected, in the lobby and in game
+
+		--- accounts command ---
+			queries the database and returns the amount of registered users as well
+			as the amount of players connected.
+
+		--- lobby command ---
+			shows current amount of players in lobby, the amount of created games
+			and the amount of players that are waiting in a game
+
+		--- help command ---
+			shows details of all available commands
+
+------------ code design ------------
+
+	--- cleanup time ---
+
+		--- socket_manage file needs to be sorted out and renamed ---
+			could possibly split it into socket_accept and socket_recv who both run in different threads
+
+		--- each file needs to be moved to their own relevant module (folder) ---
