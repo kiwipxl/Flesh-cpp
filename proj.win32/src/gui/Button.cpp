@@ -26,6 +26,7 @@ void update_buttons() {
     for (int n = 0; n < button_list.size(); ++n) {
         auto& b = button_list[n];
         if (!b) continue;
+        if (b.unique()) b->schedule_removal();
         if (!b->is_removal_scheduled()) b->update();
         if (b->is_removal_scheduled()) {
             button_list.erase(button_list.begin() + n, button_list.begin() + n + 1);

@@ -131,7 +131,7 @@ void init_footer() {
 
 void update_inventory() {
     int n = 0;
-    for (auto i : inventory_buttons) {
+    for (auto& i : inventory_buttons) {
         entities::items::Weapon* w = entities::items::weapon_none;
         if (n <= entities::units::current_unit->inventory.size() - 1) w = entities::units::current_unit->inventory[n];
         auto a = assets::textures::inventory_empty;

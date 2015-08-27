@@ -128,15 +128,16 @@ namespace root {
         }
 
         utility::update_general();
-        network::server::update();
-        gui::update_buttons();
-        input::update_keyboard();
-        input::update_mouse();
 
         states::startup::update_state(s);
         states::login::update_state(s);
         states::game::update_state(s);
         states::menu::update_state(s);
+
+        network::server::update();
+        gui::update_buttons();
+        input::update_keyboard();
+        input::update_mouse();
     }
 
     void exit_root() {

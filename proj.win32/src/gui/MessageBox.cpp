@@ -43,6 +43,18 @@ MessageBox::~MessageBox() {
     close();
 }
 
+void MessageBox::close() {
+    if (!closed) {
+        for (auto& b : buttons) {
+            container->removeChild(b->base);
+            b = NULL;
+        }
+        buttons.clear();
+        root::ui_layer->removeChild(container);
+        closed = true;
+    }
+}
+
 void MessageBox::add_button(ButtonPtr button) {
     container->addChild(button->base);
     buttons.push_back(button);
@@ -79,13 +91,6 @@ Sprite* MessageBox::add_spinner() {
     spinner_sprite->setPosition(frame->getPositionX(), frame->getPositionY() - 20);
     container->addChild(spinner_sprite, 1);
     return spinner_sprite;
-}
-
-void MessageBox::close() {
-    if (!closed) {
-        root::ui_layer->removeChild(container);
-        closed = true;
-    }
 }
 
 //-- end MessageBox definition --

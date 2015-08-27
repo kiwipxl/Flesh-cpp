@@ -147,10 +147,14 @@ namespace menu {
     void remove_state(State state) {
         switch (state) {
         case STATE_MENU:
+            menu_node->removeChild(begin_button->base);
+            begin_button = NULL;
             ui_layer->removeChild(menu_node);
 
             ui_layer->removeChild(lbutton->base);
+            lbutton = NULL;
             ui_layer->removeChild(rbutton->base);
+            rbutton = NULL;
 
             ui_layer->removeChild(corner_box_left);
             ui_layer->removeChild(corner_box_right);
