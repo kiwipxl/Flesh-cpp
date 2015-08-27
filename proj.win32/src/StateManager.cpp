@@ -19,6 +19,7 @@
 #include "network/server/ServerConnection.h"
 #include "physics/Physics.h"
 #include "utility/Logger.h"
+#include "utility/General.h"
 
 #include "states/Game.h"
 #include "states/Login.h"
@@ -41,6 +42,8 @@ namespace root {
     
     //private
     bool created_init_state = false;
+    bool switching_states = false;
+    State queued_new_state;
 
     void create_state(State, bool = false);
     void remove_state(State, bool = false);
@@ -95,14 +98,17 @@ namespace root {
     }
 
     void switch_state(State new_state, bool force) {
-        if (!force && s == new_state) { log_info << "cannot switch to state " << new_state << " when on state " << s; return; }
+        queued_new_state = new_state;
+        utility::invoke_main_thread([&]() {
+            if (!force && s == queued_new_state) { log_info << "cannot switch to state " << queued_new_state << " when on state " << s; return; }
 
-        log_info << "switching to state " << new_state << " from state " << s;
+            log_info << "switching to state " << queued_new_state << " from state " << s;
 
-        remove_state(s, true);
-        create_state(new_state, true);
+            remove_state(s, true);
+            create_state(queued_new_state, true);
 
-        log_info << "switched to state " << new_state << " from state " << s;
+            log_info << "switched to state " << queued_new_state << " from state " << s;
+        });
     }
 
     void update_state(float dt) {
@@ -121,15 +127,16 @@ namespace root {
             switch_state((State)((int)s + 1));
         }
 
-        states::startup::update_state(s);
-        states::login::update_state(s);
-        states::game::update_state(s);
-        states::menu::update_state(s);
-        
+        utility::update_general();
         network::server::update();
         gui::update_buttons();
         input::update_keyboard();
         input::update_mouse();
+
+        states::startup::update_state(s);
+        states::login::update_state(s);
+        states::game::update_state(s);
+        states::menu::update_state(s);
     }
 
     void exit_root() {

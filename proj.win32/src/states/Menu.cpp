@@ -10,6 +10,7 @@
 #include "network/server/ServerConnection.h"
 #include "network/sockets/Socket.h"
 #include "StateManager.h"
+#include "utility/General.h"
 
 BEGIN_STATES_NS
 
@@ -126,7 +127,7 @@ namespace menu {
             begin_button->set_on_click_callback([]() {
                 switch_state(STATE_GAME);
             });
-            ui_layer->addChild(begin_button->base, 1);
+            menu_node->addChild(begin_button->base, 1);
 
             server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {
@@ -151,10 +152,10 @@ namespace menu {
             ui_layer->removeChild(lbutton->base);
             ui_layer->removeChild(rbutton->base);
 
-            ui_layer->removeChild(begin_button->base);
-
             ui_layer->removeChild(corner_box_left);
             ui_layer->removeChild(corner_box_right);
+            ui_layer->removeChild(username_label);
+            ui_layer->removeChild(gold_label);
 
             break;
         }
