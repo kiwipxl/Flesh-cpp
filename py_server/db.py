@@ -32,7 +32,6 @@ def add_user_account(username, password):
     result = query("insert or ignore into accounts(user, pass, gold) \
                     values('%s', '%s', '%d')" % (username, password, accounts.STARTING_GOLD));
     if not (result): return accounts.RegisterResult.UNKNOWN_ERROR;
-    con.commit();
 
     return accounts.RegisterResult.SUCCESS;
 
@@ -64,14 +63,28 @@ def get_user_acc_details(acc_details, unique_id):
 
     return accounts.LoginResult.SUCCESS, acc_details;
 
-def query(q):
+#modifies the gold value for a specific account
+def set_acc_gold(unique_id, gold):
     global cur;
+
+    result = query("update accounts set gold=? where id=?", (gold, unique_id));
+    if not (result or cur.rowcount == 0): return accounts.GeneralResult.UNKNOWN_ERROR;
+
+    return accounts.LoginResult.SUCCESS;
+
+def query(*args):
+    global cur;
+    global con;
+
+    if (len(args) == 0): return False;
+    
     try:
-        cur.execute(q);
-        debug.log_db("query: %s" % q);
+        cur.execute(*args);
+        con.commit();
+        debug.log_db("query: %s" % args[0]);
         return True;
-    except lite.Error as e:
-        debug.log_db("database error occurred: %s" % e.args[0]);
+    except lite.Error as err:
+        debug.log_db("database error occurred: %s" % err.args[0]);
         return False;
 
 if __name__ == "__main__":

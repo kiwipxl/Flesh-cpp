@@ -57,9 +57,9 @@ public:
     int get_text_font_size();
     std::string get_text_string();
     cc::Size get_size() { return size; }
-    cc::Size get_scaled_size() { return scaled_size; }
     cc::Vec2 get_pos() { return pos; }
     cc::Vec2 get_scale() { return scale; }
+    cc::Size get_scaled_size() { return scaled_size; }
 
     cc::Texture2D* get_idle_texture() { return idle_texture; }
     cc::Texture2D* get_hover_texture() { return hover_texture; }

@@ -63,7 +63,8 @@ void Button::update() {
         mpos.x <= pos.x + (scaled_size.width / 2.0f) && mpos.y >= pos.y - (scaled_size.height / 2.0f)) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
-        }else if (button_down) {
+        }
+        else if (button_down) {
             if (click_callback) click_callback();
         }
     }
@@ -94,8 +95,6 @@ void Button::set_size(int _width, int _height) {
     base->setScaleX(_width / base->getContentSize().width);
     base->setScaleY(_height / base->getContentSize().height);
 
-    text->setScaleX(base->getContentSize().width / _width);
-    text->setScaleY(base->getContentSize().height / _height);
     text->setDimensions(size);
     update_text_pos();
 

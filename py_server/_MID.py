@@ -65,6 +65,9 @@ RECV_CLIENT_BINDED_UDP_PORT                                         = MID(_FT.UN
 RECV_REQUEST_FOR_CLIENT_ACCOUNT_DETAILS                             = MID();
 SEND_CLIENT_ACCOUNT_DETAILS                                         = MID(_FT.GENERAL_RESULT, _FT.STRING, _FT.INT);
 
+RECV_REQUEST_TO_BUY_BOOSTER_PACK                                    = MID(_FT.INT);
+SEND_REQUEST_TO_BUY_BOOSTER_PACK_RESULT                         = MID(_FT.GENERAL_RESULT, _FT.INT);
+
 #put all x variables into a name array so messages can be debugged easier
 names = id * [None];
 for k, v in list(locals().iteritems()):

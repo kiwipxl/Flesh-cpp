@@ -4,6 +4,7 @@
 
 #include "assets/Textures.h"
 #include "gui/Button.h"
+#include "gui/MessageBox.h"
 #include "network/message/Message.h"
 #include "network/message/Stream.h"
 #include "network/message/MID.h"
@@ -11,6 +12,7 @@
 #include "network/sockets/Socket.h"
 #include "StateManager.h"
 #include "utility/General.h"
+#include "utility/Logger.h"
 
 BEGIN_STATES_NS
 
@@ -33,6 +35,8 @@ namespace menu {
     gui::ButtonPtr corner_box_boosts;
     Sprite* boosts_overlay;
     Sprite* checkered_bg;
+    std::vector<gui::ButtonPtr> boost_buy_buttons;
+    bool buying_boosts = false;
 
     gui::ButtonPtr lbutton;
     gui::ButtonPtr rbutton;
@@ -69,14 +73,14 @@ namespace menu {
     }
 
     void scroll_left() {
-        if (scrolling) return;
+        if (scrolling || buying_boosts) return;
 
         scrolling = true;
         scroll_dest_x += scene->screen_size.width;
     }
 
     void scroll_right() {
-        if (scrolling) return;
+        if (scrolling || buying_boosts) return;
 
         scrolling = true;
         scroll_dest_x -= scene->screen_size.width;
@@ -125,6 +129,8 @@ namespace menu {
             create_corner_box(corner_box_left);
             create_corner_box(corner_box_right);
 
+            //me so spaghetti
+
             int corner_width = corner_box_right->getContentSize().width * corner_box_right->getScaleX();
             int corner_height = corner_box_right->getContentSize().height * corner_box_right->getScaleY();
             corner_box_right->setPositionX(scene->screen_size.width - corner_width);
@@ -135,13 +141,28 @@ namespace menu {
             corner_box_boosts->base->setFlippedY(true);
             corner_box_boosts->set_text("Boosts");
             corner_box_boosts->set_size(170, 60);
-            corner_box_boosts->set_text_font_size(30);
+            corner_box_boosts->set_text_font_size(60);
             corner_box_boosts->set_on_click_callback([]() {
-                boosts_overlay->setVisible(true);
-                checkered_bg->setVisible(true);
-                corner_box_boosts->set_text("Back");
+                if (!buying_boosts) {
+                    boosts_overlay->setVisible(true);
+                    checkered_bg->setVisible(true);
+                    corner_box_boosts->set_text("Back");
+
+                    for (int n = 0; n < boost_buy_buttons.size(); ++n) {
+                        boost_buy_buttons[n]->base->setVisible(true);
+                    }
+                }else {
+                    boosts_overlay->setVisible(false);
+                    checkered_bg->setVisible(false);
+                    corner_box_boosts->set_text("Boosts");
+
+                    for (int n = 0; n < boost_buy_buttons.size(); ++n) {
+                        boost_buy_buttons[n]->base->setVisible(false);
+                    }
+                }
+                buying_boosts = !buying_boosts;
             });
-            ui_layer->addChild(corner_box_boosts->base, 5);
+            ui_layer->addChild(corner_box_boosts->base, 10);
 
             create_corner_label(username_label);
             username_label->setWidth(corner_width - 40);
@@ -155,10 +176,12 @@ namespace menu {
 
             begin_button = gui::create_button(scene->screen_size.width / 2.0f, scene->screen_size.height / 2.0f);
             begin_button->set_idle_texture(assets::textures::begin_button);
-            begin_button->set_scale_x(500.0f / begin_button->get_idle_texture()->getContentSize().width);
+            begin_button->set_scale_x(580.0f / begin_button->get_idle_texture()->getContentSize().width);
             begin_button->set_scale_y(250.0f / begin_button->get_idle_texture()->getContentSize().height);
             begin_button->set_size(assets::textures::begin_button->getContentSize());
             begin_button->set_on_click_callback([]() {
+                if (buying_boosts) return;
+
                 switch_state(STATE_GAME);
             });
             menu_node->addChild(begin_button->base, 1);
@@ -172,6 +195,41 @@ namespace menu {
             boosts_overlay->setScaleY((scene->screen_size.height - offset_y) / boosts_overlay->getTexture()->getContentSize().height);
             boosts_overlay->setAnchorPoint(Vec2(0, 0));
             ui_layer->addChild(boosts_overlay, 10);
+
+            for (int n = 0; n < 3; ++n) {
+                gui::ButtonPtr b = gui::create_button(180 + (n * 290), 255);
+                b->set_idle_texture(assets::textures::menu_buy_button);
+                b->set_scale_x(boosts_overlay->getScaleX());
+                b->set_scale_y(boosts_overlay->getScaleY());
+                b->set_size(b->get_idle_texture()->getContentSize());
+                b->set_text_font_size(30);
+                b->base->setVisible(false);
+                ui_layer->addChild(b->base, 10);
+                boost_buy_buttons.push_back(b);
+
+                b->set_on_click_callback([n]() {
+                    server::tcp_sock.add_message_handler(msg::MID_RECV_REQUEST_TO_BUY_BOOSTER_PACK_RESULT, [n](msg::Message* m) {
+                        auto result = m->get<msg::GeneralResult>(0);
+                        utility::invoke_main_thread([result, n]() {
+                            if (result == msg::GENERAL_RESULT_SUCCESS) {
+                                gui::show_message_box("Success", sstream_cstr("Purchased booster pack " << n << " successfully"), "OK");
+                            }else if (result == msg::GENERAL_RESULT_ERROR) {
+                                gui::show_message_box("Error", sstream_cstr("Insufficient funds!"), "OK");
+                            }else if (result == msg::GENERAL_RESULT_UNKNOWN_ERROR) {
+                                gui::show_message_box("Error", sstream_cstr("An unknown server error occurred. Please try again later."), "OK");
+                            }
+                        });
+                    });
+
+                    gui::show_loading_message_box("Please wait...", "Purchasing...");
+                    msg::send(server::tcp_sock, msg::Stream() << msg::MID_SEND_REQUEST_TO_BUY_BOOSTER_PACK << n);
+                });
+            }
+            boost_buy_buttons[0]->text->setString("Buy for 450G");
+            boost_buy_buttons[1]->text->setString("Buy for 800G");
+            boost_buy_buttons[2]->text->setString("Buy for 2000G");
+
+            //spaghet!!
 
             server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {

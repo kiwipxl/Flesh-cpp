@@ -63,17 +63,39 @@ def handle_all_messages(m):
         msg.send(m.sock, m.client_obj, msg.build(_MID.SEND_CLIENT_ATTEMPT_LOGIN_RESULT, result));
 
     elif (m.mid == _MID.RECV_REQUEST_FOR_CLIENT_ACCOUNT_DETAILS):
-        print("request client account details");
         acc_details = m.client_obj.acc_details;
+        result = GeneralResult.ERROR;
+        username = "";
+        gold = -1;
         if (acc_details and acc_details.parent_client == m.client_obj):
-            msg.send(m.sock, m.client_obj,
-                     msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
-                              GeneralResult.SUCCESS, acc_details.username,
-                              acc_details.gold));
-        else:
-            msg.send(m.sock, m.client_obj,
-                     msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS,
-                               GeneralResult.ERROR, "", -1));
+            result = GeneralResult.SUCCESS;
+            username = acc_details.username;
+            gold = acc_details.gold;
+
+        msg.send(m.sock, m.client_obj,
+                 msg.build(_MID.SEND_CLIENT_ACCOUNT_DETAILS, result, username, gold));
+
+    elif (m.mid == _MID.RECV_REQUEST_TO_BUY_BOOSTER_PACK):
+        acc_details = m.client_obj.acc_details;
+        result = GeneralResult.UNKNOWN_ERROR;
+        gold = -1;
+        if (m.client_obj.acc_details != None):
+            cost = 0;
+            if (m.params[0] == 0):
+                cost = 450;
+            elif (m.params[0] == 1):
+                cost = 800;
+            elif (m.params[0] == 2):
+                cost = 2000;
+            if (cost != 0):
+                gold = acc_details.gold - cost;
+                if (gold >= 0):
+                    result = db.set_acc_gold(acc_details.unique_id, gold);
+                else:
+                    result = GeneralResult.ERROR;
+
+        msg.send(m.sock, m.client_obj,
+                 msg.build(_MID.SEND_REQUEST_TO_BUY_BOOSTER_PACK_RESULT, result, gold));
 
 #checks the formatting of both the username annd password to make sure it can be put in the db
 #returns (formatted username, formatted password, error code (true = success, false = format_error))

@@ -2,19 +2,3 @@ loaded 11 frames (ui/spinner_sheet.png)
 animation assets loaded
 csb assets loaded
 texture assets loaded
-map assets loaded
-particle assets loaded
-asset loading completed
-attempt connect on thread...
-created state 1
-(tcp_sock): connection successful
-
-switching to state 2 from state 1
-removed state 1
-created state 2
-switched to state 2 from state 2
-switching to state 3 from state 2
-removed state 2
-created state 3
-switched to state 3 from state 3
-
