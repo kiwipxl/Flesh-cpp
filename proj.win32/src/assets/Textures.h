@@ -44,6 +44,7 @@ namespace textures {
     extern cc::Texture2D* customisation_screen;
     extern cc::Texture2D* arrow_button;
     extern cc::Texture2D* ui_corner_box;
+    extern cc::Texture2D* begin_button;
 
     extern void init();
 };

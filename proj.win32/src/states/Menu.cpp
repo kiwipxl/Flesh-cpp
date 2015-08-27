@@ -121,6 +121,8 @@ namespace menu {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {
                     char* username = m->get<char*>(1);
                     int gold = m->get<int>(2);
+                    username_label->setString(username);
+                    gold_label->setString(sstream_cstr(gold));
                 }
             });
 

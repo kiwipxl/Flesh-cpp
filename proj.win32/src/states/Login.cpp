@@ -118,6 +118,7 @@ namespace login {
                             switch (result) {
                                 case LOGIN_RESULT_SUCCESS:
                                     gui::show_message_box("successful", "logged in successfully", "OK");
+                                    switch_state(STATE_MENU);
                                     break;
                                 case LOGIN_RESULT_INCORRECT_USER_OR_PASS:
                                     gui::show_message_box("login error", "incorrect username or password. please try again.", "OK");
@@ -138,7 +139,8 @@ namespace login {
                         utility::invoke_main_thread([result]() {
                             switch (result) {
                                 case REGISTER_RESULT_SUCCESS:
-                                    gui::show_message_box("successful", "registered successfully", "OK");
+                                    gui::show_loading_message_box("successful", "registered successfully. logging in...");
+                                    msg::send(server::tcp_sock, msg::Stream() << msg::MID_SEND_ATTEMPT_LOGIN << username_str << password_str);
                                     break;
                                 case REGISTER_RESULT_USER_ALREADY_EXISTS:
                                     gui::show_message_box("register error", "username already exists. please try another name.", "OK");
