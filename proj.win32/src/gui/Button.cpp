@@ -59,8 +59,8 @@ void Button::update() {
     update_scheduler();
 
     Vec2 mpos = input::get_mouse_pos();
-    if (mpos.x >= pos.x - (scaled_size.width / 2.0f) && mpos.y <= pos.y + (scaled_size.height / 2.0f) &&
-        mpos.x <= pos.x + (scaled_size.width / 2.0f) && mpos.y >= pos.y - (scaled_size.height / 2.0f)) {
+    if (mpos.x >= pos.x && mpos.y >= pos.y &&
+        mpos.x <= pos.x + scaled_size.width && mpos.y <= pos.y + scaled_size.height) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
         }
@@ -77,6 +77,7 @@ void Button::update() {
 void Button::set_on_click_callback(ButtonClickCallback _callback) { click_callback = _callback; }
 
 void Button::update_text_pos() {
+    base->setAnchorPoint(Vec2(0, 0));
     text->setPosition(Vec2(0, 0));
     text->setAnchorPoint(Vec2(0, 0));
 }
@@ -95,10 +96,13 @@ void Button::set_size(int _width, int _height) {
     base->setScaleX(_width / base->getContentSize().width);
     base->setScaleY(_height / base->getContentSize().height);
 
-    text->setDimensions(size);
+    text->setScaleX(base->getContentSize().width / _width);
+    text->setScaleY(base->getContentSize().height / _height);
+
+    text->setDimensions(scaled_size);
     update_text_pos();
 
-    base->setContentSize(size);
+    base->setContentSize(scaled_size);
 }
 
 void Button::set_size(cc::Size _size) { set_size(_size.width, _size.height); }

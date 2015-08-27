@@ -113,13 +113,13 @@ namespace menu {
             options_menu->setPositionX(-scene->screen_size.width);
             customisations_menu->setPositionX(scene->screen_size.width);
 
-            lbutton = gui::create_button(40, scene->screen_size.height / 2.0f);
+            lbutton = gui::create_button(8, (scene->screen_size.height / 2.0f) - 16);
             lbutton->set_on_click_callback(scroll_left);
             lbutton->set_idle_texture(assets::textures::arrow_button);
             lbutton->set_size(assets::textures::arrow_button->getContentSize());
             ui_layer->addChild(lbutton->base, 1);
 
-            rbutton = gui::create_button(scene->screen_size.width - 40, scene->screen_size.height / 2.0f);
+            rbutton = gui::create_button(scene->screen_size.width - 72, scene->screen_size.height / 2.0f);
             rbutton->set_on_click_callback(scroll_right);
             rbutton->set_idle_texture(assets::textures::arrow_button);
             rbutton->set_size(assets::textures::arrow_button->getContentSize());
@@ -136,12 +136,12 @@ namespace menu {
             corner_box_right->setPositionX(scene->screen_size.width - corner_width);
             corner_box_right->setFlippedX(true);
 
-            corner_box_boosts = gui::create_button(35, 15);
+            corner_box_boosts = gui::create_button(0, 0);
             corner_box_boosts->set_idle_texture(assets::textures::ui_corner_box);
             corner_box_boosts->base->setFlippedY(true);
             corner_box_boosts->set_text("Boosts");
             corner_box_boosts->set_size(170, 60);
-            corner_box_boosts->set_text_font_size(60);
+            corner_box_boosts->set_text_font_size(25);
             corner_box_boosts->set_on_click_callback([]() {
                 if (!buying_boosts) {
                     boosts_overlay->setVisible(true);
@@ -201,8 +201,8 @@ namespace menu {
                 b->set_idle_texture(assets::textures::menu_buy_button);
                 b->set_scale_x(boosts_overlay->getScaleX());
                 b->set_scale_y(boosts_overlay->getScaleY());
-                b->set_size(b->get_idle_texture()->getContentSize());
-                b->set_text_font_size(30);
+                b->set_size(Size(b->get_idle_texture()->getContentSize().width, b->get_idle_texture()->getContentSize().height - 15));
+                b->set_text_font_size(14);
                 b->base->setVisible(false);
                 ui_layer->addChild(b->base, 10);
                 boost_buy_buttons.push_back(b);
