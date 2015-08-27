@@ -92,8 +92,9 @@ void init_footer() {
     footer->setAnchorPoint(Vec2(0.0f, 0.0f));
     root::ui_layer->addChild(footer);
 
-    footer_fire_button = gui::create_button(750, 30);
+    footer_fire_button = gui::create_button(675, -40);
     footer_fire_button->set_idle_texture(assets::textures::footer_fire_button);
+    footer_fire_button->set_size(footer_fire_button->get_idle_texture()->getContentSize());
     footer_fire_button->base->setScale(.4f);
     root::ui_layer->addChild(footer_fire_button->base, 10);
     footer_fire_button->set_on_click_callback([]() {
@@ -106,8 +107,9 @@ void init_footer() {
     });
 
     for (int i = 0; i < 2; ++i) {
-        auto& b = gui::create_button(40.0f + (i * 70.0f), 40.0f);
+        auto& b = gui::create_button(8.0f + (i * 70.0f), 8.0f);
         b->set_idle_texture(assets::textures::inventory_empty);
+        b->set_size(b->get_idle_texture()->getContentSize());
         root::ui_layer->addChild(b->base, 10);
         inventory_buttons.push_back(b);
 

@@ -46,6 +46,9 @@ Button::Button(int _x, int _y) {
     text->setHorizontalAlignment(TextHAlignment::CENTER);
     text->setVerticalAlignment(TextVAlignment::CENTER);
 
+    base->setAnchorPoint(Vec2(0, 0));
+    text->setAnchorPoint(Vec2(0, 0));
+
     set_idle_texture(assets::textures::ui_button_idle);
     set_size(DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT);
     set_pos(_x, _y);
@@ -63,8 +66,7 @@ void Button::update() {
         mpos.x <= pos.x + scaled_size.width && mpos.y <= pos.y + scaled_size.height) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
-        }
-        else if (button_down) {
+        }else if (button_down) {
             if (click_callback) click_callback();
         }
     }
@@ -77,9 +79,7 @@ void Button::update() {
 void Button::set_on_click_callback(ButtonClickCallback _callback) { click_callback = _callback; }
 
 void Button::update_text_pos() {
-    base->setAnchorPoint(Vec2(0, 0));
     text->setPosition(Vec2(0, 0));
-    text->setAnchorPoint(Vec2(0, 0));
 }
 void Button::update_size() { set_size(size.width, size.height); }
 

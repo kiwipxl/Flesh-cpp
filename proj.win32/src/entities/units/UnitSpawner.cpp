@@ -93,6 +93,7 @@ void update_all_units() {
                 select_current_unit();
                 gui::game::reset_countdown();
             }
+            if (current_unit_index >= all_units.size()) current_unit_index = 0;
             current_unit = all_units[current_unit_index];
             gui::game::sort_ui_bars();
             gui::game::update_inventory();

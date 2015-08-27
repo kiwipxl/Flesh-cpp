@@ -18,3 +18,26 @@ removed state 2
 created state 3
 switched to state 3 from state 3
 
+switching to state 4 from state 3
+removed state 3
+created state 4
+switched to state 4 from state 4
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 6, post_solve: 0, separate: 2
+contact pre_solve callbacks: 5, post_solve: 0, separate: 2
+contact pre_solve callbacks: 5, post_solve: 0, separate: 2
+contact pre_solve callbacks: 5, post_solve: 0, separate: 2
+attempted to add a component when another one of the same type already existed.                           cannot have more than 1 component
+contact pre_solve callbacks: 4, post_solve: 0, separate: 2
+contact pre_solve callbacks: 4, post_solve: 0, separate: 2
+attempted to add a component when another one of the same type already existed.                           cannot have more than 1 component
+contact pre_solve callbacks: 3, post_solve: 0, separate: 2

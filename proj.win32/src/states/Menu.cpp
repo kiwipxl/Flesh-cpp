@@ -176,6 +176,7 @@ namespace menu {
 
             begin_button = gui::create_button(scene->screen_size.width / 2.0f, scene->screen_size.height / 2.0f);
             begin_button->set_idle_texture(assets::textures::begin_button);
+            begin_button->base->setAnchorPoint(Vec2(1, 1));
             begin_button->set_scale_x(580.0f / begin_button->get_idle_texture()->getContentSize().width);
             begin_button->set_scale_y(250.0f / begin_button->get_idle_texture()->getContentSize().height);
             begin_button->set_size(assets::textures::begin_button->getContentSize());
@@ -197,11 +198,12 @@ namespace menu {
             ui_layer->addChild(boosts_overlay, 10);
 
             for (int n = 0; n < 3; ++n) {
-                gui::ButtonPtr b = gui::create_button(180 + (n * 290), 255);
+                gui::ButtonPtr b = gui::create_button(120 + (n * 290), 225);
                 b->set_idle_texture(assets::textures::menu_buy_button);
                 b->set_scale_x(boosts_overlay->getScaleX());
                 b->set_scale_y(boosts_overlay->getScaleY());
-                b->set_size(Size(b->get_idle_texture()->getContentSize().width, b->get_idle_texture()->getContentSize().height - 15));
+                b->set_size(b->get_idle_texture()->getContentSize().width, b->get_idle_texture()->getContentSize().height);
+                b->text->setPositionY(b->text->getPositionY() + 20);
                 b->set_text_font_size(14);
                 b->base->setVisible(false);
                 ui_layer->addChild(b->base, 10);

@@ -71,8 +71,8 @@ void MessageBox::add_button(std::string _button_text, int _x, int _y, int _font_
 }
 
 void MessageBox::stack_button(std::string _button_text, int _font_size, ButtonClickCallback _on_click_callback) {
-    int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 55) - (buttons.size() * 85);
-    int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 35;
+    int x = ((frame->getPositionX() + (frame->getContentSize().width / 2)) - 90) - (buttons.size() * 85);
+    int y = (frame->getPositionY() - (frame->getContentSize().height / 2)) + 18;
 
     ButtonPtr button = create_button(x, y);
     button->set_text(_button_text);
