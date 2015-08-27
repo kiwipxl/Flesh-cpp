@@ -57,8 +57,8 @@ void Button::update() {
     update_scheduler();
 
     Vec2 mpos = input::get_mouse_pos();
-    if (mpos.x >= pos.x - size.width && mpos.y <= pos.y + size.height && 
-        mpos.x <= pos.x + size.width && mpos.y >= pos.y - size.height) {
+    if (mpos.x >= pos.x - scaled_size.width && mpos.y <= pos.y + scaled_size.height &&
+        mpos.x <= pos.x + scaled_size.width && mpos.y >= pos.y - scaled_size.height) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
         }else if (button_down) {
@@ -71,18 +71,23 @@ void Button::update() {
     }
 }
 
-void Button::set_on_click_callback(ButtonClickCallback _callback) {
-    click_callback = _callback;
-}
+void Button::set_on_click_callback(ButtonClickCallback _callback) { click_callback = _callback; }
 
 void Button::update_text_pos() {
     text->setPosition(Vec2(0, 0));
     text->setAnchorPoint(Vec2(0, 0));
 }
+void Button::update_size() { set_size(size.width, size.height); }
 
 void Button::set_size(int _width, int _height) {
     size.width = _width;
     size.height = _height;
+
+    _width *= scale.x;
+    _height *= scale.y;
+
+    scaled_size.width = _width;
+    scaled_size.height = _height;
 
     base->setScaleX(_width / base->getContentSize().width);
     base->setScaleY(_height / base->getContentSize().height);
@@ -95,9 +100,11 @@ void Button::set_size(int _width, int _height) {
     base->setContentSize(size);
 }
 
-void Button::set_size(cc::Size _size) {
-    set_size(_size.width, _size.height);
-}
+void Button::set_size(cc::Size _size) { set_size(_size.width, _size.height); }
+
+void Button::set_scale(float _scale_x, float _scale_y) { scale.x = _scale_x; scale.y = _scale_y; }
+void Button::set_scale_x(float _scale_x) { scale.x = _scale_x; }
+void Button::set_scale_y(float _scale_y) { scale.y = _scale_y; }
 
 void Button::set_pos(cc::Vec2 _pos) {
     pos = _pos;
@@ -123,7 +130,6 @@ void Button::set_idle_texture(Texture2D* _idle_texture) {
     idle_texture = _idle_texture;
     base->setTexture(idle_texture);
     base->setTextureRect(Rect(0, 0, base->getTexture()->getContentSize().width, base->getTexture()->getContentSize().height));
-    if (size.width == 0 && size.height == 0) set_size(base->getTextureRect().size);
 }
 
 void Button::set_hover_texture(Texture2D* _hover_texture) {

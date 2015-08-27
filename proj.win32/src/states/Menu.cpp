@@ -29,6 +29,7 @@ namespace menu {
     Label* gold_label;
     gui::ButtonPtr lbutton;
     gui::ButtonPtr rbutton;
+    gui::ButtonPtr begin_button;
     Node* menu_node;
 
     bool scrolling = false;
@@ -116,6 +117,13 @@ namespace menu {
             gold_label->setWidth(corner_width - 40);
             gold_label->setHeight(corner_height);
             gold_label->setPositionY(scene->screen_size.height - corner_height);
+
+            begin_button = gui::create_button(scene->screen_size.width / 2.0f, scene->screen_size.height / 2.0f);
+            begin_button->set_idle_texture(assets::textures::begin_button);
+            begin_button->set_scale_x(400.0f / begin_button->get_idle_texture()->getContentSize().width);
+            begin_button->set_scale_y(400.0f / begin_button->get_idle_texture()->getContentSize().height);
+            begin_button->set_size(assets::textures::begin_button->getContentSize());
+            ui_layer->addChild(begin_button->base, 1);
 
             server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
                 if (m->get<msg::GeneralResult>(0) == msg::GENERAL_RESULT_SUCCESS) {

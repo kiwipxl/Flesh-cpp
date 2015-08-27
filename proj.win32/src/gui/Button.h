@@ -31,10 +31,14 @@ public:
     cc::LabelTTF* text;
 
     void update();
+    void update_size();
 
     void set_on_click_callback(ButtonClickCallback _callback);
     void set_size(int _width, int _height);
     void set_size(cc::Size _size);
+    void set_scale(float _scale_x, float _scale_y);
+    void set_scale_x(float _scale_x);
+    void set_scale_y(float _scale_y);
 
     void set_pos(cc::Vec2 _pos);
     void set_pos(int _x, int _y);
@@ -53,7 +57,9 @@ public:
     int get_text_font_size();
     std::string get_text_string();
     cc::Size get_size() { return size; }
+    cc::Size get_scaled_size() { return scaled_size; }
     cc::Vec2 get_pos() { return pos; }
+    cc::Vec2 get_scale() { return scale; }
 
     cc::Texture2D* get_idle_texture() { return idle_texture; }
     cc::Texture2D* get_hover_texture() { return hover_texture; }
@@ -65,6 +71,8 @@ public:
 private:
     cc::Vec2 pos;
     cc::Size size;
+    cc::Size scaled_size;
+    cc::Vec2 scale = { 1.0f, 1.0f };
 
     cc::Texture2D* idle_texture;
     cc::Texture2D* hover_texture;
