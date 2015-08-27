@@ -120,9 +120,12 @@ namespace menu {
 
             begin_button = gui::create_button(scene->screen_size.width / 2.0f, scene->screen_size.height / 2.0f);
             begin_button->set_idle_texture(assets::textures::begin_button);
-            begin_button->set_scale_x(400.0f / begin_button->get_idle_texture()->getContentSize().width);
-            begin_button->set_scale_y(400.0f / begin_button->get_idle_texture()->getContentSize().height);
+            begin_button->set_scale_x(500.0f / begin_button->get_idle_texture()->getContentSize().width);
+            begin_button->set_scale_y(250.0f / begin_button->get_idle_texture()->getContentSize().height);
             begin_button->set_size(assets::textures::begin_button->getContentSize());
+            begin_button->set_on_click_callback([]() {
+                switch_state(STATE_GAME);
+            });
             ui_layer->addChild(begin_button->base, 1);
 
             server::tcp_sock.add_message_handler(msg::MID_RECV_MY_ACCOUNT_DETAILS, [](msg::Message* m) {
@@ -147,6 +150,11 @@ namespace menu {
 
             ui_layer->removeChild(lbutton->base);
             ui_layer->removeChild(rbutton->base);
+
+            ui_layer->removeChild(begin_button->base);
+
+            ui_layer->removeChild(corner_box_left);
+            ui_layer->removeChild(corner_box_right);
 
             break;
         }

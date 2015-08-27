@@ -57,8 +57,8 @@ void Button::update() {
     update_scheduler();
 
     Vec2 mpos = input::get_mouse_pos();
-    if (mpos.x >= pos.x - scaled_size.width && mpos.y <= pos.y + scaled_size.height &&
-        mpos.x <= pos.x + scaled_size.width && mpos.y >= pos.y - scaled_size.height) {
+    if (mpos.x >= pos.x - (scaled_size.width / 2.0f) && mpos.y <= pos.y + (scaled_size.height / 2.0f) &&
+        mpos.x <= pos.x + (scaled_size.width / 2.0f) && mpos.y >= pos.y - (scaled_size.height / 2.0f)) {
         if (input::get_mouse_button_down(MOUSE_BUTTON_LEFT)) {
             button_down = true;
         }else if (button_down) {
