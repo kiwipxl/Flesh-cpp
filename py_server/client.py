@@ -101,6 +101,7 @@ def handle_leave(client_obj, leave_msg, remove_from_list = True):
     msg.send(client_obj.tcp_sock, client_obj, msg.build(_MID.SEND_CLIENT_LEAVE, leave_msg));
 
     game.client_leave(client_obj);
+    accounts.handle_client_leave(client_obj);
 
     client_obj.tcp_sock.close();
     client_obj.udp_sock.close();

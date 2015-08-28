@@ -9,14 +9,34 @@ def init():
     global con;
     global cur;
     con = lite.connect("acc.db");
-
-    #con.row_factory = lite.Row;     #fetches use dictionary over tuple
+    con.row_factory = lite.Row;     #fetches use dictionary over tuple
     cur = con.cursor();
+
     query("create table if not exists accounts(id integer primary key, user character, pass character, \
-            gold integer, unique(user))");
+            gold integer, last_login_time integer, last_logout_time integer, total_login_time integer, unique(user))");
     con.commit();
 
     debug.log("accounts db initiated", debug.P_INFO);
+
+#modifies a attribute attached to an account (user, pass, gold, ect)
+def set_attrib(unique_id, attrib_name, attrib_value):
+    global cur;
+
+    result = query("update accounts set %s=? where id=?" % (attrib_name), (attrib_value, unique_id));
+    if not (result or cur.rowcount == 0): return accounts.GeneralResult.UNKNOWN_ERROR;
+
+    return accounts.GeneralResult.SUCCESS;
+
+#modifies a attribute attached to an account (user, pass, gold, ect)
+def get_attrib(unique_id, attrib_name):
+    global cur;
+
+    result = query("select %s from accounts where id=?" % (attrib_name), (unique_id, ));
+    if not (result): return accounts.GeneralResult.UNKNOWN_ERROR, None;
+    f = cur.fetchone();
+    if (f == None): return accounts.GeneralResult.UNKNOWN_ERROR, None;
+
+    return accounts.GeneralResult.SUCCESS, f[attrib_name];
 
 #attempts to add a username and password to the database and returns a RegisterResult enum
 def add_user_account(username, password):
@@ -29,8 +49,8 @@ def add_user_account(username, password):
     query("select * from accounts where user=?", (username, ));
     if (cur.fetchone() != None): return accounts.RegisterResult.USER_ALREADY_EXISTS;
 
-    result = query("insert or ignore into accounts(user, pass, gold) \
-                    values(?, ?, ?)", (username, password, accounts.STARTING_GOLD));
+    result = query("insert or ignore into accounts(user, pass, gold, last_login_time, last_logout_time, total_login_time) \
+                    values(?, ?, ?, ?, ?, ?)", (username, password, accounts.STARTING_GOLD, 0, 0, 0));
     if not (result): return accounts.RegisterResult.UNKNOWN_ERROR;
 
     return accounts.RegisterResult.SUCCESS;
@@ -47,7 +67,7 @@ def find_user_account(username, password):
     fetch = cur.fetchone();
     if (fetch == None): return accounts.LoginResult.INCORRECT_USER_OR_PASS, -1;
 
-    return accounts.LoginResult.SUCCESS, fetch[accounts.ID_INDEX];
+    return accounts.LoginResult.SUCCESS, fetch["id"];
 
 #returns a LoginResult enum on whether or not the username and password was found in the db
 def get_user_acc_details(acc_details, unique_id):
@@ -58,19 +78,14 @@ def get_user_acc_details(acc_details, unique_id):
     fetch = cur.fetchone();
     if (fetch == None): return accounts.GeneralResult.ERROR, acc_details;
     
-    acc_details.username = str(fetch[accounts.USER_INDEX]);
-    acc_details.gold = int(fetch[accounts.GOLD_INDEX]);
+    acc_details.username = str(fetch["user"]);
+    acc_details.gold = int(fetch["gold"]);
 
-    return accounts.LoginResult.SUCCESS, acc_details;
+    return accounts.GeneralResult.SUCCESS, acc_details;
 
 #modifies the gold value for a specific account
 def set_acc_gold(unique_id, gold):
-    global cur;
-
-    result = query("update accounts set gold=? where id=?", (gold, unique_id));
-    if not (result or cur.rowcount == 0): return accounts.GeneralResult.UNKNOWN_ERROR;
-
-    return accounts.LoginResult.SUCCESS;
+    return set_attrib(unique_id, "gold", gold);
 
 def query(*args):
     global cur;

@@ -6,11 +6,15 @@ import re;
 import debug;
 import hashlib;
 import socket_manage;
+import time;
 
 class AccDetails:
     unique_id = -1;
     username = "";
     gold = -1;
+    last_login_time = 0;
+    last_logout_time = 0;
+    total_login_time = 0;
     parent_client = None;
 
 class LoginResult:
@@ -28,11 +32,6 @@ MIN_PASSWORD_LEN = 3;
 MAX_PASSWORD_LEN = 16;
 
 input_regex = "^[a-zA-Z0-9]+$";
-
-ID_INDEX = 0;
-USER_INDEX = 1;
-PASS_INDEX = 2;
-GOLD_INDEX = 3;
 
 STARTING_GOLD = 1225;
 
@@ -54,11 +53,19 @@ def handle_all_messages(m):
     elif (m.mid == _MID.RECV_CLIENT_ATTEMPT_LOGIN):
         result, unique_id = db.find_user_account(m.params[0], m.params[1]);
         if (result == LoginResult.SUCCESS):
-            details = AccDetails();
-            details.parent_client = m.client_obj;
-            details.unique_id = unique_id;
-            m.client_obj.acc_details = details;
+            acc_details = AccDetails();
+            acc_details.parent_client = m.client_obj;
+            acc_details.unique_id = unique_id;
+            m.client_obj.acc_details = acc_details;
             update_acc_details(m.client_obj, unique_id);
+
+            t = time.time();
+            db.set_attrib(unique_id, "last_login_time", t);
+            acc_details.last_login_time = t;
+
+            result, total = db.get_attrib(unique_id, "total_login_time");
+            if (result == GeneralResult.SUCCESS):
+                acc_details.total_login_time = total;
 
         msg.send(m.sock, m.client_obj, msg.build(_MID.SEND_CLIENT_ATTEMPT_LOGIN_RESULT, result));
 
@@ -125,3 +132,16 @@ def format_user_pass(username, password):
 
     err = True;
     return username, password, err;
+
+def handle_client_leave(client_obj):
+    acc_details = client_obj.acc_details;
+    if (acc_details != None):
+        t = time.time();
+        if (db.set_attrib(acc_details.unique_id, "last_logout_time", t) == GeneralResult.SUCCESS):
+            acc_details.last_logout_time = t;
+
+            result, total = db.get_attrib(acc_details.unique_id, "total_login_time");
+            if (result == GeneralResult.SUCCESS):
+                total += t - acc_details.last_login_time;
+                db.set_attrib(acc_details.unique_id, "total_login_time", total);
+                acc_details.total_login_time = total;
